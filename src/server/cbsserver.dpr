@@ -2,9 +2,9 @@ program cbsserver;
 
 uses
   Forms,
-  ServerModule in 'ServerModule.pas' {UniServerModule: TUniGUIServerModule},
-  MainModule in 'MainModule.pas' {UniMainModule: TUniGUIMainModule},
-  Main in 'Main.pas' {MainForm: TUniForm};
+  Main in 'src\Main.pas' {MainForm: TUniForm},
+  MainModule in 'src\MainModule.pas' {UniMainModule: TUniGUIMainModule},
+  ServerModule in 'src\ServerModule.pas' {UniServerModule: TUniGUIServerModule};
 
 {$R *.res}
 

@@ -70,6 +70,12 @@
         <Cfg_1>true</Cfg_1>
         <Base>true</Base>
     </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win64)'!=''">
+        <Cfg_1_Win64>true</Cfg_1_Win64>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_2)'!=''">
         <Cfg_2>true</Cfg_2>
         <CfgParent>Base</CfgParent>
@@ -81,9 +87,15 @@
         <Cfg_2>true</Cfg_2>
         <Base>true</Base>
     </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win64)'!=''">
+        <Cfg_2_Win64>true</Cfg_2_Win64>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <DCC_DcuOutput>.\$(Platform)\$(Config)</DCC_DcuOutput>
-        <DCC_ExeOutput>.\$(Platform)\$(Config)</DCC_ExeOutput>
+        <DCC_DcuOutput>..\..\build\$(Platform)\$(Config)\.dcu</DCC_DcuOutput>
+        <DCC_ExeOutput>..\..\build\$(Platform)\$(Config)</DCC_ExeOutput>
         <DCC_E>false</DCC_E>
         <DCC_N>false</DCC_N>
         <DCC_S>false</DCC_S>
@@ -92,6 +104,11 @@
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
+        <SanitizedProjectName>cbsserver</SanitizedProjectName>
+        <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
+        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <VerInfo_Locale>1046</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
         <DCC_UsePackage>fmx;DbxCommonDriver;bindengine;IndyIPCommon;emsclient;IndyProtocols;dbxcds;FmxTeeUI;FireDACSqliteDriver;DbxClientDriver;soapmidas;dbexpress;inet;FireDACDBXDriver;CustomIPTransport;IndySystem;ibxbindings;FireDACCommon;emsserverresource;bindcompdbx;rtl;DBXSqliteDriver;DataSnapFireDAC;FireDAC;xmlrtl;ibxpress;dsnap;DataSnapNativeClient;emshosting;FireDACCommonDriver;IndyIPClient;emsedge;bindcompfmx;ibmonitor;fmxFireDAC;DataSnapCommon;fmxase;dbrtl;DBXInterBaseDriver;bindcomp;inetstn;IndyCore;RESTBackendComponents;RESTComponents;IndyIPServer;dsnapxml;DataSnapClient;DataSnapProviderClient;emsclientfiredac;FireDACDSDriver;tethering;CloudService;FMXTee;soaprtl;soapserver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
@@ -127,6 +144,11 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <DCC_UsePackage>vclwinx;DataSnapServer;dxComnRS37;fmx;dxDockingRS37;vclie;DbxCommonDriver;bindengine;IndyIPCommon;VCLRESTComponents;DBXMSSQLDriver;FireDACCommonODBC;emsclient;dxCoreRS37;dxServerModeRS37;IndyProtocols;cxPivotGridRS37;vclx;dxPScxTLLnkRS37;dbxcds;vcledge;dxSpreadSheetConditionalFormattingDialogsRS37;dxEMFRS37;FmxTeeUI;dxPSCoreRS37;dxPSPrVwRibbonRS37;DBXFirebirdDriver;cxIBXAdaptersRS37;dxRichEditDocumentModelRS37;FireDACSqliteDriver;DbxClientDriver;dxPSdxDBTVLnkRS37;soapmidas;TeeUI;dxPScxExtCommonRS37;dbexpress;inet;vcltouch;cxSchedulerWebServiceStorageRS37;FireDACDBXDriver;fmxdae;dxTabbedMDIRS37;uSynEdit_R2026;CustomIPTransport;FireDACMSSQLDriver;dxFireDACEMFRS37;cxGridRS37;dxSpellCheckerRS37;cxFireDACAdaptersRS37;dxorgcRS37;IndySystem;dxBarRS37;dxCloudServiceLibraryRS37;dxPScxPCProdRS37;ibxbindings;dxPSRichEditControlLnkRS37;dxGDIPlusRS37;vclFireDAC;cxADOAdaptersRS37;FireDACCommon;DataSnapServerMidas;FireDACODBCDriver;emsserverresource;dxBarDBNavRS37;dxPDFViewerRS37;dxmdsRS37;dxPSdxOCLnkRS37;bindcompdbx;rtl;FireDACMySQLDriver;dxADOEMFRS37;DBXSqliteDriver;dxPSdxDBOCLnkRS37;DBXSybaseASEDriver;cxSchedulerTreeBrowserRS37;dxChartControlRS37;cxGridEMFRS37;vclimg;DataSnapFireDAC;inetdbxpress;FireDAC;dxNavBarRS37;dxSpreadSheetCoreConditionalFormattingDialogsRS37;xmlrtl;dxPScxGridLnkRS37;dxADOServerModeRS37;ibxpress;dxWizardControlRS37;dsnap;FireDACDb2Driver;dxPScxSchedulerLnkRS37;DBXOracleDriver;DBXInformixDriver;vclib;dxHttpIndyRequestRS37;fmxobj;bindcompvclsmp;DataSnapNativeClient;dxSpreadSheetReportDesignerRS37;dxTileControlRS37;dxGaugeControlRS37;dxOrgChartAdvancedCustomizeFormRS37;DatasnapConnectorsFreePascal;dxPSdxMapControlLnkRS37;cxVerticalGridRS37;dxBarExtItemsRS37;cxLibraryRS37;dxdborRS37;dxSpreadSheetRS37;cxSchedulerGridRS37;emshosting;dxFlowChartAdvancedCustomizeFormRS37;dxPSDBTeeChartRS37;dxPSdxLCLnkRS37;FireDACCommonDriver;IndyIPClient;bindcompvclwinx;dxPSLnksRS37;dxPSTeeChartRS37;emsedge;bindcompfmx;cxTreeListRS37;dxFlowChartRS37;inetdb;ibmonitor;cxPivotGridChartRS37;dxFireDACServerModeRS37;FireDACASADriver;Tee;vclactnband;dxMapControlRS37;fmxFireDAC;FireDACInfxDriver;DBXMySQLDriver;VclSmp;DataSnapCommon;fmxase;cxSchedulerRibbonStyleEventEditorRS37;DBXOdbcDriver;dbrtl;dxPScxCommonRS37;FireDACOracleDriver;dxPSdxSpreadSheetLnkRS37;dxPSdxChartControlLnkRS37;TeeDB;FireDACMSAccDriver;dxRichEditControlRS37;dxPsPrVwAdvRS37;dxPSdxPDFViewerLnkRS37;DataSnapIndy10ServerTransport;dxDBXServerModeRS37;cxSchedulerRS37;cxExportRS37;DataSnapConnectors;vcldsnap;DBXInterBaseDriver;FireDACMongoDBDriver;dxRichEditControlCoreRS37;FireDACTDataDriver;Skia.Package.VCL;uniGUI30VCL;dxPScxPivotGridLnkRS37;vcldb;dxBarExtDBItemsRS37;dxPSdxFCLnkRS37;bindcomp;inetstn;dxFlowChartLayoutsRS37;IndyCore;RESTBackendComponents;dxRibbonRS37;dxSpreadSheetCoreRS37;uniGUI30m;dxGanttControlRS37;dxPScxVGridLnkRS37;dxPSdxGaugeControlLnkRS37;FireDACADSDriver;RESTComponents;IndyIPServer;vcl;dsnapxml;adortl;dsnapcon;DataSnapClient;DataSnapProviderClient;dxSkinsCoreRS37;dxdbtrRS37;DBXDb2Driver;dxRichEditCoreRS37;cxTreeListdxBarPopupMenuRS37;emsclientfiredac;FireDACPgDriver;FireDACDSDriver;dxRibbonCustomizationFormRS37;tethering;dxtrmdRS37;bindcompvcl;cxPivotGridOLAPRS37;dxFlowChartDesignerRS37;CloudService;DBXSybaseASADriver;FMXTee;soaprtl;soapserver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
+        <BT_BuildType>Debug</BT_BuildType>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -141,6 +163,11 @@
     <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win64)'!=''">
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -151,24 +178,27 @@
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win64)'!=''">
+        <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
+    </PropertyGroup>
     <ItemGroup>
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="ServerModule.pas">
-            <Form>UniServerModule</Form>
+        <DCCReference Include="src\Main.pas">
+            <Form>MainForm</Form>
             <FormType>dfm</FormType>
-            <DesignClass>TUniGUIServerModule</DesignClass>
+            <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="MainModule.pas">
+        <DCCReference Include="src\MainModule.pas">
             <Form>UniMainModule</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniGUIMainModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="Main.pas">
-            <Form>MainForm</Form>
+        <DCCReference Include="src\ServerModule.pas">
+            <Form>UniServerModule</Form>
             <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
+            <DesignClass>TUniGUIServerModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
@@ -190,9 +220,13 @@
                 <Source>
                     <Source Name="MainSource">cbsserver.dpr</Source>
                 </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k370.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
+                </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="5">
-                <DeployFile LocalName="Win32\Debug\cbsserver.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\build\Win32\Debug\cbsserver.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>cbsserver.exe</RemoteName>
                         <Overwrite>true</Overwrite>

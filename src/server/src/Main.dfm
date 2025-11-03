@@ -7,5 +7,6 @@ object MainForm: TMainForm
   BorderStyle = bsNone
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
+  PageMode = True
   TextHeight = 15
 end

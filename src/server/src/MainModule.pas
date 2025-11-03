@@ -8,9 +8,9 @@ uses
 type
   TUniMainModule = class(TUniGUIMainModule)
   private
-    { Private declarations }
+    FUserName: string;
   public
-    { Public declarations }
+    property UserName: string read FUserName write FUserName;
   end;
 
 function UniMainModule: TUniMainModule;
@@ -29,4 +29,5 @@ end;
 
 initialization
   RegisterMainModuleClass(TUniMainModule);
+
 end.
