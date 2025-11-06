@@ -1,4 +1,4 @@
-unit MainModule;
+unit cbsclient.MainModule;
 
 interface
 
@@ -8,9 +8,9 @@ uses
 type
   TUniMainModule = class(TUniGUIMainModule)
   private
-    FUserName: string;
+    { Private declarations }
   public
-    property UserName: string read FUserName write FUserName;
+    { Public declarations }
   end;
 
 function UniMainModule: TUniMainModule;
@@ -20,7 +20,7 @@ implementation
 {$R *.dfm}
 
 uses
-  UniGUIVars, ServerModule, uniGUIApplication;
+  UniGUIVars, cbsclient.ServerModule, uniGUIApplication;
 
 function UniMainModule: TUniMainModule;
 begin
@@ -29,5 +29,4 @@ end;
 
 initialization
   RegisterMainModuleClass(TUniMainModule);
-
 end.

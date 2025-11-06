@@ -1,4 +1,4 @@
-unit ServerModule;
+unit cbsserver.ServerModule;
 
 interface
 

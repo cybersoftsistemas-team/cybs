@@ -6,6 +6,9 @@
         <Projects Include="server\cbsserver.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="client\cbsclient.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -23,14 +26,23 @@
     <Target Name="cbsserver:Make">
         <MSBuild Projects="server\cbsserver.dproj" Targets="Make"/>
     </Target>
+    <Target Name="cbsclient">
+        <MSBuild Projects="client\cbsclient.dproj"/>
+    </Target>
+    <Target Name="cbsclient:Clean">
+        <MSBuild Projects="client\cbsclient.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cbsclient:Make">
+        <MSBuild Projects="client\cbsclient.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="cbsserver"/>
+        <CallTarget Targets="cbsserver;cbsclient"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="cbsserver:Clean"/>
+        <CallTarget Targets="cbsserver:Clean;cbsclient:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="cbsserver:Make"/>
+        <CallTarget Targets="cbsserver:Make;cbsclient:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
