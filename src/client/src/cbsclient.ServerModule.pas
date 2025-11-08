@@ -3,38 +3,67 @@ unit cbsclient.ServerModule;
 interface
 
 uses
-  Classes, SysUtils, uniGUIServer, uniGUIMainModule, uniGUIApplication, uIdCustomHTTPServer,
-  uniGUITypes, uIdContext;
+{IDE}
+  uniGUIServer;
 
 type
   TUniServerModule = class(TUniGUIServerModule)
-  private
-    { Private declarations }
+    procedure UniGUIServerModuleCreate(Sender: TObject);
   protected
     procedure FirstInit; override;
-  public
-    { Public declarations }
   end;
 
-function UniServerModule: TUniServerModule;
+function GetServerModule: TUniServerModule;
 
 implementation
 
 {$R *.dfm}
 
 uses
-  uniGUIVars;
+{IDE}
+  VCL.Dialogs,
+  System.SysUtils,
+  uniGUIVars,
+  Winapi.ShellAPI;
 
-function UniServerModule: TUniServerModule;
+function GetServerModule: TUniServerModule;
 begin
   Result := TUniServerModule(UniGUIServerInstance);
 end;
+
+procedure ExploreWeb(page: PChar);
+var
+  returnValue: integer;
+begin
+  ReturnValue := ShellExecute(0, 'Open', page, nil, nil, 1);
+  if ReturnValue <= 32 then
+  begin
+    case ReturnValue of
+      0: Showmessage('Sem memória');
+      2: Showmessage('Arquivo não encontrado');
+      3: Showmessage('Diretório não encontrado');
+      11: Showmessage('Arquivo corrompido ou inválido');
+    else
+      Showmessage(PChar('Erro nº '+ IntTostr(ReturnValue)+'Na execução do aplicativo'));
+    end;
+  end;
+end;
+
+{ TUniServerModule }
 
 procedure TUniServerModule.FirstInit;
 begin
   InitServerModule(Self);
 end;
 
+procedure TUniServerModule.UniGUIServerModuleCreate(Sender: TObject);
+begin
+  ExploreWeb('http://localhost:8077');
+end;
+
 initialization
+begin
   RegisterServerModuleClass(TUniServerModule);
+end;
+
 end.

@@ -3,7 +3,8 @@ unit cbsclient.MainModule;
 interface
 
 uses
-  uniGUIMainModule, SysUtils, Classes;
+{IDE}
+  uniGUIMainModule;
 
 type
   TUniMainModule = class(TUniGUIMainModule)
@@ -13,20 +14,27 @@ type
     { Public declarations }
   end;
 
-function UniMainModule: TUniMainModule;
+function GetMainModule: TUniMainModule;
 
 implementation
 
 {$R *.dfm}
 
 uses
-  UniGUIVars, cbsclient.ServerModule, uniGUIApplication;
+{IDE}
+  uniGUIApplication,
+  uniGUIVars,
+{PROJECT}
+  cbsclient.ServerModule;
 
-function UniMainModule: TUniMainModule;
+function GetMainModule: TUniMainModule;
 begin
   Result := TUniMainModule(UniApplication.UniMainModule)
 end;
 
 initialization
+begin
   RegisterMainModuleClass(TUniMainModule);
+end;
+
 end.

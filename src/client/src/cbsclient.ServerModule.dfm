@@ -1,4 +1,5 @@
 object UniServerModule: TUniServerModule
+  OnCreate = UniGUIServerModuleCreate
   TempFolder = 'temp\'
   Title = 'New Application'
   SuppressErrors = []

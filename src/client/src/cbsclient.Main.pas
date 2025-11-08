@@ -14,7 +14,7 @@ type
     { Public declarations }
   end;
 
-function MainForm: TMainForm;
+function GetMainForm: TMainForm;
 
 implementation
 
@@ -27,12 +27,14 @@ uses
 {PROJECT}
   cbsclient.MainModule;
 
-function MainForm: TMainForm;
+function GetMainForm: TMainForm;
 begin
-  Result := TMainForm(UniMainModule.GetFormInstance(TMainForm));
+  Result := TMainForm(GetMainModule.GetFormInstance(TMainForm));
 end;
 
 initialization
+begin
   RegisterAppFormClass(TMainForm);
+end;
 
 end.
