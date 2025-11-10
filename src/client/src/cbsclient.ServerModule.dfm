@@ -1,4 +1,4 @@
-object UniServerModule: TUniServerModule
+object ServerModule: TServerModule
   OnCreate = UniGUIServerModuleCreate
   TempFolder = 'temp\'
   Title = 'New Application'

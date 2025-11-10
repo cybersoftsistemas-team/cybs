@@ -4,10 +4,10 @@ interface
 
 uses
 {IDE}
-  uniGUIMainModule;
+  cbsCliSrv.MainBaseModule;
 
 type
-  TUniMainModule = class(TUniGUIMainModule)
+  TUniMainModule = class(TMainBaseModule)
   private
     { Private declarations }
   public

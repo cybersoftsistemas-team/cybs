@@ -7,13 +7,13 @@ uses
   uniGUIServer;
 
 type
-  TUniServerModule = class(TUniGUIServerModule)
+  TServerModule = class(TUniGUIServerModule)
     procedure UniGUIServerModuleCreate(Sender: TObject);
   protected
     procedure FirstInit; override;
   end;
 
-function GetServerModule: TUniServerModule;
+function GetServerModule: TServerModule;
 
 implementation
 
@@ -21,21 +21,19 @@ implementation
 
 uses
 {IDE}
-  VCL.Dialogs,
   System.SysUtils,
   uniGUIVars,
+  VCL.Dialogs,
   Winapi.ShellAPI;
 
-function GetServerModule: TUniServerModule;
+function GetServerModule: TServerModule;
 begin
-  Result := TUniServerModule(UniGUIServerInstance);
+  Result := TServerModule(UniGUIServerInstance);
 end;
 
 procedure ExploreWeb(page: PChar);
-var
-  returnValue: integer;
 begin
-  ReturnValue := ShellExecute(0, 'Open', page, nil, nil, 1);
+  var ReturnValue := ShellExecute(0, 'Open', page, nil, nil, 1);
   if ReturnValue <= 32 then
   begin
     case ReturnValue of
@@ -49,21 +47,21 @@ begin
   end;
 end;
 
-{ TUniServerModule }
+{ TServerModule }
 
-procedure TUniServerModule.FirstInit;
+procedure TServerModule.FirstInit;
 begin
   InitServerModule(Self);
 end;
 
-procedure TUniServerModule.UniGUIServerModuleCreate(Sender: TObject);
+procedure TServerModule.UniGUIServerModuleCreate(Sender: TObject);
 begin
   ExploreWeb('http://localhost:8077');
 end;
 
 initialization
 begin
-  RegisterServerModuleClass(TUniServerModule);
+  RegisterServerModuleClass(TServerModule);
 end;
 
 end.

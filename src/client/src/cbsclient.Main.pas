@@ -3,11 +3,34 @@ unit cbsclient.Main;
 interface
 
 uses
+{PROJECT}
+  cbsCliSrv.MainBaseForm,
 {IDE}
-  uniGUIForm;
+  uniButton, uniBitBtn, uniGUIClasses, uniEdit, uniDBEdit, uniPanel, System.Classes, Vcl.Controls, Vcl.Forms, uniGUIBaseClasses, uniImageList, System.Actions, Vcl.ActnList,
+  uniMainMenu, System.ImageList, Vcl.ImgList, uniSpeedButton, uniLabel, uniMultiItem, uniComboBox, uniDBComboBox, uniDBLookupComboBox;
 
 type
-  TMainForm = class(TUniForm)
+  TMainForm = class(TMainBaseForm)
+    pnlAuthenticate: TUniPanel;
+    pnlHeader: TUniSimplePanel;
+    pnlBody: TUniSimplePanel;
+    pnlFooter: TUniSimplePanel;
+    edtUserName: TUniDBEdit;
+    edtPassword: TUniDBEdit;
+    edtDomainName: TUniDBEdit;
+    btnOptions: TUniBitBtn;
+    btnConnect: TUniBitBtn;
+    actConnect: TAction;
+    actOptions: TAction;
+    btnDomains: TUniSpeedButton;
+    actDomains: TAction;
+    UniLabel1: TUniLabel;
+    UniLabel2: TUniLabel;
+    UniLabel3: TUniLabel;
+    UniLabel4: TUniLabel;
+    UniLabel5: TUniLabel;
+    UniLabel6: TUniLabel;
+    cbbServerName: TUniDBLookupComboBox;
   private
     { Private declarations }
   public

@@ -3,11 +3,14 @@
         <ProjectGuid>{AE470662-793B-471A-9F74-E431C9B04F90}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="server\cbsserver.dproj">
+        <Projects Include="Base\cbsCliSrv.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="server\cbsserver.dproj">
+            <Dependencies>Base\cbsCliSrv.dproj</Dependencies>
+        </Projects>
         <Projects Include="client\cbsclient.dproj">
-            <Dependencies/>
+            <Dependencies>Base\cbsCliSrv.dproj</Dependencies>
         </Projects>
     </ItemGroup>
     <ProjectExtensions>
@@ -17,32 +20,41 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
-    <Target Name="cbsserver">
+    <Target Name="cbsCliSrv">
+        <MSBuild Projects="Base\cbsCliSrv.dproj"/>
+    </Target>
+    <Target Name="cbsCliSrv:Clean">
+        <MSBuild Projects="Base\cbsCliSrv.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cbsCliSrv:Make">
+        <MSBuild Projects="Base\cbsCliSrv.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="cbsserver" DependsOnTargets="cbsCliSrv">
         <MSBuild Projects="server\cbsserver.dproj"/>
     </Target>
-    <Target Name="cbsserver:Clean">
+    <Target Name="cbsserver:Clean" DependsOnTargets="cbsCliSrv:Clean">
         <MSBuild Projects="server\cbsserver.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="cbsserver:Make">
+    <Target Name="cbsserver:Make" DependsOnTargets="cbsCliSrv:Make">
         <MSBuild Projects="server\cbsserver.dproj" Targets="Make"/>
     </Target>
-    <Target Name="cbsclient">
+    <Target Name="cbsclient" DependsOnTargets="cbsCliSrv">
         <MSBuild Projects="client\cbsclient.dproj"/>
     </Target>
-    <Target Name="cbsclient:Clean">
+    <Target Name="cbsclient:Clean" DependsOnTargets="cbsCliSrv:Clean">
         <MSBuild Projects="client\cbsclient.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="cbsclient:Make">
+    <Target Name="cbsclient:Make" DependsOnTargets="cbsCliSrv:Make">
         <MSBuild Projects="client\cbsclient.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="cbsserver;cbsclient"/>
+        <CallTarget Targets="cbsCliSrv;cbsserver;cbsclient"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="cbsserver:Clean;cbsclient:Clean"/>
+        <CallTarget Targets="cbsCliSrv:Clean;cbsserver:Clean;cbsclient:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="cbsserver:Make;cbsclient:Make"/>
+        <CallTarget Targets="cbsCliSrv:Make;cbsserver:Make;cbsclient:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
