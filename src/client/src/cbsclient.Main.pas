@@ -7,7 +7,7 @@ uses
   cbsCliSrv.MainBaseForm,
 {IDE}
   uniButton, uniBitBtn, uniGUIClasses, uniEdit, uniDBEdit, uniPanel, System.Classes, Vcl.Controls, Vcl.Forms, uniGUIBaseClasses, uniImageList, System.Actions, Vcl.ActnList,
-  uniMainMenu, System.ImageList, Vcl.ImgList, uniSpeedButton, uniLabel, uniMultiItem, uniComboBox, uniDBComboBox, uniDBLookupComboBox;
+  uniMainMenu, System.ImageList, Vcl.ImgList, uniSpeedButton, uniLabel, uniMultiItem, uniComboBox, uniDBComboBox, uniDBLookupComboBox, Vcl.Imaging.pngimage, uniImage;
 
 type
   TMainForm = class(TMainBaseForm)
@@ -31,6 +31,7 @@ type
     UniLabel5: TUniLabel;
     UniLabel6: TUniLabel;
     cbbServerName: TUniDBLookupComboBox;
+    UniImage1: TUniImage;
   private
     { Private declarations }
   public

@@ -24,6 +24,7 @@ uses
   System.SysUtils,
   uniGUIVars,
   VCL.Dialogs,
+  VCL.Forms,
   Winapi.ShellAPI;
 
 function GetServerModule: TServerModule;
@@ -55,7 +56,14 @@ begin
 end;
 
 procedure TServerModule.UniGUIServerModuleCreate(Sender: TObject);
+var
+  LNotifyIconData : TNotifyIconData;
 begin
+  FillChar(LNotifyIconData, System.SizeOf(TNotifyIconData), 0);
+  LNotifyIconData.cbSize := SizeOf(TNotifyIconData);
+  LNotifyIconData.Wnd := Application.MainForm.Handle;
+  LNotifyIconData.uID := 1002;
+  Shell_NotifyIcon(NIM_DELETE, @LNotifyIconData);
   ExploreWeb('http://localhost:8077');
 end;
 
