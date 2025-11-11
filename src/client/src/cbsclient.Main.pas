@@ -10,7 +10,7 @@ uses
   uniMainMenu, System.ImageList, Vcl.ImgList, uniSpeedButton, uniLabel, uniMultiItem, uniComboBox, uniDBComboBox, uniDBLookupComboBox, Vcl.Imaging.pngimage, uniImage;
 
 type
-  TMainForm = class(TMainBaseForm)
+  TMainForm = class(TcbsCliSrvMainBaseForm)
     pnlAuthenticate: TUniPanel;
     pnlHeader: TUniSimplePanel;
     pnlBody: TUniSimplePanel;

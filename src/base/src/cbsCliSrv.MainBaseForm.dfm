@@ -1,9 +1,9 @@
-object MainBaseForm: TMainBaseForm
+object cbsCliSrvMainBaseForm: TcbsCliSrvMainBaseForm
   Left = 0
   Top = 0
   ClientHeight = 348
   ClientWidth = 464
-  Caption = 'MainBaseForm'
+  Caption = 'cbsCliSrvMainBaseForm'
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
   TextHeight = 15

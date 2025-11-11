@@ -12,6 +12,9 @@
         <Projects Include="client\cbsclient.dproj">
             <Dependencies>Base\cbsCliSrv.dproj</Dependencies>
         </Projects>
+        <Projects Include="client\cbs.dproj">
+            <Dependencies>Base\cbsCliSrv.dproj</Dependencies>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -47,14 +50,23 @@
     <Target Name="cbsclient:Make" DependsOnTargets="cbsCliSrv:Make">
         <MSBuild Projects="client\cbsclient.dproj" Targets="Make"/>
     </Target>
+    <Target Name="cbs" DependsOnTargets="cbsCliSrv">
+        <MSBuild Projects="client\cbs.dproj"/>
+    </Target>
+    <Target Name="cbs:Clean" DependsOnTargets="cbsCliSrv:Clean">
+        <MSBuild Projects="client\cbs.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cbs:Make" DependsOnTargets="cbsCliSrv:Make">
+        <MSBuild Projects="client\cbs.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="cbsCliSrv;cbsserver;cbsclient"/>
+        <CallTarget Targets="cbsCliSrv;cbsserver;cbsclient;cbs"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="cbsCliSrv:Clean;cbsserver:Clean;cbsclient:Clean"/>
+        <CallTarget Targets="cbsCliSrv:Clean;cbsserver:Clean;cbsclient:Clean;cbs:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="cbsCliSrv:Make;cbsserver:Make;cbsclient:Make"/>
+        <CallTarget Targets="cbsCliSrv:Make;cbsserver:Make;cbsclient:Make;cbs:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

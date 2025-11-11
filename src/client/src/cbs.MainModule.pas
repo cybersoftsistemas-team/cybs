@@ -1,4 +1,4 @@
-unit cbsclient.MainModule;
+unit cbs.MainModule;
 
 interface
 
@@ -7,14 +7,14 @@ uses
   cbsCliSrv.MainBaseModule;
 
 type
-  TUniMainModule = class(TcbsCliSrvMainBaseModule)
+  TcbsMainModule = class(TcbsCliSrvMainBaseModule)
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-function GetMainModule: TUniMainModule;
+function GetMainModule: TcbsMainModule;
 
 implementation
 
@@ -25,14 +25,14 @@ uses
   uniGUIApplication,
   uniGUIVars;
 
-function GetMainModule: TUniMainModule;
+function GetMainModule: TcbsMainModule;
 begin
-  Result := TUniMainModule(UniApplication.UniMainModule)
+  Result := TcbsMainModule(UniApplication.UniMainModule)
 end;
 
 initialization
 begin
-  RegisterMainModuleClass(TUniMainModule);
+  RegisterMainModuleClass(TcbsMainModule);
 end;
 
 end.

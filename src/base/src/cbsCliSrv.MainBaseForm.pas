@@ -7,7 +7,7 @@ uses
   uniGUIForm, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList;
 
 type
-  TMainBaseForm = class(TUniForm)
+  TcbsCliSrvMainBaseForm = class(TUniForm)
     aclMain: TUniActionList;
     ilaMain: TUniImageListAdapter;
     ilstMain: TUniImageList;

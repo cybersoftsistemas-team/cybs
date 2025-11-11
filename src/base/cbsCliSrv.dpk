@@ -36,10 +36,14 @@ requires
   vclimg,
   uniGUI30Core,
   uniTools30,
-  uIndy30;
+  uIndy30,
+  uniGUI30;
 
 contains
-  cbsCliSrv.MainBaseForm in 'src\cbsCliSrv.MainBaseForm.pas' {MainBaseForm: TUniForm},
-  cbsCliSrv.MainBaseModule in 'src\cbsCliSrv.MainBaseModule.pas' {MainBaseModule: TDataModule};
+  cbsCliSrv.MainBaseForm in 'src\cbsCliSrv.MainBaseForm.pas' {cbsCliSrvMainBaseForm: TUniForm},
+  cbsCliSrv.MainBaseModule in 'src\cbsCliSrv.MainBaseModule.pas' {cbsCliSrvMainBaseModule: TDataModule},
+  cbsCliSrv.ServerBaseModule in 'src\cbsCliSrv.ServerBaseModule.pas' {cbsCliSrvBaseModule: TUniGUIServerModule},
+  cbsCliSrv.UserAuthenticationForm in 'src\cbsCliSrv.UserAuthenticationForm.pas' {cbsCliSrvUserAuthenticationForm: TUniLoginForm},
+  cbsCliSrv.UserAuthenticationModule in 'src\cbsCliSrv.UserAuthenticationModule.pas' {cbsCliSrvUserAuthenticationModule: TUniGUIMainModule};
 
 end.

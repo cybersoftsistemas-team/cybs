@@ -1,13 +1,13 @@
-unit cbsCliSrv.MainBaseModule;
+unit cbsCliSrv.ServerBaseModule;
 
 interface
 
 uses
 {IDE}
-  uniGUIMainModule;
+  uniGUIServer;
 
 type
-  TcbsCliSrvMainBaseModule = class(TUniGUIMainModule)
+  TcbsCliSrvBaseModule = class(TUniGUIServerModule)
   private
     { Private declarations }
   public

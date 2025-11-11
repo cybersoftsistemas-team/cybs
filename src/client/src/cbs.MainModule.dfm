@@ -1,0 +1,2 @@
+inherited cbsMainModule: TcbsMainModule
+end
