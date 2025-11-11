@@ -19,14 +19,14 @@ inherited MainForm: TMainForm
       Left = 1
       Top = 1
       Width = 451
-      Height = 115
+      Height = 109
       Hint = ''
       ParentColor = False
       Align = alTop
       TabOrder = 1
       DesignSize = (
         451
-        115)
+        109)
       object UniLabel3: TUniLabel
         Left = 29
         Top = 73
@@ -78,18 +78,18 @@ inherited MainForm: TMainForm
     end
     object pnlBody: TUniSimplePanel
       Left = 1
-      Top = 116
+      Top = 110
       Width = 451
-      Height = 152
+      Height = 158
       Hint = ''
       ParentColor = False
       Align = alClient
       TabOrder = 2
-      ExplicitTop = 120
-      ExplicitHeight = 148
+      ExplicitTop = 116
+      ExplicitHeight = 152
       DesignSize = (
         451
-        152)
+        158)
       object cbbServerName: TUniDBLookupComboBox
         Left = 30
         Top = 5
