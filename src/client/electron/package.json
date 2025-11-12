@@ -1,0 +1,12 @@
+{
+  "name": "cybersoft-sistemas",
+  "version": "1.0.0",
+  "main": "main.js",
+  "type": "module",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^39.1.2"
+  }
+}

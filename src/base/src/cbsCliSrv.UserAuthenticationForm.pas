@@ -22,11 +22,9 @@ type
     UniLabel5: TUniLabel;
     UniLabel6: TUniLabel;
     pnlBody: TUniSimplePanel;
-    cbbServerName: TUniDBLookupComboBox;
     edtUserName: TUniDBEdit;
     edtPassword: TUniDBEdit;
     edtDomainName: TUniDBEdit;
-    btnOptions: TUniBitBtn;
     btnConnect: TUniBitBtn;
     btnDomains: TUniSpeedButton;
     pnlFooter: TUniSimplePanel;
@@ -34,6 +32,11 @@ type
     UniLabel1: TUniLabel;
     UniLabel2: TUniLabel;
     nilstMain: TUniNativeImageList;
+    pnlTitlebar: TUniContainerPanel;
+    nilstTitlebar: TUniNativeImageList;
+    pnlTitlebarBtns: TUniSimplePanel;
+    btnWindowsClose: TUniSpeedButton;
+    btnWindowsMinimize: TUniSpeedButton;
   private
     { Private declarations }
   public
