@@ -12,7 +12,6 @@ type
   TcbsCliSrvUserAuthenticationForm = class(TUniLoginForm)
     aclMain: TUniActionList;
     ilaMain: TUniImageListAdapter;
-    ilstMain: TUniImageList;
     actConnect: TAction;
     actDomains: TAction;
     actOptions: TAction;
@@ -34,6 +33,7 @@ type
     UniImage1: TUniImage;
     UniLabel1: TUniLabel;
     UniLabel2: TUniLabel;
+    nilstMain: TUniNativeImageList;
   private
     { Private declarations }
   public

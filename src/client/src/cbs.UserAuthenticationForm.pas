@@ -4,7 +4,10 @@ interface
 
 uses
 {PROJECT}
-  cbsCliSrv.UserAuthenticationForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
+  cbsCliSrv.UserAuthenticationForm,
+{IDE}
+  uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Imaging.pngimage, uniImage, uniSpeedButton,
+  uniButton, uniBitBtn, uniEdit, uniDBEdit, uniGUIClasses, uniMultiItem, uniComboBox, uniDBComboBox, uniDBLookupComboBox, uniLabel, uniPanel, Vcl.Controls, Vcl.Forms;
 
 type
   TcbsUserAuthenticationForm = class(TcbsCliSrvUserAuthenticationForm)

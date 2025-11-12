@@ -13,11 +13,11 @@ object cbsCliSrvMainBaseForm: TcbsCliSrvMainBaseForm
     Top = 16
   end
   object ilaMain: TUniImageListAdapter
-    UniImageList = ilstMain
+    UniImageList = nilstMain
     Left = 420
     Top = 16
   end
-  object ilstMain: TUniImageList
+  object nilstMain: TUniNativeImageList
     Left = 392
     Top = 16
   end

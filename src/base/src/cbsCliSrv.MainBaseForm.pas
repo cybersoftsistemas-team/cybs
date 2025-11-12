@@ -4,13 +4,13 @@ interface
 
 uses
 {IDE}
-  uniGUIForm, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList;
+  uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
   TcbsCliSrvMainBaseForm = class(TUniForm)
     aclMain: TUniActionList;
     ilaMain: TUniImageListAdapter;
-    ilstMain: TUniImageList;
+    nilstMain: TUniNativeImageList;
   private
     { Private declarations }
   public
