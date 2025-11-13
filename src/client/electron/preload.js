@@ -1,7 +1,5 @@
-// preload.js
-import { contextBridge, ipcRenderer } from 'electron';
+const { contextBridge, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('electronAPI', {
-  minimize: () => ipcRenderer.invoke('window:minimize'),
-  close: () => ipcRenderer.invoke('window:close')
+  send: (channel, data) => ipcRenderer.send(channel, data)
 });

@@ -23,19 +23,19 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
     Caption = 'pnlAuthenticate'
     object pnlHeader: TUniSimplePanel
       Left = 0
-      Top = 30
+      Top = 0
       Width = 453
-      Height = 67
+      Height = 93
       Hint = ''
       ParentColor = False
       Align = alTop
       TabOrder = 0
       DesignSize = (
         453
-        67)
+        93)
       object UniLabel3: TUniLabel
         Left = 30
-        Top = 49
+        Top = 76
         Width = 410
         Height = 13
         Hint = ''
@@ -47,7 +47,7 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
       end
       object UniLabel4: TUniLabel
         Left = 30
-        Top = -6
+        Top = 21
         Width = 96
         Height = 47
         Hint = ''
@@ -60,7 +60,7 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
       end
       object UniLabel5: TUniLabel
         Left = 133
-        Top = -6
+        Top = 21
         Width = 63
         Height = 47
         Hint = ''
@@ -73,7 +73,7 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
       end
       object UniLabel6: TUniLabel
         Left = 157
-        Top = 32
+        Top = 59
         Width = 44
         Height = 13
         Hint = ''
@@ -84,92 +84,94 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
     end
     object pnlBody: TUniSimplePanel
       Left = 0
-      Top = 97
+      Top = 93
       Width = 453
-      Height = 172
+      Height = 162
       Hint = ''
       ParentColor = False
       Align = alClient
       TabOrder = 2
-      ExplicitTop = 109
-      ExplicitHeight = 160
+      ExplicitHeight = 155
       DesignSize = (
         453
-        172)
+        162)
       object edtUserName: TUniDBEdit
         Left = 30
-        Top = 35
+        Top = 40
         Width = 392
         Height = 22
         Hint = ''
-        Anchors = [akLeft, akTop, akRight]
+        Anchors = [akLeft, akRight, akBottom]
         TabOrder = 1
         FieldLabel = 'Nome de usu'#225'rio ou e-mail'
         FieldLabelWidth = 156
+        ExplicitTop = 47
       end
       object edtPassword: TUniDBEdit
         Left = 30
-        Top = 63
+        Top = 68
         Width = 392
         Height = 22
         Hint = ''
         PasswordChar = '*'
-        Anchors = [akLeft, akTop, akRight]
+        Anchors = [akLeft, akRight, akBottom]
         TabOrder = 2
         FieldLabel = 'Senha'
         FieldLabelWidth = 156
+        ExplicitTop = 75
       end
       object edtDomainName: TUniDBEdit
         Left = 30
-        Top = 91
+        Top = 96
         Width = 363
         Height = 22
         Hint = ''
-        Enabled = False
-        Anchors = [akLeft, akTop, akRight]
+        Anchors = [akLeft, akRight, akBottom]
         TabOrder = 3
         ReadOnly = True
         FieldLabel = 'Dom'#237'nio'
         FieldLabelWidth = 156
         ReadOnlyMode = urmNotEditable
+        ExplicitTop = 103
       end
       object btnConnect: TUniBitBtn
         Left = 342
-        Top = 119
+        Top = 124
         Width = 80
         Height = 25
         Action = actConnect
-        Anchors = [akTop, akRight]
+        Anchors = [akLeft, akRight, akBottom]
         TabOrder = 5
         ImageIndex = 0
+        ExplicitTop = 131
       end
       object btnDomains: TUniSpeedButton
         Left = 399
-        Top = 91
+        Top = 96
         Width = 23
         Height = 22
         Action = actDomains
-        Anchors = [akTop, akRight]
+        Anchors = [akRight, akBottom]
         ParentColor = False
         ImageIndex = 2
         TabOrder = 4
+        ExplicitTop = 103
       end
     end
     object pnlFooter: TUniSimplePanel
       Left = 0
-      Top = 269
+      Top = 255
       Width = 453
-      Height = 79
+      Height = 93
       Hint = ''
-      ParentColor = False
       Align = alBottom
       TabOrder = 3
       DesignSize = (
         453
-        79)
+        93)
       object UniImage1: TUniImage
         Left = 0
-        Top = 33
+        Top = 47
         Width = 451
         Height = 46
         Hint = ''
@@ -392,90 +394,44 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
           23083C7FE83F5331C264A1FCDD7DB12DEA1DEFA35F5EDF42B621DD29A07A5644
           DD27DD5A9EABDD7D62C45B668DBFE5C9BAD1BA4304E8E7FF7FED57AA252B40BB
           340000000049454E44AE426082}
+        Align = alBottom
         Transparent = True
+        ExplicitTop = 31
       end
       object UniLabel1: TUniLabel
         Left = 30
-        Top = 9
+        Top = 31
         Width = 174
         Height = 13
         Hint = ''
         Caption = 'Conectado ao Cybersoft Sistemas.'
         Anchors = [akLeft, akBottom]
         TabOrder = 1
+        ExplicitTop = 54
       end
       object UniLabel2: TUniLabel
         Left = 30
-        Top = 23
+        Top = 45
         Width = 315
         Height = 13
         Hint = ''
         Caption = #169' 2026 Cybersoft Sistemas Ltda. Todos os direitos reservados.'
         Anchors = [akLeft, akBottom]
         TabOrder = 2
-      end
-    end
-    object pnlTitlebar: TUniContainerPanel
-      Left = 0
-      Top = 0
-      Width = 453
-      Height = 30
-      Hint = ''
-      ParentColor = False
-      Align = alTop
-      TabOrder = 4
-      object pnlTitlebarBtns: TUniSimplePanel
-        Left = 393
-        Top = 0
-        Width = 60
-        Height = 30
-        Hint = ''
-        Align = alRight
-        TabOrder = 1
-        object btnWindowsClose: TUniSpeedButton
-          Left = 30
-          Top = 0
-          Width = 30
-          Height = 30
-          Hint = ''
-          Caption = 'X'
-          Align = alRight
-          ParentColor = False
-          LayoutConfig.Cls = 'cybs-close-btn'
-          TabOrder = 1
-          ExplicitLeft = 127
-          ExplicitHeight = 25
-        end
-        object btnWindowsMinimize: TUniSpeedButton
-          Left = 0
-          Top = 0
-          Width = 30
-          Height = 30
-          Hint = ''
-          Caption = ''
-          Align = alRight
-          ParentColor = False
-          Images = nilstTitlebar
-          ImageIndex = 1
-          TabOrder = 2
-          ExplicitLeft = 19
-          ExplicitTop = 3
-          ExplicitHeight = 25
-        end
+        ExplicitTop = 68
       end
     end
   end
   object aclMain: TUniActionList
     Images = ilaMain
-    Left = 323
-    Top = 32
+    Left = 351
+    Top = 16
     object actConnect: TAction
       Caption = 'Entrar'
-      Enabled = False
       ImageIndex = 0
+      OnExecute = actConnectExecute
     end
     object actDomains: TAction
-      Enabled = False
       ImageIndex = 2
     end
     object actOptions: TAction
@@ -485,12 +441,12 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
   end
   object ilaMain: TUniImageListAdapter
     UniImageList = nilstMain
-    Left = 351
-    Top = 32
+    Left = 379
+    Top = 16
   end
   object nilstMain: TUniNativeImageList
-    Left = 379
-    Top = 32
+    Left = 407
+    Top = 16
     Images = {
       03000000FFFFFF1F04AE00000089504E470D0A1A0A0000000D49484452000000
       100000001008060000001FF3FF61000000017352474200AECE1CE90000000467
@@ -517,23 +473,5 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
       72232F8843CE2E3F094004A81168B882F594B89D834940868F7D1384ED1C140B
       FC801FF50283BEB2734FA025415E3000FE3DA38A41B3014A0000000049454E44
       AE426082}
-  end
-  object nilstTitlebar: TUniNativeImageList
-    Left = 407
-    Top = 32
-    Images = {
-      02000000FFFFFF1F046601000089504E470D0A1A0A0000000D49484452000000
-      100000001008060000001FF3FF61000000017352474200AECE1CE90000000467
-      414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA864
-      000000FB49444154384FC593B16A02411445477F62663A75371F21A4B748EB1F
-      F80316296C6C5298321011827F60501C11C22CB3A560D207FB74F989E4DADC31
-      93E7261022F86058E6BE7BEEF0786C0D80FA4FD5A5F0D73A6D4033CBDBABA2BC
-      4DB5B45645A95AF9C55029757310011C8EF3A1AF8D85F36196EAEC296DEC93F3
-      01009EA3FECD44E30B43D6027E24FC9AFA8F02086C193226FC407827BD477012
-      32D7C6421BFB4178233D007EDD4297DFE8B94C7A5F2513F9BAD2C64E9C0F703E
-      7C729C6BE943D50884A7E9CCCE87054306D25F05C755BD895EDCCEDD8F01CD2C
-      EF107E972F3164D968650070551900A00BE05E82E28C00F4E2BD8673FF8D7BDE
-      979F241672CCBA0000000049454E44AE426082FFFFFF1F061B00000066617220
-      66612D77696E646F772D6D696E696D697A653B6661723B}
   end
 end

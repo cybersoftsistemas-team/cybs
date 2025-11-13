@@ -28,15 +28,11 @@ type
     btnConnect: TUniBitBtn;
     btnDomains: TUniSpeedButton;
     pnlFooter: TUniSimplePanel;
-    UniImage1: TUniImage;
     UniLabel1: TUniLabel;
     UniLabel2: TUniLabel;
     nilstMain: TUniNativeImageList;
-    pnlTitlebar: TUniContainerPanel;
-    nilstTitlebar: TUniNativeImageList;
-    pnlTitlebarBtns: TUniSimplePanel;
-    btnWindowsClose: TUniSpeedButton;
-    btnWindowsMinimize: TUniSpeedButton;
+    UniImage1: TUniImage;
+    procedure actConnectExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -46,5 +42,14 @@ type
 implementation
 
 {$R *.dfm}
+
+uses
+  uniGUIApplication;
+
+procedure TcbsCliSrvUserAuthenticationForm.actConnectExecute(Sender: TObject);
+begin
+  ModalResult := mrOK;
+  UniSession.AddJS('window.electronAPI.send("after-login", { w: 1024, h: 700 });');
+end;
 
 end.
