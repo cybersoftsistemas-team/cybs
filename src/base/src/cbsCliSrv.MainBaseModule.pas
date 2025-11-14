@@ -9,9 +9,9 @@ uses
 type
   TcbsCliSrvMainBaseModule = class(TUniGUIMainModule)
   private
-    { Private declarations }
+    FIsElectron: Boolean;
   public
-    { Public declarations }
+    property IsElectron: Boolean read FIsElectron write FIsElectron;
   end;
 
 implementation

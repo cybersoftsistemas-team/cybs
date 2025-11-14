@@ -150,6 +150,7 @@
             <Form>cbsCliSrvUserAuthenticationModule</Form>
             <DesignClass>TUniGUIMainModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="src\cbsCliSrv.ElectronUtils.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

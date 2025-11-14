@@ -91,7 +91,6 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
       ParentColor = False
       Align = alClient
       TabOrder = 2
-      ExplicitHeight = 155
       DesignSize = (
         453
         162)
@@ -164,6 +163,7 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
       Width = 453
       Height = 93
       Hint = ''
+      ParentColor = False
       Align = alBottom
       TabOrder = 3
       DesignSize = (

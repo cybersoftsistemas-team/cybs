@@ -44,6 +44,7 @@ contains
   cbsCliSrv.MainBaseModule in 'src\cbsCliSrv.MainBaseModule.pas' {cbsCliSrvMainBaseModule: TDataModule},
   cbsCliSrv.ServerBaseModule in 'src\cbsCliSrv.ServerBaseModule.pas' {cbsCliSrvBaseModule: TUniGUIServerModule},
   cbsCliSrv.UserAuthenticationForm in 'src\cbsCliSrv.UserAuthenticationForm.pas' {cbsCliSrvUserAuthenticationForm: TUniLoginForm},
-  cbsCliSrv.UserAuthenticationModule in 'src\cbsCliSrv.UserAuthenticationModule.pas' {cbsCliSrvUserAuthenticationModule: TUniGUIMainModule};
+  cbsCliSrv.UserAuthenticationModule in 'src\cbsCliSrv.UserAuthenticationModule.pas' {cbsCliSrvUserAuthenticationModule: TUniGUIMainModule},
+  cbsCliSrv.ElectronUtils in 'src\cbsCliSrv.ElectronUtils.pas';
 
 end.
