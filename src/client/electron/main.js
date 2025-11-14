@@ -18,16 +18,17 @@ function createWindow() {
     resizable: false,
     webPreferences: {
       preload: join(__dirname, "preload.js"),
+      additionalArguments: ["--electron"],
       nodeIntegration: false,
-      contextIsolation: true
-    }
+      contextIsolation: true,
+    },
   });
 
   // URL do seu UniGUI
   win.loadURL("http://localhost:8077");
   win.center();
 
-  // win.webContents.openDevTools({ mode: "detach" });
+  win.webContents.openDevTools({ mode: "detach" });
 
   ipcMain.on("after-login", (event, obj) => {
     if (!win) return;
@@ -38,9 +39,10 @@ function createWindow() {
   });
 }
 
-app.whenReady()
+app
+  .whenReady()
   .then(createWindow)
-  .catch(err => console.error("Erro ao iniciar app:", err));
+  .catch((err) => console.error("Erro ao iniciar app:", err));
 
 app.on("activate", () => {
   if (BrowserWindow.getAllWindows().length === 0) createWindow();
