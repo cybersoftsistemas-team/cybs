@@ -28,7 +28,7 @@ function createWindow() {
   win.loadURL("http://localhost:8077");
   win.center();
 
-  win.webContents.openDevTools({ mode: "detach" });
+  // win.webContents.openDevTools({ mode: "detach" });
 
   ipcMain.on("after-login", (event, obj) => {
     if (!win) return;
