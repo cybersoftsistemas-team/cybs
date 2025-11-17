@@ -7,7 +7,7 @@ object cbsCliSrvBaseModule: TcbsCliSrvBaseModule
   CustomFiles.Strings = (
     'files\js\electron-env.js'
     'files\js\detect-env.js'
-    'files\js\load-data.js')
+    'files\js\data-storege.js')
   CustomCSS.Strings = (
     '/* Remove rolagem e espa'#231'amento do body */'
     'html, body {'
@@ -130,7 +130,7 @@ object cbsCliSrvBaseModule: TcbsCliSrvBaseModule
     ''
     '.electron-login-pos {'
     '  position: absolute !important;'
-    '  left: -4px !important;'
+    '  left: -5px !important;'
     '  top: -5px !important;'
     '}')
   SSL.SSLOptions.RootCertFile = 'root.pem'

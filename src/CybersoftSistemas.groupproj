@@ -3,11 +3,17 @@
         <ProjectGuid>{AE470662-793B-471A-9F74-E431C9B04F90}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
+        <Projects Include="foundation\cbsMigrations.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="foundation\cbsMigrationsFireDac.dproj">
+            <Dependencies>foundation\cbsMigrations.dproj</Dependencies>
+        </Projects>
         <Projects Include="Base\cbsCliSrv.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="client\cbs.dproj">
-            <Dependencies>Base\cbsCliSrv.dproj</Dependencies>
+            <Dependencies>Base\cbsCliSrv.dproj;foundation\cbsMigrations.dproj;foundation\cbsMigrationsFireDac.dproj</Dependencies>
         </Projects>
     </ItemGroup>
     <ProjectExtensions>
@@ -17,6 +23,24 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+    <Target Name="cbsMigrations">
+        <MSBuild Projects="foundation\cbsMigrations.dproj"/>
+    </Target>
+    <Target Name="cbsMigrations:Clean">
+        <MSBuild Projects="foundation\cbsMigrations.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cbsMigrations:Make">
+        <MSBuild Projects="foundation\cbsMigrations.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="cbsMigrationsFireDac" DependsOnTargets="cbsMigrations">
+        <MSBuild Projects="foundation\cbsMigrationsFireDac.dproj"/>
+    </Target>
+    <Target Name="cbsMigrationsFireDac:Clean" DependsOnTargets="cbsMigrations:Clean">
+        <MSBuild Projects="foundation\cbsMigrationsFireDac.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cbsMigrationsFireDac:Make" DependsOnTargets="cbsMigrations:Make">
+        <MSBuild Projects="foundation\cbsMigrationsFireDac.dproj" Targets="Make"/>
+    </Target>
     <Target Name="cbsCliSrv">
         <MSBuild Projects="Base\cbsCliSrv.dproj"/>
     </Target>
@@ -26,23 +50,23 @@
     <Target Name="cbsCliSrv:Make">
         <MSBuild Projects="Base\cbsCliSrv.dproj" Targets="Make"/>
     </Target>
-    <Target Name="cbs" DependsOnTargets="cbsCliSrv">
+    <Target Name="cbs" DependsOnTargets="cbsCliSrv;cbsMigrations;cbsMigrationsFireDac">
         <MSBuild Projects="client\cbs.dproj"/>
     </Target>
-    <Target Name="cbs:Clean" DependsOnTargets="cbsCliSrv:Clean">
+    <Target Name="cbs:Clean" DependsOnTargets="cbsCliSrv:Clean;cbsMigrations:Clean;cbsMigrationsFireDac:Clean">
         <MSBuild Projects="client\cbs.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="cbs:Make" DependsOnTargets="cbsCliSrv:Make">
+    <Target Name="cbs:Make" DependsOnTargets="cbsCliSrv:Make;cbsMigrations:Make;cbsMigrationsFireDac:Make">
         <MSBuild Projects="client\cbs.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="cbsCliSrv;cbs"/>
+        <CallTarget Targets="cbsMigrations;cbsMigrationsFireDac;cbsCliSrv;cbs"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="cbsCliSrv:Clean;cbs:Clean"/>
+        <CallTarget Targets="cbsMigrations:Clean;cbsMigrationsFireDac:Clean;cbsCliSrv:Clean;cbs:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="cbsCliSrv:Make;cbs:Make"/>
+        <CallTarget Targets="cbsMigrations:Make;cbsMigrationsFireDac:Make;cbsCliSrv:Make;cbs:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

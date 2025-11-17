@@ -10,12 +10,12 @@ uses
 type
   TFDDataSetExtensions = class helper for TFDDataSet
   private
-    function Compress(const S: string): TBytes;
-    function Decompress(const B: TBytes): string;
+    function Compress(const AValue: string): TBytes;
+    function Decompress(const ABytes: TBytes): string;
     function Decrypt(const AData, APassword: string): string;
     function Encrypt(const AData, APassword: string): string;
     function StreamToBase64: string;
-    procedure Base64ToStream(const AB64: string);
+    procedure Base64ToStream(const AValue: string);
   public
     procedure LoadData(const AKey, AData: string);
     procedure SaveData(const AKey, AFile: string);
@@ -36,10 +36,10 @@ uses
 
 { TFDDataSetExtensions }
 
-function TFDDataSetExtensions.Compress(const S: string): TBytes;
+function TFDDataSetExtensions.Compress(const AValue: string): TBytes;
 begin
-  var ss := TStringStream.Create(S, TEncoding.UTF8);
   var ms := TMemoryStream.Create;
+  var ss := TStringStream.Create(AValue, TEncoding.UTF8);
   try
     var zs := TZCompressionStream.Create(ms);
     try
@@ -55,12 +55,12 @@ begin
   end;
 end;
 
-function TFDDataSetExtensions.Decompress(const B: TBytes): string;
+function TFDDataSetExtensions.Decompress(const ABytes: TBytes): string;
 begin
   var ms := TMemoryStream.Create;
   var ss := TStringStream.Create('', TEncoding.UTF8);
   try
-    ms.Write(B[0], Length(B));
+    ms.Write(ABytes[0], Length(ABytes));
     ms.Position := 0;
     var uz := TZDecompressionStream.Create(ms);
     try
@@ -83,8 +83,8 @@ begin
   begin
     Exit('');
   end;
-  var LBytes := TNetEncoding.Base64.DecodeStringToBytes(AData);
   var LPwd := TEncoding.UTF8.GetBytes(APassword);
+  var LBytes := TNetEncoding.Base64.DecodeStringToBytes(AData);
   for var I := 0 to High(LBytes) do
   begin
     LBytes[I] := LBytes[I] xor LPwd[I mod Length(LPwd)];
@@ -115,16 +115,16 @@ begin
   end;
 end;
 
-procedure TFDDataSetExtensions.Base64ToStream(const AB64: string);
+procedure TFDDataSetExtensions.Base64ToStream(const AValue: string);
 begin
-  if AB64.Trim.IsEmpty or
-    SameText(AB64.Trim, 'null') or
-    SameText(AB64.Trim, 'undefined') then
+  if AValue.Trim.IsEmpty or
+    SameText(AValue.Trim, 'null') or
+    SameText(AValue.Trim, 'undefined') then
   begin
     Exit;
   end;
-  var LBytes := TNetEncoding.Base64.DecodeStringToBytes(AB64);
   var Lms := TMemoryStream.Create;
+  var LBytes := TNetEncoding.Base64.DecodeStringToBytes(AValue);
   try
     Lms.Write(LBytes, Length(LBytes));
     Lms.Position := 0;
@@ -136,8 +136,7 @@ end;
 
 procedure TFDDataSetExtensions.LoadData(const AKey, AData: string);
 begin
-  var LB64 := Decrypt(AData, AKey);
-  Base64ToStream(LB64);
+  Base64ToStream(Decrypt(AData, AKey));
 end;
 
 procedure TFDDataSetExtensions.SaveData(const AKey, AFile: string);
@@ -146,24 +145,10 @@ begin
   begin
     Self.Post;
   end;
-  var LB64 := StreamToBase64;
-  var LEnc := Encrypt(LB64, AKey);
-  if RunTime.IsElectron then
-  begin
-    // Salvar via Electron IPC
-    UniSession.AddJS(
-      'window.electronAPI.saveClientData(' +
-      QuotedStr(AFile) + ', ' + QuotedStr(LEnc.Replace(#13, '').Replace(#10, '')) + ');'
-    );
-  end
-  else
-  begin
-    // Salvar no localStorage
-    UniSession.AddJS(
-      'localStorage.setItem(' +
-      QuotedStr(AFile) + ', ' + QuotedStr(LEnc.Replace(#13, '').Replace(#10, '')) + ');'
-    );
-  end;
+  var LEnc := Encrypt(StreamToBase64, AKey)
+   .Replace(#13, '')
+   .Replace(#10, '');
+  UniSession.AddJS(Format('window.DataStorage.save("%s","%s");', [AFile, LEnc]));
 end;
 
 end.

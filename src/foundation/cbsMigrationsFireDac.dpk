@@ -1,0 +1,53 @@
+package cbsMigrationsFireDac;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  cbsMigrations,
+  FireDAC,
+  FireDACCommonDriver,
+  FireDACCommon;
+
+contains
+  cbsMigrationsFireDac.Contracts.Migrations.DatabaseMigrationRepository in 'src\Contracts\Migrations\cbsMigrationsFireDac.Contracts.Migrations.DatabaseMigrationRepository.pas',
+  cbsMigrationsFireDac.Migrations.DatabaseMigrationRepository in 'src\Migrations\cbsMigrationsFireDac.Migrations.DatabaseMigrationRepository.pas',
+  cbsMigrationsFireDac.Migrations.ConnectionResolver in 'src\Migrations\cbsMigrationsFireDac.Migrations.ConnectionResolver.pas',
+  cbsMigrationsFireDac.Contracts.Migrations.ConnectionResolver in 'src\Contracts\Migrations\cbsMigrationsFireDac.Contracts.Migrations.ConnectionResolver.pas',
+  cbsMigrationsFireDac.Schema.SqlServerBuilder in 'src\Schema\cbsMigrationsFireDac.Schema.SqlServerBuilder.pas',
+  cbsMigrationsFireDac.Migrations.MigrationContextBase in 'src\Migrations\cbsMigrationsFireDac.Migrations.MigrationContextBase.pas',
+  cbsMigrationsFireDac.Contracts.Migrations.MigrationContextBase in 'src\Contracts\Migrations\cbsMigrationsFireDac.Contracts.Migrations.MigrationContextBase.pas',
+  cbsMigrationsFireDac.Support.MigrationContext in 'src\Support\cbsMigrationsFireDac.Support.MigrationContext.pas',
+  cbsMigrationsFireDac.Contracts.Support.MigrationContext in 'src\Contracts\Support\cbsMigrationsFireDac.Contracts.Support.MigrationContext.pas',
+  cbsMigrationsFireDac.Contracts.Migrations.MigrationCommandExecutor in 'src\Contracts\Migrations\cbsMigrationsFireDac.Contracts.Migrations.MigrationCommandExecutor.pas',
+  cbsMigrationsFireDac.Migrations.MigrationCommandExecutor in 'src\Migrations\cbsMigrationsFireDac.Migrations.MigrationCommandExecutor.pas',
+  cbsMigrationsFireDac.Schema.Builder in 'src\Schema\cbsMigrationsFireDac.Schema.Builder.pas',
+  cbsMigrationsFireDac.Contracts.Schema.Builder in 'src\Contracts\Schema\cbsMigrationsFireDac.Contracts.Schema.Builder.pas';
+
+end.

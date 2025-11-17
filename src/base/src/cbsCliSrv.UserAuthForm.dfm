@@ -10,11 +10,10 @@ object cbsCliSrvUserAuthForm: TcbsCliSrvUserAuthForm
   ActiveControl = edtUserName
   ClientEvents.UniEvents.Strings = (
     
-      'window.afterCreate=function window.afterCreate(sender)'#13#10'{       ' +
-      '                      '#13#10'    var inElectron = AppEnv.isElectron()' +
-      ';'#13#10#13#10'    // manda para o Delphi'#13#10'    ajaxRequest(sender, "IsElec' +
-      'tron", ["value=" + inElectron]);'#13#10'    '#13#10'    if (AppEnv.isElectro' +
-      'n()) {'#13#10'        sender.addCls("electron-login-pos");'#13#10'    }'#13#10'}')
+      'window.beforeInit=function window.beforeInit(sender, config)'#13#10'{'#13 +
+      #10'    var inElectron = AppEnv.isElectron();'#13#10#13#10'    // manda para ' +
+      'o Delphi'#13#10'    ajaxRequest(sender, "IsElectron", ["value=" + inEl' +
+      'ectron]);'#13#10'}')
   LayoutConfig.Cls = 'login-form'
   OnAjaxEvent = UniLoginFormAjaxEvent
   TextHeight = 15

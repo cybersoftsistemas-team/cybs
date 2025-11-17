@@ -1,7 +1,6 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
-import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -10,13 +9,14 @@ let win;
 
 function createWindow() {
   win = new BrowserWindow({
-    width: 469,
+    width: 467,
     height: 387,
     frame: true,
     autoHideMenuBar: true,
     minimizable: true,
     maximizable: false,
     resizable: false,
+    icon: __dirname + '/files/icons/cbs.ico',
     webPreferences: {
       preload: join(__dirname, "preload.js"),
       nodeIntegration: false,
@@ -41,32 +41,7 @@ function createWindow() {
     win.setSize(obj.w, obj.h);
     win.center();
   });
-
-  ipcMain.handle("save-client-data", async (event, fileName, data) => {
-    const userDir = app.getPath("userData");
-    const filePath = join(userDir, fileName);
-
-    try {
-      fs.writeFileSync(filePath, data);
-      return { ok: true, filePath };
-    } catch (e) {
-      return { ok: false, error: e.message };
-    }
-  });
-
-  ipcMain.handle("load-client-data", async (event, fileName) => {
-    const userDir = app.getPath("userData");
-    const filePath = join(userDir, fileName);
-
-    if (!fs.existsSync(filePath)) {
-      return null;
-    }
-
-    return fs.readFileSync(filePath, "utf8");
-  });
 }
-
-// app.commandLine.appendSwitch("disable-http-cache");
 
 app
   .whenReady()
