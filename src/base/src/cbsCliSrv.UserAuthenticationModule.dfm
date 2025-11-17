@@ -1,2 +1,0 @@
-inherited cbsCliSrvUserAuthenticationModule: TcbsCliSrvUserAuthenticationModule
-end

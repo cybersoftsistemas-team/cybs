@@ -4,6 +4,10 @@ object cbsCliSrvBaseModule: TcbsCliSrvBaseModule
   SuppressErrors = []
   Bindings = <>
   MainFormDisplayMode = mfPage
+  CustomFiles.Strings = (
+    'files\js\electron-env.js'
+    'files\js\detect-env.js'
+    'files\js\load-data.js')
   CustomCSS.Strings = (
     '/* Remove rolagem e espa'#231'amento do body */'
     'html, body {'
@@ -122,6 +126,12 @@ object cbsCliSrvBaseModule: TcbsCliSrvBaseModule
     '  display: flex !important;'
     '  align-items: center !important;'
     '  justify-content: center !important;'
+    '}'
+    ''
+    '.electron-login-pos {'
+    '  position: absolute !important;'
+    '  left: -4px !important;'
+    '  top: -5px !important;'
     '}')
   SSL.SSLOptions.RootCertFile = 'root.pem'
   SSL.SSLOptions.CertFile = 'cert.pem'

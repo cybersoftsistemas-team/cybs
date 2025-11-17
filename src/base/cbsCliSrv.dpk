@@ -37,14 +37,18 @@ requires
   uniGUI30Core,
   uniTools30,
   uIndy30,
-  uniGUI30;
+  uniGUI30,
+  vclFireDAC,
+  FireDACCommonODBC,
+  FireDACMSSQLDriver;
 
 contains
   cbsCliSrv.MainBaseForm in 'src\cbsCliSrv.MainBaseForm.pas' {cbsCliSrvMainBaseForm: TUniForm},
   cbsCliSrv.MainBaseModule in 'src\cbsCliSrv.MainBaseModule.pas' {cbsCliSrvMainBaseModule: TDataModule},
   cbsCliSrv.ServerBaseModule in 'src\cbsCliSrv.ServerBaseModule.pas' {cbsCliSrvBaseModule: TUniGUIServerModule},
-  cbsCliSrv.UserAuthenticationForm in 'src\cbsCliSrv.UserAuthenticationForm.pas' {cbsCliSrvUserAuthenticationForm: TUniLoginForm},
-  cbsCliSrv.UserAuthenticationModule in 'src\cbsCliSrv.UserAuthenticationModule.pas' {cbsCliSrvUserAuthenticationModule: TUniGUIMainModule},
-  cbsCliSrv.ElectronUtils in 'src\cbsCliSrv.ElectronUtils.pas';
+  cbsCliSrv.UserAuthForm in 'src\cbsCliSrv.UserAuthForm.pas' {cbsCliSrvUserAuthForm: TUniLoginForm},
+  cbsCliSrv.UserAuthModule in 'src\cbsCliSrv.UserAuthModule.pas' {cbsCliSrvUserAuthModule: TUniGUIMainModule},
+  cbsCliSrv.RunTime in 'src\cbsCliSrv.RunTime.pas',
+  cdsCliSrv.FDDataSet.Extensions in 'src\cdsCliSrv.FDDataSet.Extensions.pas';
 
 end.

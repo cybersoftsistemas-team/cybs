@@ -1,0 +1,2 @@
+inherited damLogin: TdamLogin
+end

@@ -1,15 +1,22 @@
-object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
+object cbsCliSrvUserAuthForm: TcbsCliSrvUserAuthForm
   Left = 0
   Top = 0
   ClientHeight = 347
   ClientWidth = 451
-  Caption = 'cbsCliSrvUserAuthenticationForm'
+  Caption = 'cbsCliSrvUserAuthForm'
   BorderStyle = bsNone
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
-  PageMode = True
   ActiveControl = edtUserName
+  ClientEvents.UniEvents.Strings = (
+    
+      'window.afterCreate=function window.afterCreate(sender)'#13#10'{       ' +
+      '                      '#13#10'    var inElectron = AppEnv.isElectron()' +
+      ';'#13#10#13#10'    // manda para o Delphi'#13#10'    ajaxRequest(sender, "IsElec' +
+      'tron", ["value=" + inElectron]);'#13#10'    '#13#10'    if (AppEnv.isElectro' +
+      'n()) {'#13#10'        sender.addCls("electron-login-pos");'#13#10'    }'#13#10'}')
   LayoutConfig.Cls = 'login-form'
+  OnAjaxEvent = UniLoginFormAjaxEvent
   TextHeight = 15
   object pnlAuthenticate: TUniPanel
     Left = 0
@@ -34,7 +41,7 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         453
         93)
       object UniLabel3: TUniLabel
-        Left = 30
+        Left = 28
         Top = 76
         Width = 410
         Height = 13
@@ -46,7 +53,7 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         TabOrder = 4
       end
       object UniLabel4: TUniLabel
-        Left = 30
+        Left = 28
         Top = 21
         Width = 96
         Height = 47
@@ -59,7 +66,7 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         TabOrder = 1
       end
       object UniLabel5: TUniLabel
-        Left = 133
+        Left = 131
         Top = 21
         Width = 63
         Height = 47
@@ -72,7 +79,7 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         TabOrder = 2
       end
       object UniLabel6: TUniLabel
-        Left = 157
+        Left = 155
         Top = 59
         Width = 44
         Height = 13
@@ -95,32 +102,34 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         453
         162)
       object edtUserName: TUniDBEdit
-        Left = 30
+        Left = 28
         Top = 40
         Width = 392
         Height = 22
         Hint = ''
+        DataField = 'Name'
+        DataSource = cbsCliSrvUserAuthModule.dsoUSE
         Anchors = [akLeft, akRight, akBottom]
         TabOrder = 1
         FieldLabel = 'Nome de usu'#225'rio ou e-mail'
         FieldLabelWidth = 156
-        ExplicitTop = 47
       end
       object edtPassword: TUniDBEdit
-        Left = 30
+        Left = 28
         Top = 68
         Width = 392
         Height = 22
         Hint = ''
+        DataField = 'Password'
+        DataSource = cbsCliSrvUserAuthModule.dsoUSE
         PasswordChar = '*'
         Anchors = [akLeft, akRight, akBottom]
         TabOrder = 2
         FieldLabel = 'Senha'
         FieldLabelWidth = 156
-        ExplicitTop = 75
       end
       object edtDomainName: TUniDBEdit
-        Left = 30
+        Left = 28
         Top = 96
         Width = 363
         Height = 22
@@ -131,10 +140,9 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         FieldLabel = 'Dom'#237'nio'
         FieldLabelWidth = 156
         ReadOnlyMode = urmNotEditable
-        ExplicitTop = 103
       end
       object btnConnect: TUniBitBtn
-        Left = 342
+        Left = 340
         Top = 124
         Width = 80
         Height = 25
@@ -142,10 +150,9 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         Anchors = [akLeft, akRight, akBottom]
         TabOrder = 5
         ImageIndex = 0
-        ExplicitTop = 131
       end
       object btnDomains: TUniSpeedButton
-        Left = 399
+        Left = 397
         Top = 96
         Width = 23
         Height = 22
@@ -154,7 +161,6 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         ParentColor = False
         ImageIndex = 2
         TabOrder = 4
-        ExplicitTop = 103
       end
     end
     object pnlFooter: TUniSimplePanel
@@ -396,7 +402,6 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
           340000000049454E44AE426082}
         Align = alBottom
         Transparent = True
-        ExplicitTop = 31
       end
       object UniLabel1: TUniLabel
         Left = 30
@@ -407,7 +412,6 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         Caption = 'Conectado ao Cybersoft Sistemas.'
         Anchors = [akLeft, akBottom]
         TabOrder = 1
-        ExplicitTop = 54
       end
       object UniLabel2: TUniLabel
         Left = 30
@@ -418,7 +422,6 @@ object cbsCliSrvUserAuthenticationForm: TcbsCliSrvUserAuthenticationForm
         Caption = #169' 2026 Cybersoft Sistemas Ltda. Todos os direitos reservados.'
         Anchors = [akLeft, akBottom]
         TabOrder = 2
-        ExplicitTop = 68
       end
     end
   end

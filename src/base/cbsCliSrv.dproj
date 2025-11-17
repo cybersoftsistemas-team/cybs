@@ -130,6 +130,9 @@
         <DCCReference Include="uniTools30.dcp"/>
         <DCCReference Include="uIndy30.dcp"/>
         <DCCReference Include="uniGUI30.dcp"/>
+        <DCCReference Include="vclFireDAC.dcp"/>
+        <DCCReference Include="FireDACCommonODBC.dcp"/>
+        <DCCReference Include="FireDACMSSQLDriver.dcp"/>
         <DCCReference Include="src\cbsCliSrv.MainBaseForm.pas">
             <Form>cbsCliSrvMainBaseForm</Form>
             <DesignClass>TUniForm</DesignClass>
@@ -142,15 +145,16 @@
             <Form>cbsCliSrvBaseModule</Form>
             <DesignClass>TUniGUIServerModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\cbsCliSrv.UserAuthenticationForm.pas">
-            <Form>cbsCliSrvUserAuthenticationForm</Form>
+        <DCCReference Include="src\cbsCliSrv.UserAuthForm.pas">
+            <Form>cbsCliSrvUserAuthForm</Form>
             <DesignClass>TUniLoginForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\cbsCliSrv.UserAuthenticationModule.pas">
-            <Form>cbsCliSrvUserAuthenticationModule</Form>
+        <DCCReference Include="src\cbsCliSrv.UserAuthModule.pas">
+            <Form>cbsCliSrvUserAuthModule</Form>
             <DesignClass>TUniGUIMainModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\cbsCliSrv.ElectronUtils.pas"/>
+        <DCCReference Include="src\cbsCliSrv.RunTime.pas"/>
+        <DCCReference Include="src\cdsCliSrv.FDDataSet.Extensions.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

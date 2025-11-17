@@ -4,9 +4,7 @@ interface
 
 uses
 {PROJECT}
-  cbsCliSrv.ServerBaseModule,
-{IDE}
-  System.SysUtils;
+  cbsCliSrv.ServerBaseModule;
 
 type
   TcbsServerModule = class(TcbsCliSrvBaseModule)

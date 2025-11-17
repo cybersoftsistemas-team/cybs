@@ -4,7 +4,7 @@ interface
 
 uses
 {IDE}
-  uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
+  uniGUIForm, uniImageList, System.Classes, uniMainMenu, uniGUIBaseClasses, System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList;
 
 type
   TcbsCliSrvMainBaseForm = class(TUniForm)
