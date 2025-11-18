@@ -191,12 +191,14 @@ $(PostBuildEvent)]]></PostBuildEvent>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\inf\cbs.inf.Database.MigrationContext.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_11_17_00000001_create_identity_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_11_17_00000001_create_auxiliary_data_schema.pas"/>
         <DCCReference Include="src\dom\DataModules\cbs.DbModule.pas">
             <Form>damDb</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="src\inf\Migrations\_2025_11_17_00000005_create_identity_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_11_17_00000010_create_people_schema.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

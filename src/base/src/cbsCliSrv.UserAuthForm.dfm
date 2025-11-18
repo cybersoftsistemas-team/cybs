@@ -6,6 +6,7 @@ object cbsCliSrvUserAuthForm: TcbsCliSrvUserAuthForm
   Caption = 'cbsCliSrvUserAuthForm'
   BorderStyle = bsNone
   OldCreateOrder = False
+  OnActivate = UniLoginFormActivate
   MonitoredKeys.Keys = <>
   ActiveControl = edtUserName
   ClientEvents.UniEvents.Strings = (

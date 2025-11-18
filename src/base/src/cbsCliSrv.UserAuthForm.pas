@@ -32,6 +32,7 @@ type
     nilstMain: TUniNativeImageList;
     UniImage1: TUniImage;
     procedure actConnectExecute(Sender: TObject);
+    procedure UniLoginFormActivate(Sender: TObject);
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
   private
     { Private declarations }
@@ -53,6 +54,14 @@ uses
 procedure TcbsCliSrvUserAuthForm.actConnectExecute(Sender: TObject);
 begin
   ModalResult := mrOK;
+end;
+
+procedure TcbsCliSrvUserAuthForm.UniLoginFormActivate(Sender: TObject);
+begin
+  if not SameText(string(edtUserName.Text).Trim, '') then
+  begin
+    edtPassword.SetFocus;
+  end;
 end;
 
 procedure TcbsCliSrvUserAuthForm.UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
