@@ -36,14 +36,6 @@ function createWindow() {
 
   // win.webContents.openDevTools({ mode: "detach" });
 
-  ipcMain.on("after-login", (event, obj) => {
-    if (!win) return;
-    win.setResizable(true);
-    win.setMaximizable(true);
-    win.setSize(obj.w, obj.h);
-    win.center();
-  });
-
   win.setTitle("Cybersoft Sistemas");
   title = win.getTitle();
 
@@ -68,6 +60,14 @@ function createWindow() {
   tray.on("double-click", () => {
     if (win.isVisible()) win.hide();
     else win.show();
+  });
+
+  ipcMain.on("after-login", (event, obj) => {
+    if (!win) return;
+    win.setResizable(true);
+    win.setMaximizable(true);
+    win.setSize(obj.w, obj.h);
+    win.center();
   });
 }
 
