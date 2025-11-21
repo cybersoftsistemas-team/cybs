@@ -9,6 +9,13 @@ contextBridge.exposeInMainWorld("electronAPI", {
   },
 });
 
+contextBridge.exposeInMainWorld("Application", {
+  loadConfig: () => ipcRenderer.invoke("application-load-config"),
+  messageBox: (options) => ipcRenderer.invoke("message-box", options),
+  reload: (url) => ipcRenderer.send("application-reload", url),
+  saveConfig: (config) => ipcRenderer.send("application-save-config", config),
+});
+
 contextBridge.exposeInMainWorld("electronEnv", {
   isElectron: true,
 });

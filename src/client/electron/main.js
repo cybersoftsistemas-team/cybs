@@ -1,13 +1,48 @@
-import { app, BrowserWindow, ipcMain, Menu, Tray } from "electron";
+import { app, BrowserWindow, dialog, ipcMain } from "electron";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
+import fs from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-let title;
-let tray;
+let configDir;
 let win;
+
+if (process.platform === "win32") {
+  const baseProgramData = process.env.ProgramData || "C:\\ProgramData";
+  configDir = join(baseProgramData, ".cybersoft", "config");
+} else if (process.platform === "linux") {
+  configDir = "/var/opt/cybersoft/config";
+} else if (process.platform === "darwin") {
+  configDir = "/Library/Application Support/Cybersoft/config";
+}
+
+const configPath = join(configDir, "config.json");
+
+if (!fs.existsSync(configDir)) {
+  fs.mkdirSync(configDir, { recursive: true });
+}
+
+async function loadConfig() {
+  try {
+    if (fs.existsSync(configPath)) {
+      return JSON.parse(fs.readFileSync(configPath, "utf8"));
+    }
+  } catch (err) {
+    win.hide();
+    await dialog.showMessageBox(win, {
+      modal: true,
+      ...{
+        type: "error",
+        title: "Cybersoft Sistemas - Erro config",
+        message: "Erro ao ler config: " + err.message,
+      },
+    });
+    app.quit();
+  }
+  return { serverUrl: "http://localhost:8077" }; // valor padrão
+};
 
 function createWindow() {
   win = new BrowserWindow({
@@ -26,12 +61,6 @@ function createWindow() {
     },
   });
 
-  win.setMenu(null);
-
-  // URL do seu UniGUI
-  win.loadURL("http://localhost:8077");
-  win.center();
-
   // win.webContents.session.clearCache().then(() => {
   //   win.webContents.reloadIgnoringCache();
   // });
@@ -39,29 +68,12 @@ function createWindow() {
   // win.webContents.openDevTools({ mode: "detach" });
 
   win.setTitle("Cybersoft Sistemas");
-  title = win.getTitle();
 
-  // Linux precisa de PNG
-  const trayIcon =
-    process.platform === "linux"
-      ? join(__dirname, "files/icons/cbs.png")
-      : join(__dirname, "files/icons/cbs.ico");
-
-  tray = new Tray(trayIcon);
-  tray.setToolTip(title);
-
-  const menu = Menu.buildFromTemplate([
-    { label: "Abrir Configurações", click: () => win.show() },
-    { type: "separator" },
-    { label: `Fechar o ${title}`, click: () => app.quit() },
-  ]);
-
-  tray.setContextMenu(menu);
-
-  // Use double-click (evita bloquear o menu no Linux)
-  tray.on("double-click", () => {
-    if (win.isVisible()) win.hide();
-    else win.show();
+  ipcMain.handle("message-box", async (event, options) => {
+    return await dialog.showMessageBox(win, {
+      modal: true, 
+      ...options,
+    });
   });
 
   ipcMain.on("after-login", (event, obj) => {
@@ -72,16 +84,42 @@ function createWindow() {
     win.center();
   });
 
-  // Se falhar, carrega página local
+  ipcMain.on("application-reload", (event, url) => {
+    if (!win) return;
+    try {
+      win.loadURL(url);
+    } catch (err) {
+      console.error("Erro ao recarregar URL:", err);
+      win.loadFile(join(__dirname, "err_conn_refused.html"));
+    }
+  });
+
+  ipcMain.on("application-save-config", (event, config) => {
+    try {
+      fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
+    } catch (err) {
+      dialog.showMessageBoxSync(win, {
+        type: "error",
+        message: "Erro ao salvar config: " + err.message
+      });
+    }
+  });
+
   win.webContents.on("did-fail-load", (event, code, desc) => {
-    console.log("Falha ao tentar acessar o servidor:", code, desc);
     win.loadFile(join(__dirname, "err_conn_refused.html"));
   });
 }
 
 app
   .whenReady()
-  .then(createWindow)
+  .then(async () => {
+    createWindow();
+
+    const cfg = await loadConfig();
+    win.loadURL(cfg.serverUrl);
+    win.setMenu(null);
+    win.center();
+  })
   .catch((err) => console.error("Erro ao iniciar app:", err));
 
 app.on("activate", () => {

@@ -24,25 +24,17 @@
         <div class="field-block">
           <label>Servidor:</label>
           <input
-            id="serverName"
+            id="edtServerName"
             type="text"
             placeholder="(http ou https)://(Nome ou IP do servidor):(Porta 8077)"
           />
           <div class="button-row-right">
             <button
-              id="btnTestConnection"
+              id="btnConnect"
               class="btn-uni"
-              onclick="testConnection()"
+              onclick="connect()"
             >
-              Testar conexão
-            </button>
-            <button
-              id="btnSave"
-              class="btn-uni"
-              disabled
-              onclick="saveConfig()"
-            >
-              Salvar
+              Conectar
             </button>
           </div>
         </div>
@@ -57,70 +49,63 @@
         </div>
       </div>
     </div>
-    <div id="msgBox" class="msgbox-overlay" style="display: none">
-      <div class="msgbox-window">
-        <div id="msgBoxIcon" class="msgbox-icon">ℹ️</div>
-        <div id="msgBoxText" class="msgbox-text">Mensagem</div>
-
-        <button class="msgbox-btn" onclick="closeMsgBox()">OK</button>
-      </div>
-    </div>
   </body>
   <script>
-    function showMsgBox(msg, type = "info") {
-      const box = document.getElementById("msgBox");
-      const txt = document.getElementById("msgBoxText");
-      const icon = document.getElementById("msgBoxIcon");
+    const edtServerName = document.getElementById("edtServerName");
+    const btnConnect = document.getElementById("btnConnect");
 
-      txt.innerText = msg;
-
-      if (type === "success") icon.innerText = "✔️";
-      else if (type === "error") icon.innerText = "❌";
-      else icon.innerText = "ℹ️";
-
-      box.style.display = "flex";
+    function setButtonLoading(btn, isLoading) {
+      if (isLoading) {
+        btn.classList.add("loading");
+        btn.disabled = true;
+      } else {
+        btn.classList.remove("loading");
+        btn.disabled = false;
+      }
     }
 
-    function closeMsgBox() {
-      document.getElementById("msgBox").style.display = "none";
+    function connect() {
+      const edtServerNameValue = edtServerName.value.trim();
 
-      // devolve foco ao campo
-      document.getElementById("serverName").focus();
-    }
-
-    const btnSave = document.getElementById("btnSave");
-    const btnTestConnection = document.getElementById("btnTestConnection");
-
-    function testConnection() {
-      const serverName = document.getElementById("serverName").value.trim();
-      btnTestConnection.disabled = true;
-
-      if (!serverName) {
-        showMsgBox("Servidor ou porta inválidos.", "error");
-        btnSave.disabled = true;
+      if (!edtServerNameValue) {
+        Application.messageBox({
+          type: "error",
+          title: "Endereço inválido",
+          message: "Informe o servidor no formato:\n(http ou https)://nome ou IP do servidor:porta"
+        });
+        edtServerName.focus();
         return;
       }
 
-      const url = serverName;
+      const url = edtServerNameValue;
 
-      // Timeout manual (3 segundos)
+      edtServerName.disabled = true;
+      btnConnect.disabled = true;
+
+      setButtonLoading(btnConnect, true);
+
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 3000);
 
       fetch(url, { signal: controller.signal })
-        .then((res) => {
-          clearTimeout(timeout);
-          showMsgBox("Conexão bem-sucedida!", "success");
-          btnSave.disabled = false;
-          btnTestConnection.disabled = false;
-          document.getElementById("serverName").focus();
+        .then(async (res) => {
+          clearTimeout(timeout);          
+          await Application.saveConfig({ serverUrl: url });
+          Application.reload(url);
         })
         .catch((err) => {
           clearTimeout(timeout);
-          showMsgBox("Falha na conexão.\nVerifique o servidor.", "error");
-          btnSave.disabled = true;
-          btnTestConnection.disabled = false;
-          document.getElementById("serverName").focus();
+          setButtonLoading(btnConnect, false);
+          
+          btnConnect.disabled = false;
+          edtServerName.disabled = false;
+          edtServerName.focus();
+
+          Application.messageBox({
+            type: "error",
+            title: "Erro ao conectar",
+            message: "Falha ao conectar no servidor informado."
+          });
         });
     }
   </script>
