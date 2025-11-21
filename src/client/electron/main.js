@@ -1,6 +1,6 @@
-import { app, BrowserWindow, ipcMain, Tray, Menu } from "electron";
-import { fileURLToPath } from "url";
+import { app, BrowserWindow, ipcMain, Menu, Tray } from "electron";
 import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,6 +25,8 @@ function createWindow() {
       contextIsolation: true,
     },
   });
+
+  win.setMenu(null);
 
   // URL do seu UniGUI
   win.loadURL("http://localhost:8077");
@@ -68,6 +70,12 @@ function createWindow() {
     win.setMaximizable(true);
     win.setSize(obj.w, obj.h);
     win.center();
+  });
+
+  // Se falhar, carrega página local
+  win.webContents.on("did-fail-load", (event, code, desc) => {
+    console.log("Falha ao tentar acessar o servidor:", code, desc);
+    win.loadFile(join(__dirname, "err_conn_refused.html"));
   });
 }
 

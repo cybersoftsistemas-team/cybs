@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Cybersoft Sistemas - Erro de Conexão</title>
+    <link rel="stylesheet" href="files/css/err_conn_refused.css" />
+  </head>
+  <body>
+    <div class="login-wrapper">
+      <div class="logo-block">
+        <div class="logo">
+          <label>Cyber</label><span class="soft"><label>soft</label></span>
+        </div>
+        <div class="logo-sub"><label>Sistemas</label></div>
+      </div>
+      <div class="slogan">
+        <label
+          >Simplificando Operações com Desenvolvimento de Software e Soluções
+          Técnicas</label
+        >
+      </div>
+      <div class="row-inline">
+        <div class="field-block"></div>
+        <div class="field-block">
+          <label>Servidor:</label>
+          <input
+            id="serverName"
+            type="text"
+            placeholder="(http ou https)://(Nome ou IP do servidor):(Porta 8077)"
+          />
+          <div class="button-row-right">
+            <button
+              id="btnTestConnection"
+              class="btn-uni"
+              onclick="testConnection()"
+            >
+              Testar conexão
+            </button>
+            <button
+              id="btnSave"
+              class="btn-uni"
+              disabled
+              onclick="saveConfig()"
+            >
+              Salvar
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bg">
+        <div class="footer-content">
+          <label>Conectado ao Cybersoft Sistemas.</label><br />
+          <label
+            >© 2026 Cybersoft Sistemas Ltda. Todos os direitos
+            reservados.</label
+          >
+        </div>
+      </div>
+    </div>
+    <div id="msgBox" class="msgbox-overlay" style="display: none">
+      <div class="msgbox-window">
+        <div id="msgBoxIcon" class="msgbox-icon">ℹ️</div>
+        <div id="msgBoxText" class="msgbox-text">Mensagem</div>
+
+        <button class="msgbox-btn" onclick="closeMsgBox()">OK</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    function showMsgBox(msg, type = "info") {
+      const box = document.getElementById("msgBox");
+      const txt = document.getElementById("msgBoxText");
+      const icon = document.getElementById("msgBoxIcon");
+
+      txt.innerText = msg;
+
+      if (type === "success") icon.innerText = "✔️";
+      else if (type === "error") icon.innerText = "❌";
+      else icon.innerText = "ℹ️";
+
+      box.style.display = "flex";
+    }
+
+    function closeMsgBox() {
+      document.getElementById("msgBox").style.display = "none";
+
+      // devolve foco ao campo
+      document.getElementById("serverName").focus();
+    }
+
+    const btnSave = document.getElementById("btnSave");
+
+    function testConnection() {
+      const serverName = document.getElementById("serverName").value.trim();
+
+      if (!serverName) {
+        showMsgBox("Servidor ou porta inválidos.", "error");
+        btnSave.disabled = true;
+        return;
+      }
+
+      const url = serverName;
+
+      // Timeout manual (3 segundos)
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 3000);
+
+      fetch(url, { signal: controller.signal })
+        .then((res) => {
+          clearTimeout(timeout);
+          showMsgBox("Conexão bem-sucedida!", "success");
+          btnSave.disabled = false;
+          // document.getElementById("serverName").focus();
+        })
+        .catch((err) => {
+          clearTimeout(timeout);
+          showMsgBox("Falha na conexão.\nVerifique o servidor.", "error");
+          btnSave.disabled = true;
+          // document.getElementById("serverName").focus();
+        });
+    }
+  </script>
+</html>
