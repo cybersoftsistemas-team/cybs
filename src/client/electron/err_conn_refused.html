@@ -89,9 +89,11 @@
     }
 
     const btnSave = document.getElementById("btnSave");
+    const btnTestConnection = document.getElementById("btnTestConnection");
 
     function testConnection() {
       const serverName = document.getElementById("serverName").value.trim();
+      btnTestConnection.disabled = true;
 
       if (!serverName) {
         showMsgBox("Servidor ou porta inválidos.", "error");
@@ -110,13 +112,15 @@
           clearTimeout(timeout);
           showMsgBox("Conexão bem-sucedida!", "success");
           btnSave.disabled = false;
-          // document.getElementById("serverName").focus();
+          btnTestConnection.disabled = false;
+          document.getElementById("serverName").focus();
         })
         .catch((err) => {
           clearTimeout(timeout);
           showMsgBox("Falha na conexão.\nVerifique o servidor.", "error");
           btnSave.disabled = true;
-          // document.getElementById("serverName").focus();
+          btnTestConnection.disabled = false;
+          document.getElementById("serverName").focus();
         });
     }
   </script>
