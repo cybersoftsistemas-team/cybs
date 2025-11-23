@@ -6,7 +6,7 @@ uses
 {PROJECT}
   cbsCliSrv.MainBaseForm,
 {IDE}
-  System.Classes, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, uniMainMenu;
+  System.Classes, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, uniMainMenu, cbsCore.Cybersoft.MainForm;
 
 type
   TcbsMainForm = class(TcbsCliSrvMainBaseForm)

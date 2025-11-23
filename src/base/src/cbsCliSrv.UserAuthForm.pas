@@ -13,7 +13,6 @@ type
     ilaMain: TUniImageListAdapter;
     actConnect: TAction;
     actDomains: TAction;
-    actOptions: TAction;
     pnlAuthenticate: TUniPanel;
     pnlHeader: TUniSimplePanel;
     UniLabel3: TUniLabel;

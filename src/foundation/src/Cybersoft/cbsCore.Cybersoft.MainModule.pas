@@ -1,20 +1,20 @@
-unit cbs.MainModule;
+unit cbsCore.Cybersoft.MainModule;
 
 interface
 
 uses
 {IDE}
-  cbsCliSrv.MainBaseModule, cbsCore.Cybersoft.MainModule;
+  uniGUIMainModule;
 
 type
-  TcbsMainModule = class(TcbsMainModule)
+  TcbsMainModule = class(TUniGUIMainModule)
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-function GetMainModule: TcbsMainModule;
+function cbsMainModule: TcbsMainModule;
 
 implementation
 
@@ -25,7 +25,7 @@ uses
   uniGUIApplication,
   uniGUIVars;
 
-function GetMainModule: TcbsMainModule;
+function cbsMainModule: TcbsMainModule;
 begin
   Result := TcbsMainModule(UniApplication.UniMainModule)
 end;

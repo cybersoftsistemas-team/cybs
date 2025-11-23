@@ -435,11 +435,8 @@ object cbsCliSrvUserAuthForm: TcbsCliSrvUserAuthForm
       OnExecute = actConnectExecute
     end
     object actDomains: TAction
+      Enabled = False
       ImageIndex = 2
-    end
-    object actOptions: TAction
-      Caption = 'Op'#231#245'es'
-      ImageIndex = 1
     end
   end
   object ilaMain: TUniImageListAdapter

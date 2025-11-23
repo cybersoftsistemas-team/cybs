@@ -29,11 +29,7 @@
             placeholder="(http ou https)://(Nome ou IP do servidor):(Porta 8077)"
           />
           <div class="button-row-right">
-            <button
-              id="btnConnect"
-              class="btn-uni"
-              onclick="connect()"
-            >
+            <button id="btnConnect" class="btn-uni" onclick="connect()">
               Conectar
             </button>
           </div>
@@ -54,6 +50,13 @@
     const edtServerName = document.getElementById("edtServerName");
     const btnConnect = document.getElementById("btnConnect");
 
+    window.onload = async () => {
+      const cfg = await Application.loadConfig();
+      if (cfg && cfg.serverUrl) {
+        edtServerName.value = cfg.serverUrl;
+      }
+    };
+
     function setButtonLoading(btn, isLoading) {
       if (isLoading) {
         btn.classList.add("loading");
@@ -71,7 +74,8 @@
         Application.messageBox({
           type: "error",
           title: "Endereço inválido",
-          message: "Informe o servidor no formato:\n(http ou https)://nome ou IP do servidor:porta"
+          message:
+            "Informe o servidor no formato:\n(http ou https)://nome ou IP do servidor:porta",
         });
         edtServerName.focus();
         return;
@@ -89,14 +93,14 @@
 
       fetch(url, { signal: controller.signal })
         .then(async (res) => {
-          clearTimeout(timeout);          
+          clearTimeout(timeout);
           await Application.saveConfig({ serverUrl: url });
           Application.reload(url);
         })
         .catch((err) => {
           clearTimeout(timeout);
           setButtonLoading(btnConnect, false);
-          
+
           btnConnect.disabled = false;
           edtServerName.disabled = false;
           edtServerName.focus();
@@ -104,7 +108,7 @@
           Application.messageBox({
             type: "error",
             title: "Erro ao conectar",
-            message: "Falha ao conectar no servidor informado."
+            message: "Falha ao conectar no servidor informado.",
           });
         });
     }

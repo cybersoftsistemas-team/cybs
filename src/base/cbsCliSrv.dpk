@@ -40,7 +40,10 @@ requires
   uniGUI30,
   vclFireDAC,
   FireDACCommonODBC,
-  FireDACMSSQLDriver;
+  FireDACMSSQLDriver,
+  IndySystem,
+  IndyProtocols,
+  IndyCore;
 
 contains
   cbsCliSrv.MainBaseForm in 'src\cbsCliSrv.MainBaseForm.pas' {cbsCliSrvMainBaseForm: TUniForm},

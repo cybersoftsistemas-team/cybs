@@ -12,6 +12,7 @@ uses
 
 type
   TdamLogin = class(TcbsCliSrvUserAuthModule)
+    procedure mtbUSENewRecord(DataSet: TDataSet);
   private
     { Private declarations }
   public
@@ -26,6 +27,7 @@ implementation
 
 uses
 {IDE}
+  System.SysUtils,
   uniGUIVars,
 {PROJECT}
   cbs.MainModule;
@@ -33,6 +35,12 @@ uses
 function damLogin: TdamLogin;
 begin
   Result := TdamLogin(GetMainModule.GetModuleInstance(TdamLogin));
+end;
+
+procedure TdamLogin.mtbUSENewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  mtbUSEId.AsGuid := TGuid.NewGuid;
 end;
 
 initialization

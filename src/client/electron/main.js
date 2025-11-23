@@ -42,7 +42,7 @@ async function loadConfig() {
     app.quit();
   }
   return { serverUrl: "http://localhost:8077" }; // valor padrão
-};
+}
 
 function createWindow() {
   win = new BrowserWindow({
@@ -71,7 +71,7 @@ function createWindow() {
 
   ipcMain.handle("message-box", async (event, options) => {
     return await dialog.showMessageBox(win, {
-      modal: true, 
+      modal: true,
       ...options,
     });
   });
@@ -100,9 +100,13 @@ function createWindow() {
     } catch (err) {
       dialog.showMessageBoxSync(win, {
         type: "error",
-        message: "Erro ao salvar config: " + err.message
+        message: "Erro ao salvar config: " + err.message,
       });
     }
+  });
+
+  ipcMain.handle("application-load-config", async () => {
+    return await loadConfig();
   });
 
   win.webContents.on("did-fail-load", (event, code, desc) => {
