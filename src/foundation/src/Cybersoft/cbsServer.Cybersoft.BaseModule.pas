@@ -14,6 +14,8 @@ type
     { Public declarations }
   end;
 
+  TcbsModuleClass = class of TDataModule;
+
 implementation
 
 {$R *.dfm}

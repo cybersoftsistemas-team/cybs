@@ -1,9 +1,9 @@
-object cbsCliSrvUserAuthForm: TcbsCliSrvUserAuthForm
+object frmLogin: TfrmLogin
   Left = 0
   Top = 0
   ClientHeight = 347
   ClientWidth = 451
-  Caption = 'cbsCliSrvUserAuthForm'
+  Caption = 'frmLogin'
   BorderStyle = bsNone
   OldCreateOrder = False
   OnActivate = UniLoginFormActivate
@@ -14,9 +14,15 @@ object cbsCliSrvUserAuthForm: TcbsCliSrvUserAuthForm
       'window.beforeInit=function window.beforeInit(sender, config)'#13#10'{'#13 +
       #10'    var inElectron = AppEnv.isElectron();'#13#10#13#10'    // manda para ' +
       'o Delphi'#13#10'    ajaxRequest(sender, "IsElectron", ["value=" + inEl' +
-      'ectron]);'#13#10'}')
+      'ectron]);'#13#10'}'
+    
+      'window.afterCreate=function window.afterCreate(sender)'#13#10'{'#13#10'   if' +
+      ' (AppEnv.isElectron()) {'#13#10'      sender.addCls("electron-login-po' +
+      's");'#13#10'   }'#13#10'   '#13#10'   window.DataStorage.load(sender, "logon.dat")' +
+      ';'#13#10'}')
   LayoutConfig.Cls = 'login-form'
   OnAjaxEvent = UniLoginFormAjaxEvent
+  OnCreate = UniLoginFormCreate
   TextHeight = 15
   object pnlAuthenticate: TUniPanel
     Left = 0
@@ -108,7 +114,7 @@ object cbsCliSrvUserAuthForm: TcbsCliSrvUserAuthForm
         Height = 22
         Hint = ''
         DataField = 'Name'
-        DataSource = cbsCliSrvUserAuthModule.dsoUSE
+        DataSource = damLogin.dsoUSE
         Anchors = [akLeft, akRight, akBottom]
         TabOrder = 1
         FieldLabel = 'Nome de usu'#225'rio ou e-mail'
@@ -121,7 +127,7 @@ object cbsCliSrvUserAuthForm: TcbsCliSrvUserAuthForm
         Height = 22
         Hint = ''
         DataField = 'Password'
-        DataSource = cbsCliSrvUserAuthModule.dsoUSE
+        DataSource = damLogin.dsoUSE
         PasswordChar = '*'
         Anchors = [akLeft, akRight, akBottom]
         TabOrder = 2

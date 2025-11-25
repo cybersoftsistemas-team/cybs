@@ -161,10 +161,15 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="src\Module\cbsUAuth.Module.ExportMethods.pas"/>
+        <DCCReference Include="src\Module\cbsUAuth.Module.Info.pas"/>
         <DCCReference Include="src\Contracts\Module\cbsUAuth.Contracts.Module.Api.pas"/>
-        <DCCReference Include="src\Module\cbsUAuth.LoginModule.pas">
+        <DCCReference Include="src\Module\cbsUAuth.Module.LoginModule.pas">
             <Form>damLogin</Form>
+        </DCCReference>
+        <DCCReference Include="src\Module\cbsUAuth.Module.LoginForm.pas">
+            <Form>frmLogin</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniLoginForm</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

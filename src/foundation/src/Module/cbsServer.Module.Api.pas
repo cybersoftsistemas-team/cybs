@@ -2,6 +2,11 @@
 
 interface
 
+uses
+{PROJECT}
+  cbsServer.Cybersoft.BaseForm,
+  cbsServer.Cybersoft.BaseModule;
+
 type
   TcbsModuleVersion = record
     Major: Word;
@@ -18,6 +23,8 @@ type
   PModuleInfo = ^TcbsModuleInfo;
 
   TGetModuleInfo = function: PModuleInfo; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
+  TGetRegisteredForms = function: TArray<TcbsFormClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
+  TGetRegisteredModules = function: TArray<TcbsModuleClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
 
   function GetModuleExtension: AnsiString;
 

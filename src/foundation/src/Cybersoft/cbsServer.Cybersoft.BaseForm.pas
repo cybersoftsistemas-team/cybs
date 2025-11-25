@@ -17,6 +17,8 @@ type
     { Public declarations }
   end;
 
+  TcbsFormClass = class of TUniForm;
+
 implementation
 
 {$R *.dfm}

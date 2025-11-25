@@ -1,4 +1,4 @@
-unit cbsUAuth.Module.ExportMethods;
+unit cbsUAuth.Module.Info;
 
 interface
 

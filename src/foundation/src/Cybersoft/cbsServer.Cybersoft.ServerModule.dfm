@@ -2,6 +2,7 @@ object cbsServerModule: TcbsServerModule
   OnCreate = UniGUIServerModuleCreate
   TempFolder = 'temp\'
   Title = 'New Application'
+  BGColorLogin = 8404992
   SuppressErrors = []
   Bindings = <>
   JQueryVersion = '3.7.1'

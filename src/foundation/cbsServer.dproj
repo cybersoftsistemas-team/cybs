@@ -171,7 +171,7 @@
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Cybersoft\cbsServer.Cybersoft.MainModule.pas">
-            <Form>cbsMainModule</Form>
+            <Form>damMainModule</Form>
             <DesignClass>TUniGUIMainModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Cybersoft\cbsServer.Cybersoft.ServerModule.pas">
@@ -191,6 +191,12 @@
         </DCCReference>
         <DCCReference Include="src\Support\cdsServer.Support.FDDataSet.Extensions.pas"/>
         <DCCReference Include="src\Support\cbsServer.Support.RunTime.pas"/>
+        <DCCReference Include="src\Module\Registered\cbsServer.Registered.Forms.pas"/>
+        <DCCReference Include="src\Module\Registered\cbsServer.Registered.Modules.pas"/>
+        <DCCReference Include="src\Contracts\Module\Registered\cbsServer.Contracts.Registered.Forms.pas"/>
+        <DCCReference Include="src\Contracts\Module\Registered\cbsServer.Contracts.Registered.Modules.pas"/>
+        <DCCReference Include="src\Support\cbsServer.Support.Form.pas"/>
+        <DCCReference Include="src\Support\cbsServer.Support.Module.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

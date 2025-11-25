@@ -28,6 +28,7 @@ implementation
 uses
 {IDE}
   System.IOUtils,
+  uniGUIVars,
 {$IFDEF MSWINDOWS}
   Winapi.Windows
 {$ELSEIF Defined(POSIX)}
@@ -53,6 +54,7 @@ begin
 {$ENDIF}
   end;
   var GetModuleInfo: TGetModuleInfo;
+  FillChar(FInfo, SizeOf(FInfo), 0);
   @GetModuleInfo := GetProcAddress(FHandle, 'GetModuleInfo');
   if Assigned(@GetModuleInfo) then
   begin
@@ -60,6 +62,24 @@ begin
     if PInfo <> nil then
     begin
       FInfo := PInfo^;
+    end;
+  end;
+  var GetRegisteredForms: TGetRegisteredForms;
+  @GetRegisteredForms := GetProcAddress(FHandle, 'GetRegisteredForms');
+  if Assigned(@GetRegisteredForms) then
+  begin
+    for var LFormClass in GetRegisteredForms() do
+    begin
+      RegisterAppFormClass(LFormClass);
+    end;
+  end;
+  var GetRegisteredModules: TGetRegisteredModules;
+  @GetRegisteredModules := GetProcAddress(FHandle, 'GetRegisteredModules');
+  if Assigned(@GetRegisteredModules) then
+  begin
+    for var LModuleClass in GetRegisteredModules() do
+    begin
+      RegisterModuleClass(LModuleClass);
     end;
   end;
 end;

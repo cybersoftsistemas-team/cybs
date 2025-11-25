@@ -1,12 +1,10 @@
 library cbsServer;
 
-{$APPTYPE GUI}
-
 uses
   Forms,
   cbsServer.Cybersoft.BaseForm in 'src\Cybersoft\cbsServer.Cybersoft.BaseForm.pas' {cbsBaseForm: TUniForm},
   cbsServer.Cybersoft.MainForm in 'src\Cybersoft\cbsServer.Cybersoft.MainForm.pas' {cbsMainForm: TUniForm},
-  cbsServer.Cybersoft.MainModule in 'src\Cybersoft\cbsServer.Cybersoft.MainModule.pas' {cbsMainModule: TUniGUIMainModule},
+  cbsServer.Cybersoft.MainModule in 'src\Cybersoft\cbsServer.Cybersoft.MainModule.pas' {damMainModule: TUniGUIMainModule},
   cbsServer.Cybersoft.ServerModule in 'src\Cybersoft\cbsServer.Cybersoft.ServerModule.pas' {cbsServerModule: TUniGUIServerModule},
   cbsServer.Support.ModuleManager in 'src\Support\cbsServer.Support.ModuleManager.pas',
   cbsServer.ModuleManager in 'src\Module\Manager\cbsServer.ModuleManager.pas',
@@ -16,7 +14,13 @@ uses
   cbsServer.Module.Api in 'src\Module\cbsServer.Module.Api.pas',
   cbsServer.Cybersoft.BaseModule in 'src\Cybersoft\cbsServer.Cybersoft.BaseModule.pas' {cbsBaseModule: TDataModule},
   cdsServer.Support.FDDataSet.Extensions in 'src\Support\cdsServer.Support.FDDataSet.Extensions.pas',
-  cbsServer.Support.RunTime in 'src\Support\cbsServer.Support.RunTime.pas';
+  cbsServer.Support.RunTime in 'src\Support\cbsServer.Support.RunTime.pas',
+  cbsServer.Registered.Forms in 'src\Module\Registered\cbsServer.Registered.Forms.pas',
+  cbsServer.Registered.Modules in 'src\Module\Registered\cbsServer.Registered.Modules.pas',
+  cbsServer.Contracts.Registered.Forms in 'src\Contracts\Module\Registered\cbsServer.Contracts.Registered.Forms.pas',
+  cbsServer.Contracts.Registered.Modules in 'src\Contracts\Module\Registered\cbsServer.Contracts.Registered.Modules.pas',
+  cbsServer.Support.Form in 'src\Support\cbsServer.Support.Form.pas',
+  cbsServer.Support.Module in 'src\Support\cbsServer.Support.Module.pas';
 
 {$R *.res}
 

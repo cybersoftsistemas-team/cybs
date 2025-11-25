@@ -23,9 +23,9 @@ implementation
 
 uses
 {IDE}
-  uniGUIVars,
   Forms,
   System.SysUtils,
+  uniGUIVars,
 {$IFDEF MSWINDOWS}
   Winapi.Windows,
   Winapi.ShellAPI,
@@ -66,7 +66,7 @@ end;
 procedure TcbsServerModule.UniGUIServerModuleCreate(Sender: TObject);
 begin
   HideTrayIconSystem;
-  ModuleManager.LoadFromFolder(IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'modules');
+  ModuleManager.LoadFromFolder(StartPath + 'modules');
 end;
 
 initialization

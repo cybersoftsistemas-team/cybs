@@ -1,4 +1,4 @@
-unit cbsCliSrv.UserAuthForm;
+unit cbsUAuth.Module.LoginForm;
 
 interface
 
@@ -8,7 +8,7 @@ uses
   uniImage, uniSpeedButton, uniButton, uniBitBtn, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, uniPanel, Vcl.Controls, Vcl.Forms;
 
 type
-  TcbsCliSrvUserAuthForm = class(TUniLoginForm)
+  TfrmLogin = class(TUniLoginForm)
     aclMain: TUniActionList;
     ilaMain: TUniImageListAdapter;
     actConnect: TAction;
@@ -30,6 +30,7 @@ type
     UniLabel2: TUniLabel;
     nilstMain: TUniNativeImageList;
     UniImage1: TUniImage;
+    procedure UniLoginFormCreate(Sender: TObject);
     procedure actConnectExecute(Sender: TObject);
     procedure UniLoginFormActivate(Sender: TObject);
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
@@ -39,6 +40,8 @@ type
     { Public declarations }
   end;
 
+  function frmLogin: TfrmLogin;
+
 implementation
 
 {$R *.dfm}
@@ -47,15 +50,33 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsCliSrv.RunTime,
-  cbsCliSrv.UserAuthModule;
+  cbsServer.Cybersoft.MainModule,
+  cbsServer.Support.Form,
+  cbsServer.Support.RunTime,
+  cbsUAuth.Module.LoginModule;
 
-procedure TcbsCliSrvUserAuthForm.actConnectExecute(Sender: TObject);
+function frmLogin: TfrmLogin;
+begin
+  Result := TfrmLogin(damMainModule.GetFormInstance(TfrmLogin));
+end;
+
+{ TfrmLogin }
+
+procedure TfrmLogin.UniLoginFormCreate(Sender: TObject);
+begin
+//  actOptions.Visible := RunTime.IsClientRunningInServer;
+//  if not actOptions.Visible then
+//  begin
+//    btnConnect.Left := btnDomains.Left - btnConnect.Width + btnDomains.Width;
+//  end;
+end;
+
+procedure TfrmLogin.actConnectExecute(Sender: TObject);
 begin
   ModalResult := mrOK;
 end;
 
-procedure TcbsCliSrvUserAuthForm.UniLoginFormActivate(Sender: TObject);
+procedure TfrmLogin.UniLoginFormActivate(Sender: TObject);
 begin
   if not SameText(string(edtUserName.Text).Trim, '') then
   begin
@@ -63,12 +84,21 @@ begin
   end;
 end;
 
-procedure TcbsCliSrvUserAuthForm.UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
+procedure TfrmLogin.UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
 begin
   if EventName = 'IsElectron' then
   begin
     RunTime.IsElectron := SameText(Params.Values['value'], 'true');
+  end
+  else if EventName = 'LoadClientData' then
+  begin
+    damLogin.LoadData(Params.Values['file'], Params.Values['value']);
   end;
+end;
+
+initialization
+begin
+  RegisterFormClass(TfrmLogin);
 end;
 
 end.

@@ -7,14 +7,14 @@ uses
   uniGUIMainModule;
 
 type
-  TcbsMainModule = class(TUniGUIMainModule)
+  TdamMainModule = class(TUniGUIMainModule)
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-function cbsMainModule: TcbsMainModule;
+function damMainModule: TdamMainModule;
 
 implementation
 
@@ -25,14 +25,14 @@ uses
   uniGUIApplication,
   uniGUIVars;
 
-function cbsMainModule: TcbsMainModule;
+function damMainModule: TdamMainModule;
 begin
-  Result := TcbsMainModule(UniApplication.UniMainModule)
+  Result := TdamMainModule(UniApplication.UniMainModule)
 end;
 
 initialization
 begin
-  RegisterMainModuleClass(TcbsMainModule);
+  RegisterMainModuleClass(TdamMainModule);
 end;
 
 end.

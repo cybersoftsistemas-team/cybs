@@ -30,7 +30,7 @@ uses
 
 function cbsMainForm: TcbsMainForm;
 begin
-  Result := TcbsMainForm(cbsMainModule.GetFormInstance(TcbsMainForm));
+  Result := TcbsMainForm(damMainModule.GetFormInstance(TcbsMainForm));
 end;
 
 initialization

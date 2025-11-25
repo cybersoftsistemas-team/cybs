@@ -1,4 +1,4 @@
-unit cbsUAuth.LoginModule;
+unit cbsUAuth.Module.LoginModule;
 
 interface
 
@@ -32,19 +32,19 @@ implementation
 uses
 {IDE}
   System.SysUtils,
-  uniGUIVars,
   uniGUIApplication,
 {PROJECT}
   cbsServer.Cybersoft.MainModule,
+  cbsServer.Support.Module,
   cdsServer.Support.FDDataSet.Extensions;
 
 const
   CST_FILENAME_LOGON = 'logon.dat';
-  CST_KEY_LOGON = '{7CEDDCEE-2AAC-4BD6-8609-9580F1BFF871}';
+  CST_KEY_LOGON      = '{7CEDDCEE-2AAC-4BD6-8609-9580F1BFF871}';
 
 function damLogin: TdamLogin;
 begin
-  Result := TdamLogin(cbsMainModule.GetModuleInstance(TdamLogin));
+  Result := TdamLogin(damMainModule.GetModuleInstance(TdamLogin));
 end;
 
 { TdamLogin }
