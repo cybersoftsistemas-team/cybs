@@ -1,4 +1,4 @@
-unit cbsCore.Cybersoft.MainModule;
+unit cbsServer.Cybersoft.MainModule;
 
 interface
 

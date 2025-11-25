@@ -1,4 +1,4 @@
-unit cbsCore.Cybersoft.ServerModule;
+﻿unit cbsServer.Cybersoft.ServerModule;
 
 interface
 
@@ -25,7 +25,13 @@ uses
 {IDE}
   uniGUIVars,
   Forms,
-  ShellAPI;
+  System.SysUtils,
+{$IFDEF MSWINDOWS}
+  Winapi.Windows,
+  Winapi.ShellAPI,
+{$ENDIF}
+{PROJECT}
+  cbsServer.Support.ModuleManager;
 
 function cbsServerModule: TcbsServerModule;
 begin
@@ -41,6 +47,7 @@ begin
 end;
 
 procedure TcbsServerModule.HideTrayIconSystem;
+{$IFDEF MSWINDOWS}
 var
   LNotifyIconData: TNotifyIconData;
 begin
@@ -50,10 +57,16 @@ begin
   LNotifyIconData.uID := 1002;
   Shell_NotifyIcon(NIM_DELETE, @LNotifyIconData);
 end;
+{$ELSE}
+begin
+  // Linux / macOS → NOP (não existe tray icon)
+end;
+{$ENDIF}
 
 procedure TcbsServerModule.UniGUIServerModuleCreate(Sender: TObject);
 begin
   HideTrayIconSystem;
+  ModuleManager.LoadFromFolder(IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'modules');
 end;
 
 initialization

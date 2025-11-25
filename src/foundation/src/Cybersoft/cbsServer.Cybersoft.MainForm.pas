@@ -1,10 +1,10 @@
-unit cbsCore.Cybersoft.MainForm;
+unit cbsServer.Cybersoft.MainForm;
 
 interface
 
 uses
 {PROJECT}
-  cbsCore.Cybersoft.BaseForm,
+  cbsServer.Cybersoft.BaseForm,
 {IDE}
   System.Classes, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, uniMainMenu;
 
@@ -26,7 +26,7 @@ uses
 {IDE}
   uniGUIVars,
 {PROJECT}
-  cbsCore.Cybersoft.MainModule;
+  cbsServer.Cybersoft.MainModule;
 
 function cbsMainForm: TcbsMainForm;
 begin
