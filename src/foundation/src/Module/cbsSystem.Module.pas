@@ -1,4 +1,4 @@
-unit cbsCServer.Module;
+unit cbsSystem.Module;
 
 interface
 
@@ -6,9 +6,9 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsCServer.Contracts.Module,
-  cbsCServer.Form.BaseForm,
-  cbsCServer.Module.BaseModule;
+  cbsSystem.Contracts.Module,
+  cbsSystem.Form.BaseForm,
+  cbsSystem.Module.BaseModule;
 
 type
   TcbsModule = class(TInterfacedObject, IcbsModule)

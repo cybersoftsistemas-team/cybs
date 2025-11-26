@@ -4,7 +4,7 @@ interface
 
 uses
 {PROJECT}
-  cbsCServer.Module.BaseModule,
+  cbsSystem.Module.BaseModule,
 {IDE}
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, System.Classes, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client;
@@ -34,8 +34,8 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsCServer.Support.Module,
-  cdsCServer.Support.DataSet.Extensions;
+  cbsSystem.Support.DataSet.Extensions,
+  cbsSystem.Support.Module;
 
 const
   CST_FILENAME_LOGON = 'logon.dat';

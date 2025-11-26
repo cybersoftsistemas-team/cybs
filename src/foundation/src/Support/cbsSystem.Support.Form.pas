@@ -1,10 +1,10 @@
-unit cbsCServer.Support.Form;
+unit cbsSystem.Support.Form;
 
 interface
 
 uses
 {PROJECT}
-  cbsCServer.Form.BaseForm;
+  cbsSystem.Form.BaseForm;
 
   function GetFormRegistered: TArray<TcbsFormClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF}; export;
   procedure RegisterFormClass(const AFormClass: TcbsFormClass);
@@ -13,8 +13,8 @@ implementation
 
 uses
 {PROJECT}
-  cbsCServer.Contracts.Form.Registered,
-  cbsCServer.Form.Registered;
+  cbsSystem.Contracts.Form.Registered,
+  cbsSystem.Form.Registered;
 
 var
   GFormRegistered: IcbsFormRegistered;

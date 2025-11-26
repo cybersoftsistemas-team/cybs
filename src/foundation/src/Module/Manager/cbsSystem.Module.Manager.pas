@@ -1,11 +1,11 @@
-unit cbsCServer.Module.Manager;
+unit cbsSystem.Module.Manager;
 
 interface
 
 uses
 {PROJECT}
-  cbsCServer.Contracts.Module,
-  cbsCServer.Contracts.Module.Manager,
+  cbsSystem.Contracts.Module,
+  cbsSystem.Contracts.Module.Manager,
 {SPRING}
   Spring.Collections;
 
@@ -29,7 +29,7 @@ uses
   System.IOUtils,
   System.SysUtils,
 {PROJECT}
-  cbsCServer.Module;
+  cbsSystem.Module;
 
 { TcbsModuleManager }
 

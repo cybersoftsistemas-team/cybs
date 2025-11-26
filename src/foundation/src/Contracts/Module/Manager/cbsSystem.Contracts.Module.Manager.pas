@@ -1,10 +1,10 @@
-unit cbsCServer.Contracts.Module.Manager;
+unit cbsSystem.Contracts.Module.Manager;
 
 interface
 
 uses
 {PROJECT}
-  cbsCServer.Contracts.Module,
+  cbsSystem.Contracts.Module,
 {SPRING}
   Spring.Collections;
 

@@ -1,10 +1,10 @@
-unit cbsCServer.Contracts.Form.Registered;
+unit cbsSystem.Contracts.Form.Registered;
 
 interface
 
 uses
 {PROJECT}
-  cbsCServer.Form.BaseForm,
+  cbsSystem.Form.BaseForm,
 {SPRING}
   Spring.Collections;
 

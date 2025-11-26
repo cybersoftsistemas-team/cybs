@@ -6,8 +6,8 @@ implementation
 
 uses
 {IDE}
-  cbsCServer.Support.Form,
-  cbsCServer.Support.Module;
+  cbsSystem.Support.Form,
+  cbsSystem.Support.Module;
 
 exports
   GetFormRegistered,

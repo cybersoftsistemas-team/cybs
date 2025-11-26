@@ -44,15 +44,15 @@ requires
   uniGUI30Core,
   uniTools30,
   uIndy30,
-  cbsCServer,
   vclFireDAC,
   FireDACCommonODBC,
-  FireDACMSSQLDriver;
+  FireDACMSSQLDriver,
+  cbsSystem;
 
 contains
   cbsUAuth.ui.LoginForm in 'src\ui\cbsUAuth.ui.LoginForm.pas' {frmLogin: TUniLoginForm},
   cbsUAuth.data.module.LoginModule in 'src\data\module\cbsUAuth.data.module.LoginModule.pas',
   ExportMethods in 'src\exports\ExportMethods.pas',
-  cbs.inf.DbModule in 'src\inf\cbs.inf.DbModule.pas' {damDb: TDataModule};
+  cbsUAuth.inf.DbModule in 'src\inf\cbsUAuth.inf.DbModule.pas' {damDb: TDataModule};
 
 end.

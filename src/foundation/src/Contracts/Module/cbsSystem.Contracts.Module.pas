@@ -1,11 +1,11 @@
-unit cbsCServer.Contracts.Module;
+unit cbsSystem.Contracts.Module;
 
 interface
 
 uses
 {IDE}
-  cbsCServer.Form.BaseForm,
-  cbsCServer.Module.BaseModule,
+  cbsSystem.Form.BaseForm,
+  cbsSystem.Module.BaseModule,
 {SPRING}
   Spring.Collections;
 

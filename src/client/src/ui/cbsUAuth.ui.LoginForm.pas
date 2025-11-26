@@ -50,8 +50,8 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsCServer.Support.Form,
-  cbsCServer.Support.RunTime,
+  cbsSystem.Support.Form,
+  cbsSystem.Support.RunTime,
   cbsUAuth.data.module.LoginModule;
 
 { TfrmLogin }

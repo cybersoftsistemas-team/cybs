@@ -1,11 +1,11 @@
-unit cbsCServer.Module.Registered;
+unit cbsSystem.Module.Registered;
 
 interface
 
 uses
 {PROJECT}
-  cbsCServer.Contracts.Module.Registered,
-  cbsCServer.Module.BaseModule;
+  cbsSystem.Contracts.Module.Registered,
+  cbsSystem.Module.BaseModule;
 
 type
   TcbsModuleRegistered = class(TInterfacedObject, IcbsModuleRegistered)

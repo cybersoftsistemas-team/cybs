@@ -1,10 +1,10 @@
-unit cbsCServer.Support.Module;
+unit cbsSystem.Support.Module;
 
 interface
 
 uses
 {PROJECT}
-  cbsCServer.Module.BaseModule;
+  cbsSystem.Module.BaseModule;
 
   function GetModuleRegistered: TArray<TdamBaseClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF}; export;
   procedure RegisterModuleClass(const AModuleClass: TdamBaseClass);
@@ -13,8 +13,8 @@ implementation
 
 uses
 {PROJECT}
-  cbsCServer.Contracts.Module.Registered,
-  cbsCServer.Module.Registered;
+  cbsSystem.Contracts.Module.Registered,
+  cbsSystem.Module.Registered;
 
 var
   GModuleRegistered: IcbsModuleRegistered;

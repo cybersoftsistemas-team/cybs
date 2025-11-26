@@ -30,7 +30,7 @@ uses
   Winapi.ShellAPI,
 {$ENDIF}
 {PROJECT}
-  cbsCServer.Support.ModuleManager;
+  cbsSystem.Support.ModuleManager;
 
 function cbsServerModule: TcbsServerModule;
 begin
@@ -74,7 +74,7 @@ begin
 end;
 {$ELSE}
 begin
-  // Linux / macOS → NOP (não existe tray icon)
+  // Linux / macOS ? NOP (não existe tray icon)
 end;
 {$ENDIF}
 

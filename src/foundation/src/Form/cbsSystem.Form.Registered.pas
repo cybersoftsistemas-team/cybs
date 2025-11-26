@@ -1,11 +1,11 @@
-unit cbsCServer.Form.Registered;
+unit cbsSystem.Form.Registered;
 
 interface
 
 uses
 {PROJECT}
-  cbsCServer.Contracts.Form.Registered,
-  cbsCServer.Form.BaseForm;
+  cbsSystem.Contracts.Form.Registered,
+  cbsSystem.Form.BaseForm;
 
 type
   TcbsFormRegistered = class(TInterfacedObject, IcbsFormRegistered)
@@ -49,3 +49,4 @@ begin
 end;
 
 end.
+

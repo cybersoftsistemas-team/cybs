@@ -91,7 +91,7 @@
         <DCC_BplOutput>..\..\build\$(Platform)\$(Config)\.bpl</DCC_BplOutput>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <DCC_UsePackage>cbsCServer;$(DCC_UsePackage)</DCC_UsePackage>
+        <DCC_UsePackage>cbsSystem;$(DCC_UsePackage)</DCC_UsePackage>
         <UsePackages>true</UsePackages>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">

@@ -1,0 +1,83 @@
+package cbsSystem;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  dbrtl,
+  vcl,
+  soaprtl,
+  vclimg,
+  IndySystem,
+  FireDAC,
+  FireDACCommon,
+  uniGUI30Core,
+  uniTools30,
+  uIndy30;
+
+contains
+  Spring.Collections.Dictionaries,
+  Spring.Collections.LinkedLists,
+  Spring.Collections.MultiSets,
+  Spring.Collections.Queues,
+  Spring.Collections.Sets,
+  Spring.Collections.Stacks,
+  Spring.Collections.Events,
+  Spring.Hash,
+  Spring.ResourceStrings,
+  Spring.Collections.MultiMaps,
+  Spring.Collections.Extensions,
+  Spring.Collections.Base,
+  Spring.Collections.Trees,
+  Spring.HashTable,
+  Spring.Events.Base,
+  Spring.Collections.Lists,
+  Spring.Events,
+  Spring.Collections,
+  Spring,
+  Spring.VirtualClass,
+  Spring.HazardEra,
+  Spring.Comparers,
+  cbsSystem.Module.BaseModule in 'src\Module\cbsSystem.Module.BaseModule.pas' {damBase: TDataModule},
+  cbsSystem.Form.BaseForm in 'src\Form\cbsSystem.Form.BaseForm.pas' {frmBase: TUniForm},
+  cbsSystem.Form.Registered in 'src\Form\cbsSystem.Form.Registered.pas',
+  cbsSystem.Module.Registered in 'src\Module\cbsSystem.Module.Registered.pas',
+  cbsSystem.Contracts.Form.Registered in 'src\Contracts\Form\cbsSystem.Contracts.Form.Registered.pas',
+  cbsSystem.Contracts.Module.Registered in 'src\Contracts\Module\cbsSystem.Contracts.Module.Registered.pas',
+  cbsSystem.Contracts.Module.Manager in 'src\Contracts\Module\Manager\cbsSystem.Contracts.Module.Manager.pas',
+  cbsSystem.Contracts.Module in 'src\Contracts\Module\cbsSystem.Contracts.Module.pas',
+  cbsSystem.Module.Manager in 'src\Module\Manager\cbsSystem.Module.Manager.pas',
+  cbsSystem.Module in 'src\Module\cbsSystem.Module.pas',
+  cbsSystem.Support.Form in 'src\Support\cbsSystem.Support.Form.pas',
+  cbsSystem.Support.Module in 'src\Support\cbsSystem.Support.Module.pas',
+  cbsSystem.Support.ModuleManager in 'src\Support\cbsSystem.Support.ModuleManager.pas',
+  cbsSystem.Support.RunTime in 'src\Support\cbsSystem.Support.RunTime.pas',
+  cdsSystem.Support.DataSet.Extensions in 'src\Support\cdsSystem.Support.DataSet.Extensions.pas';
+
+end.

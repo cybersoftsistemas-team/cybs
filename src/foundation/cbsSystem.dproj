@@ -1,13 +1,13 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
         <ProjectGuid>{BACECD78-EB4A-413A-9C23-1324EE542F79}</ProjectGuid>
-        <MainSource>cbsCServer.dpk</MainSource>
+        <MainSource>cbsSystem.dpk</MainSource>
         <ProjectVersion>20.3</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
-        <ProjectName Condition="'$(ProjectName)'==''">cbsCServer</ProjectName>
+        <ProjectName Condition="'$(ProjectName)'==''">cbsSystem</ProjectName>
         <TargetedPlatforms>129</TargetedPlatforms>
         <AppType>Package</AppType>
     </PropertyGroup>
@@ -70,7 +70,7 @@
         <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <SanitizedProjectName>cbsCServer</SanitizedProjectName>
+        <SanitizedProjectName>cbsSystem</SanitizedProjectName>
         <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\..\build\$(Platform)\$(Config)\modules;C:\Projects\cybs\src\modules\spring4d\Source;C:\Projects\cybs\src\modules\spring4d\Source\Base;C:\Projects\cybs\src\modules\spring4d\Source\Base\Collections;C:\Projects\cybs\src\modules\spring4d\Source\Base\Logging;C:\Projects\cybs\src\modules\spring4d\Source\Base\Patches;C:\Projects\cybs\src\modules\spring4d\Source\Base\Patterns;C:\Projects\cybs\src\modules\spring4d\Source\Core\Container;C:\Projects\cybs\src\modules\spring4d\Source\Core\Interception;C:\Projects\cybs\src\modules\spring4d\Source\Core\Logging;C:\Projects\cybs\src\modules\spring4d\Source\Core\Mocking;C:\Projects\cybs\src\modules\spring4d\Source\Core\Services;C:\Projects\cybs\src\modules\spring4d\Source\Data\ObjectDataSet;C:\Projects\cybs\src\modules\spring4d\Source\Extensions\Cryptography;C:\Projects\cybs\src\modules\spring4d\Source\Extensions\Utils;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Adapters;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Core;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Criteria;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Mapping;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\SQL;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
         <DCC_BplOutput>..\..\build\$(Platform)\$(Config)</DCC_BplOutput>
@@ -133,29 +133,29 @@
         <DCCReference Include="uniGUI30Core.dcp"/>
         <DCCReference Include="uniTools30.dcp"/>
         <DCCReference Include="uIndy30.dcp"/>
-        <DCCReference Include="src\Module\cbsCServer.Module.BaseModule.pas">
+        <DCCReference Include="src\Module\cbsSystem.Module.BaseModule.pas">
             <Form>damBase</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Form\cbsCServer.Form.BaseForm.pas">
+        <DCCReference Include="src\Form\cbsSystem.Form.BaseForm.pas">
             <Form>frmBase</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Form\cbsCServer.Form.Registered.pas"/>
-        <DCCReference Include="src\Module\cbsCServer.Module.Registered.pas"/>
-        <DCCReference Include="src\Contracts\Form\cbsCServer.Contracts.Form.Registered.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsCServer.Contracts.Module.Registered.pas"/>
-        <DCCReference Include="src\Contracts\Module\Manager\cbsCServer.Contracts.Module.Manager.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsCServer.Contracts.Module.pas"/>
-        <DCCReference Include="src\Module\Manager\cbsCServer.Module.Manager.pas"/>
-        <DCCReference Include="src\Module\cbsCServer.Module.pas"/>
-        <DCCReference Include="src\Support\cbsCServer.Support.Form.pas"/>
-        <DCCReference Include="src\Support\cbsCServer.Support.Module.pas"/>
-        <DCCReference Include="src\Support\cbsCServer.Support.ModuleManager.pas"/>
-        <DCCReference Include="src\Support\cbsCServer.Support.RunTime.pas"/>
-        <DCCReference Include="src\Support\cdsCServer.Support.DataSet.Extensions.pas"/>
+        <DCCReference Include="src\Form\cbsSystem.Form.Registered.pas"/>
+        <DCCReference Include="src\Module\cbsSystem.Module.Registered.pas"/>
+        <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.Registered.pas"/>
+        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.Registered.pas"/>
+        <DCCReference Include="src\Contracts\Module\Manager\cbsSystem.Contracts.Module.Manager.pas"/>
+        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.pas"/>
+        <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.pas"/>
+        <DCCReference Include="src\Module\cbsSystem.Module.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Form.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Module.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.ModuleManager.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.RunTime.pas"/>
+        <DCCReference Include="src\Support\cdsSystem.Support.DataSet.Extensions.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -178,7 +178,7 @@
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
                 <Source>
-                    <Source Name="MainSource">cbsCServer.dpk</Source>
+                    <Source Name="MainSource">cbsSystem.dpk</Source>
                 </Source>
             </Delphi.Personality>
             <Deployment Version="5">
@@ -197,9 +197,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\build\Win32\Debug\cbsCServer.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\build\Win32\Debug\cbsSystem.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>cbsCServer.bpl</RemoteName>
+                        <RemoteName>cbsSystem.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

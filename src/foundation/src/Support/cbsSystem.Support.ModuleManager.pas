@@ -1,10 +1,10 @@
-unit cbsCServer.Support.ModuleManager;
+unit cbsSystem.Support.ModuleManager;
 
 interface
 
 uses
 {PROJECT}
-  cbsCServer.Contracts.Module.Manager;
+  cbsSystem.Contracts.Module.Manager;
 
   function ModuleManager: IcbsModuleManager;
 
@@ -12,7 +12,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsCServer.Module.Manager;
+  cbsSystem.Module.Manager;
 
 var
   GModuleManager: IcbsModuleManager;

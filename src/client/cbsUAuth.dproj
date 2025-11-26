@@ -145,17 +145,17 @@
         <DCCReference Include="uniGUI30Core.dcp"/>
         <DCCReference Include="uniTools30.dcp"/>
         <DCCReference Include="uIndy30.dcp"/>
-        <DCCReference Include="cbsCServer.dcp"/>
         <DCCReference Include="vclFireDAC.dcp"/>
         <DCCReference Include="FireDACCommonODBC.dcp"/>
         <DCCReference Include="FireDACMSSQLDriver.dcp"/>
+        <DCCReference Include="cbsSystem.dcp"/>
         <DCCReference Include="src\ui\cbsUAuth.ui.LoginForm.pas">
             <Form>frmLogin</Form>
             <DesignClass>TUniLoginForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\data\module\cbsUAuth.data.module.LoginModule.pas"/>
         <DCCReference Include="src\exports\ExportMethods.pas"/>
-        <DCCReference Include="src\inf\cbs.inf.DbModule.pas">
+        <DCCReference Include="src\inf\cbsUAuth.inf.DbModule.pas">
             <Form>damDb</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
