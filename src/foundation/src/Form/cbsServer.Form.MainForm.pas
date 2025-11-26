@@ -4,7 +4,7 @@ interface
 
 uses
 {PROJECT}
-  cbsServer.Form.BaseForm,
+  cbsCServer.Form.BaseForm,
 {IDE}
   System.Classes, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, uniMainMenu;
 

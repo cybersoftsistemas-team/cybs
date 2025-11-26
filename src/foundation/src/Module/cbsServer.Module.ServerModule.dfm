@@ -2,7 +2,7 @@ object cbsServerModule: TcbsServerModule
   OnCreate = UniGUIServerModuleCreate
   TempFolder = 'temp\'
   Title = 'New Application'
-  BGColorLogin = 8404992
+  BGColorLogin = 15921906
   SuppressErrors = []
   Bindings = <>
   JQueryVersion = '3.7.1'
@@ -17,7 +17,6 @@ object cbsServerModule: TcbsServerModule
     '  margin: 0 !important;'
     '  padding: 0 !important;'
     '  overflow: hidden !important;'
-    '  background: transparent !important;'
     '}'
     ''
     '/* '#55357#56594' Bloqueia sele'#231#227'o apenas em componentes n'#227'o edit'#225'veis */'

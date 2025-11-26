@@ -1,2 +1,0 @@
-inherited UniMainModule: TUniMainModule
-end

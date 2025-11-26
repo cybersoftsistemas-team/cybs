@@ -86,11 +86,13 @@
         <GenDll>true</GenDll>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <SanitizedProjectName>cbsServer</SanitizedProjectName>
-        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\..\build\$(Platform)\$(Config)\modules;..\modules\spring4d\Source;..\modules\spring4d\Source\Base;..\modules\spring4d\Source\Base\Collections;..\modules\spring4d\Source\Base\Logging;..\modules\spring4d\Source\Base\Patches;..\modules\spring4d\Source\Base\Patterns;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Logging;..\modules\spring4d\Source\Core\Mocking;..\modules\spring4d\Source\Core\Services;..\modules\spring4d\Source\Data\ObjectDataSet;..\modules\spring4d\Source\Extensions\Cryptography;..\modules\spring4d\Source\Extensions\Utils;..\modules\spring4d\Source\Persistence\Adapters;..\modules\spring4d\Source\Persistence\Core;..\modules\spring4d\Source\Persistence\Criteria;..\modules\spring4d\Source\Persistence\Mapping;..\modules\spring4d\Source\Persistence\SQL;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\..\build\$(Platform)\$(Config)\modules;..\foundation\src\Form;..\foundation\src\Module;..\modules\spring4d\Source;..\modules\spring4d\Source\Base;..\modules\spring4d\Source\Base\Collections;..\modules\spring4d\Source\Base\Logging;..\modules\spring4d\Source\Base\Patches;..\modules\spring4d\Source\Base\Patterns;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Logging;..\modules\spring4d\Source\Core\Mocking;..\modules\spring4d\Source\Core\Services;..\modules\spring4d\Source\Data\ObjectDataSet;..\modules\spring4d\Source\Extensions\Cryptography;..\modules\spring4d\Source\Extensions\Utils;..\modules\spring4d\Source\Persistence\Adapters;..\modules\spring4d\Source\Persistence\Core;..\modules\spring4d\Source\Persistence\Criteria;..\modules\spring4d\Source\Persistence\Mapping;..\modules\spring4d\Source\Persistence\SQL;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
         <DCC_BplOutput>..\..\build\$(Platform)\$(Config)\.bpl</DCC_BplOutput>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <DCC_UsePackage>cbsCServer;$(DCC_UsePackage)</DCC_UsePackage>
+        <UsePackages>true</UsePackages>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
         <VerInfo_Keys>package=com.embarcadero.$(MSBuildProjectName);label=$(MSBuildProjectName);versionCode=1;versionName=1.0.0;persistent=False;restoreAnyVersion=False;installLocation=auto;largeHeap=False;theme=TitleBar;hardwareAccelerated=true;apiKey=;minSdkVersion=23;targetSdkVersion=35</VerInfo_Keys>
@@ -128,9 +130,10 @@
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Debugger_HostApplication>C:\Projects\cybs\build\Win32\Debug\cbs.exe</Debugger_HostApplication>
+        <Manifest_File>(None)</Manifest_File>
+        <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win64)'!=''">
         <DCC_UsePackage>vclwinx;DataSnapServer;dxComnRS37;fmx;dxDockingRS37;vclie;DbxCommonDriver;bindengine;IndyIPCommon;VCLRESTComponents;DBXMSSQLDriver;FireDACCommonODBC;emsclient;dxCoreRS37;dxServerModeRS37;IndyProtocols;cxPivotGridRS37;vclx;dxPScxTLLnkRS37;dbxcds;vcledge;dxSpreadSheetConditionalFormattingDialogsRS37;dxEMFRS37;FmxTeeUI;dxPSCoreRS37;dxPSPrVwRibbonRS37;DBXFirebirdDriver;cxIBXAdaptersRS37;dxRichEditDocumentModelRS37;FireDACSqliteDriver;DbxClientDriver;dxPSdxDBTVLnkRS37;soapmidas;TeeUI;dxPScxExtCommonRS37;dbexpress;inet;vcltouch;cxSchedulerWebServiceStorageRS37;FireDACDBXDriver;fmxdae;dxTabbedMDIRS37;uSynEdit_R2026;CustomIPTransport;FireDACMSSQLDriver;dxFireDACEMFRS37;cxGridRS37;dxSpellCheckerRS37;cxFireDACAdaptersRS37;dxorgcRS37;IndySystem;dxBarRS37;dxCloudServiceLibraryRS37;dxPScxPCProdRS37;ibxbindings;dxPSRichEditControlLnkRS37;dxGDIPlusRS37;vclFireDAC;cxADOAdaptersRS37;FireDACCommon;DataSnapServerMidas;FireDACODBCDriver;emsserverresource;dxBarDBNavRS37;dxPDFViewerRS37;dxmdsRS37;dxPSdxOCLnkRS37;bindcompdbx;rtl;FireDACMySQLDriver;dxADOEMFRS37;DBXSqliteDriver;dxPSdxDBOCLnkRS37;DBXSybaseASEDriver;cxSchedulerTreeBrowserRS37;dxChartControlRS37;cxGridEMFRS37;vclimg;DataSnapFireDAC;inetdbxpress;FireDAC;dxNavBarRS37;dxSpreadSheetCoreConditionalFormattingDialogsRS37;xmlrtl;dxPScxGridLnkRS37;dxADOServerModeRS37;ibxpress;dxWizardControlRS37;dsnap;FireDACDb2Driver;dxPScxSchedulerLnkRS37;DBXOracleDriver;DBXInformixDriver;vclib;dxHttpIndyRequestRS37;fmxobj;bindcompvclsmp;DataSnapNativeClient;dxSpreadSheetReportDesignerRS37;dxTileControlRS37;dxGaugeControlRS37;dxOrgChartAdvancedCustomizeFormRS37;DatasnapConnectorsFreePascal;dxPSdxMapControlLnkRS37;cxVerticalGridRS37;dxBarExtItemsRS37;cxLibraryRS37;dxdborRS37;dxSpreadSheetRS37;cxSchedulerGridRS37;emshosting;dxFlowChartAdvancedCustomizeFormRS37;dxPSDBTeeChartRS37;dxPSdxLCLnkRS37;FireDACCommonDriver;IndyIPClient;bindcompvclwinx;dxPSLnksRS37;dxPSTeeChartRS37;emsedge;bindcompfmx;cxTreeListRS37;dxFlowChartRS37;inetdb;ibmonitor;cxPivotGridChartRS37;dxFireDACServerModeRS37;FireDACASADriver;Tee;vclactnband;dxMapControlRS37;fmxFireDAC;FireDACInfxDriver;DBXMySQLDriver;VclSmp;DataSnapCommon;fmxase;cxSchedulerRibbonStyleEventEditorRS37;DBXOdbcDriver;dbrtl;dxPScxCommonRS37;FireDACOracleDriver;dxPSdxSpreadSheetLnkRS37;dxPSdxChartControlLnkRS37;TeeDB;FireDACMSAccDriver;dxRichEditControlRS37;dxPsPrVwAdvRS37;dxPSdxPDFViewerLnkRS37;DataSnapIndy10ServerTransport;dxDBXServerModeRS37;cxSchedulerRS37;cxExportRS37;DataSnapConnectors;vcldsnap;DBXInterBaseDriver;FireDACMongoDBDriver;dxRichEditControlCoreRS37;FireDACTDataDriver;Skia.Package.VCL;uniGUI30VCL;dxPScxPivotGridLnkRS37;vcldb;dxBarExtDBItemsRS37;dxPSdxFCLnkRS37;bindcomp;inetstn;dxFlowChartLayoutsRS37;IndyCore;RESTBackendComponents;dxRibbonRS37;dxSpreadSheetCoreRS37;uniGUI30m;dxGanttControlRS37;dxPScxVGridLnkRS37;dxPSdxGaugeControlLnkRS37;FireDACADSDriver;RESTComponents;IndyIPServer;vcl;dsnapxml;adortl;dsnapcon;DataSnapClient;DataSnapProviderClient;dxSkinsCoreRS37;dxdbtrRS37;DBXDb2Driver;dxRichEditCoreRS37;cxTreeListdxBarPopupMenuRS37;emsclientfiredac;FireDACPgDriver;FireDACDSDriver;dxRibbonCustomizationFormRS37;tethering;dxtrmdRS37;bindcompvcl;cxPivotGridOLAPRS37;dxFlowChartDesignerRS37;CloudService;DBXSybaseASADriver;FMXTee;soaprtl;soapserver;FireDACIBDriver;$(DCC_UsePackage)</DCC_UsePackage>
@@ -149,8 +152,6 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <Manifest_File>(None)</Manifest_File>
-        <AppDPIAwarenessMode>none</AppDPIAwarenessMode>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -162,29 +163,10 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="src\Support\cbsServer.Support.ModuleManager.pas"/>
-        <DCCReference Include="src\Module\Manager\cbsServer.Module.Manager.pas"/>
-        <DCCReference Include="src\Contracts\Module\Manager\cbsServer.Contracts.Module.Manager.pas"/>
-        <DCCReference Include="src\Module\cbsServer.Module.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsServer.Contracts.Module.pas"/>
-        <DCCReference Include="src\Support\cdsServer.Support.DataSet.Extensions.pas"/>
-        <DCCReference Include="src\Support\cbsServer.Support.RunTime.pas"/>
-        <DCCReference Include="src\Support\cbsServer.Support.Form.pas"/>
-        <DCCReference Include="src\Support\cbsServer.Support.Module.pas"/>
-        <DCCReference Include="src\Form\cbsServer.Form.BaseForm.pas">
-            <Form>frmBase</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
         <DCCReference Include="src\Form\cbsServer.Form.MainForm.pas">
             <Form>frmMain</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\Module\cbsServer.Module.BaseModule.pas">
-            <Form>damBase</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Module\cbsServer.Module.MainModule.pas">
             <Form>damMain</Form>
@@ -196,10 +178,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniGUIServerModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Form\cbsServer.Form.Registered.pas"/>
-        <DCCReference Include="src\Contracts\Form\cbsServer.Contracts.Form.Registered.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsServer.Contracts.Module.Registered.pas"/>
-        <DCCReference Include="src\Module\cbsServer.Module.Registered.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -1,0 +1,61 @@
+package cbsCServer;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  soaprtl,
+  dbrtl,
+  vclimg,
+  uniGUI30Core,
+  uniTools30,
+  uIndy30,
+  IndySystem,
+  FireDAC,
+  FireDACCommon;
+
+contains
+  cbsCServer.Module.BaseModule in 'src\Module\cbsCServer.Module.BaseModule.pas' {damBase: TDataModule},
+  cbsCServer.Form.BaseForm in 'src\Form\cbsCServer.Form.BaseForm.pas' {frmBase: TUniForm},
+  cbsCServer.Form.Registered in 'src\Form\cbsCServer.Form.Registered.pas',
+  cbsCServer.Module.Registered in 'src\Module\cbsCServer.Module.Registered.pas',
+  cbsCServer.Contracts.Form.Registered in 'src\Contracts\Form\cbsCServer.Contracts.Form.Registered.pas',
+  cbsCServer.Contracts.Module.Registered in 'src\Contracts\Module\cbsCServer.Contracts.Module.Registered.pas',
+  cbsCServer.Contracts.Module.Manager in 'src\Contracts\Module\Manager\cbsCServer.Contracts.Module.Manager.pas',
+  cbsCServer.Contracts.Module in 'src\Contracts\Module\cbsCServer.Contracts.Module.pas',
+  cbsCServer.Module.Manager in 'src\Module\Manager\cbsCServer.Module.Manager.pas',
+  cbsCServer.Module in 'src\Module\cbsCServer.Module.pas',
+  cbsCServer.Support.Form in 'src\Support\cbsCServer.Support.Form.pas',
+  cbsCServer.Support.Module in 'src\Support\cbsCServer.Support.Module.pas',
+  cbsCServer.Support.ModuleManager in 'src\Support\cbsCServer.Support.ModuleManager.pas',
+  cbsCServer.Support.RunTime in 'src\Support\cbsCServer.Support.RunTime.pas',
+  cdsCServer.Support.DataSet.Extensions in 'src\Support\cdsCServer.Support.DataSet.Extensions.pas';
+
+end.

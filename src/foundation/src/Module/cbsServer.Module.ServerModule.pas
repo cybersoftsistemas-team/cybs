@@ -27,15 +27,30 @@ uses
   System.SysUtils,
   uniGUIVars,
 {$IFDEF MSWINDOWS}
-  Winapi.Windows,
   Winapi.ShellAPI,
 {$ENDIF}
 {PROJECT}
-  cbsServer.Support.ModuleManager;
+  cbsCServer.Support.ModuleManager;
 
 function cbsServerModule: TcbsServerModule;
 begin
   Result := TcbsServerModule(UniGUIServerInstance);
+end;
+
+procedure RegisterAppFormAndModuleClass;
+begin
+  ModuleManager.LoadFromFolder(IncludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0))) + 'modules');
+  for var LModule in ModuleManager do
+  begin
+    for var LFormClass in LModule.FormTypes do
+    begin
+      RegisterAppFormClass(LFormClass);
+    end;
+    for var LModuleClass in LModule.DataModuleTypes do
+    begin
+      RegisterModuleClass(LModuleClass);
+    end;
+  end;
 end;
 
 { TcbsServerModule }
@@ -66,12 +81,12 @@ end;
 procedure TcbsServerModule.UniGUIServerModuleCreate(Sender: TObject);
 begin
   HideTrayIconSystem;
-  ModuleManager.LoadFromFolder(StartPath + 'modules');
 end;
 
 initialization
 begin
   RegisterServerModuleClass(TcbsServerModule);
+  RegisterAppFormAndModuleClass;
 end;
 
 end.

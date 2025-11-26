@@ -1,0 +1,58 @@
+package cbsUAuth;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl,
+  soaprtl,
+  dbrtl,
+  vclimg,
+  vclwinx,
+  IndySystem,
+  vcldb,
+  FireDAC,
+  FireDACCommonDriver,
+  FireDACCommon,
+  uniGUI30,
+  uniGUI30Core,
+  uniTools30,
+  uIndy30,
+  cbsCServer,
+  vclFireDAC,
+  FireDACCommonODBC,
+  FireDACMSSQLDriver;
+
+contains
+  cbsUAuth.ui.LoginForm in 'src\ui\cbsUAuth.ui.LoginForm.pas' {frmLogin: TUniLoginForm},
+  cbsUAuth.data.module.LoginModule in 'src\data\module\cbsUAuth.data.module.LoginModule.pas',
+  ExportMethods in 'src\exports\ExportMethods.pas',
+  cbs.inf.DbModule in 'src\inf\cbs.inf.DbModule.pas' {damDb: TDataModule};
+
+end.
