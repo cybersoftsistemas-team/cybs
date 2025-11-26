@@ -17,6 +17,7 @@ object cbsServerModule: TcbsServerModule
     '  margin: 0 !important;'
     '  padding: 0 !important;'
     '  overflow: hidden !important;'
+    '  font-family: tahoma, arial, verdana, sans-serif;'
     '}'
     ''
     '/* '#55357#56594' Bloqueia sele'#231#227'o apenas em componentes n'#227'o edit'#225'veis */'
