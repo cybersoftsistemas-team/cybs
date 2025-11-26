@@ -1,4 +1,4 @@
-unit cbsServer.Cybersoft.BaseModule;
+unit cbsServer.Module.BaseModule;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   Classes;
 
 type
-  TcbsBaseModule = class(TDataModule)
+  TdamBase = class(TDataModule)
   private
     { Private declarations }
   public

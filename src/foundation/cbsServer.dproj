@@ -162,41 +162,44 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="src\Cybersoft\cbsServer.Cybersoft.BaseForm.pas">
-            <Form>cbsBaseForm</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\Cybersoft\cbsServer.Cybersoft.MainForm.pas">
-            <Form>cbsMainForm</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\Cybersoft\cbsServer.Cybersoft.MainModule.pas">
-            <Form>damMainModule</Form>
-            <DesignClass>TUniGUIMainModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\Cybersoft\cbsServer.Cybersoft.ServerModule.pas">
-            <Form>cbsServerModule</Form>
-            <DesignClass>TUniGUIServerModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="src\Support\cbsServer.Support.ModuleManager.pas"/>
-        <DCCReference Include="src\Module\Manager\cbsServer.ModuleManager.pas"/>
-        <DCCReference Include="src\Contracts\Module\Manager\cbsServer.Contracts.ModuleManager.pas"/>
+        <DCCReference Include="src\Module\Manager\cbsServer.Module.Manager.pas"/>
+        <DCCReference Include="src\Contracts\Module\Manager\cbsServer.Contracts.Module.Manager.pas"/>
         <DCCReference Include="src\Module\cbsServer.Module.pas"/>
         <DCCReference Include="src\Contracts\Module\cbsServer.Contracts.Module.pas"/>
-        <DCCReference Include="src\Module\cbsServer.Module.Api.pas"/>
-        <DCCReference Include="src\Cybersoft\cbsServer.Cybersoft.BaseModule.pas">
-            <Form>cbsBaseModule</Form>
+        <DCCReference Include="src\Support\cdsServer.Support.DataSet.Extensions.pas"/>
+        <DCCReference Include="src\Support\cbsServer.Support.RunTime.pas"/>
+        <DCCReference Include="src\Support\cbsServer.Support.Form.pas"/>
+        <DCCReference Include="src\Support\cbsServer.Support.Module.pas"/>
+        <DCCReference Include="src\Form\cbsServer.Form.BaseForm.pas">
+            <Form>frmBase</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Form\cbsServer.Form.MainForm.pas">
+            <Form>frmMain</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Module\cbsServer.Module.BaseModule.pas">
+            <Form>damBase</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Support\cdsServer.Support.FDDataSet.Extensions.pas"/>
-        <DCCReference Include="src\Support\cbsServer.Support.RunTime.pas"/>
-        <DCCReference Include="src\Module\Registered\cbsServer.Registered.Forms.pas"/>
-        <DCCReference Include="src\Module\Registered\cbsServer.Registered.Modules.pas"/>
-        <DCCReference Include="src\Contracts\Module\Registered\cbsServer.Contracts.Registered.Forms.pas"/>
-        <DCCReference Include="src\Contracts\Module\Registered\cbsServer.Contracts.Registered.Modules.pas"/>
-        <DCCReference Include="src\Support\cbsServer.Support.Form.pas"/>
-        <DCCReference Include="src\Support\cbsServer.Support.Module.pas"/>
+        <DCCReference Include="src\Module\cbsServer.Module.MainModule.pas">
+            <Form>damMain</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniGUIMainModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Module\cbsServer.Module.ServerModule.pas">
+            <Form>cbsServerModule</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniGUIServerModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Form\cbsServer.Form.Registered.pas"/>
+        <DCCReference Include="src\Contracts\Form\cbsServer.Contracts.Form.Registered.pas"/>
+        <DCCReference Include="src\Contracts\Module\cbsServer.Contracts.Module.Registered.pas"/>
+        <DCCReference Include="src\Module\cbsServer.Module.Registered.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

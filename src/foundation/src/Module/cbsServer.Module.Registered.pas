@@ -1,14 +1,14 @@
-unit cbsServer.Registered.Modules;
+unit cbsServer.Module.Registered;
 
 interface
 
 uses
 {PROJECT}
-  cbsServer.Contracts.Registered.Modules,
-  cbsServer.Cybersoft.BaseModule;
+  cbsServer.Contracts.Module.Registered,
+  cbsServer.Module.BaseModule;
 
 type
-  TcbsRegisteredModules = class(TInterfacedObject, IcbsRegisteredModules)
+  TcbsModuleRegistered = class(TInterfacedObject, IcbsModuleRegistered)
   strict private
     FModuleClassList: IModuleClassList;
   public
@@ -20,27 +20,27 @@ type
 
 implementation
 
-{ TcbsRegisteredModules }
+{ TcbsModuleRegistered }
 
-constructor TcbsRegisteredModules.Create;
+constructor TcbsModuleRegistered.Create;
 begin
   inherited Create;
   FModuleClassList := CreateModuleClassList;
 end;
 
-destructor TcbsRegisteredModules.Destroy;
+destructor TcbsModuleRegistered.Destroy;
 begin
   FModuleClassList.Clear;
   FModuleClassList := nil;
   inherited;
 end;
 
-function TcbsRegisteredModules.ToArray: TArray<TcbsModuleClass>;
+function TcbsModuleRegistered.ToArray: TArray<TcbsModuleClass>;
 begin
   Result := FModuleClassList.ToArray;
 end;
 
-procedure TcbsRegisteredModules.Add(const AModuleClass: TcbsModuleClass);
+procedure TcbsModuleRegistered.Add(const AModuleClass: TcbsModuleClass);
 begin
   if not FModuleClassList.Contains(AModuleClass) then
   begin

@@ -2,25 +2,24 @@ library cbsServer;
 
 uses
   Forms,
-  cbsServer.Cybersoft.BaseForm in 'src\Cybersoft\cbsServer.Cybersoft.BaseForm.pas' {cbsBaseForm: TUniForm},
-  cbsServer.Cybersoft.MainForm in 'src\Cybersoft\cbsServer.Cybersoft.MainForm.pas' {cbsMainForm: TUniForm},
-  cbsServer.Cybersoft.MainModule in 'src\Cybersoft\cbsServer.Cybersoft.MainModule.pas' {damMainModule: TUniGUIMainModule},
-  cbsServer.Cybersoft.ServerModule in 'src\Cybersoft\cbsServer.Cybersoft.ServerModule.pas' {cbsServerModule: TUniGUIServerModule},
   cbsServer.Support.ModuleManager in 'src\Support\cbsServer.Support.ModuleManager.pas',
-  cbsServer.ModuleManager in 'src\Module\Manager\cbsServer.ModuleManager.pas',
-  cbsServer.Contracts.ModuleManager in 'src\Contracts\Module\Manager\cbsServer.Contracts.ModuleManager.pas',
+  cbsServer.Module.Manager in 'src\Module\Manager\cbsServer.Module.Manager.pas',
+  cbsServer.Contracts.Module.Manager in 'src\Contracts\Module\Manager\cbsServer.Contracts.Module.Manager.pas',
   cbsServer.Module in 'src\Module\cbsServer.Module.pas',
   cbsServer.Contracts.Module in 'src\Contracts\Module\cbsServer.Contracts.Module.pas',
-  cbsServer.Module.Api in 'src\Module\cbsServer.Module.Api.pas',
-  cbsServer.Cybersoft.BaseModule in 'src\Cybersoft\cbsServer.Cybersoft.BaseModule.pas' {cbsBaseModule: TDataModule},
-  cdsServer.Support.FDDataSet.Extensions in 'src\Support\cdsServer.Support.FDDataSet.Extensions.pas',
+  cdsServer.Support.DataSet.Extensions in 'src\Support\cdsServer.Support.DataSet.Extensions.pas',
   cbsServer.Support.RunTime in 'src\Support\cbsServer.Support.RunTime.pas',
-  cbsServer.Registered.Forms in 'src\Module\Registered\cbsServer.Registered.Forms.pas',
-  cbsServer.Registered.Modules in 'src\Module\Registered\cbsServer.Registered.Modules.pas',
-  cbsServer.Contracts.Registered.Forms in 'src\Contracts\Module\Registered\cbsServer.Contracts.Registered.Forms.pas',
-  cbsServer.Contracts.Registered.Modules in 'src\Contracts\Module\Registered\cbsServer.Contracts.Registered.Modules.pas',
   cbsServer.Support.Form in 'src\Support\cbsServer.Support.Form.pas',
-  cbsServer.Support.Module in 'src\Support\cbsServer.Support.Module.pas';
+  cbsServer.Support.Module in 'src\Support\cbsServer.Support.Module.pas',
+  cbsServer.Form.BaseForm in 'src\Form\cbsServer.Form.BaseForm.pas' {frmBase: TUniForm},
+  cbsServer.Form.MainForm in 'src\Form\cbsServer.Form.MainForm.pas' {frmMain: TUniForm},
+  cbsServer.Module.BaseModule in 'src\Module\cbsServer.Module.BaseModule.pas' {damBase: TDataModule},
+  cbsServer.Module.MainModule in 'src\Module\cbsServer.Module.MainModule.pas' {damMain: TUniGUIMainModule},
+  cbsServer.Module.ServerModule in 'src\Module\cbsServer.Module.ServerModule.pas' {cbsServerModule: TUniGUIServerModule},
+  cbsServer.Form.Registered in 'src\Form\cbsServer.Form.Registered.pas',
+  cbsServer.Contracts.Form.Registered in 'src\Contracts\Form\cbsServer.Contracts.Form.Registered.pas',
+  cbsServer.Contracts.Module.Registered in 'src\Contracts\Module\cbsServer.Contracts.Module.Registered.pas',
+  cbsServer.Module.Registered in 'src\Module\cbsServer.Module.Registered.pas';
 
 {$R *.res}
 

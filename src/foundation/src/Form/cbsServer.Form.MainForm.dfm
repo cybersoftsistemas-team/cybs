@@ -1,5 +1,5 @@
-inherited cbsMainForm: TcbsMainForm
-  Caption = 'cbsMainForm'
+inherited frmMain: TfrmMain
+  Caption = 'frmMain'
   ClientEvents.UniEvents.Strings = (
     
       'window.afterCreate=function window.afterCreate(sender)'#13#10'{'#13#10'    /' +

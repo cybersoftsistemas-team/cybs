@@ -1,14 +1,14 @@
-unit cbsServer.Registered.Forms;
+unit cbsServer.Form.Registered;
 
 interface
 
 uses
 {PROJECT}
-  cbsServer.Contracts.Registered.Forms,
-  cbsServer.Cybersoft.BaseForm;
+  cbsServer.Contracts.Form.Registered,
+  cbsServer.Form.BaseForm;
 
 type
-  TcbsRegisteredForms = class(TInterfacedObject, IcbsRegisteredForms)
+  TcbsFormRegistered = class(TInterfacedObject, IcbsFormRegistered)
   strict private
     FFormClassList: IFormClassList;
   public
@@ -20,27 +20,27 @@ type
 
 implementation
 
-{ TcbsRegisteredForms }
+{ TcbsFormRegistered }
 
-constructor TcbsRegisteredForms.Create;
+constructor TcbsFormRegistered.Create;
 begin
   inherited Create;
   FFormClassList := CreateFormClassList;
 end;
 
-destructor TcbsRegisteredForms.Destroy;
+destructor TcbsFormRegistered.Destroy;
 begin
   FFormClassList.Clear;
   FFormClassList := nil;
   inherited;
 end;
 
-function TcbsRegisteredForms.ToArray: TArray<TcbsFormClass>;
+function TcbsFormRegistered.ToArray: TArray<TcbsFormClass>;
 begin
   Result := FFormClassList.ToArray;
 end;
 
-procedure TcbsRegisteredForms.Add(const AFormClass: TcbsFormClass);
+procedure TcbsFormRegistered.Add(const AFormClass: TcbsFormClass);
 begin
   if not FFormClassList.Contains(AFormClass) then
   begin

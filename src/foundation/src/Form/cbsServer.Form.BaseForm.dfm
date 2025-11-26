@@ -1,9 +1,9 @@
-object cbsBaseForm: TcbsBaseForm
+object frmBase: TfrmBase
   Left = 0
   Top = 0
   ClientHeight = 199
   ClientWidth = 321
-  Caption = 'cbsBaseForm'
+  Caption = 'frmBase'
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
   TextHeight = 15

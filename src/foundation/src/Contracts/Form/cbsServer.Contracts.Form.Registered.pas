@@ -1,15 +1,15 @@
-unit cbsServer.Contracts.Registered.Forms;
+unit cbsServer.Contracts.Form.Registered;
 
 interface
 
 uses
 {PROJECT}
-  cbsServer.Cybersoft.BaseForm,
+  cbsServer.Form.BaseForm,
 {SPRING}
   Spring.Collections;
 
 type
-  IcbsRegisteredForms = interface(IUnknown)
+  IcbsFormRegistered = interface(IUnknown)
     ['{90C65F66-DB44-4943-AFEF-31121D567CB3}']
     function ToArray: TArray<TcbsFormClass>;
     procedure Add(const AFormClass: TcbsFormClass);

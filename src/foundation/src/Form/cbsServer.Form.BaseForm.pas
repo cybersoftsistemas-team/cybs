@@ -1,4 +1,4 @@
-unit cbsServer.Cybersoft.BaseForm;
+unit cbsServer.Form.BaseForm;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
-  TcbsBaseForm = class(TUniForm)
+  TfrmBase = class(TUniForm)
     aclMain: TUniActionList;
     ilaMain: TUniImageListAdapter;
     nilstMain: TUniNativeImageList;

@@ -1,4 +1,4 @@
-﻿unit cbsServer.Cybersoft.ServerModule;
+﻿unit cbsServer.Module.ServerModule;
 
 interface
 
@@ -15,7 +15,7 @@ type
     procedure FirstInit; override;
   end;
 
-function cbsServerModule: TcbsServerModule;
+  function cbsServerModule: TcbsServerModule;
 
 implementation
 

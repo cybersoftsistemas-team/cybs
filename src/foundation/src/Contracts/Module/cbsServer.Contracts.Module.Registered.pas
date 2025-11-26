@@ -1,15 +1,15 @@
-unit cbsServer.Contracts.Registered.Modules;
+unit cbsServer.Contracts.Module.Registered;
 
 interface
 
 uses
 {PROJECT}
-  cbsServer.Cybersoft.BaseModule,
+  cbsServer.Module.BaseModule,
 {SPRING}
   Spring.Collections;
 
 type
-  IcbsRegisteredModules = interface(IUnknown)
+  IcbsModuleRegistered = interface(IUnknown)
     ['{45813152-838E-4E5C-943F-22DC39CE0489}']
     function ToArray: TArray<TcbsModuleClass>;
     procedure Add(const AModuleClass: TcbsModuleClass);

@@ -1,4 +1,4 @@
-object damMainModule: TdamMainModule
+object damMain: TdamMain
   MonitoredKeys.Keys = <>
   Height = 96
   Width = 136

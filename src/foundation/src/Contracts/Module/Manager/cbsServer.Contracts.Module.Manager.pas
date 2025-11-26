@@ -1,4 +1,4 @@
-unit cbsServer.Contracts.ModuleManager;
+unit cbsServer.Contracts.Module.Manager;
 
 interface
 

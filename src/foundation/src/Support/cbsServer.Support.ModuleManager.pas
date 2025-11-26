@@ -4,7 +4,7 @@ interface
 
 uses
 {PROJECT}
-  cbsServer.Contracts.ModuleManager;
+  cbsServer.Contracts.Module.Manager;
 
   function ModuleManager: IcbsModuleManager;
 
@@ -12,7 +12,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsServer.ModuleManager;
+  cbsServer.Module.Manager;
 
 var
   InternalModuleManager: IcbsModuleManager;

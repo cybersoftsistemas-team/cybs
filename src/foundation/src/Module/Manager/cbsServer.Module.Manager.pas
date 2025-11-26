@@ -1,15 +1,16 @@
-unit cbsServer.ModuleManager;
+unit cbsServer.Module.Manager;
 
 interface
 
 uses
 {PROJECT}
-  cbsServer.Contracts.ModuleManager;
+  cbsServer.Contracts.Module.Manager;
 
 type
   TcbsModuleManager = class(TInterfacedObject, IcbsModuleManager)
   strict private
     LModuleList: IModuleList;
+    function GetModuleExtension: string;
     function GetModuleMask: string;
   public
     constructor Create;
@@ -24,8 +25,7 @@ uses
   System.IOUtils,
   System.SysUtils,
 {PROJECT}
-  cbsServer.Module,
-  cbsServer.Module.Api;
+  cbsServer.Module;
 
 { TcbsModuleManager }
 
@@ -38,12 +38,26 @@ end;
 destructor TcbsModuleManager.Destroy;
 begin
   LModuleList.Clear;
+  LModuleList := nil;
   inherited;
+end;
+
+function TcbsModuleManager.GetModuleExtension: string;
+begin
+{$IFDEF MSWINDOWS}
+  Result := '.bpl';
+{$ELSEIF Defined(MACOS)}
+  Result := '.dylib';
+{$ELSEIF Defined(LINUX)}
+  Result := '.so';
+{$ELSE}
+  Result := ''; // Caso improvável
+{$ENDIF}
 end;
 
 function TcbsModuleManager.GetModuleMask: string;
 begin
-  Result := '*' + string(GetModuleExtension);
+  Result := '*' + GetModuleExtension;
 end;
 
 procedure TcbsModuleManager.LoadFromFolder(const AFolder: string);

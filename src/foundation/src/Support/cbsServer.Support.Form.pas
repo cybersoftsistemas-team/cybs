@@ -4,7 +4,7 @@ interface
 
 uses
 {PROJECT}
-  cbsServer.Cybersoft.BaseForm;
+  cbsServer.Form.BaseForm;
 
   procedure RegisterFormClass(const AFormClass: TcbsFormClass);
 
@@ -12,33 +12,33 @@ implementation
 
 uses
 {PROJECT}
-  cbsServer.Contracts.Registered.Forms,
-  cbsServer.Registered.Forms;
+  cbsServer.Contracts.Form.Registered,
+  cbsServer.Form.Registered;
 
 var
-  GRegisteredForms: IcbsRegisteredForms;
+  GFormRegistered: IcbsFormRegistered;
 
-function GetRegisteredForms: TArray<TcbsFormClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF}; export;
+function GetFormRegistered: TArray<TcbsFormClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF}; export;
 begin
-  Result := GRegisteredForms.ToArray;
+  Result := GFormRegistered.ToArray;
 end;
 
 procedure RegisterFormClass(const AFormClass: TcbsFormClass);
 begin
-  GRegisteredForms.Add(AFormClass);
+  GFormRegistered.Add(AFormClass);
 end;
 
 exports
-  GetRegisteredForms;
+  GetFormRegistered;
 
 initialization
 begin
-  GRegisteredForms := TcbsRegisteredForms.Create;
+  GFormRegistered := TcbsFormRegistered.Create;
 end;
 
 finalization
 begin
-  GRegisteredForms := nil;
+  GFormRegistered := nil;
 end;
 
 end.

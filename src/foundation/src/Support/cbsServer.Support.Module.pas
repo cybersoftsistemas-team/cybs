@@ -4,7 +4,7 @@ interface
 
 uses
 {PROJECT}
-  cbsServer.Cybersoft.BaseModule;
+  cbsServer.Module.BaseModule;
 
   procedure RegisterModuleClass(const AModuleClass: TcbsModuleClass);
 
@@ -12,33 +12,33 @@ implementation
 
 uses
 {PROJECT}
-  cbsServer.Contracts.Registered.Modules,
-  cbsServer.Registered.Modules;
+  cbsServer.Contracts.Module.Registered,
+  cbsServer.Module.Registered;
 
 var
-  GRegisteredModules: IcbsRegisteredModules;
+  GModuleRegistered: IcbsModuleRegistered;
 
-function GetRegisteredModules: TArray<TcbsModuleClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF}; export;
+function GetModuleRegistered: TArray<TcbsModuleClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF}; export;
 begin
-  Result := GRegisteredModules.ToArray;
+  Result := GModuleRegistered.ToArray;
 end;
 
 procedure RegisterModuleClass(const AModuleClass: TcbsModuleClass);
 begin
-  GRegisteredModules.Add(AModuleClass);
+  GModuleRegistered.Add(AModuleClass);
 end;
 
 exports
-  GetRegisteredModules;
+  GetModuleRegistered;
 
 initialization
 begin
-  GRegisteredModules := TcbsRegisteredModules.Create;
+  GModuleRegistered := TcbsModuleRegistered.Create;
 end;
 
 finalization
 begin
-  GRegisteredModules := nil;
+  GModuleRegistered := nil;
 end;
 
 end.

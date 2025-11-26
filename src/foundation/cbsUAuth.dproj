@@ -161,8 +161,6 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="src\Module\cbsUAuth.Module.Info.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsUAuth.Contracts.Module.Api.pas"/>
         <DCCReference Include="src\Module\cbsUAuth.Module.LoginModule.pas">
             <Form>damLogin</Form>
         </DCCReference>

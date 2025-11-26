@@ -1,22 +1,22 @@
-unit cbsServer.Cybersoft.MainForm;
+unit cbsServer.Form.MainForm;
 
 interface
 
 uses
 {PROJECT}
-  cbsServer.Cybersoft.BaseForm,
+  cbsServer.Form.BaseForm,
 {IDE}
   System.Classes, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
-  TcbsMainForm = class(TcbsBaseForm)
+  TfrmMain = class(TfrmBase)
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 
-function cbsMainForm: TcbsMainForm;
+function frmMain: TfrmMain;
 
 implementation
 
@@ -26,16 +26,16 @@ uses
 {IDE}
   uniGUIVars,
 {PROJECT}
-  cbsServer.Cybersoft.MainModule;
+  cbsServer.Module.MainModule;
 
-function cbsMainForm: TcbsMainForm;
+function frmMain: TfrmMain;
 begin
-  Result := TcbsMainForm(damMainModule.GetFormInstance(TcbsMainForm));
+  Result := TfrmMain(damMain.GetFormInstance(TfrmMain));
 end;
 
 initialization
 begin
-  RegisterAppFormClass(TcbsMainForm);
+  RegisterAppFormClass(TfrmMain);
 end;
 
 end.
