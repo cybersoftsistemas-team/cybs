@@ -5,10 +5,10 @@ interface
 type
   RunTime = class
   private
-    class var FIsElectron: Boolean;
     class function GetIsClientRunningInServer: Boolean; static;
+    class function GetIsElectron: Boolean; static;
   public
-    class property IsElectron: Boolean read FIsElectron write FIsElectron;
+    class property IsElectron: Boolean read GetIsElectron;
     class property IsClientRunningInServer: Boolean read GetIsClientRunningInServer;
   end;
 
@@ -18,7 +18,9 @@ uses
 {IDE}
   IdStack,
   System.SysUtils,
-  uniGUIApplication;
+  uniGUIApplication,
+{PROJECT}
+  cbsSystem.Contracts.Module.Main;
 
 function GetLocalAddresses: TArray<string>;
 begin
@@ -34,12 +36,17 @@ end;
 
 class function RunTime.GetIsClientRunningInServer: Boolean;
 begin
-  Result := False;
   for var LIP in GetLocalAddresses do if
     SameText(LIP, UniSession.RemoteIP) then
   begin
     Exit(True);
   end;
+  Result := False;
+end;
+
+class function RunTime.GetIsElectron: Boolean;
+begin
+  Result := (UniApplication.UniMainModule as IMainModule).IsElectron;
 end;
 
 end.

@@ -46,6 +46,12 @@ object cbsServerModule: TcbsServerModule
     '  position: absolute !important;'
     '  left: -5px !important;'
     '  top: -5px !important;'
+    '}'
+    ''
+    '.electron-login-options-pos {'
+    '  position: absolute !important;'
+    '  left: -6px !important;'
+    '  top: -28px !important;'
     '}')
   SSL.SSLOptions.RootCertFile = 'root.pem'
   SSL.SSLOptions.CertFile = 'cert.pem'

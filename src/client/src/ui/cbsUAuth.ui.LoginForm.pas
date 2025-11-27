@@ -31,7 +31,7 @@ type
     labFooterTitle: TUniLabel;
     labFooterSubTitle: TUniLabel;
     nilstMain: TUniNativeImageList;
-    UniImage1: TUniImage;
+    imgBckFooter: TUniImage;
     procedure UniLoginFormCreate(Sender: TObject);
     procedure actConnectExecute(Sender: TObject);
     procedure UniLoginFormActivate(Sender: TObject);
@@ -54,6 +54,7 @@ uses
   System.SysUtils,
   uniGUIApplication,
 {PROJECT}
+  cbsSystem.Contracts.Module.Main,
   cbsSystem.Support.Form,
   cbsSystem.Support.RunTime,
   cbsUAuth.data.module.LoginModule,
@@ -97,7 +98,7 @@ procedure TfrmLogin.UniLoginFormAjaxEvent(Sender: TComponent; EventName: string;
 begin
   if EventName = 'IsElectron' then
   begin
-    RunTime.IsElectron := SameText(Params.Values['value'], 'true');
+    (UniApplication.UniMainModule as IMainModule).IsElectron := SameText(Params.Values['value'], 'true');
   end
   else if EventName = 'LoadClientData' then
   begin

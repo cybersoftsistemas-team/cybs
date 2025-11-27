@@ -3,15 +3,19 @@ unit cbsServer.Module.MainModule;
 interface
 
 uses
+{PROJECT}
+  cbsSystem.Contracts.Module.Main,
 {IDE}
   uniGUIMainModule;
 
 type
-  TdamMain = class(TUniGUIMainModule)
+  TdamMain = class(TUniGUIMainModule, IMainModule)
   private
-    { Private declarations }
+    FIsElectron: Boolean;
+    function GetIsElectron: Boolean;
+    procedure SetIsElectron(const AValue: Boolean);
   public
-    { Public declarations }
+    property IsElectron: Boolean read GetIsElectron write SetIsElectron;
   end;
 
   function damMain: TdamMain;
@@ -28,6 +32,18 @@ uses
 function damMain: TdamMain;
 begin
   Result := TdamMain(UniApplication.UniMainModule)
+end;
+
+{ TdamMain }
+
+function TdamMain.GetIsElectron: Boolean;
+begin
+  Result := FIsElectron;
+end;
+
+procedure TdamMain.SetIsElectron(const AValue: Boolean);
+begin
+  FIsElectron := AValue;
 end;
 
 initialization

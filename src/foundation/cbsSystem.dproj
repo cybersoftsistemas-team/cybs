@@ -156,6 +156,7 @@
         <DCCReference Include="src\Support\cbsSystem.Support.ModuleManager.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.RunTime.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.DataSet.Extensions.pas"/>
+        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.Main.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

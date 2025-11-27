@@ -105,24 +105,6 @@ function createWindow() {
     }
   });
 
-  ipcMain.on("open-window", (event, options) => {
-    const form = new BrowserWindow({
-      width: options.width || 800,
-      height: options.height || 600,
-      resizable: options.resizable ?? true,
-      autoHideMenuBar: options.autoHideMenuBar ?? true,
-      frame: options.frame ?? true,
-      icon: options.icon || null,
-      webPreferences: {
-        preload: join(__dirname, "preload.js"),
-        nodeIntegration: false,
-        contextIsolation: true,
-      },
-    });
-
-    form.loadURL(options.url);
-  });
-
   ipcMain.handle("application-load-config", async () => {
     return await loadConfig();
   });

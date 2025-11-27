@@ -11,15 +11,12 @@ object frmLogin: TfrmLogin
   ActiveControl = edtUserName
   ClientEvents.UniEvents.Strings = (
     
-      'window.beforeInit=function window.beforeInit(sender, config)'#13#10'{'#13 +
-      #10'    var inElectron = AppEnv.isElectron();'#13#10#13#10'    // manda para ' +
-      'o Delphi'#13#10'    ajaxRequest(sender, "IsElectron", ["value=" + inEl' +
-      'ectron]);'#13#10'}'
-    
-      'window.afterCreate=function window.afterCreate(sender)'#13#10'{'#13#10'   if' +
-      ' (AppEnv.isElectron()) {'#13#10'      sender.addCls("electron-login-po' +
-      's");'#13#10'   }'#13#10'   '#13#10'   window.DataStorage.load(sender, "logon.dat")' +
-      ';'#13#10'}')
+      'window.afterCreate=function window.afterCreate(sender)'#13#10'{'#13#10'   va' +
+      'r inElectron = AppEnv.isElectron();'#13#10#13#10'   // manda para o Delphi' +
+      #13#10'   ajaxRequest(sender, "IsElectron", ["value=" + inElectron]);' +
+      #13#10'   '#13#10'   if (AppEnv.isElectron()) {'#13#10'      sender.addCls("elect' +
+      'ron-login-pos");'#13#10'   }'#13#10'   '#13#10'   window.DataStorage.load(sender, ' +
+      '"logon.dat");'#13#10'}')
   LayoutConfig.Cls = 'login-form'
   OnAjaxEvent = UniLoginFormAjaxEvent
   OnCreate = UniLoginFormCreate
@@ -190,7 +187,7 @@ object frmLogin: TfrmLogin
       DesignSize = (
         453
         93)
-      object UniImage1: TUniImage
+      object imgBckFooter: TUniImage
         Left = 0
         Top = 47
         Width = 451

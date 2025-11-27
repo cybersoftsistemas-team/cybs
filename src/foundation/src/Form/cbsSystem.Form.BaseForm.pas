@@ -4,9 +4,11 @@ interface
 
 uses
 {IDE}
-  uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
+  uniGUIDialogs, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
+  TcbsFormClass = class of TUniForm;
+
   TfrmBase = class(TUniForm)
     aclMain: TUniActionList;
     ilaMain: TUniImageListAdapter;
@@ -16,8 +18,6 @@ type
   public
     { Public declarations }
   end;
-
-  TcbsFormClass = class of TUniForm;
 
 implementation
 

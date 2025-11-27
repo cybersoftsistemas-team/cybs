@@ -7,11 +7,20 @@ uses
   cbsSystem.Form.BaseForm,
 {IDE}
   uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Controls, Vcl.Forms, uniGUIClasses, uniBasicGrid,
-  uniDBGrid;
+  uniDBGrid, uniLabel, uniButton, uniBitBtn;
 
 type
   TfrmOptions = class(TfrmBase)
     grdConn: TUniDBGrid;
+    labConnList: TUniLabel;
+    btnAdd: TUniBitBtn;
+    btnEdit: TUniBitBtn;
+    btnDel: TUniBitBtn;
+    btnClear: TUniBitBtn;
+    actAdd: TAction;
+    actEdit: TAction;
+    actDel: TAction;
+    actClear: TAction;
   private
     { Private declarations }
   public
