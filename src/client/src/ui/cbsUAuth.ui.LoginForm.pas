@@ -36,11 +36,14 @@ type
     procedure actConnectExecute(Sender: TObject);
     procedure UniLoginFormActivate(Sender: TObject);
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
+    procedure actOptionsExecute(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
+
+  function frmLogin: TfrmLogin;
 
 implementation
 
@@ -49,10 +52,17 @@ implementation
 uses
 {IDE}
   System.SysUtils,
+  uniGUIApplication,
 {PROJECT}
   cbsSystem.Support.Form,
   cbsSystem.Support.RunTime,
-  cbsUAuth.data.module.LoginModule;
+  cbsUAuth.data.module.LoginModule,
+  cbsUAuth.ui.OptionsForm;
+
+function frmLogin: TfrmLogin;
+begin
+  Result := TfrmLogin(UniApplication.UniMainModule.GetFormInstance(TfrmLogin));
+end;
 
 { TfrmLogin }
 
@@ -68,6 +78,11 @@ end;
 procedure TfrmLogin.actConnectExecute(Sender: TObject);
 begin
   ModalResult := mrOK;
+end;
+
+procedure TfrmLogin.actOptionsExecute(Sender: TObject);
+begin
+  frmOptions.ShowModal;
 end;
 
 procedure TfrmLogin.UniLoginFormActivate(Sender: TObject);

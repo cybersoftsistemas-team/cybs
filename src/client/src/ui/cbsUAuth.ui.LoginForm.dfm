@@ -452,6 +452,7 @@ object frmLogin: TfrmLogin
     object actOptions: TAction
       Caption = 'Op'#231#245'es'
       ImageIndex = 1
+      OnExecute = actOptionsExecute
     end
     object actDomains: TAction
       Enabled = False

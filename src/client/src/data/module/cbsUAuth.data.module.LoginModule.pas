@@ -23,8 +23,7 @@ type
     procedure SaveLogonData;
   end;
 
-var
-  damLogin: TdamLogin;
+  function damLogin: TdamLogin;
 
 implementation
 
@@ -33,6 +32,7 @@ implementation
 uses
 {IDE}
   System.SysUtils,
+  uniGUIApplication,
 {PROJECT}
   cbsSystem.Support.DataSet.Extensions,
   cbsSystem.Support.Module;
@@ -40,6 +40,11 @@ uses
 const
   CST_FILENAME_LOGON = 'logon.dat';
   CST_KEY_LOGON      = '{7CEDDCEE-2AAC-4BD6-8609-9580F1BFF871}';
+
+function damLogin: TdamLogin;
+begin
+  Result := TdamLogin(UniApplication.UniMainModule.GetModuleInstance(TdamLogin));
+end;
 
 { TdamLogin }
 
@@ -68,7 +73,6 @@ end;
 procedure TdamLogin.UniGUIMainModuleCreate(Sender: TObject);
 begin
   inherited;
-  damLogin := Self;
   mtbUSE.CreateDataSet;
 end;
 

@@ -78,6 +78,6 @@ contains
   cbsSystem.Support.Module in 'src\Support\cbsSystem.Support.Module.pas',
   cbsSystem.Support.ModuleManager in 'src\Support\cbsSystem.Support.ModuleManager.pas',
   cbsSystem.Support.RunTime in 'src\Support\cbsSystem.Support.RunTime.pas',
-  cdsSystem.Support.DataSet.Extensions in 'src\Support\cdsSystem.Support.DataSet.Extensions.pas';
+  cbsSystem.Support.DataSet.Extensions in 'src\Support\cbsSystem.Support.DataSet.Extensions.pas';
 
 end.

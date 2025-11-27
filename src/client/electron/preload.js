@@ -4,6 +4,7 @@ contextBridge.exposeInMainWorld("electronAPI", {
   on: (channel, callback) => {
     ipcRenderer.on(channel, (event, data) => callback(data));
   },
+  openWindow: (options) => ipcRenderer.send("open-window", options),
   send: (channel, data) => {
     ipcRenderer.send(channel, data);
   },

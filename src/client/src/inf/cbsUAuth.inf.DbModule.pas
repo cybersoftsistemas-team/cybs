@@ -20,10 +20,26 @@ type
     { Public declarations }
   end;
 
+  function damDb: TdamDb;
+
 implementation
 
-{%CLASSGROUP 'Vcl.Controls.TControl'}
-
 {$R *.dfm}
+
+uses
+{IDE}
+  uniGUIApplication,
+{PROJECT}
+  cbsSystem.Support.Module;
+
+function damDb: TdamDb;
+begin
+  Result := TdamDb(UniApplication.UniMainModule.GetModuleInstance(TdamDb));
+end;
+
+initialization
+begin
+  RegisterModuleClass(TdamDb);
+end;
 
 end.
