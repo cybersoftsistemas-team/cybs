@@ -133,6 +133,9 @@
         <DCCReference Include="uniGUI30Core.dcp"/>
         <DCCReference Include="uniTools30.dcp"/>
         <DCCReference Include="uIndy30.dcp"/>
+        <DCCReference Include="vclFireDAC.dcp"/>
+        <DCCReference Include="FireDACCommonODBC.dcp"/>
+        <DCCReference Include="FireDACMSSQLDriver.dcp"/>
         <DCCReference Include="src\Module\cbsSystem.Module.BaseModule.pas">
             <Form>damBase</Form>
             <FormType>dfm</FormType>
@@ -157,6 +160,11 @@
         <DCCReference Include="src\Support\cbsSystem.Support.RunTime.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.DataSet.Extensions.pas"/>
         <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.Main.pas"/>
+        <DCCReference Include="src\Infrastructure\cbsSystem.Infrastructure.BaseDbModule.pas">
+            <Form>damBaseDb</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

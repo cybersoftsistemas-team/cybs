@@ -1,32 +1,32 @@
 inherited frmOptions: TfrmOptions
-  ClientHeight = 348
+  ClientHeight = 347
   ClientWidth = 451
   Caption = 'Adicionar/Remover Conex'#245'es de Bancos de Dados'
-  BorderStyle = bsDialog
+  BorderStyle = bsNone
   ClientEvents.UniEvents.Strings = (
     
       'window.afterCreate=function window.afterCreate(sender)'#13#10'{'#13#10'   if' +
       ' (AppEnv.isElectron()) {'#13#10'      sender.addCls("electron-login-op' +
       'tions-pos");'#13#10'   }'#13#10'}')
-  ExplicitWidth = 467
-  ExplicitHeight = 387
+  ExplicitWidth = 451
+  ExplicitHeight = 347
   TextHeight = 15
   object grdConn: TUniDBGrid [0]
     Left = 10
     Top = 26
     Width = 311
-    Height = 312
+    Height = 311
     Hint = ''
     DataSource = damLogin.dsoCNS
     Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgRowSelect, dgAutoRefreshRow]
     ReadOnly = True
     WebOptions.Paged = False
-    LoadMask.Message = 'Loading data...'
+    LoadMask.Message = 'Carregando dados...'
+    ForceFit = True
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
     Columns = <
       item
-        ShowToolTipAlways = False
         FieldName = 'Id'
         Title.Caption = 'Id'
         Width = 232
@@ -36,13 +36,13 @@ inherited frmOptions: TfrmOptions
       item
         FieldName = 'Name'
         Title.Caption = 'Nome da conex'#227'o'
-        Width = 124
+        Width = 112
         ReadOnly = True
       end
       item
         FieldName = 'ConnectionString'
         Title.Caption = 'ConnectionString'
-        Width = 244
+        Width = 184
         ReadOnly = True
       end>
   end
@@ -97,7 +97,7 @@ inherited frmOptions: TfrmOptions
   end
   object btnClose: TUniBitBtn [6]
     Left = 330
-    Top = 313
+    Top = 312
     Width = 111
     Height = 25
     Action = actClose
@@ -118,7 +118,7 @@ inherited frmOptions: TfrmOptions
   end
   object btnSelected: TUniBitBtn [8]
     Left = 330
-    Top = 282
+    Top = 281
     Width = 111
     Height = 25
     Action = actSelected
@@ -158,6 +158,7 @@ inherited frmOptions: TfrmOptions
     object actAdd: TAction
       Caption = 'Adicionar'
       ImageIndex = 0
+      OnExecute = actAddExecute
     end
     object actEdit: TAction
       Caption = 'Alterar'

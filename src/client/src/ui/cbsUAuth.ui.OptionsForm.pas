@@ -29,6 +29,7 @@ type
     btnSelected: TUniBitBtn;
     pnlLine01: TUniPanel;
     pnlLine02: TUniPanel;
+    procedure actAddExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,11 +46,18 @@ uses
 {IDE}
   uniGUIApplication,
 {PROJECT}
-  cbsUAuth.data.module.LoginModule;
+  cbsUAuth.data.module.LoginModule,
+  cbsUAuth.ui.ConnEditorForm;
 
 function frmOptions: TfrmOptions;
 begin
   Result := TfrmOptions(UniApplication.UniMainModule.GetFormInstance(TfrmOptions));
+end;
+
+procedure TfrmOptions.actAddExecute(Sender: TObject);
+begin
+  frmConnEditor.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
+  frmConnEditor.ShowModal;
 end;
 
 end.

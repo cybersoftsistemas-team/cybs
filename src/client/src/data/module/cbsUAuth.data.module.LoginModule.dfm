@@ -51,12 +51,12 @@ inherited damLogin: TdamLogin
     end
     object mtbCNSName: TStringField
       DisplayLabel = 'Nome da conex'#227'o'
-      DisplayWidth = 20
+      DisplayWidth = 18
       FieldName = 'Name'
       Size = 255
     end
     object mtbCNSConnectionString: TStringField
-      DisplayWidth = 20
+      DisplayWidth = 30
       FieldName = 'ConnectionString'
       Size = 255
     end

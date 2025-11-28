@@ -23,6 +23,7 @@ implementation
 
 uses
 {IDE}
+  FireDAC.Comp.Client,
   Forms,
   System.SysUtils,
   uniGUIVars,
@@ -87,6 +88,12 @@ initialization
 begin
   RegisterServerModuleClass(TcbsServerModule);
   RegisterAppFormAndModuleClass;
+  FDManager.Active := True;
+end;
+
+finalization
+begin
+  FDManager.Close;
 end;
 
 end.

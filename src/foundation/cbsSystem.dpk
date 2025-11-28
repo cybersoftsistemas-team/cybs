@@ -39,7 +39,10 @@ requires
   FireDACCommon,
   uniGUI30Core,
   uniTools30,
-  uIndy30;
+  uIndy30,
+  vclFireDAC,
+  FireDACCommonODBC,
+  FireDACMSSQLDriver;
 
 contains
   Spring.Collections.Dictionaries,
@@ -79,7 +82,8 @@ contains
   cbsSystem.Support.ModuleManager in 'src\Support\cbsSystem.Support.ModuleManager.pas',
   cbsSystem.Support.RunTime in 'src\Support\cbsSystem.Support.RunTime.pas',
   cbsSystem.Support.DataSet.Extensions in 'src\Support\cbsSystem.Support.DataSet.Extensions.pas',
-  cbsSystem.Contracts.Module.Main in 'src\Contracts\Module\cbsSystem.Contracts.Module.Main.pas';
+  cbsSystem.Contracts.Module.Main in 'src\Contracts\Module\cbsSystem.Contracts.Module.Main.pas',
+  cbsSystem.Infrastructure.BaseDbModule in 'src\Infrastructure\cbsSystem.Infrastructure.BaseDbModule.pas' {damBaseDb: TDataModule};
 
 end.
 
