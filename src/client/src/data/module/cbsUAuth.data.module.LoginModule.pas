@@ -16,6 +16,11 @@ type
     mtbUSEId: TGuidField;
     mtbUSEName: TStringField;
     mtbUSEPassword: TStringField;
+    mtbCNS: TFDMemTable;
+    dsoCNS: TDataSource;
+    mtbCNSId: TGuidField;
+    mtbCNSName: TStringField;
+    mtbCNSConnectionString: TStringField;
     procedure UniGUIMainModuleCreate(Sender: TObject);
     procedure mtbUSENewRecord(DataSet: TDataSet);
   public
@@ -74,6 +79,7 @@ procedure TdamLogin.UniGUIMainModuleCreate(Sender: TObject);
 begin
   inherited;
   mtbUSE.CreateDataSet;
+  mtbCNS.CreateDataSet;
 end;
 
 initialization
