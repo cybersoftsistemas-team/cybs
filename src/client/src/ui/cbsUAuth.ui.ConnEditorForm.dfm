@@ -26,7 +26,7 @@ inherited frmConnEditor: TfrmConnEditor
     ForceFit = True
     EnableColumnHide = False
     Anchors = [akLeft, akTop, akRight, akBottom]
-    TabOrder = 6
+    TabOrder = 2
     OnSelectionChange = grdParamsSelectionChange
     OnDrawColumnCell = grdParamsDrawColumnCell
     Columns = <
@@ -46,6 +46,13 @@ inherited frmConnEditor: TfrmConnEditor
         Title.Caption = 'Padr'#227'o'
         Width = 1534
         ReadOnly = True
+      end
+      item
+        FieldName = 'ParamType'
+        Title.Caption = 'ParamType'
+        Width = 1534
+        Visible = False
+        Menu.ColumnHideable = False
       end>
   end
   object imgDb: TUniImage [1]
@@ -79,7 +86,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 13
     Hint = ''
     Caption = 'Configure os par'#226'metros de conex'#227'o do banco de dados.'
-    TabOrder = 0
+    TabOrder = 1
   end
   object btnOk: TUniBitBtn [3]
     Left = 284
@@ -90,7 +97,7 @@ inherited frmConnEditor: TfrmConnEditor
     Cancel = True
     ModalResult = 1
     Anchors = [akRight, akBottom]
-    TabOrder = 1
+    TabOrder = 6
   end
   object btnCancel: TUniBitBtn [4]
     Left = 365
@@ -101,7 +108,7 @@ inherited frmConnEditor: TfrmConnEditor
     Cancel = True
     ModalResult = 2
     Anchors = [akRight, akBottom]
-    TabOrder = 2
+    TabOrder = 7
   end
   object btnTestConn: TUniBitBtn [5]
     Left = 10
@@ -110,7 +117,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 25
     Action = actTestConn
     Anchors = [akTop, akRight]
-    TabOrder = 3
+    TabOrder = 5
     ImageIndex = 0
   end
   object btnDefaults: TUniBitBtn [6]
@@ -122,6 +129,40 @@ inherited frmConnEditor: TfrmConnEditor
     Anchors = [akTop, akRight]
     TabOrder = 4
     ImageIndex = 1
+  end
+  object pnlCtrl: TUniHiddenPanel [7]
+    Left = 256
+    Top = 88
+    Width = 145
+    Height = 153
+    Hint = ''
+    Visible = True
+    object cbxCombo: TUniComboBox
+      Left = 12
+      Top = 8
+      Width = 121
+      Hint = ''
+      Text = 'cbxCombo'
+      TabOrder = 1
+      IconItems = <>
+    end
+    object edtPassword: TUniEdit
+      Left = 12
+      Top = 36
+      Width = 121
+      Hint = ''
+      PasswordChar = '*'
+      Text = 'edtPassword'
+      TabOrder = 2
+    end
+    object edtText: TUniEdit
+      Left = 12
+      Top = 64
+      Width = 121
+      Hint = ''
+      Text = 'edtText'
+      TabOrder = 3
+    end
   end
   inherited aclMain: TUniActionList
     Left = 18
@@ -338,6 +379,11 @@ inherited frmConnEditor: TfrmConnEditor
     object mtbPRMDefault: TStringField
       DisplayLabel = 'Padr'#227'o'
       FieldName = 'Default'
+      Size = 255
+    end
+    object mtbPRMParamType: TStringField
+      FieldName = 'ParamType'
+      Visible = False
       Size = 255
     end
   end

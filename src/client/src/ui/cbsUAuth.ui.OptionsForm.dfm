@@ -32,6 +32,7 @@ inherited frmOptions: TfrmOptions
         Width = 232
         Visible = False
         ReadOnly = True
+        Menu.ColumnHideable = False
       end
       item
         FieldName = 'Name'
