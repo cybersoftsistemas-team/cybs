@@ -163,8 +163,8 @@ inherited frmOptions: TfrmOptions
     end
     object actEdit: TAction
       Caption = 'Alterar'
-      Enabled = False
       ImageIndex = 1
+      OnExecute = actEditExecute
     end
     object actDel: TAction
       Caption = 'Excluir'

@@ -30,10 +30,12 @@ type
     pnlLine01: TUniPanel;
     pnlLine02: TUniPanel;
     procedure actAddExecute(Sender: TObject);
+    procedure actEditExecute(Sender: TObject);
   private
     { Private declarations }
   public
-    { Public declarations }
+    procedure AddorEditConnection; overload;
+    procedure AddorEditConnection(const AName, AConnectionString: string); overload;
   end;
 
   function frmOptions: TfrmOptions;
@@ -44,6 +46,7 @@ implementation
 
 uses
 {IDE}
+  System.UITypes,
   uniGUIApplication,
 {PROJECT}
   cbsUAuth.data.module.LoginModule,
@@ -56,8 +59,35 @@ end;
 
 procedure TfrmOptions.actAddExecute(Sender: TObject);
 begin
-  frmConnEditor.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
-  frmConnEditor.ShowModal;
+  AddorEditConnection;
+end;
+
+procedure TfrmOptions.actEditExecute(Sender: TObject);
+begin
+  AddorEditConnection(damLogin.mtbCNSName.AsString, damLogin.mtbCNSConnectionString.AsString);
+end;
+
+procedure TfrmOptions.AddorEditConnection;
+begin
+  AddorEditConnection('', '');
+end;
+
+procedure TfrmOptions.AddorEditConnection(const AName, AConnectionString: string);
+begin
+  frmConnEditor.ConnectionName := AName;
+  frmConnEditor.ConnectionString := AConnectionString;
+  frmConnEditor.ShowModal(
+    procedure(Sender: TComponent; Result: Integer)
+    begin
+      if Result = mrOk then
+      begin
+        damLogin.mtbCNS.Edit;
+        damLogin.mtbCNSName.AsString := frmConnEditor.ConnectionName;
+        damLogin.mtbCNSConnectionString.AsString := frmConnEditor.ConnectionString;
+        damLogin.mtbCNS.Post;
+      end;
+    end
+  );
 end;
 
 end.

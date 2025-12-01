@@ -15,10 +15,15 @@ inherited frmConnEditor: TfrmConnEditor
   TextHeight = 15
   object grdParams: TUniDBGrid [0]
     Left = 10
-    Top = 46
+    Top = 86
     Width = 430
-    Height = 256
+    Height = 216
     Hint = ''
+    ClientEvents.ExtEvents.Strings = (
+      
+        'beforeedit=function beforeedit(editor, context, eOpts)'#13#10'{'#13#10'    a' +
+        'jaxRequest(context.grid, '#39'beforeedit'#39', {'#13#10'        row: context.r' +
+        'owIdx,'#13#10'        col: context.colIdx'#13#10'    });'#13#10'}')
     DataSource = dsoPRM
     Options = [dgEditing, dgTitles, dgIndicator, dgColLines, dgRowLines, dgAutoRefreshRow]
     WebOptions.Paged = False
@@ -27,6 +32,7 @@ inherited frmConnEditor: TfrmConnEditor
     EnableColumnHide = False
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 2
+    OnAjaxEvent = grdParamsAjaxEvent
     OnSelectionChange = grdParamsSelectionChange
     OnDrawColumnCell = grdParamsDrawColumnCell
     Columns = <
@@ -86,7 +92,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 13
     Hint = ''
     Caption = 'Configure os par'#226'metros de conex'#227'o do banco de dados.'
-    TabOrder = 1
+    TabOrder = 0
   end
   object btnOk: TUniBitBtn [3]
     Left = 284
@@ -97,7 +103,7 @@ inherited frmConnEditor: TfrmConnEditor
     Cancel = True
     ModalResult = 1
     Anchors = [akRight, akBottom]
-    TabOrder = 6
+    TabOrder = 5
   end
   object btnCancel: TUniBitBtn [4]
     Left = 365
@@ -108,7 +114,7 @@ inherited frmConnEditor: TfrmConnEditor
     Cancel = True
     ModalResult = 2
     Anchors = [akRight, akBottom]
-    TabOrder = 7
+    TabOrder = 6
   end
   object btnTestConn: TUniBitBtn [5]
     Left = 10
@@ -117,7 +123,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 25
     Action = actTestConn
     Anchors = [akTop, akRight]
-    TabOrder = 5
+    TabOrder = 4
     ImageIndex = 0
   end
   object btnDefaults: TUniBitBtn [6]
@@ -127,42 +133,55 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 25
     Action = actDefaults
     Anchors = [akTop, akRight]
-    TabOrder = 4
+    TabOrder = 3
     ImageIndex = 1
   end
-  object pnlCtrl: TUniHiddenPanel [7]
-    Left = 256
-    Top = 88
-    Width = 145
-    Height = 153
+  object pnlValue: TUniPanel [7]
+    Left = 128
+    Top = 128
+    Width = 193
+    Height = 82
     Hint = ''
-    Visible = True
-    object cbxCombo: TUniComboBox
-      Left = 12
-      Top = 8
-      Width = 121
+    Visible = False
+    TabOrder = 7
+    Floating = True
+    ShowCaption = False
+    TitleVisible = True
+    Caption = 'pnlValue'
+    AlwaysOnTop = True
+    object cbxCombo: TUniDBComboBox
+      Left = 18
+      Top = 16
+      Width = 156
       Hint = ''
-      Text = 'cbxCombo'
+      DataField = 'Value'
+      DataSource = dsoPRM
       TabOrder = 1
       IconItems = <>
+      OnSelect = cbxComboSelect
     end
-    object edtPassword: TUniEdit
-      Left = 12
-      Top = 36
-      Width = 121
-      Hint = ''
-      PasswordChar = '*'
-      Text = 'edtPassword'
-      TabOrder = 2
-    end
-    object edtText: TUniEdit
-      Left = 12
-      Top = 64
-      Width = 121
-      Hint = ''
-      Text = 'edtText'
-      TabOrder = 3
-    end
+  end
+  object edtConnectionName: TUniEdit [8]
+    Left = 8
+    Top = 55
+    Width = 430
+    Hint = ''
+    Text = 'edtConnectionName'
+    TabOrder = 8
+    FieldLabel = 'Nome da conex'#227'o:'
+  end
+  object pnlLine02: TUniPanel [9]
+    Left = 8
+    Top = 45
+    Width = 430
+    Height = 1
+    Hint = ''
+    Enabled = False
+    BodyRTL = False
+    Anchors = [akTop, akRight]
+    TabOrder = 9
+    ShowCaption = False
+    Caption = 'UniPanel1'
   end
   inherited aclMain: TUniActionList
     Left = 18
@@ -357,6 +376,8 @@ inherited frmConnEditor: TfrmConnEditor
       44AE426082}
   end
   object mtbPRM: TFDMemTable
+    AfterPost = mtbPRMAfterPost
+    AfterScroll = mtbPRMAfterScroll
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvSilentMode]

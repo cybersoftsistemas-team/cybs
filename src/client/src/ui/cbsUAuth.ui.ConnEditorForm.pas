@@ -6,20 +6,11 @@ uses
 {PROJECT}
   cbsSystem.Form.BaseForm,
 {IDE}
-  uniGUITypes, uniGUIBaseClasses, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, uniGUIClasses,
-  uniBasicGrid, uniDBGrid, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, System.Classes, System.Actions, Vcl.ActnList, uniButton, uniBitBtn, uniLabel, Vcl.Imaging.pngimage,
-  Vcl.Controls, Vcl.Forms, uniImage, uniImageList, System.ImageList, Vcl.ImgList, uniMainMenu, uniPanel, uniMultiItem, uniComboBox, uniEdit;
+  uniGUITypes, uniGUIBaseClasses, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, uniMultiItem,
+  uniComboBox, uniDBComboBox, uniGUIClasses, uniPanel, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, System.Classes, System.Actions, Vcl.ActnList, uniButton, uniBitBtn,
+  uniLabel, Vcl.Imaging.pngimage, uniImage, Vcl.Controls, Vcl.Forms, uniBasicGrid, uniDBGrid, uniImageList, System.ImageList, Vcl.ImgList, uniMainMenu, uniEdit, uniDBEdit;
 
 type
-  TCellEditorKind = (
-    ceText,          // string
-    ceInteger,       // números
-    cePassword,      // senha
-    ceCombo,         // lista de valores
-    ceFile,          // abrir arquivo
-    ceDir            // abrir diretório
-  );
-
   TfrmConnEditor = class(TfrmBase)
     imgDb: TUniImage;
     labInfo: TUniLabel;
@@ -37,14 +28,19 @@ type
     btnTestConn: TUniBitBtn;
     btnDefaults: TUniBitBtn;
     grdParams: TUniDBGrid;
-    pnlCtrl: TUniHiddenPanel;
-    cbxCombo: TUniComboBox;
-    edtPassword: TUniEdit;
-    edtText: TUniEdit;
     mtbPRMParamType: TStringField;
+    pnlValue: TUniPanel;
+    cbxCombo: TUniDBComboBox;
+    edtConnectionName: TUniEdit;
+    pnlLine02: TUniPanel;
     procedure actOkExecute(Sender: TObject);
+    procedure cbxComboSelect(Sender: TObject);
+    procedure grdParamsAjaxEvent(Sender: TComponent; EventName: string; Params:
+        TUniStrings);
     procedure grdParamsDrawColumnCell(Sender: TObject; ACol, ARow: Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
     procedure grdParamsSelectionChange(Sender: TObject);
+    procedure mtbPRMAfterPost(DataSet: TDataSet);
+    procedure mtbPRMAfterScroll(DataSet: TDataSet);
     procedure UniFormDestroy(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
   private
@@ -55,16 +51,19 @@ type
     FDriverID: String;
     FEdited: TStrings;
     FResults: TStrings;
+    function GetConnectionName: string;
     function IsDriverKnown(const ADrvID: String; out ADrvMeta: IFDPhysDriverMetadata): Boolean;
     procedure FillParamGrids;
     procedure FillConnParams(const AParams: TStrings);
     procedure FillParamValues(const AAsIs: Boolean);
     procedure GetDriverParams(const ADrvID: String; AStrs: TStrings);
     procedure OverrideBy(AThis, AByThat: TStrings);
+    procedure PostEdited;
     procedure SetConnectionParams(const AConnection: TFDCustomConnection);
+    procedure SetConnectionName(const AValue: string);
     procedure SetConnectionString(const AValue: string);
-    function ResolveCellEditor(const AParamName, AParamType: string; out AKind: TCellEditorKind): Boolean;
   public
+    property ConnectionName: string read GetConnectionName write SetConnectionName;
     property ConnectionString: string read FConnectionString write SetConnectionString;
   end;
 
@@ -78,6 +77,7 @@ uses
 {IDE}
   FireDAC.Stan.Util,
   System.SysUtils,
+  System.Types,
   System.UITypes,
   System.Variants,
   uniGUIApplication;
@@ -90,7 +90,7 @@ begin
   Result := TfrmConnEditor(UniApplication.UniMainModule.GetFormInstance(TfrmConnEditor));
 end;
 
-function GUIxSetupEditor(AItems: TStrings; {AFileEdt: TCustomEdit; AOpenDlg: TOpenDialog;} const AType: String): Integer;
+function GUIxSetupEditor(AItems: TStrings; const AType: String): Integer;
 const
   S_True = 'True';
   S_False = 'False';
@@ -168,52 +168,15 @@ begin
   Result := False;
 end;
 
-function TfrmConnEditor.ResolveCellEditor(const AParamName: string; const AParamType: string; out AKind: TCellEditorKind): Boolean;
-begin
-  if SameText(AParamName, 'password') then
-  begin
-    AKind := cePassword;
-    Exit(True);
-  end;
-
-  if SameText(AParamName, 'server') then
-  begin
-    AKind := ceCombo;
-    Exit(True);
-  end;
-
-  if SameText(AParamType, 'Integer') then
-  begin
-    AKind := ceInteger;
-    Exit(True);
-  end;
-
-  if SameText(AParamType, 'Boolean') then
-  begin
-    AKind := ceCombo;
-    Exit(True);
-  end;
-
-  if SameText(AParamType, 'FileName') then
-  begin
-    AKind := ceFile;
-    Exit(True);
-  end;
-
-  if SameText(AParamType, 'Folder') then
-  begin
-    AKind := ceDir;
-    Exit(True);
-  end;
-
-  AKind := ceText;
-  Result := True;
-end;
-
 procedure TfrmConnEditor.actOkExecute(Sender: TObject);
 begin
   SetConnectionParams(FConnection);
   FConnectionString := FConnection.ResultConnectionDef.BuildString();
+end;
+
+procedure TfrmConnEditor.cbxComboSelect(Sender: TObject);
+begin
+  pnlValue.Visible := False;
 end;
 
 procedure TfrmConnEditor.FillConnParams(const AParams: TStrings);
@@ -305,6 +268,11 @@ begin
   end;
 end;
 
+function TfrmConnEditor.GetConnectionName: string;
+begin
+  Result := edtConnectionName.Text;
+end;
+
 procedure TfrmConnEditor.GetDriverParams(const ADrvID: String; AStrs: TStrings);
 begin
   var LDrvMeta: IFDPhysDriverMetadata;
@@ -318,6 +286,25 @@ begin
       end;
     finally
       FDFree(LTab);
+    end;
+  end;
+end;
+
+procedure TfrmConnEditor.grdParamsAjaxEvent(Sender: TComponent; EventName:
+    string; Params: TUniStrings);
+begin
+  if EventName = 'beforeedit' then
+  begin
+    var LDataSet := grdParams.DataSource.DataSet;
+    if not SameText(LDataSet.FieldByName('Param').AsString, 'server') then
+    begin
+      pnlValue.Title := Format('Parâmetro: %s', [LDataSet.FieldByName('Param').AsString]);
+      var LResultIndex := GUIxSetupEditor(cbxCombo.Items, LDataSet.FieldByName('ParamType').AsString);
+      pnlValue.Visible := LResultIndex = 1;
+      if pnlValue.Visible then
+      begin
+        grdParams.CancelEditing;
+      end;
     end;
   end;
 end;
@@ -343,15 +330,25 @@ begin
 end;
 
 procedure TfrmConnEditor.grdParamsSelectionChange(Sender: TObject);
-var
-  LDataSet: TDataSet;
-  LCurrentColumn: TUniDBGridColumn;
 begin
-  LDataSet := grdParams.DataSource.DataSet;
-  LCurrentColumn := grdParams.Columns[grdParams.CurrCol];
+  var LCurrentColumn := grdParams.Columns[grdParams.CurrCol];
+  pnlValue.Visible := False;
   if not SameText(LCurrentColumn.FieldName, 'Value') then
+  begin
     Exit;
-  LCurrentColumn.ReadOnly := (LDataSet.RecNo = 1);
+  end;
+  var LDataSet := grdParams.DataSource.DataSet;
+  LCurrentColumn.ReadOnly := LDataSet.RecNo = 1;
+end;
+
+procedure TfrmConnEditor.mtbPRMAfterPost(DataSet: TDataSet);
+begin
+  PostEdited;
+end;
+
+procedure TfrmConnEditor.mtbPRMAfterScroll(DataSet: TDataSet);
+begin
+  pnlValue.Visible := False;
 end;
 
 procedure TfrmConnEditor.OverrideBy(AThis, AByThat: TStrings);
@@ -362,6 +359,24 @@ begin
     var LValue := AByThat.Values[LKey];
     AThis.Values[LKey] := LValue;
   end;
+end;
+
+procedure TfrmConnEditor.PostEdited;
+begin
+  if FDataChange then
+  begin
+    var I := FEdited.IndexOfName(mtbPRMParam.AsString);
+    if I = -1 then
+    begin
+      I := FEdited.Add('');
+    end;
+    FEdited[I] := mtbPRMParam.AsString + '=' + mtbPRMValue.AsString;
+  end;
+end;
+
+procedure TfrmConnEditor.SetConnectionName(const AValue: string);
+begin
+  edtConnectionName.Text := AValue;
 end;
 
 procedure TfrmConnEditor.SetConnectionParams(const AConnection: TFDCustomConnection);
@@ -398,7 +413,6 @@ begin
   FDFree(FConnection);
   FDFreeAndNil(FDefaults);
   FDFreeAndNil(FResults);
-  FDFreeAndNil(FEdited);
   inherited;
 end;
 
