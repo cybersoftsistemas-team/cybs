@@ -21,8 +21,10 @@ type
     mtbCNSId: TGuidField;
     mtbCNSName: TStringField;
     mtbCNSConnectionString: TStringField;
+    mtbUSECnsId: TGuidField;
     procedure UniGUIMainModuleCreate(Sender: TObject);
     procedure mtbUSENewRecord(DataSet: TDataSet);
+    procedure mtbCNSNewRecord(DataSet: TDataSet);
   public
     procedure LoadData(const AFile, AData: string);
     procedure SaveLogonData;
@@ -62,6 +64,12 @@ begin
     mtbUSEPassword.Clear;
     mtbUSE.Post;
   end;
+end;
+
+procedure TdamLogin.mtbCNSNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  mtbCNSId.AsGuid := TGuid.NewGuid;
 end;
 
 procedure TdamLogin.mtbUSENewRecord(DataSet: TDataSet);

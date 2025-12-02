@@ -3,6 +3,7 @@ inherited frmConnEditor: TfrmConnEditor
   ClientWidth = 451
   Caption = 'dsoPRM'
   BorderStyle = bsNone
+  ActiveControl = edtConnectionName
   ClientEvents.UniEvents.Strings = (
     
       'window.afterCreate=function window.afterCreate(sender)'#13#10'{'#13#10'   if' +
@@ -31,7 +32,7 @@ inherited frmConnEditor: TfrmConnEditor
     ForceFit = True
     EnableColumnHide = False
     Anchors = [akLeft, akTop, akRight, akBottom]
-    TabOrder = 2
+    TabOrder = 4
     OnAjaxEvent = grdParamsAjaxEvent
     OnSelectionChange = grdParamsSelectionChange
     OnDrawColumnCell = grdParamsDrawColumnCell
@@ -62,7 +63,7 @@ inherited frmConnEditor: TfrmConnEditor
       end>
   end
   object imgDb: TUniImage [1]
-    Left = 8
+    Left = 10
     Top = 8
     Width = 32
     Height = 32
@@ -92,7 +93,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 13
     Hint = ''
     Caption = 'Configure os par'#226'metros de conex'#227'o do banco de dados.'
-    TabOrder = 0
+    TabOrder = 1
   end
   object btnOk: TUniBitBtn [3]
     Left = 284
@@ -103,7 +104,7 @@ inherited frmConnEditor: TfrmConnEditor
     Cancel = True
     ModalResult = 1
     Anchors = [akRight, akBottom]
-    TabOrder = 5
+    TabOrder = 8
   end
   object btnCancel: TUniBitBtn [4]
     Left = 365
@@ -114,7 +115,7 @@ inherited frmConnEditor: TfrmConnEditor
     Cancel = True
     ModalResult = 2
     Anchors = [akRight, akBottom]
-    TabOrder = 6
+    TabOrder = 9
   end
   object btnTestConn: TUniBitBtn [5]
     Left = 10
@@ -123,7 +124,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 25
     Action = actTestConn
     Anchors = [akTop, akRight]
-    TabOrder = 4
+    TabOrder = 7
     ImageIndex = 0
   end
   object btnDefaults: TUniBitBtn [6]
@@ -133,7 +134,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 25
     Action = actDefaults
     Anchors = [akTop, akRight]
-    TabOrder = 3
+    TabOrder = 6
     ImageIndex = 1
   end
   object pnlValue: TUniPanel [7]
@@ -143,7 +144,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 82
     Hint = ''
     Visible = False
-    TabOrder = 7
+    TabOrder = 5
     Floating = True
     ShowCaption = False
     TitleVisible = True
@@ -162,13 +163,14 @@ inherited frmConnEditor: TfrmConnEditor
     end
   end
   object edtConnectionName: TUniEdit [8]
-    Left = 8
+    Left = 10
     Top = 55
     Width = 430
     Hint = ''
     Text = 'edtConnectionName'
-    TabOrder = 8
+    TabOrder = 3
     FieldLabel = 'Nome da conex'#227'o:'
+    OnChange = edtConnectionNameChange
   end
   object pnlLine02: TUniPanel [9]
     Left = 8
@@ -179,7 +181,7 @@ inherited frmConnEditor: TfrmConnEditor
     Enabled = False
     BodyRTL = False
     Anchors = [akTop, akRight]
-    TabOrder = 9
+    TabOrder = 2
     ShowCaption = False
     Caption = 'UniPanel1'
   end
@@ -191,6 +193,7 @@ inherited frmConnEditor: TfrmConnEditor
     end
     object actOk: TAction
       Caption = 'Ok'
+      Enabled = False
       OnExecute = actOkExecute
     end
     object actTestConn: TAction
@@ -410,6 +413,7 @@ inherited frmConnEditor: TfrmConnEditor
   end
   object dsoPRM: TDataSource
     DataSet = mtbPRM
+    OnDataChange = dsoPRMDataChange
     Left = 130
     Top = 248
   end

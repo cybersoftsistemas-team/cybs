@@ -83,7 +83,8 @@ contains
   cbsSystem.Support.RunTime in 'src\Support\cbsSystem.Support.RunTime.pas',
   cbsSystem.Support.DataSet.Extensions in 'src\Support\cbsSystem.Support.DataSet.Extensions.pas',
   cbsSystem.Contracts.Module.Main in 'src\Contracts\Module\cbsSystem.Contracts.Module.Main.pas',
-  cbsSystem.Infrastructure.BaseDbModule in 'src\Infrastructure\cbsSystem.Infrastructure.BaseDbModule.pas' {damBaseDb: TDataModule};
+  cbsSystem.Infrastructure.BaseDbModule in 'src\Infrastructure\cbsSystem.Infrastructure.BaseDbModule.pas' {damBaseDb: TDataModule},
+  cbsSystem.Support.Utils in 'src\Support\cbsSystem.Support.Utils.pas';
 
 end.
 

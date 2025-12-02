@@ -43,6 +43,8 @@ type
     procedure mtbPRMAfterScroll(DataSet: TDataSet);
     procedure UniFormDestroy(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
+    procedure dsoPRMDataChange(Sender: TObject; Field: TField);
+    procedure edtConnectionNameChange(Sender: TObject);
   private
     FConnection: TFDCustomConnection;
     FConnectionString: string;
@@ -155,6 +157,11 @@ end;
 
 { TfrmConnEditor }
 
+function TfrmConnEditor.GetConnectionName: string;
+begin
+  Result := edtConnectionName.Text;
+end;
+
 function TfrmConnEditor.IsDriverKnown(const ADrvID: String; out ADrvMeta: IFDPhysDriverMetadata): Boolean;
 begin
   var LManMeta: IFDPhysManagerMetadata;
@@ -177,6 +184,17 @@ end;
 procedure TfrmConnEditor.cbxComboSelect(Sender: TObject);
 begin
   pnlValue.Visible := False;
+end;
+
+procedure TfrmConnEditor.dsoPRMDataChange(Sender: TObject; Field: TField);
+begin
+  edtConnectionNameChange(Sender);
+end;
+
+procedure TfrmConnEditor.edtConnectionNameChange(Sender: TObject);
+begin
+  actOk.Enabled := not string(edtConnectionName.Text).Trim.IsEmpty;
+  actTestConn.Enabled := actOk.Enabled;
 end;
 
 procedure TfrmConnEditor.FillConnParams(const AParams: TStrings);
@@ -266,11 +284,6 @@ begin
   finally
     FDFree(LStrs);
   end;
-end;
-
-function TfrmConnEditor.GetConnectionName: string;
-begin
-  Result := edtConnectionName.Text;
 end;
 
 procedure TfrmConnEditor.GetDriverParams(const ADrvID: String; AStrs: TStrings);

@@ -6,8 +6,8 @@ uses
 {PROJECT}
   cbsSystem.Form.BaseForm,
 {IDE}
-  uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Controls, Vcl.Forms, uniGUIClasses, uniBasicGrid,
-  uniDBGrid, uniLabel, uniButton, uniBitBtn, uniPanel;
+  Data.DB, uniGUIBaseClasses, System.Classes, System.Actions, Vcl.ActnList, uniGUIClasses, uniPanel, uniButton, uniBitBtn, uniLabel, Vcl.Controls, Vcl.Forms, uniBasicGrid,
+  uniDBGrid, uniImageList, System.ImageList, Vcl.ImgList, uniMainMenu;
 
 type
   TfrmOptions = class(TfrmBase)
@@ -31,8 +31,9 @@ type
     pnlLine02: TUniPanel;
     procedure actAddExecute(Sender: TObject);
     procedure actEditExecute(Sender: TObject);
-  private
-    { Private declarations }
+  protected
+    function GetDataModule: TdamBase; override;
+    procedure DataChange(Sender: TObject; Field: TField); override;
   public
     procedure AddorEditConnection; overload;
     procedure AddorEditConnection(const AName, AConnectionString: string); overload;
@@ -46,6 +47,7 @@ implementation
 
 uses
 {IDE}
+  System.SysUtils,
   System.UITypes,
   uniGUIApplication,
 {PROJECT}
@@ -55,6 +57,13 @@ uses
 function frmOptions: TfrmOptions;
 begin
   Result := TfrmOptions(UniApplication.UniMainModule.GetFormInstance(TfrmOptions));
+end;
+
+{ TfrmOptions }
+
+function TfrmOptions.GetDataModule: TdamBase;
+begin
+  Result := damLogin;
 end;
 
 procedure TfrmOptions.actAddExecute(Sender: TObject);
@@ -88,6 +97,16 @@ begin
       end;
     end
   );
+end;
+
+procedure TfrmOptions.DataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
+  actEdit.Enabled := not(damLogin.mtbCNS.State in dsEditModes) and  not damLogin.mtbCNS.IsEmpty;
+  actDel.Enabled := actEdit.Enabled;
+  actClear.Enabled := actEdit.Enabled;
+  actTestConn.Enabled := actEdit.Enabled;
+  actSelected.Enabled := actEdit.Enabled and not IsEqualGUID(damLogin.mtbCNSId.AsGuid, damLogin.mtbUSECnsId.AsGuid);
 end;
 
 end.

@@ -6,6 +6,7 @@ object frmBase: TfrmBase
   Caption = 'frmBase'
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
+  OnCreate = UniFormCreate
   TextHeight = 15
   object aclMain: TUniActionList
     Images = ilaMain
