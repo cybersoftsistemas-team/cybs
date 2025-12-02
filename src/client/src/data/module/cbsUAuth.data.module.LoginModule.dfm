@@ -63,7 +63,7 @@ inherited damLogin: TdamLogin
       Size = 255
     end
     object mtbCNSConnectionString: TStringField
-      DisplayWidth = 30
+      DisplayWidth = 120
       FieldName = 'ConnectionString'
       Size = 255
     end

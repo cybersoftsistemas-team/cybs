@@ -4,15 +4,20 @@ interface
 
 uses
 {IDE}
-  uniGUIServer;
+  uniGUIServer,
+{PROJECT}
+  cbsSystem.Contracts.Module.ServerModule;
 
 type
-  TcbsServerModule = class(TUniGUIServerModule)
+  TcbsServerModule = class(TUniGUIServerModule, IServerModule)
     procedure UniGUIServerModuleCreate(Sender: TObject);
   private
     procedure HideTrayIconSystem;
+    function GetSystemFilesFolderPath: string;
   protected
     procedure FirstInit; override;
+  public
+    property SystemFilesFolderPath: string read GetSystemFilesFolderPath;
   end;
 
   function cbsServerModule: TcbsServerModule;
@@ -31,7 +36,8 @@ uses
   Winapi.ShellAPI,
 {$ENDIF}
 {PROJECT}
-  cbsSystem.Support.ModuleManager;
+  cbsSystem.Support.ModuleManager,
+  cbsSystem.Support.ServerModule;
 
 function cbsServerModule: TcbsServerModule;
 begin
@@ -60,6 +66,12 @@ procedure TcbsServerModule.FirstInit;
 begin
   inherited;
   InitServerModule(Self);
+  RegisterSystemServerModule(Self);
+end;
+
+function TcbsServerModule.GetSystemFilesFolderPath: string;
+begin
+  Result := FilesFolderPath;
 end;
 
 procedure TcbsServerModule.HideTrayIconSystem;

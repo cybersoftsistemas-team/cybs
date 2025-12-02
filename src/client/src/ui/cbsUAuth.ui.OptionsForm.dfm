@@ -22,7 +22,6 @@ inherited frmOptions: TfrmOptions
     ReadOnly = True
     WebOptions.Paged = False
     LoadMask.Message = 'Carregando dados...'
-    ForceFit = True
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
     Columns = <
@@ -43,7 +42,7 @@ inherited frmOptions: TfrmOptions
       item
         FieldName = 'ConnectionString'
         Title.Caption = 'ConnectionString'
-        Width = 184
+        Width = 724
         ReadOnly = True
       end>
   end

@@ -136,6 +136,7 @@
         <DCCReference Include="vclFireDAC.dcp"/>
         <DCCReference Include="FireDACCommonODBC.dcp"/>
         <DCCReference Include="FireDACMSSQLDriver.dcp"/>
+        <DCCReference Include="uniGUI30.dcp"/>
         <DCCReference Include="src\Module\cbsSystem.Module.BaseModule.pas">
             <Form>damBase</Form>
             <FormType>dfm</FormType>
@@ -166,6 +167,14 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Support\cbsSystem.Support.Utils.pas"/>
+        <DCCReference Include="src\MessageBox\cbsSystem.MessageBox.pas">
+            <Form>frmMessageBox</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Support\cbsSystem.Support.MessageBox.pas"/>
+        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.ServerModule.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.ServerModule.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -105,6 +105,7 @@ function TFDDataSetExtensions.StreamToBase64: string;
 begin
   var ms := TMemoryStream.Create;
   try
+    Self.ResourceOptions.Persistent := False;
     Self.SaveToStream(ms, sfBinary);
     ms.Position := 0;
     Result := TNetEncoding.Base64.EncodeBytesToString(ms.Memory, ms.Size);

@@ -8,7 +8,8 @@ uses
 {IDE}
   uniGUITypes, uniGUIBaseClasses, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, uniMultiItem,
   uniComboBox, uniDBComboBox, uniGUIClasses, uniPanel, Data.DB, FireDAC.Comp.DataSet, FireDAC.Comp.Client, System.Classes, System.Actions, Vcl.ActnList, uniButton, uniBitBtn,
-  uniLabel, Vcl.Imaging.pngimage, uniImage, Vcl.Controls, Vcl.Forms, uniBasicGrid, uniDBGrid, uniImageList, System.ImageList, Vcl.ImgList, uniMainMenu, uniEdit, uniDBEdit;
+  uniLabel, Vcl.Imaging.pngimage, uniImage, Vcl.Controls, Vcl.Forms, uniBasicGrid, uniDBGrid, uniImageList, System.ImageList, Vcl.ImgList, uniMainMenu, uniEdit, uniDBEdit,
+  uniScreenMask;
 
 type
   TfrmConnEditor = class(TfrmBase)
@@ -33,10 +34,12 @@ type
     cbxCombo: TUniDBComboBox;
     edtConnectionName: TUniEdit;
     pnlLine02: TUniPanel;
+    usmTestConnection: TUniScreenMask;
+    procedure actDefaultsExecute(Sender: TObject);
     procedure actOkExecute(Sender: TObject);
+    procedure actTestConnExecute(Sender: TObject);
     procedure cbxComboSelect(Sender: TObject);
-    procedure grdParamsAjaxEvent(Sender: TComponent; EventName: string; Params:
-        TUniStrings);
+    procedure grdParamsAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure grdParamsDrawColumnCell(Sender: TObject; ACol, ARow: Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
     procedure grdParamsSelectionChange(Sender: TObject);
     procedure mtbPRMAfterPost(DataSet: TDataSet);
@@ -54,13 +57,17 @@ type
     FEdited: TStrings;
     FResults: TStrings;
     function GetConnectionName: string;
+    function GetTempConnection: TFDCustomConnection;
     function IsDriverKnown(const ADrvID: String; out ADrvMeta: IFDPhysDriverMetadata): Boolean;
+    procedure BeforeOk;
     procedure FillParamGrids;
     procedure FillConnParams(const AParams: TStrings);
     procedure FillParamValues(const AAsIs: Boolean);
     procedure GetDriverParams(const ADrvID: String; AStrs: TStrings);
     procedure OverrideBy(AThis, AByThat: TStrings);
+    procedure PostDataSet;
     procedure PostEdited;
+    procedure ResetConnectionDef;
     procedure SetConnectionParams(const AConnection: TFDCustomConnection);
     procedure SetConnectionName(const AValue: string);
     procedure SetConnectionString(const AValue: string);
@@ -82,7 +89,12 @@ uses
   System.Types,
   System.UITypes,
   System.Variants,
-  uniGUIApplication;
+  uniGUIApplication,
+  uniMemo,
+{PROJECT}
+  cbsSystem.Support.MessageBox,
+{SPRING}
+  Spring.Collections;
 
 const
   DriverID = 'MSSQL';
@@ -159,7 +171,7 @@ end;
 
 function TfrmConnEditor.GetConnectionName: string;
 begin
-  Result := edtConnectionName.Text;
+  Result := string(edtConnectionName.Text).Trim;
 end;
 
 function TfrmConnEditor.IsDriverKnown(const ADrvID: String; out ADrvMeta: IFDPhysDriverMetadata): Boolean;
@@ -175,10 +187,70 @@ begin
   Result := False;
 end;
 
+procedure TfrmConnEditor.actDefaultsExecute(Sender: TObject);
+begin
+  ResetConnectionDef;
+end;
+
 procedure TfrmConnEditor.actOkExecute(Sender: TObject);
 begin
+  BeforeOk;
   SetConnectionParams(FConnection);
   FConnectionString := FConnection.ResultConnectionDef.BuildString();
+  ModalResult := mrOk;
+end;
+
+procedure TfrmConnEditor.actTestConnExecute(Sender: TObject);
+begin
+  try
+    var LConn := GetTempConnection;
+    try
+      LConn.Close;
+      LConn.Open;
+      ShowMessage('Conexão estabelecida com sucesso.');
+    finally
+      FDFree(LConn);
+    end;
+  except
+    on E: Exception do
+    begin
+      MessageBox('Erro', 'Erro ao se conectar com o banco de dados.', E.Message, mtError, [mbOK]);
+    end;
+  end;
+end;
+
+procedure TfrmConnEditor.BeforeOk;
+type
+  IParamList = IDictionary<string, string>;
+begin
+  if SameText(GetConnectionName, '') then
+  begin
+    MessageDlg(Format('Digite o %s.', [edtConnectionName.FieldLabel]), mtInformation, [mbOK]);
+    Abort;
+  end;
+  var LParamList := TCollections.CreateDictionary<string, string>;
+  try
+    mtbPRM.DisableControls;
+    try
+      LParamList.Add('Database' , 'Digite o nome do banco de dados.');
+      LParamList.Add('User_Name', 'Digite o nome de usuário.');
+      LParamList.Add('Password' , 'Digite a senha de usuário.');
+      LParamList.Add('Server'   , 'Digite o nome ou o IP do servidor.');
+      for var LParam in LParamList do if
+        mtbPRM.LocateEx(mtbPRMParam.FieldName, LParam.Key, [lxoCaseInsensitive]) and
+        mtbPRMValue.AsString.Trim.IsEmpty then
+      begin
+        MessageDlg(Format('[%s][%s] ' + LParam.Value, [mtbPRMParam.DisplayName, LParam.Key]), mtInformation, [mbOK]);
+        Abort;
+      end;
+    finally
+      mtbPRM.EnableControls;
+    end;
+  finally
+    LParamList.Clear;
+    LParamList := nil;
+  end;
+  PostDataSet;
 end;
 
 procedure TfrmConnEditor.cbxComboSelect(Sender: TObject);
@@ -303,8 +375,21 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.grdParamsAjaxEvent(Sender: TComponent; EventName:
-    string; Params: TUniStrings);
+function TfrmConnEditor.GetTempConnection: TFDCustomConnection;
+begin
+  Result := TFDConnection.Create(nil);
+  if Assigned(FConnection) then
+  begin
+    Result.Name := FConnection.Name;
+  end;
+  SetConnectionParams(Result);
+  if (FConnection <> nil) and FConnection.Temporary then
+  begin
+    Result.Params.Pooled := False;
+  end;
+end;
+
+procedure TfrmConnEditor.grdParamsAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
 begin
   if EventName = 'beforeedit' then
   begin
@@ -374,8 +459,17 @@ begin
   end;
 end;
 
+procedure TfrmConnEditor.PostDataSet;
+begin
+  if mtbPRM.State in dsEditModes then
+  begin
+    mtbPRM.Post;
+  end;
+end;
+
 procedure TfrmConnEditor.PostEdited;
 begin
+  PostDataSet;
   if FDataChange then
   begin
     var I := FEdited.IndexOfName(mtbPRMParam.AsString);
@@ -385,6 +479,14 @@ begin
     end;
     FEdited[I] := mtbPRMParam.AsString + '=' + mtbPRMValue.AsString;
   end;
+end;
+
+procedure TfrmConnEditor.ResetConnectionDef;
+begin
+  FEdited.Clear;
+  FillParamValues(True);
+  FillParamGrids;
+  grdParams.Refresh;
 end;
 
 procedure TfrmConnEditor.SetConnectionName(const AValue: string);
