@@ -4,11 +4,16 @@ interface
 
 uses
 {IDE}
-  FireDAC.Comp.DataSet,
+  FireDAC.Comp.Client,
   System.SysUtils;
 
 type
-  TFDDataSetExtensions = class helper for TFDDataSet
+  TcbsStorageMode = (
+    csmClientSide,
+    csmServerSide
+  );
+
+  TFDMemTableExtensions = class helper for TFDMemTable
   private
     function Compress(const AValue: string): TBytes;
     function Decompress(const ABytes: TBytes): string;
@@ -18,7 +23,7 @@ type
     procedure Base64ToStream(const AValue: string);
   public
     procedure LoadData(const AKey, AData: string);
-    procedure SaveData(const AKey, AFile: string);
+    procedure SaveData(const AKey, AFile: string; const AStorageMode: TcbsStorageMode = csmClientSide);
   end;
 
 implementation
@@ -30,11 +35,13 @@ uses
   System.Classes,
   System.NetEncoding,
   System.ZLib,
-  uniGUIApplication;
+  uniGUIApplication,
+{PROJECT}
+  cbsSystem.Support.ServerModule;
 
-{ TFDDataSetExtensions }
+{ TFDMemTableExtensions }
 
-function TFDDataSetExtensions.Compress(const AValue: string): TBytes;
+function TFDMemTableExtensions.Compress(const AValue: string): TBytes;
 begin
   var ms := TMemoryStream.Create;
   var ss := TStringStream.Create(AValue, TEncoding.UTF8);
@@ -53,7 +60,7 @@ begin
   end;
 end;
 
-function TFDDataSetExtensions.Decompress(const ABytes: TBytes): string;
+function TFDMemTableExtensions.Decompress(const ABytes: TBytes): string;
 begin
   var ms := TMemoryStream.Create;
   var ss := TStringStream.Create('', TEncoding.UTF8);
@@ -73,7 +80,7 @@ begin
   end;
 end;
 
-function TFDDataSetExtensions.Decrypt(const AData, APassword: string): string;
+function TFDMemTableExtensions.Decrypt(const AData, APassword: string): string;
 begin
   if AData.Trim.IsEmpty or
     SameText(AData.Trim, 'null') or
@@ -90,7 +97,7 @@ begin
   Result := Decompress(LBytes);
 end;
 
-function TFDDataSetExtensions.Encrypt(const AData, APassword: string): string;
+function TFDMemTableExtensions.Encrypt(const AData, APassword: string): string;
 begin
   var LBytes := Compress(AData);
   var LPwd := TEncoding.UTF8.GetBytes(APassword);
@@ -101,7 +108,7 @@ begin
   Result := TNetEncoding.Base64.EncodeBytesToString(LBytes);
 end;
 
-function TFDDataSetExtensions.StreamToBase64: string;
+function TFDMemTableExtensions.StreamToBase64: string;
 begin
   var ms := TMemoryStream.Create;
   try
@@ -114,7 +121,7 @@ begin
   end;
 end;
 
-procedure TFDDataSetExtensions.Base64ToStream(const AValue: string);
+procedure TFDMemTableExtensions.Base64ToStream(const AValue: string);
 begin
   if AValue.Trim.IsEmpty or
     SameText(AValue.Trim, 'null') or
@@ -133,21 +140,26 @@ begin
   end;
 end;
 
-procedure TFDDataSetExtensions.LoadData(const AKey, AData: string);
+procedure TFDMemTableExtensions.LoadData(const AKey, AData: string);
 begin
   Base64ToStream(Decrypt(AData, AKey));
 end;
 
-procedure TFDDataSetExtensions.SaveData(const AKey, AFile: string);
+procedure TFDMemTableExtensions.SaveData(const AKey, AFile: string; const AStorageMode: TcbsStorageMode);
 begin
   if Self.State in dsEditModes then
   begin
     Self.Post;
   end;
-  var LEnc := Encrypt(StreamToBase64, AKey)
-   .Replace(#13, '')
-   .Replace(#10, '');
-  UniSession.AddJS(Format('window.DataStorage.save("%s","%s");', [AFile, LEnc]));
+  var LEnc := Encrypt(StreamToBase64, AKey).Replace(#13, '').Replace(#10, '');
+  if AStorageMode = csmServerSide then
+  begin
+    ServerModule.DataStorage.Save(AFile, LEnc);
+  end
+  else if AStorageMode = csmClientSide then
+  begin
+    UniSession.AddJS(Format('window.DataStorage.save("%s","%s");', [AFile, LEnc]));
+  end;
 end;
 
 end.

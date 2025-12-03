@@ -1,5 +1,6 @@
 object cbsServerModule: TcbsServerModule
   OnCreate = UniGUIServerModuleCreate
+  OnDestroy = UniGUIServerModuleDestroy
   TempFolder = 'temp\'
   Title = 'New Application'
   BGColorLogin = 15921906
@@ -59,6 +60,6 @@ object cbsServerModule: TcbsServerModule
   SSL.SSLOptions.VerifyDepth = 0
   ConnectionFailureRecovery.ErrorMessage = 'Connection Error'
   ConnectionFailureRecovery.RetryMessage = 'Retrying...'
-  Height = 276
-  Width = 371
+  Height = 199
+  Width = 285
 end

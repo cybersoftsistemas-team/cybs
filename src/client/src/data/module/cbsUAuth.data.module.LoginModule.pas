@@ -27,6 +27,7 @@ type
     procedure mtbCNSNewRecord(DataSet: TDataSet);
     procedure mtbCNSAfterPost(DataSet: TDataSet);
     procedure mtbCNSAfterDelete(DataSet: TDataSet);
+    procedure mtbCNSAfterOpen(DataSet: TDataSet);
   private
     procedure SaveOptions;
   public
@@ -46,7 +47,8 @@ uses
   uniGUIApplication,
 {PROJECT}
   cbsSystem.Support.DataSet.Extensions,
-  cbsSystem.Support.Module;
+  cbsSystem.Support.Module,
+  cbsSystem.Support.ServerModule;
 
 const
   CST_FILENAME_LOGON   = 'logon.dat';
@@ -69,16 +71,17 @@ begin
     mtbUSE.Edit;
     mtbUSEPassword.Clear;
     mtbUSE.Post;
-  end
-  else if SameText(AFile, CST_FILENAME_OPTIONS) then
-  begin
-    mtbCNS.LoadData(CST_KEY_OPTIONS, AData);
   end;
 end;
 
 procedure TdamLogin.mtbCNSAfterDelete(DataSet: TDataSet);
 begin
   SaveOptions;
+end;
+
+procedure TdamLogin.mtbCNSAfterOpen(DataSet: TDataSet);
+begin
+  mtbCNS.LoadData(CST_KEY_OPTIONS, ServerModule.DataStorage.Load(CST_FILENAME_OPTIONS));
 end;
 
 procedure TdamLogin.mtbCNSAfterPost(DataSet: TDataSet);
@@ -105,7 +108,7 @@ end;
 
 procedure TdamLogin.SaveOptions;
 begin
-  mtbCNS.SaveData(CST_KEY_OPTIONS, CST_FILENAME_OPTIONS);
+  mtbCNS.SaveData(CST_KEY_OPTIONS, CST_FILENAME_OPTIONS, csmServerSide);
 end;
 
 procedure TdamLogin.UniGUIMainModuleCreate(Sender: TObject);

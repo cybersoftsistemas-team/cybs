@@ -42,6 +42,7 @@ inherited damLogin: TdamLogin
     Top = 16
   end
   object mtbCNS: TFDMemTable
+    AfterOpen = mtbCNSAfterOpen
     AfterPost = mtbCNSAfterPost
     AfterDelete = mtbCNSAfterDelete
     OnNewRecord = mtbCNSNewRecord

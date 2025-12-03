@@ -175,6 +175,8 @@
         <DCCReference Include="src\Support\cbsSystem.Support.MessageBox.pas"/>
         <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.ServerModule.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.ServerModule.pas"/>
+        <DCCReference Include="src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas"/>
+        <DCCReference Include="src\DataStorage\cbsSystem.DataStorage.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -89,7 +89,9 @@ contains
   cbsSystem.MessageBox in 'src\MessageBox\cbsSystem.MessageBox.pas' {frmMessageBox: TUniForm},
   cbsSystem.Support.MessageBox in 'src\Support\cbsSystem.Support.MessageBox.pas',
   cbsSystem.Contracts.Module.ServerModule in 'src\Contracts\Module\cbsSystem.Contracts.Module.ServerModule.pas',
-  cbsSystem.Support.ServerModule in 'src\Support\cbsSystem.Support.ServerModule.pas';
+  cbsSystem.Support.ServerModule in 'src\Support\cbsSystem.Support.ServerModule.pas',
+  cbsSystem.Contracts.DataStorage in 'src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas',
+  cbsSystem.DataStorage in 'src\DataStorage\cbsSystem.DataStorage.pas';
 
 end.
 
