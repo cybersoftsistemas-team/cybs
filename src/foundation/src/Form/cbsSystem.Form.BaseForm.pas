@@ -3,9 +3,11 @@ unit cbsSystem.Form.BaseForm;
 interface
 
 uses
+{PROJECT}
+  cbsSystem.MessageBox,
   cbsSystem.Module.BaseModule,
 {IDE}
-  Data.DB, uniGUIDialogs, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
+  Data.DB, Dialogs, uniGUIDialogs, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
   TcbsFormClass = class of TUniForm;
@@ -23,6 +25,8 @@ type
   protected
     function GetDataModule: TdamBase; virtual;
     procedure DataChange(Sender: TObject; Field: TField); virtual;
+    procedure MessageBox(const ATitle, AMessage, ADetails: string; const AIcon: TMsgDlgType; const AButtons: TMsgDlgButtons; const ACallback: TMessageCallback = nil;
+      const AWidth: Integer = 400; const AHeight: Integer = 160);
   public
     property DataModule: TdamBase read FDataModule;
   end;
@@ -36,6 +40,12 @@ implementation
 function TfrmBase.GetDataModule: TdamBase;
 begin
   Result := nil;
+end;
+
+procedure TfrmBase.MessageBox(const ATitle, AMessage, ADetails: string; const AIcon: TMsgDlgType; const AButtons: TMsgDlgButtons; const ACallback: TMessageCallback; const AWidth,
+  AHeight: Integer);
+begin
+  ExecuteMessageBox(ATitle, AMessage, ADetails, AButtons, AIcon, ACallback, AWidth, AHeight);
 end;
 
 procedure TfrmBase.DataChange(Sender: TObject; Field: TField);

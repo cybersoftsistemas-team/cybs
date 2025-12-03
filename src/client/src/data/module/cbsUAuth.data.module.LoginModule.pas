@@ -25,6 +25,10 @@ type
     procedure UniGUIMainModuleCreate(Sender: TObject);
     procedure mtbUSENewRecord(DataSet: TDataSet);
     procedure mtbCNSNewRecord(DataSet: TDataSet);
+    procedure mtbCNSAfterPost(DataSet: TDataSet);
+    procedure mtbCNSAfterDelete(DataSet: TDataSet);
+  private
+    procedure SaveOptions;
   public
     procedure LoadData(const AFile, AData: string);
     procedure SaveLogonData;
@@ -45,8 +49,10 @@ uses
   cbsSystem.Support.Module;
 
 const
-  CST_FILENAME_LOGON = 'logon.dat';
-  CST_KEY_LOGON      = '{7CEDDCEE-2AAC-4BD6-8609-9580F1BFF871}';
+  CST_FILENAME_LOGON   = 'logon.dat';
+  CST_FILENAME_OPTIONS = 'options.dat';
+  CST_KEY_LOGON        = '{7CEDDCEE-2AAC-4BD6-8609-9580F1BFF871}';
+  CST_KEY_OPTIONS      = '{680A7754-FF49-4D05-AD11-35F7910AC2E1}';
 
 function damLogin: TdamLogin;
 begin
@@ -63,7 +69,21 @@ begin
     mtbUSE.Edit;
     mtbUSEPassword.Clear;
     mtbUSE.Post;
+  end
+  else if SameText(AFile, CST_FILENAME_OPTIONS) then
+  begin
+    mtbCNS.LoadData(CST_KEY_OPTIONS, AData);
   end;
+end;
+
+procedure TdamLogin.mtbCNSAfterDelete(DataSet: TDataSet);
+begin
+  SaveOptions;
+end;
+
+procedure TdamLogin.mtbCNSAfterPost(DataSet: TDataSet);
+begin
+  SaveOptions;
 end;
 
 procedure TdamLogin.mtbCNSNewRecord(DataSet: TDataSet);
@@ -81,6 +101,11 @@ end;
 procedure TdamLogin.SaveLogonData;
 begin
   mtbUSE.SaveData(CST_KEY_LOGON, CST_FILENAME_LOGON);
+end;
+
+procedure TdamLogin.SaveOptions;
+begin
+  mtbCNS.SaveData(CST_KEY_OPTIONS, CST_FILENAME_OPTIONS);
 end;
 
 procedure TdamLogin.UniGUIMainModuleCreate(Sender: TObject);

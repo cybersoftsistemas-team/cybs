@@ -3,16 +3,14 @@ unit cbsSystem.MessageBox;
 interface
 
 uses
-{PROJECT}
-  cbsSystem.Form.BaseForm,
 {IDE}
-  Dialogs, uniButton, uniGUIBaseClasses, uniLabel, uniImage, uniGUIClasses, uniMemo, Vcl.Controls, Vcl.Forms, uniPanel, uniImageList, System.ImageList, Vcl.ImgList, System.Classes,
-  System.Actions, Vcl.ActnList, uniMainMenu;
+  Dialogs, uniButton, uniGUIForm, uniGUIBaseClasses, uniLabel, uniImage, uniGUIClasses, uniMemo, Vcl.Controls, Vcl.Forms, uniPanel, uniImageList, System.ImageList, Vcl.ImgList,
+  System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
   TMessageCallback = reference to procedure(const AResult: Integer);
 
-  TfrmMessageBox = class(TfrmBase)
+  TfrmMessageBox = class(TUniForm)
     pnlButtons: TUniContainerPanel;
     unmText: TUniMemo;
     imgIcon: TUniImage;

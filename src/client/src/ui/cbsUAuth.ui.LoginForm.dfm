@@ -16,7 +16,8 @@ object frmLogin: TfrmLogin
       #13#10'   ajaxRequest(sender, "IsElectron", ["value=" + inElectron]);' +
       #13#10'   '#13#10'   if (AppEnv.isElectron()) {'#13#10'      sender.addCls("elect' +
       'ron-login-pos");'#13#10'   }'#13#10'   '#13#10'   window.DataStorage.load(sender, ' +
-      '"logon.dat");'#13#10'}')
+      '"logon.dat");'#13#10'   window.DataStorage.load(sender, "options.dat")' +
+      ';'#13#10'}')
   LayoutConfig.Cls = 'login-form'
   OnAjaxEvent = UniLoginFormAjaxEvent
   OnCreate = UniLoginFormCreate

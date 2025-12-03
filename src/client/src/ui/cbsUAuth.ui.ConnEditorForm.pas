@@ -90,9 +90,6 @@ uses
   System.UITypes,
   System.Variants,
   uniGUIApplication,
-  uniMemo,
-{PROJECT}
-  cbsSystem.Support.MessageBox,
 {SPRING}
   Spring.Collections;
 
@@ -209,7 +206,7 @@ begin
       LConn.Open;
       ShowMessage('Conexão estabelecida com sucesso.');
     finally
-      FDFree(LConn);
+      FDFreeAndNil(LConn);
     end;
   except
     on E: Exception do
@@ -525,7 +522,7 @@ end;
 
 procedure TfrmConnEditor.UniFormDestroy(Sender: TObject);
 begin
-  FDFree(FConnection);
+  FDFreeAndNil(FConnection);
   FDFreeAndNil(FDefaults);
   FDFreeAndNil(FResults);
   inherited;

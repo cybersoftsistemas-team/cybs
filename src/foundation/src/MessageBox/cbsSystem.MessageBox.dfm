@@ -1,12 +1,17 @@
-inherited frmMessageBox: TfrmMessageBox
+object frmMessageBox: TfrmMessageBox
+  Left = 0
+  Top = 0
   ClientHeight = 121
   ClientWidth = 384
   Caption = 'frmMessageBox'
   BorderStyle = bsDialog
-  ExplicitWidth = 400
-  ExplicitHeight = 160
+  OldCreateOrder = False
+  MonitoredKeys.Keys = <>
+  DesignSize = (
+    384
+    121)
   TextHeight = 15
-  object pnlButtons: TUniContainerPanel [0]
+  object pnlButtons: TUniContainerPanel
     Left = 8
     Top = 88
     Width = 367
@@ -14,10 +19,9 @@ inherited frmMessageBox: TfrmMessageBox
     Hint = ''
     ParentColor = False
     Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 0
-    ExplicitWidth = 371
+    TabOrder = 3
   end
-  object unmText: TUniMemo [1]
+  object unmText: TUniMemo
     Left = 49
     Top = 35
     Width = 326
@@ -28,9 +32,9 @@ inherited frmMessageBox: TfrmMessageBox
     Anchors = [akLeft, akTop, akRight, akBottom]
     ReadOnly = True
     ParentColor = True
-    TabOrder = 1
+    TabOrder = 2
   end
-  object imgIcon: TUniImage [2]
+  object imgIcon: TUniImage
     Left = 8
     Top = 8
     Width = 32
@@ -40,24 +44,24 @@ inherited frmMessageBox: TfrmMessageBox
     Images = nilstMain
     ImageIndex = 0
   end
-  object labCaption: TUniLabel [3]
+  object labCaption: TUniLabel
     Left = 47
     Top = 17
     Width = 57
     Height = 13
     Hint = ''
     Caption = 'labCaption'
-    TabOrder = 3
+    TabOrder = 1
   end
-  inherited aclMain: TUniActionList
+  object aclMain: TUniActionList
     Left = 288
     Top = 38
   end
-  inherited ilaMain: TUniImageListAdapter
+  object ilaMain: TUniImageListAdapter
     Left = 316
     Top = 38
   end
-  inherited nilstMain: TUniNativeImageList
+  object nilstMain: TUniNativeImageList
     Width = 32
     Height = 32
     Left = 344

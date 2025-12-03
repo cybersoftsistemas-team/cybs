@@ -6,7 +6,8 @@ inherited damLogin: TdamLogin
     OnNewRecord = mtbUSENewRecord
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.AssignedValues = [rvStoreItems, rvSilentMode]
+    ResourceOptions.StoreItems = [siData, siDelta]
     ResourceOptions.SilentMode = True
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False
@@ -41,10 +42,13 @@ inherited damLogin: TdamLogin
     Top = 16
   end
   object mtbCNS: TFDMemTable
+    AfterPost = mtbCNSAfterPost
+    AfterDelete = mtbCNSAfterDelete
     OnNewRecord = mtbCNSNewRecord
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
-    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.AssignedValues = [rvStoreItems, rvSilentMode]
+    ResourceOptions.StoreItems = [siData, siDelta]
     ResourceOptions.SilentMode = True
     UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
     UpdateOptions.CheckRequired = False

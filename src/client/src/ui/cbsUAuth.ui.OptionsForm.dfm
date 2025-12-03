@@ -170,16 +170,19 @@ inherited frmOptions: TfrmOptions
       Caption = 'Excluir'
       Enabled = False
       ImageIndex = 2
+      OnExecute = actDelExecute
     end
     object actClear: TAction
       Caption = 'Limpar'
       Enabled = False
       ImageIndex = 3
+      OnExecute = actClearExecute
     end
     object actTestConn: TAction
       Caption = 'Testar Conex'#227'o'
       Enabled = False
       ImageIndex = 4
+      OnExecute = actTestConnExecute
     end
     object actSelected: TAction
       Caption = 'Selecionar'
@@ -539,5 +542,13 @@ inherited frmOptions: TfrmOptions
       F44DE2789E05DBC68074C43E40229C7D10F0CD800C245EE4252222620008A263
       0D44020C025031221A8810ACFC623930622C5E676240B175182362516B2B0C70
       E42BFE40F2D8F7FC6FFC014BA2809EA80656100000000049454E44AE426082}
+  end
+  object usmTestConnection: TUniScreenMask
+    AttachedControl = btnTestConn
+    Enabled = True
+    DisplayMessage = 'Testando conex'#227'o com o banco de dados...'
+    TargetControl = Owner
+    Left = 116
+    Top = 56
   end
 end

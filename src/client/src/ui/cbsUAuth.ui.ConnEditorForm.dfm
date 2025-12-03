@@ -93,7 +93,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 13
     Hint = ''
     Caption = 'Configure os par'#226'metros de conex'#227'o do banco de dados.'
-    TabOrder = 0
+    TabOrder = 1
   end
   object btnOk: TUniBitBtn [3]
     Left = 284
@@ -167,7 +167,7 @@ inherited frmConnEditor: TfrmConnEditor
     Width = 430
     Hint = ''
     Text = 'edtConnectionName'
-    TabOrder = 2
+    TabOrder = 3
     FieldLabel = 'Nome da conex'#227'o:'
     OnChange = edtConnectionNameChange
   end
@@ -180,7 +180,7 @@ inherited frmConnEditor: TfrmConnEditor
     Enabled = False
     BodyRTL = False
     Anchors = [akTop, akRight]
-    TabOrder = 1
+    TabOrder = 2
     ShowCaption = False
     Caption = 'UniPanel1'
   end
