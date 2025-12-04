@@ -29,6 +29,7 @@ type
     procedure mtbCNSAfterDelete(DataSet: TDataSet);
     procedure mtbCNSAfterOpen(DataSet: TDataSet);
   private
+    procedure mtbCNSAfterEmptyDataSet(DataSet: TDataSet);
     procedure SaveOptions;
   public
     procedure LoadData(const AFile, AData: string);
@@ -79,6 +80,11 @@ begin
   SaveOptions;
 end;
 
+procedure TdamLogin.mtbCNSAfterEmptyDataSet(DataSet: TDataSet);
+begin
+  SaveOptions;
+end;
+
 procedure TdamLogin.mtbCNSAfterOpen(DataSet: TDataSet);
 begin
   mtbCNS.LoadData(CST_KEY_OPTIONS, ServerModule.DataStorage.Load(CST_FILENAME_OPTIONS));
@@ -91,13 +97,11 @@ end;
 
 procedure TdamLogin.mtbCNSNewRecord(DataSet: TDataSet);
 begin
-  inherited;
   mtbCNSId.AsGuid := TGuid.NewGuid;
 end;
 
 procedure TdamLogin.mtbUSENewRecord(DataSet: TDataSet);
 begin
-  inherited;
   mtbUSEId.AsGuid := TGuid.NewGuid;
 end;
 
@@ -114,6 +118,7 @@ end;
 procedure TdamLogin.UniGUIMainModuleCreate(Sender: TObject);
 begin
   inherited;
+  mtbCNS.AfterEmptyDataSet := mtbCNSAfterEmptyDataSet;
   mtbUSE.CreateDataSet;
   mtbCNS.CreateDataSet;
 end;

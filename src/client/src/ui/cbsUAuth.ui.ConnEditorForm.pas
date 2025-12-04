@@ -212,6 +212,7 @@ begin
     on E: Exception do
     begin
       MessageBox('Erro', 'Erro ao se conectar com o banco de dados.', E.Message, mtError, [mbOK]);
+      Abort;
     end;
   end;
 end;

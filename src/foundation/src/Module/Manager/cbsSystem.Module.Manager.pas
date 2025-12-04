@@ -54,7 +54,7 @@ end;
 function TcbsModuleManager.GetModuleExtension: string;
 begin
 {$IFDEF MSWINDOWS}
-  Result := '.bpl';
+  Result := 'cbs*.bpl';
 {$ELSEIF Defined(MACOS)}
   Result := '.dylib';
 {$ELSEIF Defined(LINUX)}

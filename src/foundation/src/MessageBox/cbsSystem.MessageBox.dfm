@@ -53,10 +53,6 @@ object frmMessageBox: TfrmMessageBox
     Caption = 'labCaption'
     TabOrder = 1
   end
-  object aclMain: TUniActionList
-    Left = 288
-    Top = 38
-  end
   object ilaMain: TUniImageListAdapter
     Left = 316
     Top = 38

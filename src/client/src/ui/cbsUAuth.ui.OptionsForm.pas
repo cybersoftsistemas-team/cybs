@@ -35,6 +35,7 @@ type
     procedure actDelExecute(Sender: TObject);
     procedure actClearExecute(Sender: TObject);
     procedure actTestConnExecute(Sender: TObject);
+    procedure grdConnDblClick(Sender: TObject);
   protected
     function GetDataModule: TdamBase; override;
     function GetTestConnection: TFDCustomConnection;
@@ -57,6 +58,7 @@ uses
   System.UITypes,
   uniGUIApplication,
 {PROJECT}
+  cbsSystem.Support.DataSet.Extensions,
   cbsUAuth.data.module.LoginModule,
   cbsUAuth.ui.ConnEditorForm;
 
@@ -78,6 +80,14 @@ begin
   Result.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
 end;
 
+procedure TfrmOptions.grdConnDblClick(Sender: TObject);
+begin
+  if not damLogin.mtbCNS.IsEmpty then
+  begin
+    actEdit.Execute;
+  end;
+end;
+
 procedure TfrmOptions.actAddExecute(Sender: TObject);
 begin
   AddorEditConnection;
@@ -92,7 +102,6 @@ begin
       if Result = mrYes then
       begin
         damLogin.mtbCNS.EmptyDataSet;
-        damLogin.mtbCNSName.FocusControl;
       end;
     end);
 end;
@@ -106,7 +115,6 @@ begin
       if Result = mrYes then
       begin
         damLogin.mtbCNS.Delete;
-        damLogin.mtbCNSName.FocusControl;
       end;
     end);
 end;
@@ -153,7 +161,6 @@ begin
         damLogin.mtbCNSName.AsString := frmConnEditor.ConnectionName;
         damLogin.mtbCNSConnectionString.AsString := frmConnEditor.ConnectionString;
         damLogin.mtbCNS.Post;
-        damLogin.mtbCNSName.FocusControl;
       end;
     end
   );

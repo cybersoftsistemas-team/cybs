@@ -24,6 +24,7 @@ inherited frmOptions: TfrmOptions
     LoadMask.Message = 'Carregando dados...'
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
+    OnDblClick = grdConnDblClick
     Columns = <
       item
         FieldName = 'Id'

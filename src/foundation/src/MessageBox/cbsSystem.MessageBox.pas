@@ -4,8 +4,8 @@ interface
 
 uses
 {IDE}
-  Dialogs, uniButton, uniGUIForm, uniGUIBaseClasses, uniLabel, uniImage, uniGUIClasses, uniMemo, Vcl.Controls, Vcl.Forms, uniPanel, uniImageList, System.ImageList, Vcl.ImgList,
-  System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
+  Dialogs, uniButton, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, uniLabel, uniImage, uniGUIClasses, uniMemo, System.Classes, Vcl.Controls,
+  Vcl.Forms, uniPanel;
 
 type
   TMessageCallback = reference to procedure(const AResult: Integer);
@@ -15,6 +15,8 @@ type
     unmText: TUniMemo;
     imgIcon: TUniImage;
     labCaption: TUniLabel;
+    ilaMain: TUniImageListAdapter;
+    nilstMain: TUniNativeImageList;
   private
     FCallback: TMessageCallback;
     procedure ButtonClick(Sender: TObject);
@@ -32,9 +34,7 @@ implementation
 uses
 {IDE}
   System.SysUtils,
-  uniGUIApplication,
-{PROJECT}
-  cbsSystem.Support.ServerModule;
+  uniGUIApplication;
 
 function ButtonCaption(const ABtn: TMsgDlgBtn): string;
 begin

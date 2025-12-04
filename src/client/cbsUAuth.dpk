@@ -52,7 +52,7 @@ requires
 contains
   cbsUAuth.ui.LoginForm in 'src\ui\cbsUAuth.ui.LoginForm.pas' {frmLogin: TUniLoginForm},
   cbsUAuth.data.module.LoginModule in 'src\data\module\cbsUAuth.data.module.LoginModule.pas',
-  ExportMethods in 'src\exports\ExportMethods.pas',
+  ComingOut in 'src\exports\ComingOut.pas',
   cbsUAuth.inf.DbModule in 'src\inf\cbsUAuth.inf.DbModule.pas' {damDb: TDataModule},
   cbsUAuth.ui.OptionsForm in 'src\ui\cbsUAuth.ui.OptionsForm.pas' {frmOptions: TUniForm},
   cbsUAuth.ui.ConnEditorForm in 'src\ui\cbsUAuth.ui.ConnEditorForm.pas' {frmConnEditor: TUniForm};

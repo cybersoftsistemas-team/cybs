@@ -154,7 +154,7 @@
             <DesignClass>TUniLoginForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\data\module\cbsUAuth.data.module.LoginModule.pas"/>
-        <DCCReference Include="src\exports\ExportMethods.pas"/>
+        <DCCReference Include="src\exports\ComingOut.pas"/>
         <DCCReference Include="src\inf\cbsUAuth.inf.DbModule.pas">
             <Form>damDb</Form>
             <FormType>dfm</FormType>
