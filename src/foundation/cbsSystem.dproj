@@ -177,6 +177,7 @@
         <DCCReference Include="src\Support\cbsSystem.Support.ServerModule.pas"/>
         <DCCReference Include="src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas"/>
         <DCCReference Include="src\DataStorage\cbsSystem.DataStorage.pas"/>
+        <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.CycleInfo.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

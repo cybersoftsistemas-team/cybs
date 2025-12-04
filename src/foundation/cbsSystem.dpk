@@ -91,7 +91,8 @@ contains
   cbsSystem.Contracts.Module.ServerModule in 'src\Contracts\Module\cbsSystem.Contracts.Module.ServerModule.pas',
   cbsSystem.Support.ServerModule in 'src\Support\cbsSystem.Support.ServerModule.pas',
   cbsSystem.Contracts.DataStorage in 'src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas',
-  cbsSystem.DataStorage in 'src\DataStorage\cbsSystem.DataStorage.pas';
+  cbsSystem.DataStorage in 'src\DataStorage\cbsSystem.DataStorage.pas',
+  cbsSystem.Module.Manager.CycleInfo in 'src\Module\Manager\cbsSystem.Module.Manager.CycleInfo.pas';
 
 end.
 
