@@ -12,6 +12,7 @@ type
     function GetDataStorage: IcbsDataStorage;
     function GetProgramDataPath: string;
     function GetSystemFilesFolderPath: string;
+    procedure ExecuteMigrations;
     property DataStorage: IcbsDataStorage read GetDataStorage;
     property ProgramDataPath: string read GetProgramDataPath;
     property SystemFilesFolderPath: string read GetSystemFilesFolderPath;

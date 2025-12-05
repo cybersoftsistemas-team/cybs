@@ -137,6 +137,8 @@
         <DCCReference Include="FireDACCommonODBC.dcp"/>
         <DCCReference Include="FireDACMSSQLDriver.dcp"/>
         <DCCReference Include="uniGUI30.dcp"/>
+        <DCCReference Include="cbsMigrations.dcp"/>
+        <DCCReference Include="cbsMigrationsFireDac.dcp"/>
         <DCCReference Include="src\Module\cbsSystem.Module.BaseModule.pas">
             <Form>damBase</Form>
             <FormType>dfm</FormType>
@@ -178,6 +180,10 @@
         <DCCReference Include="src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas"/>
         <DCCReference Include="src\DataStorage\cbsSystem.DataStorage.pas"/>
         <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.CycleInfo.pas"/>
+        <DCCReference Include="src\Migrations\cbsSystem.Migrations.pas"/>
+        <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Migrations.pas"/>
+        <DCCReference Include="src\Migrations\cbsSystem.Migrations.MigrationContext.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

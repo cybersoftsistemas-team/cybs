@@ -17,38 +17,45 @@ type
 implementation
 
 uses
-{IDE}
-  System.Generics.Collections,
 {PROJECT}
-  cbsSystem.Contracts.Module;
+  cbsSystem.Contracts.Module,
+{SPRING}
+  Spring.Collections;
+
+type
+  INameMapList = IDictionary<string, IcbsModule>;
+  IStackList = IList<string>;
+  IStateList = IDictionary<string, Integer>;
 
 function DetectCircularDependencies(const AModules: IcbsModuleManager): TCycleInfo;
 var
   LInfo: TCycleInfo;
-  LStack: TList<string>;
-  LState: TDictionary<string, Integer>;
-  LNameMap: TDictionary<string, IcbsModule>;
+  LNameMap: INameMapList;
+  LStack: IStackList;
+  LState: IStateList;
 
   function DFS(const AModuleName: string): Boolean;
+  var
+    LStatus: Integer;
   begin
-    if not LState.ContainsKey(AModuleName) then
+    if not LState.TryGetValue(AModuleName, LStatus) then
     begin
-      Exit(False);
+      LStatus := 0;
     end;
-    if LState[AModuleName] = 1 then
+    if LStatus = 1 then
     begin
-      var Arr: TArray<string>;
-      var idx := LStack.IndexOf(AModuleName);
-      SetLength(Arr, LStack.Count - idx);
-      for var I := idx to LStack.Count - 1 do
+      var LArr: TArray<string>;
+      var LIdx := LStack.IndexOf(AModuleName);
+      SetLength(LArr, LStack.Count - LIdx);
+      for var I := LIdx to LStack.Count - 1 do
       begin
-        Arr[I - idx] := LStack[I];
+        LArr[I - LIdx] := LStack[I];
       end;
       LInfo.HasCycle := True;
-      LInfo.Path := Arr;
+      LInfo.Path := LArr;
       Exit(True);
     end;
-    if LState[AModuleName] = 2 then
+    if LStatus = 2 then
     begin
       Exit(False);
     end;
@@ -74,19 +81,19 @@ var
 var
   LModule: IcbsModule;
 begin
-  LStack := TList<string>.Create;
-  LState := TDictionary<string, Integer>.Create;
-  LNameMap := TDictionary<string, IcbsModule>.Create;
+  LNameMap := TCollections.CreateDictionary<string, IcbsModule>;
+  LStack := TCollections.CreateList<string>;
+  LState := TCollections.CreateDictionary<string, Integer>;
   try
     LInfo.HasCycle := False;
     SetLength(LInfo.Path, 0);
     for LModule in AModules do
     begin
-      LNameMap.AddOrSetValue(LModule.Name, LModule);
+      LNameMap[LModule.Name] := LModule;
     end;
     for LModule in AModules do
     begin
-      LState.AddOrSetValue(LModule.Name, 0);
+      LState[LModule.Name] := 0;
     end;
     for LModule in AModules do
     begin
@@ -100,9 +107,9 @@ begin
       end;
     end;
   finally
-    LState.Free;
-    LStack.Free;
-    LNameMap.Free;
+    LNameMap := nil;
+    LStack := nil;
+    LState := nil;
   end;
   Result := LInfo;
 end;

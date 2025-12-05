@@ -22,6 +22,7 @@ type
   protected
     procedure FirstInit; override;
   public
+    procedure ExecuteMigrations;
     property DataStorage: IcbsDataStorage read GetDataStorage;
     property ProgramDataPath: string read GetProgramDataPath;
     property SystemFilesFolderPath: string read GetSystemFilesFolderPath;
@@ -45,6 +46,7 @@ uses
 {$ENDIF}
 {PROJECT}
   cbsSystem.DataStorage,
+  cbsSystem.Support.Migrations,
   cbsSystem.Support.ModuleManager,
   cbsSystem.Support.ServerModule;
 
@@ -53,9 +55,13 @@ begin
   Result := TcbsServerModule(UniGUIServerInstance);
 end;
 
-procedure RegisterAppFormAndModuleClass;
+procedure LoadSystemModules;
 begin
-  ModuleManager.LoadFromFolder(TPath.Combine(ExtractFilePath(ParamStr(0))) + 'modules');
+  ModuleManager.LoadFromFolder(TPath.Combine(ExtractFilePath(ParamStr(0)), 'modules'));
+end;
+
+procedure RegisterAppFormsAndDataModules;
+begin
   for var LModule in ModuleManager do
   begin
     for var LFormClass in LModule.FormTypes do
@@ -90,12 +96,18 @@ begin
   Result := FilesFolderPath;
 end;
 
+procedure TcbsServerModule.ExecuteMigrations;
+begin
+  Migrations.Run(ModuleManager);
+end;
+
 procedure TcbsServerModule.FirstInit;
 begin
   inherited;
   FDataStorage := TcbsDataStorage.Create(Self);
   InitServerModule(Self);
-  RegisterSystemServerModule(Self);
+  RegisterInternalSystemServerModule(Self);
+  ExecuteMigrations;
 end;
 
 procedure TcbsServerModule.HideTrayIconSystem;
@@ -125,12 +137,12 @@ begin
   FDataStorage := nil;
 end;
 
-
 initialization
 begin
   RegisterServerModuleClass(TcbsServerModule);
-  RegisterAppFormAndModuleClass;
-  FDManager.Active := True;
+  LoadSystemModules;
+  RegisterAppFormsAndDataModules;
+  FDManager.Open;
 end;
 
 finalization

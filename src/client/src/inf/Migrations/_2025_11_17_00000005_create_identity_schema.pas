@@ -17,7 +17,7 @@ implementation
 
 uses
 {PROJECT}
-  cbs.inf.Database.MigrationContext;
+  cbsUAuth.inf.MigrationContext;
 
 { CreateIdentitySchema }
 

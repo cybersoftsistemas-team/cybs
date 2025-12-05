@@ -43,31 +43,11 @@ requires
   vclFireDAC,
   FireDACCommonODBC,
   FireDACMSSQLDriver,
-  uniGUI30;
+  uniGUI30,
+  cbsMigrations,
+  cbsMigrationsFireDac;
 
 contains
-  Spring.Collections.Dictionaries,
-  Spring.Collections.LinkedLists,
-  Spring.Collections.MultiSets,
-  Spring.Collections.Queues,
-  Spring.Collections.Sets,
-  Spring.Collections.Stacks,
-  Spring.Collections.Events,
-  Spring.Hash,
-  Spring.ResourceStrings,
-  Spring.Collections.MultiMaps,
-  Spring.Collections.Extensions,
-  Spring.Collections.Base,
-  Spring.Collections.Trees,
-  Spring.HashTable,
-  Spring.Events.Base,
-  Spring.Collections.Lists,
-  Spring.Events,
-  Spring.Collections,
-  Spring,
-  Spring.VirtualClass,
-  Spring.HazardEra,
-  Spring.Comparers,
   cbsSystem.Module.BaseModule in 'src\Module\cbsSystem.Module.BaseModule.pas' {damBase: TDataModule},
   cbsSystem.Form.BaseForm in 'src\Form\cbsSystem.Form.BaseForm.pas' {frmBase: TUniForm},
   cbsSystem.Form.Registered in 'src\Form\cbsSystem.Form.Registered.pas',
@@ -92,7 +72,11 @@ contains
   cbsSystem.Support.ServerModule in 'src\Support\cbsSystem.Support.ServerModule.pas',
   cbsSystem.Contracts.DataStorage in 'src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas',
   cbsSystem.DataStorage in 'src\DataStorage\cbsSystem.DataStorage.pas',
-  cbsSystem.Module.Manager.CycleInfo in 'src\Module\Manager\cbsSystem.Module.Manager.CycleInfo.pas';
+  cbsSystem.Module.Manager.CycleInfo in 'src\Module\Manager\cbsSystem.Module.Manager.CycleInfo.pas',
+  cbsSystem.Migrations in 'src\Migrations\cbsSystem.Migrations.pas',
+  cbsSystem.Contracts.Migrations in 'src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas',
+  cbsSystem.Support.Migrations in 'src\Support\cbsSystem.Support.Migrations.pas',
+  cbsSystem.Migrations.MigrationContext in 'src\Migrations\cbsSystem.Migrations.MigrationContext.pas';
 
 end.
 

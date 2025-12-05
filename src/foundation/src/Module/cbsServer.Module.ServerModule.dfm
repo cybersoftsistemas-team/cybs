@@ -60,6 +60,6 @@ object cbsServerModule: TcbsServerModule
   SSL.SSLOptions.VerifyDepth = 0
   ConnectionFailureRecovery.ErrorMessage = 'Connection Error'
   ConnectionFailureRecovery.RetryMessage = 'Retrying...'
-  Height = 199
-  Width = 285
+  Height = 159
+  Width = 211
 end

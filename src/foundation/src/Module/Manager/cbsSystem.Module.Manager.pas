@@ -14,7 +14,6 @@ type
     LModuleList: IModuleList;
     function GetModuleExtension: string;
     function GetModuleMask: string;
-    procedure CheckPacketCycles;
     procedure LoadPackage(const AFileName: TFileName);
     procedure LoadPackages(const AFolder: string);
   public
@@ -30,8 +29,7 @@ uses
 {IDE}
   System.IOUtils,
 {PROJECT}
-  cbsSystem.Module,
-  cbsSystem.Module.Manager.CycleInfo;
+  cbsSystem.Module;
 
 { TcbsModuleManager }
 
@@ -71,20 +69,9 @@ begin
   Result := 'cbs*' + GetModuleExtension;
 end;
 
-procedure TcbsModuleManager.CheckPacketCycles;
-begin
-  var LCycle := DetectCircularDependencies(Self);
-  if LCycle.HasCycle then
-  begin
-    raise Exception.Create('Dependências circulares detectadas!' +
-      sLineBreak + String.Join(' → ', LCycle.Path));
-  end;
-end;
-
 procedure TcbsModuleManager.LoadFromFolder(const AFolder: string);
 begin
   LoadPackages(AFolder);
-  CheckPacketCycles;
 end;
 
 procedure TcbsModuleManager.LoadPackage(const AFileName: TFileName);

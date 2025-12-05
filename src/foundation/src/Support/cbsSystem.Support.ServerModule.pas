@@ -9,11 +9,11 @@ uses
 var
   ServerModule: IServerModule = nil;
 
-procedure RegisterSystemServerModule(const AServerModule: IServerModule);
+  procedure RegisterInternalSystemServerModule(const AServerModule: IServerModule);
 
 implementation
 
-procedure RegisterSystemServerModule(const AServerModule: IServerModule);
+procedure RegisterInternalSystemServerModule(const AServerModule: IServerModule);
 begin
   ServerModule := AServerModule;
 end;
