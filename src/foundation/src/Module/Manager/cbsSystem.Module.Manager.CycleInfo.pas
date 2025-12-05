@@ -17,6 +17,7 @@ type
 implementation
 
 uses
+{IDE}
   System.Generics.Collections,
 {PROJECT}
   cbsSystem.Contracts.Module;
@@ -30,6 +31,10 @@ var
 
   function DFS(const AModuleName: string): Boolean;
   begin
+    if not LState.ContainsKey(AModuleName) then
+    begin
+      Exit(False);
+    end;
     if LState[AModuleName] = 1 then
     begin
       var Arr: TArray<string>;

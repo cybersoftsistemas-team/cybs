@@ -1,4 +1,4 @@
-unit cbsSystem.Module.Manager;
+﻿unit cbsSystem.Module.Manager;
 
 interface
 
@@ -62,7 +62,7 @@ begin
 {$ELSEIF Defined(LINUX)}
   Result := '.so';
 {$ELSE}
-  Result := ''; // Caso improv�vel
+  Result := ''; // Caso improvável
 {$ENDIF}
 end;
 
@@ -74,11 +74,15 @@ end;
 procedure TcbsModuleManager.CheckPacketCycles;
 begin
   var LCycle := DetectCircularDependencies(Self);
+  if LCycle.HasCycle then
+  begin
+    raise Exception.Create('Dependências circulares detectadas!' +
+      sLineBreak + String.Join(' → ', LCycle.Path));
+  end;
 end;
 
 procedure TcbsModuleManager.LoadFromFolder(const AFolder: string);
 begin
-  LoadPackage(TPath.Combine(ExtractFilePath(ParamStr(0)), 'cbsSystem' + GetModuleExtension));
   LoadPackages(AFolder);
   CheckPacketCycles;
 end;
@@ -98,7 +102,7 @@ begin
     for var LFileName in TDirectory.GetFiles(AFolder,
       GetModuleMask, TSearchOption.soAllDirectories) do
     begin
-      LModuleList.Add(TcbsModule.Create(LFileName));
+      LoadPackage(LFileName);
     end;
   end;
 end;
