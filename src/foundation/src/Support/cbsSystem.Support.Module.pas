@@ -12,6 +12,9 @@ uses
 implementation
 
 uses
+{IDE}
+  System.SysUtils,
+  uniGUIApplication,
 {PROJECT}
   cbsSystem.Contracts.Module.Registered,
   cbsSystem.Module.Registered;

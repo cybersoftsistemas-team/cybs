@@ -14,14 +14,48 @@ type
     Connection: TFDConnection;
     PhysMSSQLDriverLink: TFDPhysMSSQLDriverLink;
     StanStorageBinLink: TFDStanStorageBinLink;
-  private
-    { Private declarations }
+    procedure ConnectionBeforeConnect(Sender: TObject);
+  protected
+    procedure AfterRunSeed; virtual;
+    procedure BeforeRunSeed; virtual;
+    procedure OnRunSeed; virtual;
   public
-    { Public declarations }
+    procedure RunSeed;
   end;
+
+  TDbConnectionModuleClass = class of TdamBaseDb;
 
 implementation
 
 {$R *.dfm}
+
+{ TdamBaseDb }
+
+procedure TdamBaseDb.AfterRunSeed;
+begin
+  // This method can be overwritten by inherited classes.
+end;
+
+procedure TdamBaseDb.BeforeRunSeed;
+begin
+  // This method can be overwritten by inherited classes.
+end;
+
+procedure TdamBaseDb.ConnectionBeforeConnect(Sender: TObject);
+begin
+  // inherited;
+end;
+
+procedure TdamBaseDb.OnRunSeed;
+begin
+  // This method can be overwritten by inherited classes.
+end;
+
+procedure TdamBaseDb.RunSeed;
+begin
+  BeforeRunSeed;
+  OnRunSeed;
+  AfterRunSeed;
+end;
 
 end.

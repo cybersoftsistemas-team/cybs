@@ -21,6 +21,7 @@ type
     function GetHandle: HMODULE;
     function GetName: string;
     function GetRequires: IRequires;
+    procedure ExecuteMigrations;
     property DataModuleTypes: IDataModuleTypes read GetDataModuleTypes;
     property FormTypes: IFormTypes read GetFormTypes;
     property Handle: HMODULE read GetHandle;

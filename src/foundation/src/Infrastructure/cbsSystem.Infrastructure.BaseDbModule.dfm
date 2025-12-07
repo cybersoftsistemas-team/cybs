@@ -2,6 +2,8 @@ inherited damBaseDb: TdamBaseDb
   Height = 86
   Width = 379
   object Connection: TFDConnection
+    LoginPrompt = False
+    BeforeConnect = ConnectionBeforeConnect
     Left = 37
     Top = 16
   end

@@ -11,10 +11,8 @@ uses
 
 type
   TdamDb = class(TdamBaseDb)
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+  protected
+    procedure OnRunSeed; override;
   end;
 
   function damDb: TdamDb;
@@ -27,16 +25,24 @@ uses
 {IDE}
   uniGUIApplication,
 {PROJECT}
-  cbsSystem.Support.Module;
+  cbsSystem.Support.Migrations,
+  cbsUAuth.inf.MigrationContext;
 
 function damDb: TdamDb;
 begin
   Result := TdamDb(UniApplication.UniMainModule.GetModuleInstance(TdamDb));
 end;
 
+{ TdamDb }
+
+procedure TdamDb.OnRunSeed;
+begin
+  inherited;
+end;
+
 initialization
 begin
-  RegisterModuleClass(TdamDb);
+  RegisterMigrationContextClass(TDbContext, TdamDb);
 end;
 
 end.

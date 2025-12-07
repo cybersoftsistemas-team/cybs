@@ -70,7 +70,7 @@ begin
   for var LDep in AModules do if
     SameText(LDep.Name, AModuleName) then
   begin
-//    ExecuteMigrationForModule(Dep);
+    LDep.ExecuteMigrations;
   end;
   var LDependents: IModuleList;
   if AGraph.TryGetValue(AModuleName, LDependents) then

@@ -14,6 +14,7 @@ type
   TcbsModule = class(TInterfacedObject, IcbsModule)
   strict private
     type
+      TExecuteMigrations = procedure; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
       TGetFormRegistered = function: TArray<TcbsFormClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
       TGetModuleRegistered = function: TArray<TdamBaseClass>; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
   private
@@ -35,6 +36,7 @@ type
   public
     constructor Create(const AFileName: TFileName);
     destructor Destroy; override;
+    procedure ExecuteMigrations;
     property DataModuleTypes: IDataModuleTypes read GetDataModuleTypes;
     property FormTypes: IFormTypes read GetFormTypes;
     property Handle: HMODULE read GetHandle;
@@ -121,6 +123,16 @@ end;
 function TcbsModule.GetRequires: IRequires;
 begin
   Result := FRequiredList;
+end;
+
+procedure TcbsModule.ExecuteMigrations;
+begin
+  var LExecuteMigrations: TExecuteMigrations;
+  @LExecuteMigrations := GetProcAddress(FHandle, 'ExecuteMigrations');
+  if Assigned(@LExecuteMigrations) then
+  begin
+    LExecuteMigrations();
+  end;
 end;
 
 procedure TcbsModule.LoadFormRegistered;
