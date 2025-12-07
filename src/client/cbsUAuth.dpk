@@ -29,24 +29,6 @@ package cbsUAuth;
 {$IMPLICITBUILD ON}
 
 requires
-  rtl,
-  vcl,
-  soaprtl,
-  dbrtl,
-  vclimg,
-  vclwinx,
-  IndySystem,
-  vcldb,
-  FireDAC,
-  FireDACCommonDriver,
-  FireDACCommon,
-  uniGUI30,
-  uniGUI30Core,
-  uniTools30,
-  uIndy30,
-  vclFireDAC,
-  FireDACCommonODBC,
-  FireDACMSSQLDriver,
   cbsSystem;
 
 contains
