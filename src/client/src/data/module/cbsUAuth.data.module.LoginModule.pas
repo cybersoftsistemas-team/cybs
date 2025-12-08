@@ -21,18 +21,18 @@ type
     mtbCNSId: TGuidField;
     mtbCNSName: TStringField;
     mtbCNSConnectionString: TStringField;
-    mtbUSECnsId: TGuidField;
     procedure UniGUIMainModuleCreate(Sender: TObject);
     procedure mtbUSENewRecord(DataSet: TDataSet);
     procedure mtbCNSNewRecord(DataSet: TDataSet);
     procedure mtbCNSAfterPost(DataSet: TDataSet);
     procedure mtbCNSAfterDelete(DataSet: TDataSet);
     procedure mtbCNSAfterOpen(DataSet: TDataSet);
+    procedure mtbCNSBeforeDelete(DataSet: TDataSet);
   private
-    procedure mtbCNSAfterEmptyDataSet(DataSet: TDataSet);
     procedure SaveOptions;
   public
     procedure LoadData(const AFile, AData: string);
+    procedure mtbCNSEmptyDataSet;
     procedure SaveLogonData;
   end;
 
@@ -80,11 +80,6 @@ begin
   SaveOptions;
 end;
 
-procedure TdamLogin.mtbCNSAfterEmptyDataSet(DataSet: TDataSet);
-begin
-  SaveOptions;
-end;
-
 procedure TdamLogin.mtbCNSAfterOpen(DataSet: TDataSet);
 begin
   mtbCNS.LoadData(CST_KEY_OPTIONS, ServerModule.DataStorage.Load(CST_FILENAME_OPTIONS));
@@ -93,6 +88,26 @@ end;
 procedure TdamLogin.mtbCNSAfterPost(DataSet: TDataSet);
 begin
   SaveOptions;
+  if IsEqualGUID(damLogin.mtbCNSId.AsGuid, ServerModule.Database.Id) and
+    not SameText(damLogin.mtbCNSConnectionString.AsString, ServerModule.Database.ConnectionString) then
+  begin
+    ServerModule.Database.Clear;
+  end;
+end;
+
+procedure TdamLogin.mtbCNSBeforeDelete(DataSet: TDataSet);
+begin
+  if IsEqualGUID(damLogin.mtbCNSId.AsGuid, ServerModule.Database.Id) then
+  begin
+    ServerModule.Database.Clear;
+  end;
+end;
+
+procedure TdamLogin.mtbCNSEmptyDataSet;
+begin
+  mtbCNS.EmptyDataSet;
+  SaveOptions;
+  ServerModule.Database.Clear;
 end;
 
 procedure TdamLogin.mtbCNSNewRecord(DataSet: TDataSet);
@@ -118,7 +133,6 @@ end;
 procedure TdamLogin.UniGUIMainModuleCreate(Sender: TObject);
 begin
   inherited;
-  mtbCNS.AfterEmptyDataSet := mtbCNSAfterEmptyDataSet;
   mtbUSE.CreateDataSet;
   mtbCNS.CreateDataSet;
 end;

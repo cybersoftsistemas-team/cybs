@@ -42,7 +42,7 @@ end;
 
 function TcbsDataStorage.GetConfigPath: string;
 begin
-  Result := FOwner.ProgramDataPath;
+  Result := FOwner.ProgramDataConfigPath;
 end;
 
 function TcbsDataStorage.Load(const AFileName: string): string;

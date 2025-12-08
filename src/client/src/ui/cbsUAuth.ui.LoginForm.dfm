@@ -439,7 +439,7 @@ object frmLogin: TfrmLogin
   end
   object aclMain: TUniActionList
     Images = ilaMain
-    Left = 351
+    Left = 323
     Top = 16
     object actConnect: TAction
       Caption = 'Entrar'
@@ -454,15 +454,16 @@ object frmLogin: TfrmLogin
     object actDomains: TAction
       Enabled = False
       ImageIndex = 2
+      OnExecute = actDomainsExecute
     end
   end
   object ilaMain: TUniImageListAdapter
     UniImageList = nilstMain
-    Left = 379
+    Left = 351
     Top = 16
   end
   object nilstMain: TUniNativeImageList
-    Left = 407
+    Left = 379
     Top = 16
     Images = {
       03000000FFFFFF1F04AE00000089504E470D0A1A0A0000000D49484452000000
@@ -490,5 +491,16 @@ object frmLogin: TfrmLogin
       72232F8843CE2E3F094004A81168B882F594B89D834940868F7D1384ED1C140B
       FC801FF50283BEB2734FA025415E3000FE3DA38A41B3014A0000000049454E44
       AE426082}
+  end
+  object tmrDomains: TUniTimer
+    Enabled = False
+    ClientEvent.Strings = (
+      'function(sender)'
+      '{'
+      ' '
+      '}')
+    OnTimer = tmrDomainsTimer
+    Left = 407
+    Top = 16
   end
 end

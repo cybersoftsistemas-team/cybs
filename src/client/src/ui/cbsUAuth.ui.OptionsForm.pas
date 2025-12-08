@@ -30,16 +30,20 @@ type
     pnlLine01: TUniPanel;
     pnlLine02: TUniPanel;
     usmTestConnection: TUniScreenMask;
+    usmSelected: TUniScreenMask;
     procedure actAddExecute(Sender: TObject);
     procedure actEditExecute(Sender: TObject);
     procedure actDelExecute(Sender: TObject);
     procedure actClearExecute(Sender: TObject);
+    procedure actSelectedExecute(Sender: TObject);
     procedure actTestConnExecute(Sender: TObject);
     procedure grdConnDblClick(Sender: TObject);
+    procedure grdConnDrawColumnCell(Sender: TObject; ACol, ARow: Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
   protected
     function GetDataModule: TdamBase; override;
     function GetTestConnection: TFDCustomConnection;
     procedure DataChange(Sender: TObject; Field: TField); override;
+    procedure TestConnection;
   public
     procedure AddorEditConnection; overload;
     procedure AddorEditConnection(const AName, AConnectionString: string); overload;
@@ -59,6 +63,7 @@ uses
   uniGUIApplication,
 {PROJECT}
   cbsSystem.Support.DataSet.Extensions,
+  cbsSystem.Support.ServerModule,
   cbsUAuth.data.module.LoginModule,
   cbsUAuth.ui.ConnEditorForm;
 
@@ -80,14 +85,6 @@ begin
   Result.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
 end;
 
-procedure TfrmOptions.grdConnDblClick(Sender: TObject);
-begin
-  if not damLogin.mtbCNS.IsEmpty then
-  begin
-    actEdit.Execute;
-  end;
-end;
-
 procedure TfrmOptions.actAddExecute(Sender: TObject);
 begin
   AddorEditConnection;
@@ -101,15 +98,15 @@ begin
     begin
       if Result = mrYes then
       begin
-        damLogin.mtbCNS.EmptyDataSet;
+        damLogin.mtbCNSEmptyDataSet;
       end;
     end);
 end;
 
 procedure TfrmOptions.actDelExecute(Sender: TObject);
 begin
-  MessageDlg(Format('Tem certeza de que deseja excluir a conexão ''%s''?', [damLogin.mtbCNSName.AsString]),
-    mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo],
+  MessageDlg(Format('Tem certeza de que deseja excluir a conexão ''%s''?',
+    [damLogin.mtbCNSName.AsString]), mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo],
     procedure(Sender: TComponent; Result: Integer)
     begin
       if Result = mrYes then
@@ -124,16 +121,36 @@ begin
   AddorEditConnection(damLogin.mtbCNSName.AsString, damLogin.mtbCNSConnectionString.AsString);
 end;
 
+procedure TfrmOptions.actSelectedExecute(Sender: TObject);
+begin
+  var LDatabase := ServerModule.Database;
+  LDatabase.BeginUpdate;
+  try
+    TestConnection;
+    var LRecNo := damLogin.mtbCNS.RecNo;
+    try
+      LDatabase.Id := damLogin.mtbCNSId.AsGuid;
+      LDatabase.ConnectionName := damLogin.mtbCNSName.AsString;
+      LDatabase.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
+      LDatabase.ExecuteMigrations;
+      LDatabase.EndUpdate;
+      damLogin.mtbCNS.Refresh;
+    finally
+      damLogin.mtbCNS.RecNo := LRecNo;
+    end;
+  except
+    on E: Exception do
+    begin
+      LDatabase.CancelUpdate;
+      MessageBox('Erro', 'Erro ao selecionar o banco de dados.', E.Message, mtError, [mbOK]);
+    end;
+  end;
+end;
+
 procedure TfrmOptions.actTestConnExecute(Sender: TObject);
 begin
   try
-    var LConn := GetTestConnection;
-    try
-      LConn.Close;
-      LConn.Open;
-    finally
-      FDFreeAndNil(LConn);
-    end;
+    TestConnection;
     ShowMessage('Conexão estabelecida com sucesso.');
   except
     on E: Exception do
@@ -157,7 +174,13 @@ begin
     begin
       if Result = mrOk then
       begin
-        damLogin.mtbCNS.Edit;
+        if AName.Trim.IsEmpty and
+          AConnectionString.Trim.IsEmpty then
+        begin
+          damLogin.mtbCNS.Append;
+        end
+        else
+          damLogin.mtbCNS.Edit;
         damLogin.mtbCNSName.AsString := frmConnEditor.ConnectionName;
         damLogin.mtbCNSConnectionString.AsString := frmConnEditor.ConnectionString;
         damLogin.mtbCNS.Post;
@@ -173,7 +196,40 @@ begin
   actDel.Enabled := actEdit.Enabled;
   actClear.Enabled := actEdit.Enabled;
   actTestConn.Enabled := actEdit.Enabled;
-  actSelected.Enabled := actEdit.Enabled and not IsEqualGUID(damLogin.mtbCNSId.AsGuid, damLogin.mtbUSECnsId.AsGuid);
+  actSelected.Enabled := actEdit.Enabled and not IsEqualGUID(damLogin.mtbCNSId.AsGuid, ServerModule.Database.Id);
+end;
+
+procedure TfrmOptions.grdConnDblClick(Sender: TObject);
+begin
+  if not damLogin.mtbCNS.IsEmpty then
+  begin
+    actEdit.Execute;
+  end;
+end;
+
+procedure TfrmOptions.grdConnDrawColumnCell(Sender: TObject; ACol, ARow:
+    Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
+begin
+  if IsEqualGUID(
+    grdConn.DataSource.DataSet.FieldByName('Id').AsGuid,
+    ServerModule.Database.Id
+  ) then
+  begin
+    Attribs.Font.Style := Attribs.Font.Style + [TFontStyle.fsBold];
+  end
+  else
+    Attribs.Font.Style := Attribs.Font.Style - [TFontStyle.fsBold];
+end;
+
+procedure TfrmOptions.TestConnection;
+begin
+  var LConn := GetTestConnection;
+  try
+    LConn.Close;
+    LConn.Open;
+  finally
+    FDFreeAndNil(LConn);
+  end;
 end;
 
 end.

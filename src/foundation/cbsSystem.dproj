@@ -183,7 +183,13 @@
         <DCCReference Include="src\Migrations\cbsSystem.Migrations.pas"/>
         <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.Migrations.pas"/>
-        <DCCReference Include="src\Migrations\cbsSystem.Migrations.MigrationContext.pas"/>
+        <DCCReference Include="src\Contracts\Database\cbsSystem.Contracts.Database.pas"/>
+        <DCCReference Include="src\Database\cbsSystem.Database.pas"/>
+        <DCCReference Include="src\Form\cbsSystem.Form.DialogBaseForm.pas">
+            <Form>frmDialogBase</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -16,7 +16,6 @@ type
 
   TFDMemTableExtensions = class helper for TFDMemTable
   private
-    class var FAfterEmptyDataSet: TDataSetNotifyEvent;
     function Compress(const AValue: string): TBytes;
     function Decompress(const ABytes: TBytes): string;
     function Decrypt(const AData, APassword: string): string;
@@ -24,8 +23,6 @@ type
     function StreamToBase64: string;
     procedure Base64ToStream(const AValue: string);
   public
-    class property AfterEmptyDataSet: TDataSetNotifyEvent read FAfterEmptyDataSet write FAfterEmptyDataSet;
-    procedure EmptyDataSet;
     procedure LoadData(const AKey, AData: string);
     procedure SaveData(const AKey, AFile: string; const AStorageMode: TcbsStorageMode = csmClientSide);
   end;
@@ -98,15 +95,6 @@ begin
     LBytes[I] := LBytes[I] xor LPwd[I mod Length(LPwd)];
   end;
   Result := Decompress(LBytes);
-end;
-
-procedure TFDMemTableExtensions.EmptyDataSet;
-begin
-  inherited EmptyDataSet;
-  if Assigned(FAfterEmptyDataSet) then
-  begin
-    FAfterEmptyDataSet(Self);
-  end;
 end;
 
 function TFDMemTableExtensions.Encrypt(const AData, APassword: string): string;

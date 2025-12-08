@@ -154,6 +154,11 @@
         </DCCReference>
         <DCCReference Include="src\inf\cbsUAuth.inf.MigrationContext.pas"/>
         <DCCReference Include="src\inf\Migrations\_2025_11_17_00000005_create_identity_schema.pas"/>
+        <DCCReference Include="src\ui\cbsUAuth.ui.DomainsForm.pas">
+            <Form>frmDomains</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

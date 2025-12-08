@@ -25,6 +25,7 @@ inherited frmOptions: TfrmOptions
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
     OnDblClick = grdConnDblClick
+    OnDrawColumnCell = grdConnDrawColumnCell
     Columns = <
       item
         FieldName = 'Id'
@@ -189,6 +190,7 @@ inherited frmOptions: TfrmOptions
       Caption = 'Selecionar'
       Enabled = False
       ImageIndex = 5
+      OnExecute = actSelectedExecute
     end
     object actClose: TAction
       Caption = 'Fechar'
@@ -550,6 +552,14 @@ inherited frmOptions: TfrmOptions
     DisplayMessage = 'Testando conex'#227'o com o banco de dados...'
     TargetControl = Owner
     Left = 116
+    Top = 56
+  end
+  object usmSelected: TUniScreenMask
+    AttachedControl = btnSelected
+    Enabled = True
+    DisplayMessage = 'Selecionando banco de dados...'
+    TargetControl = Owner
+    Left = 144
     Top = 56
   end
 end

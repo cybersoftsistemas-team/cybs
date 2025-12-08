@@ -5,7 +5,7 @@ interface
 uses
 {IDE}
   uniGUITypes, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Imaging.pngimage,
-  uniImage, uniSpeedButton, uniButton, uniBitBtn, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, uniPanel, Vcl.Controls, Vcl.Forms;
+  uniImage, uniSpeedButton, uniButton, uniBitBtn, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, uniPanel, Vcl.Controls, Vcl.Forms, uniTimer;
 
 type
   TfrmLogin = class(TUniLoginForm)
@@ -32,11 +32,16 @@ type
     labFooterSubTitle: TUniLabel;
     nilstMain: TUniNativeImageList;
     imgBckFooter: TUniImage;
+    tmrDomains: TUniTimer;
     procedure UniLoginFormCreate(Sender: TObject);
     procedure actConnectExecute(Sender: TObject);
+    procedure actDomainsExecute(Sender: TObject);
     procedure UniLoginFormActivate(Sender: TObject);
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure actOptionsExecute(Sender: TObject);
+    procedure tmrDomainsTimer(Sender: TObject);
+  private
+    procedure SetBtnDomainsEnabled;
   end;
 
   function frmLogin: TfrmLogin;
@@ -53,7 +58,9 @@ uses
   cbsSystem.Contracts.Module.Main,
   cbsSystem.Support.Form,
   cbsSystem.Support.RunTime,
+  cbsSystem.Support.ServerModule,
   cbsUAuth.data.module.LoginModule,
+  cbsUAuth.ui.DomainsForm,
   cbsUAuth.ui.OptionsForm;
 
 function frmLogin: TfrmLogin;
@@ -65,6 +72,11 @@ end;
 
 procedure TfrmLogin.UniLoginFormCreate(Sender: TObject);
 begin
+  SetBtnDomainsEnabled;
+  if not actDomains.Enabled then
+  begin
+    tmrDomains.Enabled := True;
+  end;
   actOptions.Visible := RunTime.IsClientRunningInServer;
   if not actOptions.Visible then
   begin
@@ -77,9 +89,28 @@ begin
   ModalResult := mrOK;
 end;
 
+procedure TfrmLogin.actDomainsExecute(Sender: TObject);
+begin
+  frmDomains.ShowModal;
+end;
+
 procedure TfrmLogin.actOptionsExecute(Sender: TObject);
 begin
   frmOptions.ShowModal;
+end;
+
+procedure TfrmLogin.SetBtnDomainsEnabled;
+begin
+  actDomains.Enabled := not ServerModule.Database.Id.IsEmpty;
+end;
+
+procedure TfrmLogin.tmrDomainsTimer(Sender: TObject);
+begin
+  SetBtnDomainsEnabled;
+  if actDomains.Enabled then
+  begin
+    tmrDomains.Enabled := False;
+  end;
 end;
 
 procedure TfrmLogin.UniLoginFormActivate(Sender: TObject);

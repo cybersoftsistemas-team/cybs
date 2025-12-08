@@ -29,6 +29,10 @@ implementation
 
 {$R *.dfm}
 
+uses
+{PROJECT}
+  cbsSystem.Support.ServerModule;
+
 { TdamBaseDb }
 
 procedure TdamBaseDb.AfterRunSeed;
@@ -43,7 +47,7 @@ end;
 
 procedure TdamBaseDb.ConnectionBeforeConnect(Sender: TObject);
 begin
-  // inherited;
+  Connection.ConnectionString := ServerModule.Database.ConnectionString;
 end;
 
 procedure TdamBaseDb.OnRunSeed;

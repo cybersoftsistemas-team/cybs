@@ -29,10 +29,6 @@ inherited damLogin: TdamLogin
       FieldName = 'Password'
       Size = 255
     end
-    object mtbUSECnsId: TGuidField
-      FieldName = 'CnsId'
-      Size = 38
-    end
   end
   object dsoUSE: TDataSource
     DataSet = mtbUSE
@@ -44,6 +40,7 @@ inherited damLogin: TdamLogin
   object mtbCNS: TFDMemTable
     AfterOpen = mtbCNSAfterOpen
     AfterPost = mtbCNSAfterPost
+    BeforeDelete = mtbCNSBeforeDelete
     AfterDelete = mtbCNSAfterDelete
     OnNewRecord = mtbCNSNewRecord
     FetchOptions.AssignedValues = [evMode]

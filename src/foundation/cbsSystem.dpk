@@ -76,7 +76,9 @@ contains
   cbsSystem.Migrations in 'src\Migrations\cbsSystem.Migrations.pas',
   cbsSystem.Contracts.Migrations in 'src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas',
   cbsSystem.Support.Migrations in 'src\Support\cbsSystem.Support.Migrations.pas',
-  cbsSystem.Migrations.MigrationContext in 'src\Migrations\cbsSystem.Migrations.MigrationContext.pas';
+  cbsSystem.Contracts.Database in 'src\Contracts\Database\cbsSystem.Contracts.Database.pas',
+  cbsSystem.Database in 'src\Database\cbsSystem.Database.pas',
+  cbsSystem.Form.DialogBaseForm in 'src\Form\cbsSystem.Form.DialogBaseForm.pas' {frmDialogBase: TUniForm};
 
 end.
 

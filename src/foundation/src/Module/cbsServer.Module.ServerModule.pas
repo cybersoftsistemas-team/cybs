@@ -6,6 +6,7 @@ uses
 {IDE}
   uniGUIServer,
 {PROJECT}
+  cbsSystem.Contracts.Database,
   cbsSystem.Contracts.DataStorage,
   cbsSystem.Contracts.Module.ServerModule;
 
@@ -14,17 +15,19 @@ type
     procedure UniGUIServerModuleCreate(Sender: TObject);
     procedure UniGUIServerModuleDestroy(Sender: TObject);
   private
+    FDatabase: IcbsDatabase;
     FDataStorage: IcbsDataStorage;
+    function GetDatabase: IcbsDatabase;
     function GetDataStorage: IcbsDataStorage;
-    function GetProgramDataPath: string;
+    function GetProgramDataConfigPath: string;
     function GetSystemFilesFolderPath: string;
     procedure HideTrayIconSystem;
   protected
     procedure FirstInit; override;
   public
-    procedure ExecuteMigrations;
+    property Database: IcbsDatabase read GetDatabase;
     property DataStorage: IcbsDataStorage read GetDataStorage;
-    property ProgramDataPath: string read GetProgramDataPath;
+    property ProgramDataConfigPath: string read GetProgramDataConfigPath;
     property SystemFilesFolderPath: string read GetSystemFilesFolderPath;
   end;
 
@@ -45,8 +48,8 @@ uses
   Winapi.ShellAPI,
 {$ENDIF}
 {PROJECT}
+  cbsSystem.Database,
   cbsSystem.DataStorage,
-  cbsSystem.Support.Migrations,
   cbsSystem.Support.ModuleManager,
   cbsSystem.Support.ServerModule;
 
@@ -77,12 +80,17 @@ end;
 
 { TcbsServerModule }
 
+function TcbsServerModule.GetDatabase: IcbsDatabase;
+begin
+  Result := FDatabase;
+end;
+
 function TcbsServerModule.GetDataStorage: IcbsDataStorage;
 begin
   Result := FDataStorage;
 end;
 
-function TcbsServerModule.GetProgramDataPath: string;
+function TcbsServerModule.GetProgramDataConfigPath: string;
 begin
   Result := TPath.Combine(TPath.GetPublicPath, '.cybersoft', 'config');
   if not DirectoryExists(Result) then
@@ -96,18 +104,14 @@ begin
   Result := FilesFolderPath;
 end;
 
-procedure TcbsServerModule.ExecuteMigrations;
-begin
-  Migrations.Run(ModuleManager);
-end;
-
 procedure TcbsServerModule.FirstInit;
 begin
   inherited;
-  FDataStorage := TcbsDataStorage.Create(Self);
   InitServerModule(Self);
+  FDataStorage := TcbsDataStorage.Create(Self);
+  FDatabase := TcbsDatabase.Create(Self);
   RegisterInternalSystemServerModule(Self);
-  ExecuteMigrations;
+  FDatabase.ExecuteMigrations;
 end;
 
 procedure TcbsServerModule.HideTrayIconSystem;
@@ -135,6 +139,7 @@ end;
 procedure TcbsServerModule.UniGUIServerModuleDestroy(Sender: TObject);
 begin
   FDataStorage := nil;
+  FDatabase := nil;
 end;
 
 initialization

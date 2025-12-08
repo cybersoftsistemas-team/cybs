@@ -4,17 +4,19 @@ interface
 
 uses
 {PROJECT}
+  cbsSystem.Contracts.Database,
   cbsSystem.Contracts.DataStorage;
 
 type
   IServerModule = interface(IUnknown)
     ['{6C4443A7-3D84-4983-8E21-D3A9562E265F}']
+    function GetDatabase: IcbsDatabase;
     function GetDataStorage: IcbsDataStorage;
-    function GetProgramDataPath: string;
+    function GetProgramDataConfigPath: string;
     function GetSystemFilesFolderPath: string;
-    procedure ExecuteMigrations;
+    property Database: IcbsDatabase read GetDatabase;
     property DataStorage: IcbsDataStorage read GetDataStorage;
-    property ProgramDataPath: string read GetProgramDataPath;
+    property ProgramDataConfigPath: string read GetProgramDataConfigPath;
     property SystemFilesFolderPath: string read GetSystemFilesFolderPath;
   end;
 
