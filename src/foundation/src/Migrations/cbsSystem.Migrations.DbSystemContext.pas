@@ -1,4 +1,4 @@
-unit cbsUAuth.inf.MigrationContext;
+unit cbsSystem.Migrations.DbSystemContext;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   cbsMigrationsFireDac.Support.MigrationContext;
 
 type
-  TDbContext = class(TFDMigrationContext);
+  TDbSystemContext = class(TFDMigrationContext);
 
 implementation
 

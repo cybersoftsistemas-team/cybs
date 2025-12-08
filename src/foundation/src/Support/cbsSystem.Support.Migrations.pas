@@ -9,7 +9,6 @@ uses
   cbsSystem.Infrastructure.BaseDbModule;
 
   function Migrations: IMigrations;
-  procedure ExecuteMigrations; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF}; export;
   procedure RegisterMigrationContextClass(const AMigrationContextType: MigrationContextType; const ADbConnectionModuleClass: TDbConnectionModuleClass);
 
 implementation
@@ -23,11 +22,9 @@ uses
   cbsSystem.Support.Module;
 
 var
+  GMigrations: IMigrations = nil;
   TdamDb: TDbConnectionModuleClass = nil;
   TDbContext: MigrationContextType = nil;
-
-var
-  GMigrations: IMigrations;
 
 function Migrations: IMigrations;
 begin

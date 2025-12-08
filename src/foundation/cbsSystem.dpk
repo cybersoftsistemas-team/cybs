@@ -50,16 +50,16 @@ requires
 contains
   cbsSystem.Module.BaseModule in 'src\Module\cbsSystem.Module.BaseModule.pas' {damBase: TDataModule},
   cbsSystem.Form.BaseForm in 'src\Form\cbsSystem.Form.BaseForm.pas' {frmBase: TUniForm},
-  cbsSystem.Form.Registered in 'src\Form\cbsSystem.Form.Registered.pas',
-  cbsSystem.Module.Registered in 'src\Module\cbsSystem.Module.Registered.pas',
-  cbsSystem.Contracts.Form.Registered in 'src\Contracts\Form\cbsSystem.Contracts.Form.Registered.pas',
-  cbsSystem.Contracts.Module.Registered in 'src\Contracts\Module\cbsSystem.Contracts.Module.Registered.pas',
+  cbsSystem.Form.Repository in 'src\Form\cbsSystem.Form.Repository.pas',
+  cbsSystem.Module.Repository in 'src\Module\cbsSystem.Module.Repository.pas',
+  cbsSystem.Contracts.Form.Repository in 'src\Contracts\Form\cbsSystem.Contracts.Form.Repository.pas',
+  cbsSystem.Contracts.Module.Repository in 'src\Contracts\Module\cbsSystem.Contracts.Module.Repository.pas',
   cbsSystem.Contracts.Module.Manager in 'src\Contracts\Module\Manager\cbsSystem.Contracts.Module.Manager.pas',
   cbsSystem.Contracts.Module in 'src\Contracts\Module\cbsSystem.Contracts.Module.pas',
   cbsSystem.Module.Manager in 'src\Module\Manager\cbsSystem.Module.Manager.pas',
   cbsSystem.Module in 'src\Module\cbsSystem.Module.pas',
-  cbsSystem.Support.Form in 'src\Support\cbsSystem.Support.Form.pas',
-  cbsSystem.Support.Module in 'src\Support\cbsSystem.Support.Module.pas',
+  cbsSystem.Support.Form.Repository in 'src\Support\cbsSystem.Support.Form.Repository.pas',
+  cbsSystem.Support.Module.Repository in 'src\Support\cbsSystem.Support.Module.Repository.pas',
   cbsSystem.Support.ModuleManager in 'src\Support\cbsSystem.Support.ModuleManager.pas',
   cbsSystem.Support.RunTime in 'src\Support\cbsSystem.Support.RunTime.pas',
   cbsSystem.Support.DataSet.Extensions in 'src\Support\cbsSystem.Support.DataSet.Extensions.pas',
@@ -78,7 +78,12 @@ contains
   cbsSystem.Support.Migrations in 'src\Support\cbsSystem.Support.Migrations.pas',
   cbsSystem.Contracts.Database in 'src\Contracts\Database\cbsSystem.Contracts.Database.pas',
   cbsSystem.Database in 'src\Database\cbsSystem.Database.pas',
-  cbsSystem.Form.DialogBaseForm in 'src\Form\cbsSystem.Form.DialogBaseForm.pas' {frmDialogBase: TUniForm};
+  cbsSystem.Form.DialogBaseForm in 'src\Form\cbsSystem.Form.DialogBaseForm.pas' {frmDialogBase: TUniForm},
+  cbsSystem.Contracts.Form.BaseForm in 'src\Contracts\Form\cbsSystem.Contracts.Form.BaseForm.pas',
+  cbsSystem.Contracts.Module.BaseModule in 'src\Contracts\Module\cbsSystem.Contracts.Module.BaseModule.pas',
+  cbsSystem.Migrations.DbSystemContext in 'src\Migrations\cbsSystem.Migrations.DbSystemContext.pas',
+  cbsSystem.Infrastructure.Migrations._2025_12_08_00000001_create_auxiliary_data_schema in 'src\Infrastructure\Migrations\cbsSystem.Infrastructure.Migrations._2025_12_08_00000001_create_auxiliary_data_schema.pas',
+  cbsSystem.Infrastructure.SystemDbModule in 'src\Infrastructure\cbsSystem.Infrastructure.SystemDbModule.pas' {damSystemDb: TDataModule};
 
 end.
 

@@ -44,6 +44,7 @@ object cbsServerModule: TcbsServerModule
     '}'
     ''
     '.electron-login-pos,'
+    '.electron-login-domains-pos,'
     '.electron-login-options-pos,'
     '.electron-login-options-conn-editor-pos {'
     '  position: absolute !important;'

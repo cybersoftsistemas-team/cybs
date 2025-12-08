@@ -11,42 +11,42 @@ uses
 
 type
   TfrmOptions = class(TfrmBase)
-    grdConn: TUniDBGrid;
-    labConnList: TUniLabel;
-    btnAdd: TUniBitBtn;
-    btnEdit: TUniBitBtn;
-    btnDel: TUniBitBtn;
-    btnClear: TUniBitBtn;
     actAdd: TAction;
-    actEdit: TAction;
-    actDel: TAction;
     actClear: TAction;
     actClose: TAction;
-    btnClose: TUniBitBtn;
-    btnTestConn: TUniBitBtn;
-    actTestConn: TAction;
+    actDel: TAction;
+    actEdit: TAction;
     actSelected: TAction;
+    actTestConn: TAction;
+    btnAdd: TUniBitBtn;
+    btnClear: TUniBitBtn;
+    btnClose: TUniBitBtn;
+    btnDel: TUniBitBtn;
+    btnEdit: TUniBitBtn;
     btnSelected: TUniBitBtn;
+    btnTestConn: TUniBitBtn;
+    grdConn: TUniDBGrid;
+    labConnList: TUniLabel;
     pnlLine01: TUniPanel;
     pnlLine02: TUniPanel;
-    usmTestConnection: TUniScreenMask;
     usmSelected: TUniScreenMask;
+    usmTestConnection: TUniScreenMask;
     procedure actAddExecute(Sender: TObject);
-    procedure actEditExecute(Sender: TObject);
-    procedure actDelExecute(Sender: TObject);
     procedure actClearExecute(Sender: TObject);
+    procedure actDelExecute(Sender: TObject);
+    procedure actEditExecute(Sender: TObject);
     procedure actSelectedExecute(Sender: TObject);
     procedure actTestConnExecute(Sender: TObject);
     procedure grdConnDblClick(Sender: TObject);
     procedure grdConnDrawColumnCell(Sender: TObject; ACol, ARow: Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
   protected
-    function GetDataModule: TdamBase; override;
+    function GetDataModule: IDataModule; override;
     function GetTestConnection: TFDCustomConnection;
-    procedure DataChange(Sender: TObject; Field: TField); override;
     procedure TestConnection;
   public
     procedure AddorEditConnection; overload;
     procedure AddorEditConnection(const AName, AConnectionString: string); overload;
+    procedure DataChange(Sender: TObject; Field: TField); override;
   end;
 
   function frmOptions: TfrmOptions;
@@ -73,17 +73,6 @@ begin
 end;
 
 { TfrmOptions }
-
-function TfrmOptions.GetDataModule: TdamBase;
-begin
-  Result := damLogin;
-end;
-
-function TfrmOptions.GetTestConnection: TFDCustomConnection;
-begin
-  Result := TFDConnection.Create(nil);
-  Result.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
-end;
 
 procedure TfrmOptions.actAddExecute(Sender: TObject);
 begin
@@ -197,6 +186,17 @@ begin
   actClear.Enabled := actEdit.Enabled;
   actTestConn.Enabled := actEdit.Enabled;
   actSelected.Enabled := actEdit.Enabled and not IsEqualGUID(damLogin.mtbCNSId.AsGuid, ServerModule.Database.Id);
+end;
+
+function TfrmOptions.GetDataModule: IDataModule;
+begin
+  Result := damLogin;
+end;
+
+function TfrmOptions.GetTestConnection: TFDCustomConnection;
+begin
+  Result := TFDConnection.Create(nil);
+  Result.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
 end;
 
 procedure TfrmOptions.grdConnDblClick(Sender: TObject);

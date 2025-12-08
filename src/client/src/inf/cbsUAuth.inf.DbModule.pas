@@ -26,7 +26,7 @@ uses
   uniGUIApplication,
 {PROJECT}
   cbsSystem.Support.Migrations,
-  cbsUAuth.inf.MigrationContext;
+  cbsUAuth.inf.DbUAuthContext;
 
 function damDb: TdamDb;
 begin
@@ -42,7 +42,7 @@ end;
 
 initialization
 begin
-  RegisterMigrationContextClass(TDbContext, TdamDb);
+  RegisterMigrationContextClass(TDbUAuthContext, TdamDb);
 end;
 
 end.

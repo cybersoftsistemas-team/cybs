@@ -38,7 +38,7 @@ contains
   cbsUAuth.inf.DbModule in 'src\inf\cbsUAuth.inf.DbModule.pas' {damDb: TDataModule},
   cbsUAuth.ui.OptionsForm in 'src\ui\cbsUAuth.ui.OptionsForm.pas' {frmOptions: TUniForm},
   cbsUAuth.ui.ConnEditorForm in 'src\ui\cbsUAuth.ui.ConnEditorForm.pas' {frmConnEditor: TUniForm},
-  cbsUAuth.inf.MigrationContext in 'src\inf\cbsUAuth.inf.MigrationContext.pas',
+  cbsUAuth.inf.DbUAuthContext in 'src\inf\cbsUAuth.inf.DbUAuthContext.pas',
   _2025_11_17_00000005_create_identity_schema in 'src\inf\Migrations\_2025_11_17_00000005_create_identity_schema.pas',
   cbsUAuth.ui.DomainsForm in 'src\ui\cbsUAuth.ui.DomainsForm.pas' {frmDomains: TUniForm};
 

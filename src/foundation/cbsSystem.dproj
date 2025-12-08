@@ -149,16 +149,16 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Form\cbsSystem.Form.Registered.pas"/>
-        <DCCReference Include="src\Module\cbsSystem.Module.Registered.pas"/>
-        <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.Registered.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.Registered.pas"/>
+        <DCCReference Include="src\Form\cbsSystem.Form.Repository.pas"/>
+        <DCCReference Include="src\Module\cbsSystem.Module.Repository.pas"/>
+        <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.Repository.pas"/>
+        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.Repository.pas"/>
         <DCCReference Include="src\Contracts\Module\Manager\cbsSystem.Contracts.Module.Manager.pas"/>
         <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.pas"/>
         <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.pas"/>
         <DCCReference Include="src\Module\cbsSystem.Module.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Form.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Module.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Form.Repository.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Module.Repository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.ModuleManager.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.RunTime.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.DataSet.Extensions.pas"/>
@@ -189,6 +189,15 @@
             <Form>frmDialogBase</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.BaseForm.pas"/>
+        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.BaseModule.pas"/>
+        <DCCReference Include="src\Migrations\cbsSystem.Migrations.DbSystemContext.pas"/>
+        <DCCReference Include="src\Infrastructure\Migrations\cbsSystem.Infrastructure.Migrations._2025_12_08_00000001_create_auxiliary_data_schema.pas"/>
+        <DCCReference Include="src\Infrastructure\cbsSystem.Infrastructure.SystemDbModule.pas">
+            <Form>damSystemDb</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

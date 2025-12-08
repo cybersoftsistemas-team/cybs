@@ -1,0 +1,2 @@
+inherited damSystemDb: TdamSystemDb
+end

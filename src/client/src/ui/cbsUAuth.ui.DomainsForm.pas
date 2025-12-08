@@ -6,17 +6,17 @@ uses
 {PROJECT}
   cbsSystem.Form.DialogBaseForm,
 {IDE}
-  uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Controls, Vcl.Forms, uniGUIClasses, uniButton,
-  uniBitBtn, uniLabel, uniBasicGrid, uniDBGrid, uniDBTreeGrid;
+  Data.DB, uniGUIBaseClasses, uniLabel, uniGUIClasses, uniBasicGrid, uniDBGrid, uniDBTreeGrid, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions,
+  Vcl.ActnList, uniMainMenu, Vcl.Controls, Vcl.Forms, uniButton, uniBitBtn;
 
 type
   TfrmDomains = class(TfrmDialogBase)
     grdDomains: TUniDBTreeGrid;
     labDomains: TUniLabel;
-  private
-    { Private declarations }
+  protected
+    function GetDataModule: IDataModule; override;
   public
-    { Public declarations }
+    procedure DataChange(Sender: TObject; Field: TField); override;
   end;
 
   function frmDomains: TfrmDomains;
@@ -27,11 +27,25 @@ implementation
 
 uses
 {IDE}
-  uniGUIApplication;
+  uniGUIApplication,
+{PROJECT}
+  cbsUAuth.data.module.LoginModule;
 
 function frmDomains: TfrmDomains;
 begin
   Result := TfrmDomains(UniApplication.UniMainModule.GetFormInstance(TfrmDomains));
+end;
+
+{ TfrmDomains }
+
+function TfrmDomains.GetDataModule: IDataModule;
+begin
+  Result := damLogin;
+end;
+
+procedure TfrmDomains.DataChange(Sender: TObject; Field: TField);
+begin
+  inherited;
 end;
 
 end.

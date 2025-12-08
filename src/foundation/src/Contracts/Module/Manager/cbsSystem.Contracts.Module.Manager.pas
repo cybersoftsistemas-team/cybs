@@ -9,7 +9,7 @@ uses
   Spring.Collections;
 
 type
-  IModuleEnumerator = IEnumerator<IcbsModule>;
+  IModuleEnumerator = IEnumerator<IModule>;
 
   IcbsModuleManager = interface(IUnknown)
     ['{85218BA3-575A-40CE-9192-FF6F2CE04C9D}']
@@ -17,7 +17,7 @@ type
     procedure LoadFromFolder(const AFolder: string);
   end;
 
-  IModuleList = IList<IcbsModule>;
+  IModuleList = IList<IModule>;
 
   function CreateModuleList: IModuleList;
 
@@ -25,7 +25,7 @@ implementation
 
 function CreateModuleList: IModuleList;
 begin
-  Result := TCollections.CreateInterfaceList<IcbsModule>;
+  Result := TCollections.CreateInterfaceList<IModule>;
 end;
 
 end.

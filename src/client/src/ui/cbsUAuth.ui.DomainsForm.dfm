@@ -3,28 +3,33 @@ inherited frmDomains: TfrmDomains
   ClientWidth = 451
   Caption = 'frmDomains'
   BorderStyle = bsNone
+  ClientEvents.UniEvents.Strings = (
+    
+      'window.afterCreate=function window.afterCreate(sender)'#13#10'{'#13#10'  if ' +
+      '(AppEnv.isElectron()) {'#13#10'      sender.addCls("electron-login-dom' +
+      'ains-pos");'#13#10'   }'#13#10'}')
   ExplicitWidth = 451
   ExplicitHeight = 347
   TextHeight = 15
   inherited btnOk: TUniBitBtn
-    Left = 287
-    Top = 314
+    Left = 284
+    Top = 312
     TabOrder = 2
-    ExplicitLeft = 287
-    ExplicitTop = 314
+    ExplicitLeft = 284
+    ExplicitTop = 312
   end
   inherited btnCancel: TUniBitBtn
-    Left = 368
-    Top = 314
+    Left = 365
+    Top = 312
     TabOrder = 3
-    ExplicitLeft = 368
-    ExplicitTop = 314
+    ExplicitLeft = 365
+    ExplicitTop = 312
   end
   object grdDomains: TUniDBTreeGrid [2]
-    Left = 8
+    Left = 10
     Top = 27
-    Width = 435
-    Height = 279
+    Width = 430
+    Height = 276
     Hint = ''
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabOrder = 1
@@ -33,7 +38,7 @@ inherited frmDomains: TfrmDomains
     UseArrows = True
   end
   object labDomains: TUniLabel [3]
-    Left = 8
+    Left = 10
     Top = 8
     Width = 176
     Height = 13

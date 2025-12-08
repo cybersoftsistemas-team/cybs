@@ -17,7 +17,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsUAuth.inf.MigrationContext;
+  cbsUAuth.inf.DbUAuthContext;
 
 { CreateIdentitySchema }
 
@@ -33,7 +33,7 @@ end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateIdentitySchema);
+  RegisterMigration(TDbUAuthContext, CreateIdentitySchema);
 end;
 
 end.

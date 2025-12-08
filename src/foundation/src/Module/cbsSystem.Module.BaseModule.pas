@@ -3,11 +3,14 @@ unit cbsSystem.Module.BaseModule;
 interface
 
 uses
+{PROJECT}
+  cbsSystem.Contracts.Form.BaseForm,
+  cbsSystem.Contracts.Module.BaseModule,
 {IDE}
   Data.DB, System.Classes, System.SysUtils;
 
 type
-  TdamBase = class(TDataModule)
+  TdamBase = class(TDataModule, IDataModule)
     procedure CpfOrCnpfGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure CpfOrCnpfSetText(Sender: TField; const Text: string);
     procedure DataSetBeforePost(DataSet: TDataSet);
@@ -16,23 +19,24 @@ type
     procedure SetZeroToTheLeft(Sender: TField; var Text: string; DisplayText: Boolean);
   private
     FCpfOrCnpfDBFieldDisplayText: Boolean;
-    FOnStateChange: TNotifyEvent;
-    FOnDataChange: TDataChangeEvent;
+    FFormListenerList: IFormListenerList;
     procedure CheckRequiredFields(const ADataSet: TDataSet);
-    procedure DoOnDataChange(Sender: TObject; Field: TField); virtual;
-    procedure DoOnStateChange(Sender: TObject); virtual;
-    procedure SetOnDataChange(const Value: TDataChangeEvent);
   protected
-    procedure SetOnDataChangeEvent; virtual;
+    procedure DoDataChange(Sender: TObject; Field: TField); virtual;
+    procedure DoStateChange(Sender: TObject); virtual;
   public
+    constructor Create(AOwner: TComponent); override;
+    destructor Destroy; override;
+    procedure AddFormListener(const AForm: IForm);
+    procedure RemoveFormListener(const AForm: IForm);
     property CpfOrCnpfDBFieldDisplayText: Boolean read FCpfOrCnpfDBFieldDisplayText write FCpfOrCnpfDBFieldDisplayText;
-    property OnDataChange: TDataChangeEvent read FOnDataChange write SetOnDataChange;
-    property OnStateChange: TNotifyEvent read FOnStateChange write FOnStateChange;
   end;
 
-  TdamBaseClass = class of TDataModule;
+  ModuleType = class of TDataModule;
 
 implementation
+
+{%CLASSGROUP 'System.Classes.TPersistent'}
 
 {$R *.dfm}
 
@@ -41,6 +45,23 @@ uses
   cbsSystem.Support.Utils;
 
 { TdamBase }
+
+constructor TdamBase.Create(AOwner: TComponent);
+begin
+  inherited;
+  FFormListenerList := CreateFormListenerList;
+end;
+
+destructor TdamBase.Destroy;
+begin
+  FFormListenerList := nil;
+  inherited;
+end;
+
+procedure TdamBase.AddFormListener(const AForm: IForm);
+begin
+  FFormListenerList.Add(AForm);
+end;
 
 procedure TdamBase.CheckRequiredFields(const ADataSet: TDataSet);
 begin
@@ -73,43 +94,37 @@ begin
   CheckRequiredFields(DataSet);
 end;
 
-procedure TdamBase.DoOnDataChange(Sender: TObject; Field: TField);
+procedure TdamBase.DoDataChange(Sender: TObject; Field: TField);
 begin
   // This method can be overwritten by inherited classes.
 end;
 
-procedure TdamBase.DoOnStateChange(Sender: TObject);
+procedure TdamBase.DoStateChange(Sender: TObject);
 begin
   // This method can be overwritten by inherited classes.
 end;
 
 procedure TdamBase.dsoDataChange(Sender: TObject; Field: TField);
 begin
-  if Assigned(FOnDataChange) then
+  for var LForm in FFormListenerList do
   begin
-    DoOnDataChange(Sender, Field);
-    FOnDataChange(Sender, Field);
+    LForm.DataChange(Sender, Field);
   end;
+  DoDataChange(Sender, Field);
 end;
 
 procedure TdamBase.dsoStateChange(Sender: TObject);
 begin
-  if Assigned(FOnStateChange) then
+  for var LForm in FFormListenerList do
   begin
-    DoOnStateChange(Sender);
-    FOnStateChange(Sender);
+    LForm.StateChange(Sender);
   end;
+  DoStateChange(Sender);
 end;
 
-procedure TdamBase.SetOnDataChange(const Value: TDataChangeEvent);
+procedure TdamBase.RemoveFormListener(const AForm: IForm);
 begin
-  FOnDataChange := Value;
-  SetOnDataChangeEvent;
-end;
-
-procedure TdamBase.SetOnDataChangeEvent;
-begin
-  // This method can be overwritten by inherited classes.
+  FFormListenerList.Remove(AForm);
 end;
 
 procedure TdamBase.SetZeroToTheLeft(Sender: TField; var Text: string; DisplayText: Boolean);

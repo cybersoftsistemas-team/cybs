@@ -4,32 +4,33 @@ interface
 
 uses
 {PROJECT}
+  cbsSystem.Contracts.Form.BaseForm,
+  cbsSystem.Contracts.Module.BaseModule,
   cbsSystem.MessageBox,
   cbsSystem.Module.BaseModule,
 {IDE}
   Data.DB, Dialogs, uniGUIDialogs, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
-  TcbsFormClass = class of TUniForm;
+  FormType = class of TUniForm;
 
-  TdamBase = cbsSystem.Module.BaseModule.TdamBase;
+  IDataModule = cbsSystem.Contracts.Module.BaseModule.IDataModule;
 
-  TfrmBase = class(TUniForm)
+  TfrmBase = class(TUniForm, IForm)
     aclMain: TUniActionList;
     ilaMain: TUniImageListAdapter;
     nilstMain: TUniNativeImageList;
     procedure UniFormDestroy(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
   private
-    FDataModule: TdamBase;
-    FOwnDataModule: Boolean;
+    FDataModule: IDataModule;
   protected
-    function GetDataModule: TdamBase; virtual;
-    procedure DataChange(Sender: TObject; Field: TField); virtual;
+    function GetDataModule: IDataModule; virtual;
     procedure MessageBox(const ATitle, AMessage, ADetails: string; const AIcon: TMsgDlgType; const AButtons: TMsgDlgButtons; const ACallback: TMessageCallback = nil;
       const AWidth: Integer = 400; const AHeight: Integer = 160);
   public
-    property DataModule: TdamBase read FDataModule;
+    procedure DataChange(Sender: TObject; Field: TField); virtual;
+    procedure StateChange(Sender: TObject); virtual;
   end;
 
 implementation
@@ -38,7 +39,7 @@ implementation
 
 { TfrmBase }
 
-function TfrmBase.GetDataModule: TdamBase;
+function TfrmBase.GetDataModule: IDataModule;
 begin
   Result := nil;
 end;
@@ -54,14 +55,17 @@ begin
   // This method can be overwritten by inherited classes.
 end;
 
+procedure TfrmBase.StateChange(Sender: TObject);
+begin
+  // This method can be overwritten by inherited classes.
+end;
+
 procedure TfrmBase.UniFormCreate(Sender: TObject);
 begin
-  FOwnDataModule := False;
   FDataModule := GetDataModule;
   if Assigned(FDataModule) then
   begin
-    FDataModule.OnDataChange := DataChange;
-    FOwnDataModule := True;
+    FDataModule.AddFormListener(Self);
   end;
 end;
 
@@ -69,7 +73,7 @@ procedure TfrmBase.UniFormDestroy(Sender: TObject);
 begin
   if Assigned(FDataModule) then
   begin
-    FDataModule.OnDataChange := nil;
+    FDataModule.RemoveFormListener(Self);
   end;
 end;
 

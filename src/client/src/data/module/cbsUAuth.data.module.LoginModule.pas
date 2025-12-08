@@ -11,25 +11,25 @@ uses
 
 type
   TdamLogin = class(TdamBase)
-    mtbUSE: TFDMemTable;
+    dsoCNS: TDataSource;
     dsoUSE: TDataSource;
+    mtbCNS: TFDMemTable;
+    mtbCNSConnectionString: TStringField;
+    mtbCNSId: TGuidField;
+    mtbCNSName: TStringField;
+    mtbUSE: TFDMemTable;
+    mtbUSEDomainId: TGuidField;
+    mtbUSEDomainName: TStringField;
     mtbUSEId: TGuidField;
     mtbUSEName: TStringField;
     mtbUSEPassword: TStringField;
-    mtbCNS: TFDMemTable;
-    dsoCNS: TDataSource;
-    mtbCNSId: TGuidField;
-    mtbCNSName: TStringField;
-    mtbCNSConnectionString: TStringField;
-    mtbUSEDomainId: TGuidField;
-    mtbUSEDomainName: TStringField;
-    procedure UniGUIMainModuleCreate(Sender: TObject);
-    procedure mtbUSENewRecord(DataSet: TDataSet);
-    procedure mtbCNSNewRecord(DataSet: TDataSet);
-    procedure mtbCNSAfterPost(DataSet: TDataSet);
     procedure mtbCNSAfterDelete(DataSet: TDataSet);
     procedure mtbCNSAfterOpen(DataSet: TDataSet);
+    procedure mtbCNSAfterPost(DataSet: TDataSet);
     procedure mtbCNSBeforeDelete(DataSet: TDataSet);
+    procedure mtbCNSNewRecord(DataSet: TDataSet);
+    procedure mtbUSENewRecord(DataSet: TDataSet);
+    procedure UniGUIMainModuleCreate(Sender: TObject);
   private
     procedure SaveOptions;
   public
@@ -41,6 +41,8 @@ type
   function damLogin: TdamLogin;
 
 implementation
+
+{%CLASSGROUP 'System.Classes.TPersistent'}
 
 {$R *.dfm}
 

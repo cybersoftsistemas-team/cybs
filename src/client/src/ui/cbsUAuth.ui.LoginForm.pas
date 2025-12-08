@@ -10,36 +10,36 @@ uses
 type
   TfrmLogin = class(TUniLoginForm)
     aclMain: TUniActionList;
-    ilaMain: TUniImageListAdapter;
     actConnect: TAction;
-    actOptions: TAction;
     actDomains: TAction;
-    pnlAuthenticate: TUniPanel;
-    pnlHeader: TUniSimplePanel;
+    actOptions: TAction;
+    btnConnect: TUniBitBtn;
+    btnDomains: TUniSpeedButton;
+    btnOptions: TUniBitBtn;
+    edtDomainName: TUniDBEdit;
+    edtPassword: TUniDBEdit;
+    edtUserName: TUniDBEdit;
+    ilaMain: TUniImageListAdapter;
+    imgBckFooter: TUniImage;
+    labFooterSubTitle: TUniLabel;
+    labFooterTitle: TUniLabel;
+    labSubTitle01: TUniLabel;
     labSubTitle02: TUniLabel;
     labTitle01: TUniLabel;
     labTitle02: TUniLabel;
-    labSubTitle01: TUniLabel;
-    pnlBody: TUniSimplePanel;
-    edtUserName: TUniDBEdit;
-    edtPassword: TUniDBEdit;
-    edtDomainName: TUniDBEdit;
-    btnConnect: TUniBitBtn;
-    btnOptions: TUniBitBtn;
-    btnDomains: TUniSpeedButton;
-    pnlFooter: TUniSimplePanel;
-    labFooterTitle: TUniLabel;
-    labFooterSubTitle: TUniLabel;
     nilstMain: TUniNativeImageList;
-    imgBckFooter: TUniImage;
+    pnlAuthenticate: TUniPanel;
+    pnlBody: TUniSimplePanel;
+    pnlFooter: TUniSimplePanel;
+    pnlHeader: TUniSimplePanel;
     tmrDomains: TUniTimer;
-    procedure UniLoginFormCreate(Sender: TObject);
     procedure actConnectExecute(Sender: TObject);
     procedure actDomainsExecute(Sender: TObject);
-    procedure UniLoginFormActivate(Sender: TObject);
-    procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure actOptionsExecute(Sender: TObject);
     procedure tmrDomainsTimer(Sender: TObject);
+    procedure UniLoginFormActivate(Sender: TObject);
+    procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
+    procedure UniLoginFormCreate(Sender: TObject);
   private
     procedure SetBtnDomainsEnabled;
   end;
@@ -69,20 +69,6 @@ begin
 end;
 
 { TfrmLogin }
-
-procedure TfrmLogin.UniLoginFormCreate(Sender: TObject);
-begin
-  SetBtnDomainsEnabled;
-  if not actDomains.Enabled then
-  begin
-    tmrDomains.Enabled := True;
-  end;
-  actOptions.Visible := RunTime.IsClientRunningInServer;
-  if not actOptions.Visible then
-  begin
-    btnConnect.Left := btnDomains.Left - btnConnect.Width + btnDomains.Width;
-  end;
-end;
 
 procedure TfrmLogin.actConnectExecute(Sender: TObject);
 begin
@@ -130,6 +116,20 @@ begin
   else if EventName = 'LoadClientData' then
   begin
     damLogin.LoadData(Params.Values['file'], Params.Values['value']);
+  end;
+end;
+
+procedure TfrmLogin.UniLoginFormCreate(Sender: TObject);
+begin
+  SetBtnDomainsEnabled;
+  if not actDomains.Enabled then
+  begin
+    tmrDomains.Enabled := True;
+  end;
+  actOptions.Visible := RunTime.IsClientRunningInServer;
+  if not actOptions.Visible then
+  begin
+    btnConnect.Left := btnDomains.Left - btnConnect.Width + btnDomains.Width;
   end;
 end;
 

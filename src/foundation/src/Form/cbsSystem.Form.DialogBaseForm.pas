@@ -10,6 +10,8 @@ uses
   uniMainMenu;
 
 type
+  IDataModule = cbsSystem.Form.BaseForm.IDataModule;
+
   TfrmDialogBase = class(TfrmBase)
     btnOk: TUniBitBtn;
     btnCancel: TUniBitBtn;

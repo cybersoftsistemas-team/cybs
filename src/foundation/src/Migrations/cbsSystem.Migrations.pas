@@ -25,7 +25,8 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsSystem.Module.Manager.CycleInfo;
+  cbsSystem.Module.Manager.CycleInfo,
+  cbsSystem.Support.Migrations;
 
 { TMigrations }
 
