@@ -19,7 +19,7 @@ type
     { Public declarations }
   end;
 
-function frmDomains: TfrmDomains;
+  function frmDomains: TfrmDomains;
 
 implementation
 

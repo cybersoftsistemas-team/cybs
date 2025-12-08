@@ -137,6 +137,8 @@ object frmLogin: TfrmLogin
         Width = 363
         Height = 22
         Hint = ''
+        DataField = 'DomainName'
+        DataSource = damLogin.dsoUSE
         Anchors = [akLeft, akRight, akBottom]
         TabOrder = 3
         ReadOnly = True

@@ -29,6 +29,14 @@ inherited damLogin: TdamLogin
       FieldName = 'Password'
       Size = 255
     end
+    object mtbUSEDomainId: TGuidField
+      FieldName = 'DomainId'
+      Size = 38
+    end
+    object mtbUSEDomainName: TStringField
+      FieldName = 'DomainName'
+      Size = 255
+    end
   end
   object dsoUSE: TDataSource
     DataSet = mtbUSE

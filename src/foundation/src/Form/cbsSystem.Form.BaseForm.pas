@@ -18,6 +18,7 @@ type
     aclMain: TUniActionList;
     ilaMain: TUniImageListAdapter;
     nilstMain: TUniNativeImageList;
+    procedure UniFormDestroy(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
   private
     FDataModule: TdamBase;
@@ -61,6 +62,14 @@ begin
   begin
     FDataModule.OnDataChange := DataChange;
     FOwnDataModule := True;
+  end;
+end;
+
+procedure TfrmBase.UniFormDestroy(Sender: TObject);
+begin
+  if Assigned(FDataModule) then
+  begin
+    FDataModule.OnDataChange := nil;
   end;
 end;
 

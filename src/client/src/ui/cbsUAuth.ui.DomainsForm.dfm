@@ -10,11 +10,15 @@ inherited frmDomains: TfrmDomains
     Left = 287
     Top = 314
     TabOrder = 2
+    ExplicitLeft = 287
+    ExplicitTop = 314
   end
   inherited btnCancel: TUniBitBtn
     Left = 368
     Top = 314
     TabOrder = 3
+    ExplicitLeft = 368
+    ExplicitTop = 314
   end
   object grdDomains: TUniDBTreeGrid [2]
     Left = 8

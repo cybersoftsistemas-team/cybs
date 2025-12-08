@@ -9,7 +9,6 @@ inherited frmConnEditor: TfrmConnEditor
       'window.afterCreate=function window.afterCreate(sender)'#13#10'{'#13#10'   if' +
       ' (AppEnv.isElectron()) {'#13#10'      sender.addCls("electron-login-op' +
       'tions-conn-editor-pos");'#13#10'   }'#13#10'}')
-  OnDestroy = UniFormDestroy
   ExplicitWidth = 451
   ExplicitHeight = 347
   TextHeight = 15
@@ -93,7 +92,7 @@ inherited frmConnEditor: TfrmConnEditor
     Height = 13
     Hint = ''
     Caption = 'Configure os par'#226'metros de conex'#227'o do banco de dados.'
-    TabOrder = 1
+    TabOrder = 0
   end
   object btnOk: TUniBitBtn [3]
     Left = 284
@@ -167,7 +166,7 @@ inherited frmConnEditor: TfrmConnEditor
     Width = 430
     Hint = ''
     Text = 'edtConnectionName'
-    TabOrder = 3
+    TabOrder = 2
     FieldLabel = 'Nome da conex'#227'o:'
     OnChange = edtConnectionNameChange
   end
@@ -180,7 +179,7 @@ inherited frmConnEditor: TfrmConnEditor
     Enabled = False
     BodyRTL = False
     Anchors = [akTop, akRight]
-    TabOrder = 2
+    TabOrder = 1
     ShowCaption = False
     Caption = 'UniPanel1'
   end

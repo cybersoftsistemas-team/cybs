@@ -7,6 +7,7 @@ object frmBase: TfrmBase
   OldCreateOrder = False
   MonitoredKeys.Keys = <>
   OnCreate = UniFormCreate
+  OnDestroy = UniFormDestroy
   TextHeight = 15
   object aclMain: TUniActionList
     Images = ilaMain

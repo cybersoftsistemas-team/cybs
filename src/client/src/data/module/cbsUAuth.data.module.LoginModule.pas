@@ -21,6 +21,8 @@ type
     mtbCNSId: TGuidField;
     mtbCNSName: TStringField;
     mtbCNSConnectionString: TStringField;
+    mtbUSEDomainId: TGuidField;
+    mtbUSEDomainName: TStringField;
     procedure UniGUIMainModuleCreate(Sender: TObject);
     procedure mtbUSENewRecord(DataSet: TDataSet);
     procedure mtbCNSNewRecord(DataSet: TDataSet);
