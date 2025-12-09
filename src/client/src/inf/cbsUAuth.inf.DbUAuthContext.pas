@@ -11,4 +11,14 @@ type
 
 implementation
 
+uses
+{PROJECT}
+  cbsSystem.Support.Migration,
+  cbsUAuth.inf.DbModule;
+
+initialization
+begin
+  RegisterMigrationContextType(TDbUAuthContext, TdamDb);
+end;
+
 end.

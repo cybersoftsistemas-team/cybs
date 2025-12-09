@@ -12,7 +12,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsSystem.Support.Module.Repository;
+  cbsSystem.Exprts.ModuleTypeRepository;
 
 procedure RegisterModuleType(const AModuleType: ModuleType);
 begin

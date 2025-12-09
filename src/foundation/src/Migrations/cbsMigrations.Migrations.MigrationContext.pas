@@ -16,6 +16,7 @@ type
   private
     FConnection: TCustomConnection;
     FMigrationTypeList: TMigrationTypeList;
+    FOwnsConnection: Boolean;
     FRepositoryPrefix: string;
     FRepository: IDatabaseMigrationRepository;
     FResolver: IConnectionResolver;
@@ -35,6 +36,7 @@ type
     function CreateRepository: IDatabaseMigrationRepository; virtual; abstract;
     function CreateResolver: IConnectionResolver; virtual; abstract;
     procedure DoUpdateDatabase; virtual;
+    procedure SetOwnsConnection(const AValue: Boolean = True);
     property Resolver: IConnectionResolver read FResolver;
   public
     constructor Create;
@@ -67,6 +69,10 @@ begin
   FRepository := nil;
   FResolver := nil;
   FMigrationTypeList := nil;
+  if FOwnsConnection then
+  begin
+    FreeAndNil(FConnection);
+  end;
   inherited;
 end;
 
@@ -112,10 +118,19 @@ end;
 
 procedure TMigrationContext.SetConnection(const AValue: TCustomConnection);
 begin
+  if FOwnsConnection then
+  begin
+    FreeAndNil(FConnection);
+  end;
   FConnection := AValue;
   FResolver := CreateResolver;
   FResolver.Connection := AValue;
   FRepository := CreateRepository;
+end;
+
+procedure TMigrationContext.SetOwnsConnection(const AValue: Boolean);
+begin
+  FOwnsConnection := AValue;
 end;
 
 procedure TMigrationContext.SetRepositoryPrefix(const AValue: string);

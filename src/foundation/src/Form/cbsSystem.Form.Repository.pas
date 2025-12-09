@@ -40,7 +40,8 @@ end;
 
 procedure TcbsFormTypeRepository.Register(const AFormType: FormType);
 begin
-  if not FFormTypeList.Contains(AFormType) then
+  if Assigned(AFormType) and
+    not FFormTypeList.Contains(AFormType) then
   begin
     FFormTypeList.Add(AFormType);
   end;

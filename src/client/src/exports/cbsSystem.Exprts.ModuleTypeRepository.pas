@@ -1,4 +1,4 @@
-unit cbsSystem.Support.Module.Repository;
+unit cbsSystem.Exprts.ModuleTypeRepository;
 
 interface
 

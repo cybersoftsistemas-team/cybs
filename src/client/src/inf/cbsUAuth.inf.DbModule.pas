@@ -23,10 +23,7 @@ implementation
 
 uses
 {IDE}
-  uniGUIApplication,
-{PROJECT}
-  cbsSystem.Support.Migrations,
-  cbsUAuth.inf.DbUAuthContext;
+  uniGUIApplication;
 
 function damDb: TdamDb;
 begin

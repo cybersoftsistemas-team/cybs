@@ -15,6 +15,9 @@ type
     procedure CheckPacketCycles(const AModules: IModuleManager);
     procedure DFSExec(const AModuleName: string; const AGraph: IGraphList; const AModules: IModuleManager; const AVisited: IVisitedList);
     procedure OnRun(const AModules: IModuleManager);
+    procedure RegisterSystemMigrations;
+    procedure RunMigrations(const AModules: IModuleManager);
+    procedure RunSystenMigrations;
   public
     procedure Run(const AModules: IModuleManager);
   end;
@@ -25,6 +28,9 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
+  _2025_12_08_00000001_create_auxiliary_data_schema,
+  cbsMigrations.Support.Migration,
+  cbsSystem.Migrations.DbSystemContext,
   cbsSystem.Module.Manager.CycleInfo;
 
 { TMigrations }
@@ -47,16 +53,20 @@ end;
 
 procedure TMigrations.BeforeRun(const AModules: IModuleManager);
 begin
+  RegisterSystemMigrations;
   CheckPacketCycles(AModules);
 end;
 
 procedure TMigrations.CheckPacketCycles(const AModules: IModuleManager);
 begin
-  var LCycle := DetectCircularDependencies(AModules);
-  if LCycle.HasCycle then
+  if Assigned(AModules) then
   begin
-    raise Exception.Create('Dependências circulares detectadas!' +
-      sLineBreak + String.Join(' → ', LCycle.Path));
+    var LCycle := DetectCircularDependencies(AModules);
+    if LCycle.HasCycle then
+    begin
+      raise Exception.Create('Dependências circulares detectadas!' +
+        sLineBreak + String.Join(' → ', LCycle.Path));
+    end;
   end;
 end;
 
@@ -70,7 +80,7 @@ begin
   for var LDep in AModules do if
     SameText(LDep.Name, AModuleName) then
   begin
-//    LDep.ExecuteMigrations;
+    LDep.ExecuteMigrations;
   end;
   var LDependents: IModuleList;
   if AGraph.TryGetValue(AModuleName, LDependents) then
@@ -84,6 +94,23 @@ end;
 
 procedure TMigrations.OnRun(const AModules: IModuleManager);
 begin
+  RunSystenMigrations;
+  RunMigrations(AModules);
+end;
+
+procedure TMigrations.RegisterSystemMigrations;
+begin
+  RegisterMigration(TDbSystemContext, CreateAuxiliaryDataSchema);
+end;
+
+procedure TMigrations.Run(const AModules: IModuleManager);
+begin
+  BeforeRun(AModules);
+  OnRun(AModules);
+end;
+
+procedure TMigrations.RunMigrations(const AModules: IModuleManager);
+begin
   var LGraph := BuildReverseGraph(AModules);
   var LVisited := CreateVisitedList;
   try
@@ -94,10 +121,24 @@ begin
   end;
 end;
 
-procedure TMigrations.Run(const AModules: IModuleManager);
+procedure TMigrations.RunSystenMigrations;
 begin
-  BeforeRun(AModules);
-  OnRun(AModules);
+  var LDbContext := TDbSystemContext.Create;
+  try
+    LDbContext.Connection.StartTransaction;
+    try
+      LDbContext.UpdateDatabase;
+    except
+      on E: Exception do
+      begin
+        LDbContext.Connection.Rollback;
+        raise Exception.Create(E.Message);
+      end;
+    end;
+    LDbContext.Connection.Commit;
+  finally
+    FreeAndNil(LDbContext);
+  end;
 end;
 
 end.

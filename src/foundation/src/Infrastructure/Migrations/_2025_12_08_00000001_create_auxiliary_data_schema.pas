@@ -1,4 +1,4 @@
-unit cbsSystem.Infrastructure.Migrations._2025_12_08_00000001_create_auxiliary_data_schema;
+unit _2025_12_08_00000001_create_auxiliary_data_schema;
 
 interface
 
@@ -15,10 +15,6 @@ type
 
 implementation
 
-uses
-{PROJECT}
-  cbsSystem.Migrations.DbSystemContext;
-
 { CreateAuxiliaryDataSchema }
 
 procedure CreateAuxiliaryDataSchema.Up(const ASchema: IMigrationBuilder);
@@ -29,11 +25,6 @@ end;
 procedure CreateAuxiliaryDataSchema.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropSchema('auxiliary_data')
-end;
-
-initialization
-begin
-  RegisterMigration(TDbSystemContext, CreateAuxiliaryDataSchema);
 end;
 
 end.

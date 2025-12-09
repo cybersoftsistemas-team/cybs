@@ -40,7 +40,8 @@ end;
 
 procedure TcbsModuleTypeRepository.Register(const AModuleType: ModuleType);
 begin
-  if not FModuleTypeList.Contains(AModuleType) then
+  if Assigned(AModuleType) and
+    not FModuleTypeList.Contains(AModuleType) then
   begin
     FModuleTypeList.Add(AModuleType);
   end;

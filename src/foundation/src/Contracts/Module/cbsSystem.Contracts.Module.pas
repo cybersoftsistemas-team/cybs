@@ -19,6 +19,7 @@ type
     function GetName: string;
     function GetRequires: IRequires;
     function ModuleTypes: IModuleTypes;
+    procedure ExecuteMigrations;
     property Handle: HMODULE read GetHandle;
     property Name: string read GetName;
     property Requires: IRequires read GetRequires;

@@ -190,13 +190,15 @@
         <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.BaseForm.pas"/>
         <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.BaseModule.pas"/>
         <DCCReference Include="src\Migrations\cbsSystem.Migrations.DbSystemContext.pas"/>
-        <DCCReference Include="src\Infrastructure\Migrations\cbsSystem.Infrastructure.Migrations._2025_12_08_00000001_create_auxiliary_data_schema.pas"/>
+        <DCCReference Include="src\Infrastructure\Migrations\_2025_12_08_00000001_create_auxiliary_data_schema.pas"/>
         <DCCReference Include="src\Infrastructure\cbsSystem.Infrastructure.SystemDbModule.pas">
             <Form>damSystemDb</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Support\cbsSystem.Support.Migrations.pas"/>
+        <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.MigrationContextTypeRepository.pas"/>
+        <DCCReference Include="src\Migrations\cbsSystem.Migrations.MigrationContextTypeRepository.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

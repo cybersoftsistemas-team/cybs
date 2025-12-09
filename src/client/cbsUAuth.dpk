@@ -34,16 +34,19 @@ requires
 contains
   cbsUAuth.ui.LoginForm in 'src\ui\cbsUAuth.ui.LoginForm.pas' {frmLogin: TUniLoginForm},
   cbsUAuth.data.module.LoginModule in 'src\data\module\cbsUAuth.data.module.LoginModule.pas',
-  exprts in 'src\exports\exprts.pas',
+  cbsSystem.Exprts in 'src\exports\cbsSystem.Exprts.pas',
   cbsUAuth.inf.DbModule in 'src\inf\cbsUAuth.inf.DbModule.pas' {damDb: TDataModule},
   cbsUAuth.ui.OptionsForm in 'src\ui\cbsUAuth.ui.OptionsForm.pas' {frmOptions: TUniForm},
   cbsUAuth.ui.ConnEditorForm in 'src\ui\cbsUAuth.ui.ConnEditorForm.pas' {frmConnEditor: TUniForm},
   cbsUAuth.inf.DbUAuthContext in 'src\inf\cbsUAuth.inf.DbUAuthContext.pas',
-  _2025_11_17_00000005_create_identity_schema in 'src\inf\Migrations\_2025_11_17_00000005_create_identity_schema.pas',
+  _2025_12_09_00000001_create_identity_schema in 'src\inf\Migrations\_2025_12_09_00000001_create_identity_schema.pas',
   cbsUAuth.ui.DomainsForm in 'src\ui\cbsUAuth.ui.DomainsForm.pas' {frmDomains: TUniForm},
-  cbsSystem.Support.Form.Repository in 'src\support\cbsSystem.Support.Form.Repository.pas',
-  cbsSystem.Support.Module.Repository in 'src\support\cbsSystem.Support.Module.Repository.pas',
   cbsSystem.Support.Form in 'src\support\cbsSystem.Support.Form.pas',
-  cbsSystem.Support.Module in 'src\support\cbsSystem.Support.Module.pas';
+  cbsSystem.Support.Module in 'src\support\cbsSystem.Support.Module.pas',
+  cbsSystem.Exprts.FormTypeRepository in 'src\exports\cbsSystem.Exprts.FormTypeRepository.pas',
+  cbsSystem.Exprts.ModuleTypeRepository in 'src\exports\cbsSystem.Exprts.ModuleTypeRepository.pas',
+  cbsSystem.Exprts.MigrationContextTypeRepository in 'src\exports\cbsSystem.Exprts.MigrationContextTypeRepository.pas',
+  cbsSystem.Support.Migration in 'src\support\cbsSystem.Support.Migration.pas';
 
 end.
+

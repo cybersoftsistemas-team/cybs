@@ -111,7 +111,7 @@ begin
   FDataStorage := TcbsDataStorage.Create(Self);
   FDatabase := TcbsDatabase.Create(Self);
   RegisterInternalSystemServerModule(Self);
-//  FDatabase.ExecuteMigrations;
+  FDatabase.ExecuteMigrations;
 end;
 
 procedure TcbsServerModule.HideTrayIconSystem;

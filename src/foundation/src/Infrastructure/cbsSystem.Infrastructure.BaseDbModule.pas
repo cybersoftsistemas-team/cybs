@@ -23,7 +23,7 @@ type
     procedure RunSeed;
   end;
 
-  TDbConnectionModuleClass = class of TdamBaseDb;
+  DbConnectionModuleType = class of TdamBaseDb;
 
 implementation
 

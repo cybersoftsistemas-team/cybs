@@ -31,6 +31,7 @@ type
     destructor Destroy; override;
     function FormTypes: IFormTypes;
     function ModuleTypes: IModuleTypes;
+    procedure ExecuteMigrations;
     property Handle: HMODULE read GetHandle;
     property Name: string read GetName;
     property Requires: IRequires read GetRequires;
@@ -87,6 +88,18 @@ begin
     UnloadPackage(FHandle);
   end;
   inherited;
+end;
+
+procedure TcbsModule.ExecuteMigrations;
+type
+  TExecuteMigrations = procedure; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
+begin
+  var ExecuteMigrations: TExecuteMigrations;
+  @ExecuteMigrations := GetProcAddress(FHandle, 'ExecuteMigrations');
+  if Assigned(@ExecuteMigrations) then
+  begin
+    ExecuteMigrations();
+  end;
 end;
 
 function TcbsModule.FormTypes: IFormTypes;

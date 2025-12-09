@@ -136,7 +136,7 @@
             <DesignClass>TUniLoginForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\data\module\cbsUAuth.data.module.LoginModule.pas"/>
-        <DCCReference Include="src\exports\exprts.pas"/>
+        <DCCReference Include="src\exports\cbsSystem.Exprts.pas"/>
         <DCCReference Include="src\inf\cbsUAuth.inf.DbModule.pas">
             <Form>damDb</Form>
             <FormType>dfm</FormType>
@@ -153,16 +153,18 @@
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\inf\cbsUAuth.inf.DbUAuthContext.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_11_17_00000005_create_identity_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000001_create_identity_schema.pas"/>
         <DCCReference Include="src\ui\cbsUAuth.ui.DomainsForm.pas">
             <Form>frmDomains</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\support\cbsSystem.Support.Form.Repository.pas"/>
-        <DCCReference Include="src\support\cbsSystem.Support.Module.Repository.pas"/>
         <DCCReference Include="src\support\cbsSystem.Support.Form.pas"/>
         <DCCReference Include="src\support\cbsSystem.Support.Module.pas"/>
+        <DCCReference Include="src\exports\cbsSystem.Exprts.FormTypeRepository.pas"/>
+        <DCCReference Include="src\exports\cbsSystem.Exprts.ModuleTypeRepository.pas"/>
+        <DCCReference Include="src\exports\cbsSystem.Exprts.MigrationContextTypeRepository.pas"/>
+        <DCCReference Include="src\support\cbsSystem.Support.Migration.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

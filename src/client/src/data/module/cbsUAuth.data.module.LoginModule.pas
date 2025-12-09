@@ -53,7 +53,8 @@ uses
 {PROJECT}
   cbsSystem.Support.DataSet.Extensions,
   cbsSystem.Support.Module,
-  cbsSystem.Support.ServerModule;
+  cbsSystem.Support.ServerModule,
+  cbsUAuth.inf.DbModule;
 
 const
   CST_FILENAME_LOGON   = 'logon.dat';

@@ -12,7 +12,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsSystem.Support.Form.Repository;
+  cbsSystem.Exprts.FormTypeRepository;
 
 procedure RegisterFormType(const AFormType: FormType);
 begin

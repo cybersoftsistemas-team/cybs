@@ -21,10 +21,6 @@ implementation
 
 {$R *.dfm}
 
-uses
-{PROJECT}
-  cbsSystem.Migrations.DbSystemContext;
-
 { TdamSystemDb }
 
 procedure TdamSystemDb.OnRunSeed;
