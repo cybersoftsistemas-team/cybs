@@ -10,8 +10,8 @@ uses
 type
   TMigrations = class(TInterfacedObject, IMigrations)
   private
-    function BuildReverseGraph(const AModules: IModuleManager): IGraphList;
     procedure BeforeRun(const AModules: IModuleManager);
+    function BuildReverseGraph(const AModules: IModuleManager): IGraphList;
     procedure CheckPacketCycles(const AModules: IModuleManager);
     procedure DFSExec(const AModuleName: string; const AGraph: IGraphList; const AModules: IModuleManager; const AVisited: IVisitedList);
     procedure OnRun(const AModules: IModuleManager);
@@ -29,9 +29,17 @@ uses
   System.SysUtils,
 {PROJECT}
   _2025_12_08_00000001_create_auxiliary_data_schema,
+  _2025_12_08_00000005_create_auxiliary_data_categories_table,
   cbsMigrations.Support.Migration,
+  cbsSystem.Infrastructure.SystemDbModule,
   cbsSystem.Migrations.DbSystemContext,
   cbsSystem.Module.Manager.CycleInfo;
+
+procedure TMigrations.BeforeRun(const AModules: IModuleManager);
+begin
+  RegisterSystemMigrations;
+  CheckPacketCycles(AModules);
+end;
 
 { TMigrations }
 
@@ -49,12 +57,6 @@ begin
       Result[Required].Add(LModule);
     end;
   end;
-end;
-
-procedure TMigrations.BeforeRun(const AModules: IModuleManager);
-begin
-  RegisterSystemMigrations;
-  CheckPacketCycles(AModules);
 end;
 
 procedure TMigrations.CheckPacketCycles(const AModules: IModuleManager);
@@ -101,6 +103,7 @@ end;
 procedure TMigrations.RegisterSystemMigrations;
 begin
   RegisterMigration(TDbSystemContext, CreateAuxiliaryDataSchema);
+  RegisterMigration(TDbSystemContext, CreateAuxiliaryDataCategoriesTable);
 end;
 
 procedure TMigrations.Run(const AModules: IModuleManager);
@@ -127,7 +130,12 @@ begin
   try
     LDbContext.Connection.StartTransaction;
     try
-      LDbContext.UpdateDatabase;
+      var LdamSystemDb := TdamSystemDb.Create(nil);
+      try
+        LDbContext.UpdateDatabase(LdamSystemDb.RunSeed);
+      finally
+        FreeAndNil(LdamSystemDb);
+      end;
     except
       on E: Exception do
       begin

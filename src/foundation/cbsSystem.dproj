@@ -199,6 +199,7 @@
         <DCCReference Include="src\Support\cbsSystem.Support.Migrations.pas"/>
         <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.MigrationContextTypeRepository.pas"/>
         <DCCReference Include="src\Migrations\cbsSystem.Migrations.MigrationContextTypeRepository.pas"/>
+        <DCCReference Include="src\Infrastructure\Migrations\_2025_12_08_00000005_create_auxiliary_data_categories_table.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

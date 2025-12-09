@@ -83,7 +83,8 @@ contains
   cbsSystem.Infrastructure.SystemDbModule in 'src\Infrastructure\cbsSystem.Infrastructure.SystemDbModule.pas' {damSystemDb: TDataModule},
   cbsSystem.Support.Migrations in 'src\Support\cbsSystem.Support.Migrations.pas',
   cbsSystem.Contracts.Migrations.MigrationContextTypeRepository in 'src\Contracts\Migrations\cbsSystem.Contracts.Migrations.MigrationContextTypeRepository.pas',
-  cbsSystem.Migrations.MigrationContextTypeRepository in 'src\Migrations\cbsSystem.Migrations.MigrationContextTypeRepository.pas';
+  cbsSystem.Migrations.MigrationContextTypeRepository in 'src\Migrations\cbsSystem.Migrations.MigrationContextTypeRepository.pas',
+  _2025_12_08_00000005_create_auxiliary_data_categories_table in 'src\Infrastructure\Migrations\_2025_12_08_00000005_create_auxiliary_data_categories_table.pas';
 
 end.
 
