@@ -10,13 +10,13 @@ uses
 type
   TMigrations = class(TInterfacedObject, IMigrations)
   private
-    function BuildReverseGraph(const AModules: IcbsModuleManager): IGraphList;
-    procedure BeforeRun(const AModules: IcbsModuleManager);
-    procedure CheckPacketCycles(const AModules: IcbsModuleManager);
-    procedure DFSExec(const AModuleName: string; const AGraph: IGraphList; const AModules: IcbsModuleManager; const AVisited: IVisitedList);
-    procedure OnRun(const AModules: IcbsModuleManager);
+    function BuildReverseGraph(const AModules: IModuleManager): IGraphList;
+    procedure BeforeRun(const AModules: IModuleManager);
+    procedure CheckPacketCycles(const AModules: IModuleManager);
+    procedure DFSExec(const AModuleName: string; const AGraph: IGraphList; const AModules: IModuleManager; const AVisited: IVisitedList);
+    procedure OnRun(const AModules: IModuleManager);
   public
-    procedure Run(const AModules: IcbsModuleManager);
+    procedure Run(const AModules: IModuleManager);
   end;
 
 implementation
@@ -25,12 +25,11 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsSystem.Module.Manager.CycleInfo,
-  cbsSystem.Support.Migrations;
+  cbsSystem.Module.Manager.CycleInfo;
 
 { TMigrations }
 
-function TMigrations.BuildReverseGraph(const AModules: IcbsModuleManager): IGraphList;
+function TMigrations.BuildReverseGraph(const AModules: IModuleManager): IGraphList;
 begin
   Result := CreateGraphList;
   for var LModule in AModules do
@@ -46,12 +45,12 @@ begin
   end;
 end;
 
-procedure TMigrations.BeforeRun(const AModules: IcbsModuleManager);
+procedure TMigrations.BeforeRun(const AModules: IModuleManager);
 begin
   CheckPacketCycles(AModules);
 end;
 
-procedure TMigrations.CheckPacketCycles(const AModules: IcbsModuleManager);
+procedure TMigrations.CheckPacketCycles(const AModules: IModuleManager);
 begin
   var LCycle := DetectCircularDependencies(AModules);
   if LCycle.HasCycle then
@@ -61,7 +60,7 @@ begin
   end;
 end;
 
-procedure TMigrations.DFSExec(const AModuleName: string; const AGraph: IGraphList; const AModules: IcbsModuleManager; const AVisited: IVisitedList);
+procedure TMigrations.DFSExec(const AModuleName: string; const AGraph: IGraphList; const AModules: IModuleManager; const AVisited: IVisitedList);
 begin
   if AVisited.ContainsKey(AModuleName) then
   begin
@@ -71,7 +70,7 @@ begin
   for var LDep in AModules do if
     SameText(LDep.Name, AModuleName) then
   begin
-    LDep.ExecuteMigrations;
+//    LDep.ExecuteMigrations;
   end;
   var LDependents: IModuleList;
   if AGraph.TryGetValue(AModuleName, LDependents) then
@@ -83,7 +82,7 @@ begin
   end;
 end;
 
-procedure TMigrations.OnRun(const AModules: IcbsModuleManager);
+procedure TMigrations.OnRun(const AModules: IModuleManager);
 begin
   var LGraph := BuildReverseGraph(AModules);
   var LVisited := CreateVisitedList;
@@ -95,7 +94,7 @@ begin
   end;
 end;
 
-procedure TMigrations.Run(const AModules: IcbsModuleManager);
+procedure TMigrations.Run(const AModules: IModuleManager);
 begin
   BeforeRun(AModules);
   OnRun(AModules);

@@ -3,6 +3,9 @@ unit cbsSystem.Contracts.Module;
 interface
 
 uses
+{PROJECT}
+  cbsSystem.Contracts.Form.Repository,
+  cbsSystem.Contracts.Module.Repository,
 {SPRING}
   Spring.Collections;
 
@@ -11,9 +14,11 @@ type
 
   IModule = interface(IUnknown)
     ['{2AEF67FF-A8C4-453C-94DF-2DF79274C1B5}']
+    function FormTypes: IFormTypes;
     function GetHandle: HMODULE;
     function GetName: string;
     function GetRequires: IRequires;
+    function ModuleTypes: IModuleTypes;
     property Handle: HMODULE read GetHandle;
     property Name: string read GetName;
     property Requires: IRequires read GetRequires;

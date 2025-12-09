@@ -12,10 +12,10 @@ uses
 type
   IMigrations = interface(IUnknown)
     ['{D95EA6B0-433A-491D-9474-9A4B5D8B5BAC}']
-    procedure Run(const AModules: IcbsModuleManager);
+    procedure Run(const AModules: IModuleManager);
   end;
 
-  IModuleList = IList<IcbsModule>;
+  IModuleList = IList<IModule>;
   IGraphList = IDictionary<string, IModuleList>;
   IVisitedList = IDictionary<string, Boolean>;
 
@@ -32,7 +32,7 @@ end;
 
 function CreateModuleList: IModuleList;
 begin
-  Result := TCollections.CreateList<IcbsModule>;
+  Result := TCollections.CreateList<IModule>;
 end;
 
 function CreateVisitedList: IVisitedList;

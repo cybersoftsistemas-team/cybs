@@ -11,7 +11,7 @@ uses
 type
   IModuleEnumerator = IEnumerator<IModule>;
 
-  IcbsModuleManager = interface(IUnknown)
+  IModuleManager = interface(IUnknown)
     ['{85218BA3-575A-40CE-9192-FF6F2CE04C9D}']
     function GetEnumerator: IModuleEnumerator;
     procedure LoadFromFolder(const AFolder: string);

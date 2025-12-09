@@ -23,19 +23,13 @@ implementation
 
 uses
 {PROJECT}
-  cbsSystem.Migrations.DbSystemContext,
-  cbsSystem.Support.Migrations;
+  cbsSystem.Migrations.DbSystemContext;
 
 { TdamSystemDb }
 
 procedure TdamSystemDb.OnRunSeed;
 begin
   inherited;
-end;
-
-initialization
-begin
-  RegisterMigrationContextClass(TDbSystemContext, TdamSystemDb);
 end;
 
 end.

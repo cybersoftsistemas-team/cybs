@@ -12,7 +12,7 @@ type
     Path: TArray<string>;
   end;
 
-  function DetectCircularDependencies(const AModules: IcbsModuleManager): TCycleInfo;
+  function DetectCircularDependencies(const AModules: IModuleManager): TCycleInfo;
 
 implementation
 
@@ -23,11 +23,11 @@ uses
   Spring.Collections;
 
 type
-  INameMapList = IDictionary<string, IcbsModule>;
+  INameMapList = IDictionary<string, IModule>;
   IStackList = IList<string>;
   IStateList = IDictionary<string, Integer>;
 
-function DetectCircularDependencies(const AModules: IcbsModuleManager): TCycleInfo;
+function DetectCircularDependencies(const AModules: IModuleManager): TCycleInfo;
 var
   LInfo: TCycleInfo;
   LNameMap: INameMapList;
@@ -61,7 +61,7 @@ var
     end;
     LState[AModuleName] := 1;
     LStack.Add(AModuleName);
-    var LModule: IcbsModule;
+    var LModule: IModule;
     if not LNameMap.TryGetValue(AModuleName, LModule) then
     begin
       LStack.Delete(LStack.Count - 1);
@@ -79,9 +79,9 @@ var
   end;
 
 var
-  LModule: IcbsModule;
+  LModule: IModule;
 begin
-  LNameMap := TCollections.CreateDictionary<string, IcbsModule>;
+  LNameMap := TCollections.CreateDictionary<string, IModule>;
   LStack := TCollections.CreateList<string>;
   LState := TCollections.CreateDictionary<string, Integer>;
   try

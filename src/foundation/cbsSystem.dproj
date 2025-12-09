@@ -157,8 +157,6 @@
         <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.pas"/>
         <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.pas"/>
         <DCCReference Include="src\Module\cbsSystem.Module.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Form.Repository.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Module.Repository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.ModuleManager.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.RunTime.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.DataSet.Extensions.pas"/>
@@ -182,7 +180,6 @@
         <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.CycleInfo.pas"/>
         <DCCReference Include="src\Migrations\cbsSystem.Migrations.pas"/>
         <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Migrations.pas"/>
         <DCCReference Include="src\Contracts\Database\cbsSystem.Contracts.Database.pas"/>
         <DCCReference Include="src\Database\cbsSystem.Database.pas"/>
         <DCCReference Include="src\Form\cbsSystem.Form.DialogBaseForm.pas">
@@ -199,6 +196,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="src\Support\cbsSystem.Support.Migrations.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -9,7 +9,7 @@ uses
   cbsSystem.Contracts.Module.Manager;
 
 type
-  TcbsModuleManager = class(TInterfacedObject, IcbsModuleManager)
+  TcbsModuleManager = class(TInterfacedObject, IModuleManager)
   strict private
     LModuleList: IModuleList;
     function GetModuleExtension: string;

@@ -6,6 +6,9 @@ uses
 {PROJECT}
   cbsSystem.Contracts.Form.Repository;
 
+type
+  IFormTypes = cbsSystem.Contracts.Form.Repository.IFormTypes;
+
   function FormTypeRepository: IFormTypeRepository;
 
 implementation

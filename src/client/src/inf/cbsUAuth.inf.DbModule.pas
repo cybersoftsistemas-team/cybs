@@ -40,9 +40,4 @@ begin
   inherited;
 end;
 
-initialization
-begin
-  RegisterMigrationContextClass(TDbUAuthContext, TdamDb);
-end;
-
 end.

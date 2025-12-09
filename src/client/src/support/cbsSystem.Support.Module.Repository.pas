@@ -6,6 +6,9 @@ uses
 {PROJECT}
   cbsSystem.Contracts.Module.Repository;
 
+type
+  IModuleTypes = cbsSystem.Contracts.Module.Repository.IModuleTypes;
+
   function ModuleTypeRepository: IModuleTypeRepository;
 
 implementation

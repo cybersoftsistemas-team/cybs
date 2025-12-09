@@ -135,7 +135,7 @@ end;
 
 initialization
 begin
-  RegisterFormClass(TfrmLogin);
+  RegisterFormType(TfrmLogin);
 end;
 
 end.

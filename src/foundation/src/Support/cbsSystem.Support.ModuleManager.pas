@@ -6,7 +6,7 @@ uses
 {PROJECT}
   cbsSystem.Contracts.Module.Manager;
 
-  function ModuleManager: IcbsModuleManager;
+  function ModuleManager: IModuleManager;
 
 implementation
 
@@ -15,21 +15,21 @@ uses
   cbsSystem.Module.Manager;
 
 var
-  GModuleManager: IcbsModuleManager;
+  InternalModuleManager: IModuleManager;
 
-function ModuleManager: IcbsModuleManager;
+function ModuleManager: IModuleManager;
 begin
-  Result := GModuleManager;
+  Result := InternalModuleManager;
 end;
 
 initialization
 begin
-  GModuleManager := TcbsModuleManager.Create;
+  InternalModuleManager := TcbsModuleManager.Create;
 end;
 
 finalization
 begin
-  GModuleManager := nil;
+  InternalModuleManager := nil;
 end;
 
 end.

@@ -4,76 +4,32 @@ interface
 
 uses
 {PROJECT}
-  cbsMigrations.Migrations.MigrationContext,
-  cbsSystem.Contracts.Migrations,
-  cbsSystem.Infrastructure.BaseDbModule;
+  cbsSystem.Contracts.Migrations;
 
   function Migrations: IMigrations;
-  procedure RegisterMigrationContextClass(const AMigrationContextType: MigrationContextType; const ADbConnectionModuleClass: TDbConnectionModuleClass);
 
 implementation
 
 uses
-{IDE}
-  System.SysUtils,
-  uniGUIApplication,
 {PROJECT}
-  cbsSystem.Migrations,
-  cbsSystem.Support.Module;
+  cbsSystem.Migrations;
 
 var
-  GMigrations: IMigrations = nil;
-  TdamDb: TDbConnectionModuleClass = nil;
-  TDbContext: MigrationContextType = nil;
+  InternalMigrations: IMigrations;
 
 function Migrations: IMigrations;
 begin
-  Result := GMigrations;
-end;
-
-procedure ExecuteMigrations;
-begin
-  if not Assigned(TdamDb) or
-    not Assigned(TDbContext) then
-  begin
-    Exit;
-  end;
-  var LdamDb := TdamDb.Create(UniApplication);
-  try
-    LdamDb.Connection.StartTransaction;
-    try
-      var LDbContext := TDbContext.Create;
-      try
-        LDbContext.Connection := LdamDb.Connection;
-        LDbContext.UpdateDatabase(LdamDb.RunSeed);
-      finally
-        FreeAndNil(LDbContext);
-      end;
-      LdamDb.Connection.Commit;
-    except
-      LdamDb.Connection.Rollback;
-      raise;
-    end;
-  finally
-    FreeAndNil(LdamDb);
-  end;
-end;
-
-procedure RegisterMigrationContextClass(const AMigrationContextType: MigrationContextType; const ADbConnectionModuleClass: TDbConnectionModuleClass);
-begin
-  TdamDb := ADbConnectionModuleClass;
-  TDbContext := AMigrationContextType;
-  RegisterModuleClass(ADbConnectionModuleClass);
+  Result := InternalMigrations;
 end;
 
 initialization
 begin
-  GMigrations := TMigrations.Create;
+  InternalMigrations := TMigrations.Create;
 end;
 
 finalization
 begin
-  GMigrations := nil;
+  InternalMigrations := nil;
 end;
 
 end.

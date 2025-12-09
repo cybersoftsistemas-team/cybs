@@ -143,7 +143,7 @@ end;
 
 initialization
 begin
-  RegisterModuleClass(TdamLogin);
+  RegisterModuleType(TdamLogin);
 end;
 
 end.

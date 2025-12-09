@@ -67,13 +67,13 @@ procedure RegisterAppFormsAndDataModules;
 begin
   for var LModule in ModuleManager do
   begin
-    for var LFormClass in LModule.FormTypes do
+    for var LFormType in LModule.FormTypes do
     begin
-      RegisterAppFormClass(LFormClass);
+      RegisterAppFormClass(LFormType);
     end;
-    for var LModuleClass in LModule.DataModuleTypes do
+    for var LModuleType in LModule.ModuleTypes do
     begin
-      RegisterModuleClass(LModuleClass);
+      RegisterModuleClass(LModuleType);
     end;
   end;
 end;
@@ -111,7 +111,7 @@ begin
   FDataStorage := TcbsDataStorage.Create(Self);
   FDatabase := TcbsDatabase.Create(Self);
   RegisterInternalSystemServerModule(Self);
-  FDatabase.ExecuteMigrations;
+//  FDatabase.ExecuteMigrations;
 end;
 
 procedure TcbsServerModule.HideTrayIconSystem;
