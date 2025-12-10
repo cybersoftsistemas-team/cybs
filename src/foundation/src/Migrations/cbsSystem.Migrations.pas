@@ -28,12 +28,26 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  _2025_12_08_00000001_create_auxiliary_data_schema,
-  _2025_12_08_00000005_create_auxiliary_data_categories_table,
   cbsMigrations.Support.Migration,
   cbsSystem.Infrastructure.SystemDbModule,
   cbsSystem.Migrations.DbSystemContext,
-  cbsSystem.Module.Manager.CycleInfo;
+  cbsSystem.Module.Manager.CycleInfo,
+  // Migrations...
+  _2025_12_08_00000001_create_auxiliary_data_schema,
+  _2025_12_08_00000005_create_auxiliary_data_categories_table,
+  _2025_12_08_00000010_create_address_schema,
+  _2025_12_08_00000015_create_address_countries_table,
+  _2025_12_08_00000020_create_address_states_table,
+  _2025_12_08_00000025_create_address_cities_table,
+  _2025_12_08_00000030_create_address_neighborhoods_table,
+  _2025_12_08_00000035_create_address_streets_table,
+  _2025_12_08_00000040_create_address_streettypes_table,
+  _2025_12_08_00000045_create_address_addresses_table,
+  _2025_12_08_00000050_create_people_schema,
+  _2025_12_08_00000055_create_people_nationalities_table,
+  _2025_12_08_00000060_create_people_person_table,
+  _2025_12_08_00000070_create_people_person_naturals_table,
+  _2025_12_08_00000065_create_people_person_legals_table;
 
 procedure TMigrations.BeforeRun(const AModules: IModuleManager);
 begin
@@ -94,18 +108,6 @@ begin
   end;
 end;
 
-procedure TMigrations.OnRun(const AModules: IModuleManager);
-begin
-  RunSystenMigrations;
-  RunMigrations(AModules);
-end;
-
-procedure TMigrations.RegisterSystemMigrations;
-begin
-  RegisterMigration(TDbSystemContext, CreateAuxiliaryDataSchema);
-  RegisterMigration(TDbSystemContext, CreateAuxiliaryDataCategoriesTable);
-end;
-
 procedure TMigrations.Run(const AModules: IModuleManager);
 begin
   BeforeRun(AModules);
@@ -124,29 +126,54 @@ begin
   end;
 end;
 
+procedure TMigrations.OnRun(const AModules: IModuleManager);
+begin
+  RunSystenMigrations;
+  RunMigrations(AModules);
+end;
+
+procedure TMigrations.RegisterSystemMigrations;
+begin
+  RegisterMigration(TDbSystemContext, CreateAuxiliaryDataSchema);
+  RegisterMigration(TDbSystemContext, CreateAuxiliaryDataCategoriesTable);
+  RegisterMigration(TDbSystemContext, CreateAddressSchema);
+  RegisterMigration(TDbSystemContext, CreateAddressCountriesTable);
+  RegisterMigration(TDbSystemContext, CreateAddressStatesTable);
+  RegisterMigration(TDbSystemContext, CreateAddressCitiesTable);
+  RegisterMigration(TDbSystemContext, CreateAddressNeighborhoodsTable);
+  RegisterMigration(TDbSystemContext, CreateAddressStreetsTable);
+  RegisterMigration(TDbSystemContext, CreateAddressStreetTypesTable);
+  RegisterMigration(TDbSystemContext, CreateAddressAddressesTable);
+  RegisterMigration(TDbSystemContext, CreatePeopleSchema);
+  RegisterMigration(TDbSystemContext, CreatePeopleNationalitiesTable);
+  RegisterMigration(TDbSystemContext, CreatePeoplePersonTable);
+  RegisterMigration(TDbSystemContext, CreatePeoplePersonLegalsTable);
+  RegisterMigration(TDbSystemContext, CreatePeoplePersonNaturalsTable);
+end;
+
 procedure TMigrations.RunSystenMigrations;
 begin
-  var LdamSystemDb := TdamSystemDb.Create(nil);
+  var damSysDb := TdamSystemDb.Create(nil);
   try
-    LdamSystemDb.Connection.StartTransaction;
+    damSysDb.Connection.StartTransaction;
     try
       var LDbContext := TDbSystemContext.Create;
       try
-        LDbContext.Connection := LdamSystemDb.Connection;
-        LDbContext.UpdateDatabase(LdamSystemDb.RunSeed);
+        LDbContext.Connection := damSysDb.Connection;
+        LDbContext.UpdateDatabase(damSysDb.RunSeed);
       finally
         FreeAndNil(LDbContext);
       end;
     except
       on E: Exception do
       begin
-        LdamSystemDb.Connection.Rollback;
+        damSysDb.Connection.Rollback;
         raise Exception.Create(E.Message);
       end;
     end;
-    LdamSystemDb.Connection.Commit;
+    damSysDb.Connection.Commit;
   finally
-    FreeAndNil(LdamSystemDb);
+    FreeAndNil(damSysDb);
   end;
 end;
 

@@ -84,7 +84,20 @@ contains
   cbsSystem.Support.Migrations in 'src\Support\cbsSystem.Support.Migrations.pas',
   cbsSystem.Contracts.Migrations.MigrationContextTypeRepository in 'src\Contracts\Migrations\cbsSystem.Contracts.Migrations.MigrationContextTypeRepository.pas',
   cbsSystem.Migrations.MigrationContextTypeRepository in 'src\Migrations\cbsSystem.Migrations.MigrationContextTypeRepository.pas',
-  _2025_12_08_00000005_create_auxiliary_data_categories_table in 'src\Infrastructure\Migrations\_2025_12_08_00000005_create_auxiliary_data_categories_table.pas';
+  _2025_12_08_00000005_create_auxiliary_data_categories_table in 'src\Infrastructure\Migrations\_2025_12_08_00000005_create_auxiliary_data_categories_table.pas',
+  _2025_12_08_00000050_create_people_schema in 'src\Infrastructure\Migrations\_2025_12_08_00000050_create_people_schema.pas',
+  _2025_12_08_00000060_create_people_person_table in 'src\Infrastructure\Migrations\_2025_12_08_00000060_create_people_person_table.pas',
+  _2025_12_08_00000070_create_people_person_naturals_table in 'src\Infrastructure\Migrations\_2025_12_08_00000070_create_people_person_naturals_table.pas',
+  _2025_12_08_00000010_create_address_schema in 'src\Infrastructure\Migrations\_2025_12_08_00000010_create_address_schema.pas',
+  _2025_12_08_00000015_create_address_countries_table in 'src\Infrastructure\Migrations\_2025_12_08_00000015_create_address_countries_table.pas',
+  _2025_12_08_00000020_create_address_states_table in 'src\Infrastructure\Migrations\_2025_12_08_00000020_create_address_states_table.pas',
+  _2025_12_08_00000025_create_address_cities_table in 'src\Infrastructure\Migrations\_2025_12_08_00000025_create_address_cities_table.pas',
+  _2025_12_08_00000030_create_address_neighborhoods_table in 'src\Infrastructure\Migrations\_2025_12_08_00000030_create_address_neighborhoods_table.pas',
+  _2025_12_08_00000035_create_address_streets_table in 'src\Infrastructure\Migrations\_2025_12_08_00000035_create_address_streets_table.pas',
+  _2025_12_08_00000040_create_address_streettypes_table in 'src\Infrastructure\Migrations\_2025_12_08_00000040_create_address_streettypes_table.pas',
+  _2025_12_08_00000045_create_address_addresses_table in 'src\Infrastructure\Migrations\_2025_12_08_00000045_create_address_addresses_table.pas',
+  _2025_12_08_00000055_create_people_nationalities_table in 'src\Infrastructure\Migrations\_2025_12_08_00000055_create_people_nationalities_table.pas',
+  _2025_12_08_00000065_create_people_person_legals_table in 'src\Infrastructure\Migrations\_2025_12_08_00000065_create_people_person_legals_table.pas';
 
 end.
 

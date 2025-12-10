@@ -40,10 +40,11 @@ type
   private
     procedure AddColumnOperation(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure CheckConstraint(const AOperation: IAddCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
-    procedure CreateTableColumns(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder); overload;
     procedure CreateTableCheckConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
+    procedure CreateTableColumns(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder); overload;
     procedure CreateTableConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure CreateTableForeignKeys(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
+    procedure CreateTableIndexes(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure CreateTablePrimaryKeyConstraint(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure CreateTableUniqueConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure ForeignKeyAction(const AReferentialAction: ReferentialAction; const ABuilder: IMigrationCommandListBuilder);
@@ -116,16 +117,19 @@ begin
   EndStatement(ABuilder);
 end;
 
-procedure TMigrationsSqlGenerator.DefaultValue(const ADefaultValueSql: string; const ABuilder: IMigrationCommandListBuilder);
+procedure TMigrationsSqlGenerator.CheckConstraint(const AOperation: IAddCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
 begin
-  if not ADefaultValueSql.Trim.IsEmpty then
-  begin
-    ABuilder
-     .Append(' ')
-     .Append('DEFAULT (')
-     .Append(ADefaultValueSql)
-     .Append(')');
-  end;
+  ABuilder
+   .Append(' ')
+   .Append('CONSTRAINT')
+   .Append(' ')
+   .Append(DelimitIdentifier(AOperation.Name))
+   .Append(' ')
+   .Append('CHECK')
+   .Append(' ')
+   .Append('(')
+   .Append(AOperation.Sql)
+   .Append(')');
 end;
 
 procedure TMigrationsSqlGenerator.ColumnDefinition(const ASchema, ATable, AName: string; const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
@@ -162,6 +166,22 @@ begin
   ColumnDefinition(AOperation.Schema, AOperation.Table, AOperation.Name, AOperation, ABuilder);
 end;
 
+procedure TMigrationsSqlGenerator.CreateTableCheckConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
+var
+  LConstraint: IConstraintOperation;
+begin
+  for LConstraint in AOperation.Constraints.Where(
+    function(const AConstraint: IConstraintOperation): Boolean
+    begin
+      Result := Supports(AConstraint, IAddCheckConstraintOperation);
+    end
+  ) do
+  begin
+    ABuilder.AppendLine(',');
+    CheckConstraint(TAddCheckConstraintOperation(LConstraint), ABuilder);
+  end;
+end;
+
 procedure TMigrationsSqlGenerator.CreateTableColumns(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
 var
   LLast: IColumnOperation;
@@ -176,37 +196,6 @@ begin
       ABuilder.AppendLine(',')
        .Append(' ');
     end;
-  end;
-end;
-
-procedure TMigrationsSqlGenerator.CheckConstraint(const AOperation: IAddCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
-begin
-  ABuilder
-   .Append(' ')
-   .Append('CONSTRAINT')
-   .Append(' ')
-   .Append(DelimitIdentifier(AOperation.Name))
-   .Append(' ')
-   .Append('CHECK')
-   .Append(' ')
-   .Append('(')
-   .Append(AOperation.Sql)
-   .Append(')');
-end;
-
-procedure TMigrationsSqlGenerator.CreateTableCheckConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
-var
-  LConstraint: IConstraintOperation;
-begin
-  for LConstraint in AOperation.Constraints.Where(
-    function(const AConstraint: IConstraintOperation): Boolean
-    begin
-      Result := Supports(AConstraint, IAddCheckConstraintOperation);
-    end
-  ) do
-  begin
-    ABuilder.AppendLine(',');
-    CheckConstraint(TAddCheckConstraintOperation(LConstraint), ABuilder);
   end;
 end;
 
@@ -231,6 +220,14 @@ begin
   begin
     ABuilder.AppendLine(',');
     ForeignKeyConstraint(TAddForeignKeyOperation(LConstraint), ABuilder);
+  end;
+end;
+
+procedure TMigrationsSqlGenerator.CreateTableIndexes(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  for var LIndex in AOperation.Indexes do
+  begin
+    Generate(LIndex, ABuilder);
   end;
 end;
 
@@ -264,6 +261,18 @@ begin
   begin
     ABuilder.AppendLine(',');
     UniqueConstraint(TAddUniqueConstraintOperation(LConstraint), ABuilder);
+  end;
+end;
+
+procedure TMigrationsSqlGenerator.DefaultValue(const ADefaultValueSql: string; const ABuilder: IMigrationCommandListBuilder);
+begin
+  if not ADefaultValueSql.Trim.IsEmpty then
+  begin
+    ABuilder
+     .Append(' ')
+     .Append('DEFAULT (')
+     .Append(ADefaultValueSql)
+     .Append(')');
   end;
 end;
 
@@ -451,61 +460,7 @@ begin
    .Append(')')
    .AppendLine(StatementTerminator);
   EndStatement(ABuilder);
-end;
-
-procedure TMigrationsSqlGenerator.PrimaryKeyConstraint(const AOperation: IAddPrimaryKeyOperation; const ABuilder: IMigrationCommandListBuilder);
-begin
-  ABuilder
-   .Append(' ')
-   .Append('CONSTRAINT')
-   .Append(' ')
-   .Append(DelimitIdentifier(AOperation.Name))
-   .Append(' ')
-   .Append('PRIMARY KEY')
-   .Append(' ')
-   .Append('(')
-   .Append(ColumnList(AOperation.Columns.ToArray))
-   .Append(')');
-end;
-
-procedure TMigrationsSqlGenerator.UniqueConstraint(const AOperation: IAddUniqueConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
-begin
-  ABuilder
-   .Append(' ')
-   .Append('CONSTRAINT')
-   .Append(' ')
-   .Append(DelimitIdentifier(AOperation.Name))
-   .Append(' ')
-   .Append('UNIQUE ')
-   .Append('(')
-   .Append(ColumnList(AOperation.Columns.ToArray))
-   .Append(')');
-end;
-
-procedure TMigrationsSqlGenerator.GenerateIndexColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
-var
-  I: Integer;
-  LColumns: TArray<string>;
-begin
-  LColumns := AOperation.Columns.ToArray;
-  for I := Low(LColumns) to High(LColumns) do
-  begin
-    if I > 0 then
-    begin
-      ABuilder
-       .Append(',')
-       .Append(' ');
-    end;
-    ABuilder.Append(DelimitIdentifier(LColumns[I]));
-    if (Length(AOperation.Descending) > 0) and
-      (Length(AOperation.Descending) = Length(LColumns)) and
-      (AOperation.Descending[I]) then
-    begin
-      ABuilder
-       .Append(' ')
-       .Append('DESC');
-    end;
-  end;
+  CreateTableIndexes(AOperation, ABuilder);
 end;
 
 procedure TMigrationsSqlGenerator.Generate(const AOperation: IDropCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
@@ -612,29 +567,6 @@ begin
   EndStatement(ABuilder);
 end;
 
-procedure TMigrationsSqlGenerator.IndexOptions(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder);
-var
-  LCreateIndexOperation: ICreateIndexOperation;
-begin
-  if Supports(AOperation, ICreateIndexOperation) then
-  begin
-    LCreateIndexOperation := TCreateIndexOperation(AOperation);
-    if not TCreateIndexOperation(AOperation).Filter.Trim.IsEmpty then
-    begin
-      ABuilder
-       .Append(' ')
-       .Append('WHERE')
-       .Append(' ')
-       .Append(LCreateIndexOperation.Filter);
-    end;
-  end;
-end;
-
-procedure TMigrationsSqlGenerator.IndexTraits(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder);
-begin
-  // This method can be overwritten by inherited classes.
-end;
-
 procedure TMigrationsSqlGenerator.Generate(const AOperation: IRenameColumnOperation;
   const ABuilder: IMigrationCommandListBuilder);
 begin
@@ -658,6 +590,84 @@ procedure TMigrationsSqlGenerator.Generate(const AOperation: ISqlOperation; cons
 begin
   ABuilder.AppendLine(NormalizeTheSQLScript(AOperation.Sql));
   EndStatement(ABuilder);
+end;
+
+procedure TMigrationsSqlGenerator.GenerateIndexColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
+var
+  I: Integer;
+  LColumns: TArray<string>;
+begin
+  LColumns := AOperation.Columns.ToArray;
+  for I := Low(LColumns) to High(LColumns) do
+  begin
+    if I > 0 then
+    begin
+      ABuilder
+       .Append(',')
+       .Append(' ');
+    end;
+    ABuilder.Append(DelimitIdentifier(LColumns[I]));
+    if (Length(AOperation.Descending) > 0) and
+      (Length(AOperation.Descending) = Length(LColumns)) and
+      (AOperation.Descending[I]) then
+    begin
+      ABuilder
+       .Append(' ')
+       .Append('DESC');
+    end;
+  end;
+end;
+
+procedure TMigrationsSqlGenerator.IndexOptions(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder);
+var
+  LCreateIndexOperation: ICreateIndexOperation;
+begin
+  if Supports(AOperation, ICreateIndexOperation) then
+  begin
+    LCreateIndexOperation := TCreateIndexOperation(AOperation);
+    if not TCreateIndexOperation(AOperation).Filter.Trim.IsEmpty then
+    begin
+      ABuilder
+       .Append(' ')
+       .Append('WHERE')
+       .Append(' ')
+       .Append(LCreateIndexOperation.Filter);
+    end;
+  end;
+end;
+
+procedure TMigrationsSqlGenerator.IndexTraits(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  // This method can be overwritten by inherited classes.
+end;
+
+procedure TMigrationsSqlGenerator.PrimaryKeyConstraint(const AOperation: IAddPrimaryKeyOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  ABuilder
+   .Append(' ')
+   .Append('CONSTRAINT')
+   .Append(' ')
+   .Append(DelimitIdentifier(AOperation.Name))
+   .Append(' ')
+   .Append('PRIMARY KEY')
+   .Append(' ')
+   .Append('(')
+   .Append(ColumnList(AOperation.Columns.ToArray))
+   .Append(')');
+end;
+
+procedure TMigrationsSqlGenerator.UniqueConstraint(const AOperation: IAddUniqueConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  ABuilder
+   .Append(' ')
+   .Append('CONSTRAINT')
+   .Append(' ')
+   .Append(DelimitIdentifier(AOperation.Name))
+   .Append(' ')
+   .Append('UNIQUE ')
+   .Append('(')
+   .Append(ColumnList(AOperation.Columns.ToArray))
+   .Append(')');
 end;
 
 end.

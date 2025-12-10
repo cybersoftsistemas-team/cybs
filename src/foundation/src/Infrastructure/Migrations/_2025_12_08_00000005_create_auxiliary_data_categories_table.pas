@@ -29,11 +29,12 @@ begin
    ])
    .Constraints([
      PrimaryKey('Id')
-    ,Unique(['ParentId', 'Name'])
     ,ForeignKey('ParentId', 'categories', 'Id')
+    ,Unique(['ParentId', 'Name'])
    ])
    .Indexes([
      CreateIndex('ParentId')
+    ,CreateIndex(['ParentId', 'Id'])
    ]);
 end;
 
