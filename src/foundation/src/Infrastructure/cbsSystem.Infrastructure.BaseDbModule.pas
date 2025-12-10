@@ -7,13 +7,15 @@ uses
   cbsSystem.Module.BaseModule,
 {IDE}
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
-  FireDAC.VCLUI.Wait, FireDAC.Phys.MSSQLDef, FireDAC.Stan.StorageBin, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL, System.Classes, Data.DB, FireDAC.Comp.Client;
+  FireDAC.VCLUI.Wait, FireDAC.Phys.MSSQLDef, FireDAC.Stan.StorageBin, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL, System.Classes, Data.DB, FireDAC.Comp.Client,
+  FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Comp.Script;
 
 type
   TdamBaseDb = class(TdamBase)
     Connection: TFDConnection;
     PhysMSSQLDriverLink: TFDPhysMSSQLDriverLink;
     StanStorageBinLink: TFDStanStorageBinLink;
+    sptSeed: TFDScript;
     procedure ConnectionBeforeConnect(Sender: TObject);
   protected
     procedure AfterRunSeed; virtual;
@@ -43,6 +45,10 @@ end;
 procedure TdamBaseDb.BeforeRunSeed;
 begin
   // This method can be overwritten by inherited classes.
+  if sptSeed.SQLScripts.Count > 0 then
+  begin
+    sptSeed.ValidateAll;
+  end;
 end;
 
 procedure TdamBaseDb.ConnectionBeforeConnect(Sender: TObject);
@@ -53,6 +59,10 @@ end;
 procedure TdamBaseDb.OnRunSeed;
 begin
   // This method can be overwritten by inherited classes.
+  if sptSeed.SQLScripts.Count > 0 then
+  begin
+    sptSeed.ExecuteAll;
+  end;
 end;
 
 procedure TdamBaseDb.RunSeed;

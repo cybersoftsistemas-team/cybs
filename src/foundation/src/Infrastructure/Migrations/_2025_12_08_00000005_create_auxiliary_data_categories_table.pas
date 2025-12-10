@@ -22,7 +22,7 @@ begin
   ASchema.CreateTable('categories')
    .HasSchema('auxiliary_data')
    .Columns([
-     GuidColumn('Id').IsRequired
+     GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
     ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
     ,GuidColumn('ParentId').IsOptional
@@ -31,6 +31,9 @@ begin
      PrimaryKey('Id')
     ,Unique(['ParentId', 'Name'])
     ,ForeignKey('ParentId', 'categories', 'Id')
+   ])
+   .Indexes([
+     CreateIndex('ParentId')
    ]);
 end;
 

@@ -126,26 +126,27 @@ end;
 
 procedure TMigrations.RunSystenMigrations;
 begin
-  var LDbContext := TDbSystemContext.Create;
+  var LdamSystemDb := TdamSystemDb.Create(nil);
   try
-    LDbContext.Connection.StartTransaction;
+    LdamSystemDb.Connection.StartTransaction;
     try
-      var LdamSystemDb := TdamSystemDb.Create(nil);
+      var LDbContext := TDbSystemContext.Create;
       try
+        LDbContext.Connection := LdamSystemDb.Connection;
         LDbContext.UpdateDatabase(LdamSystemDb.RunSeed);
       finally
-        FreeAndNil(LdamSystemDb);
+        FreeAndNil(LDbContext);
       end;
     except
       on E: Exception do
       begin
-        LDbContext.Connection.Rollback;
+        LdamSystemDb.Connection.Rollback;
         raise Exception.Create(E.Message);
       end;
     end;
-    LDbContext.Connection.Commit;
+    LdamSystemDb.Connection.Commit;
   finally
-    FreeAndNil(LDbContext);
+    FreeAndNil(LdamSystemDb);
   end;
 end;
 
