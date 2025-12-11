@@ -45,9 +45,12 @@ uses
   _2025_12_08_00000045_create_address_addresses_table,
   _2025_12_08_00000050_create_people_schema,
   _2025_12_08_00000055_create_people_nationalities_table,
-  _2025_12_08_00000060_create_people_person_table,
+  _2025_12_08_00000060_create_people_persons_table,
   _2025_12_08_00000070_create_people_person_naturals_table,
-  _2025_12_08_00000065_create_people_person_legals_table;
+  _2025_12_08_00000065_create_people_person_legals_table,
+  _2025_12_08_00000075_create_people_person_addresses_table,
+  _2025_12_08_00000075_create_people_person_emails_table,
+  _2025_12_08_00000075_create_people_person_phones_table;
 
 procedure TMigrations.BeforeRun(const AModules: IModuleManager);
 begin
@@ -146,9 +149,12 @@ begin
   RegisterMigration(TDbSystemContext, CreateAddressAddressesTable);
   RegisterMigration(TDbSystemContext, CreatePeopleSchema);
   RegisterMigration(TDbSystemContext, CreatePeopleNationalitiesTable);
-  RegisterMigration(TDbSystemContext, CreatePeoplePersonTable);
+  RegisterMigration(TDbSystemContext, CreatePeoplePersonsTable);
+  RegisterMigration(TDbSystemContext, CreatePeoplePersonAddressesTable);
   RegisterMigration(TDbSystemContext, CreatePeoplePersonLegalsTable);
   RegisterMigration(TDbSystemContext, CreatePeoplePersonNaturalsTable);
+  RegisterMigration(TDbSystemContext, CreatePeoplePersonEmailsTable);
+  RegisterMigration(TDbSystemContext, CreatePeoplePersonPhonesTable);
 end;
 
 procedure TMigrations.RunSystenMigrations;

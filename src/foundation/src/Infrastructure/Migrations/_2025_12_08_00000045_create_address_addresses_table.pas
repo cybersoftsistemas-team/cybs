@@ -26,7 +26,6 @@ begin
     ,IntColumn('ZipCode').IsRequired
     ,GuidColumn('StreetTypeId').IsRequired
     ,GuidColumn('StreetId').IsRequired
-    ,IntColumn('Number').IsOptional
     ,GuidColumn('NeighborhoodId').IsRequired
     ,GuidColumn('CityId').IsRequired
     ,GuidColumn('StateId').IsRequired
@@ -38,7 +37,7 @@ begin
     ,ForeignKey('StateId', 'states', 'Id')
     ,ForeignKey('StreetId', 'streets', 'Id')
     ,ForeignKey('StreetTypeId', 'streettypes', 'Id')
-    ,Unique(['StreetTypeId', 'StreetId', 'Number', 'NeighborhoodId', 'CityId', 'StateId'])
+    ,Unique(['StreetTypeId', 'StreetId', 'NeighborhoodId', 'CityId', 'StateId'])
    ])
    .Indexes([
      CreateIndex('ZipCode')

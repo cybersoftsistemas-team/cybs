@@ -36,7 +36,7 @@ begin
      PrimaryKey('Id')
     ,ForeignKey('GenderId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
     ,ForeignKey('NationalityId', 'nationalities', 'Id')
-    ,ForeignKey('person', 'Id')
+    ,ForeignKey('persons', 'Id')
     ,ForeignKey('PlaceOfBirthId', 'cities', 'Id').HasPrincipalSchema('address')
     ,Unique('SSN')
    ])

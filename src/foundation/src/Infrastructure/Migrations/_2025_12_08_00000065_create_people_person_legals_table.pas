@@ -37,7 +37,7 @@ begin
      PrimaryKey('Id')
     ,ForeignKey('CompanyTypeId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
     ,ForeignKey('NationalityId', 'nationalities', 'Id')
-    ,ForeignKey('person', 'Id')
+    ,ForeignKey('persons', 'Id')
     ,ForeignKey('StateId', 'states', 'Id').HasPrincipalSchema('address')
     ,Unique('CRN')
    ])
