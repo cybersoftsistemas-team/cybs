@@ -22,16 +22,16 @@ begin
   ASchema.CreateTable('person_legals')
    .HasSchema('people')
    .Columns([
-     GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
+     GuidColumn('Id').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
     ,StringColumn('DoingBusinessAs').HasMaxLength(255).IsRequired // Nome fantasia
-    ,IntColumn('CRN').IsRequired // CRN – Company Registration Number (CNPJ)
+    ,IntColumn('CRN').IsOptional // CRN – Company Registration Number (CNPJ)
     ,DateTimeColumn('FoundationDate').IsRequired
+    ,StringColumn('StateInscriptionNumber').HasMaxLength(20).IsOptional // Inscrição Estadual
+    ,StringColumn('MunicipalInscription').HasMaxLength(20).IsOptional // Inscrição Municipal
     ,GuidColumn('CompanyTypeId').IsRequired
     ,GuidColumn('NationalityId').IsRequired // Nacionalidade
     ,GuidColumn('StateId').IsOptional
-    ,StringColumn('StateInscriptionNumber').HasMaxLength(20).IsOptional // Inscrição Estadual
-    ,StringColumn('MunicipalInscription').HasMaxLength(20).IsOptional // Inscrição Municipal
    ])
    .Constraints([
      PrimaryKey('Id')

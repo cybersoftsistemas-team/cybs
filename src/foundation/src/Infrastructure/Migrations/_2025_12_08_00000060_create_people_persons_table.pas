@@ -23,14 +23,14 @@ begin
    .HasSchema('people')
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
-    ,GuidColumn('PersonType').IsRequired
+    ,GuidColumn('PersonTypeId').IsRequired
    ])
    .Constraints([
      PrimaryKey('Id')
-    ,ForeignKey('PersonType', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
+    ,ForeignKey('PersonTypeId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
    ])
    .Indexes([
-     CreateIndex('PersonType')
+     CreateIndex('PersonTypeId')
    ]);
 end;
 
