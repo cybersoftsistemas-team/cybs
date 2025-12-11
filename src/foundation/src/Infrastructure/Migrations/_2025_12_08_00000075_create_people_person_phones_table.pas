@@ -23,15 +23,15 @@ begin
    .HasSchema('people')
    .Columns([
      GuidColumn('PersonId').IsRequired
-    ,GuidColumn('PersonType').IsRequired
+    ,GuidColumn('TypeId').IsRequired
     ,GuidColumn('CityId').IsRequired
     ,IntColumn('Number').HasDefaultValueSql('0').IsRequired
    ])
    .Constraints([
-     PrimaryKey(['PersonId', 'PersonType'])
+     PrimaryKey(['PersonId', 'TypeId'])
     ,ForeignKey('CityId', 'cities', 'Id').HasPrincipalSchema('address')
     ,ForeignKey('PersonId', 'persons', 'Id')
-    ,ForeignKey('PersonType', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
+    ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
    ]);
 end;
 

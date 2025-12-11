@@ -23,17 +23,17 @@ begin
    .HasSchema('people')
    .Columns([
      GuidColumn('PersonId').IsRequired
-    ,GuidColumn('PersonType').IsRequired
+    ,GuidColumn('TypeId').IsRequired
     ,GuidColumn('AddressId').IsRequired
     ,StringColumn('AdditionalInformation').HasMaxLength(255).IsOptional
     ,BooleanColumn('Correspondence').HasDefaultValueSql('0').IsRequired
     ,IntColumn('Number').HasDefaultValueSql('0').IsRequired
    ])
    .Constraints([
-     PrimaryKey(['PersonId', 'PersonType'])
+     PrimaryKey(['PersonId', 'TypeId'])
     ,ForeignKey('AddressId', 'addresses', 'Id').HasPrincipalSchema('address')
     ,ForeignKey('PersonId', 'persons', 'Id')
-    ,ForeignKey('PersonType', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
+    ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
    ]);
 end;
 

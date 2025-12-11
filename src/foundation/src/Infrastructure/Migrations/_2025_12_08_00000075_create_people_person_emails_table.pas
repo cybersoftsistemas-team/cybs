@@ -23,13 +23,13 @@ begin
    .HasSchema('people')
    .Columns([
      GuidColumn('PersonId').IsRequired
-    ,GuidColumn('PersonType').IsRequired
+    ,GuidColumn('TypeId').IsRequired
     ,StringColumn('Address').HasMaxLength(255).IsRequired
    ])
    .Constraints([
-     PrimaryKey(['PersonId', 'PersonType'])
+     PrimaryKey(['PersonId', 'TypeId'])
     ,ForeignKey('PersonId', 'persons', 'Id')
-    ,ForeignKey('PersonType', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
+    ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
    ]);
 end;
 
