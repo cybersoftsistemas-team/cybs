@@ -169,7 +169,7 @@ contains
   cbsMigrations.Support.MappedColumnTypes in 'src\Support\cbsMigrations.Support.MappedColumnTypes.pas',
   cbsMigrations.Migrations.CustomMigration in 'src\Migrations\cbsMigrations.Migrations.CustomMigration.pas',
   cbsMigrations.Support.Migration in 'src\Support\cbsMigrations.Support.Migration.pas',
-  _2025_05_30_00000001_create_migrations_history_table in 'src\Migrations\_2025_05_30_00000001_create_migrations_history_table.pas',
+  _2025_05_30_00000002_create_migrations_history_table in 'src\Migrations\_2025_05_30_00000002_create_migrations_history_table.pas',
   cbsMigrations.Contracts.Schema.MigrationsSqlGenerators.MigrationsSqlGenerator in 'src\Contracts\Schema\MigrationsSqlGenerators\cbsMigrations.Contracts.Schema.MigrationsSqlGenerators.MigrationsSqlGenerator.pas',
   cbsMigrations.Schema.MigrationsSqlGenerators.MigrationsSqlGenerator in 'src\Schema\MigrationsSqlGenerators\cbsMigrations.Schema.MigrationsSqlGenerators.MigrationsSqlGenerator.pas',
   cbsMigrations.Contracts.Schema.MigrationsSqlGenerators.SqlServerMigrationsSqlGenerator in 'src\Contracts\Schema\MigrationsSqlGenerators\cbsMigrations.Contracts.Schema.MigrationsSqlGenerators.SqlServerMigrationsSqlGenerator.pas',
@@ -199,7 +199,8 @@ contains
   cbsMigrations.Contracts.Migrations.Operations.EnsureSchemaOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.EnsureSchemaOperation.pas',
   cbsMigrations.Migrations.Operations.EnsureSchemaOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.EnsureSchemaOperation.pas',
   cbsMigrations.Migrations.Operations.RenameColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.RenameColumnOperation.pas',
-  cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation.pas';
+  cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation.pas',
+  _2025_05_30_00000001_create_migration_schema in 'src\Migrations\_2025_05_30_00000001_create_migration_schema.pas';
 
 end.
 

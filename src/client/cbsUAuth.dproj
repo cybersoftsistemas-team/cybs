@@ -171,6 +171,7 @@
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000020_create_identity_option_settings_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000025_create_identity_domains_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000030_create_identity_domain_accesses_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000035_create_identity_domains_persons_table.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

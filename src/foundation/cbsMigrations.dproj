@@ -271,7 +271,7 @@
         <DCCReference Include="src\Support\cbsMigrations.Support.MappedColumnTypes.pas"/>
         <DCCReference Include="src\Migrations\cbsMigrations.Migrations.CustomMigration.pas"/>
         <DCCReference Include="src\Support\cbsMigrations.Support.Migration.pas"/>
-        <DCCReference Include="src\Migrations\_2025_05_30_00000001_create_migrations_history_table.pas"/>
+        <DCCReference Include="src\Migrations\_2025_05_30_00000002_create_migrations_history_table.pas"/>
         <DCCReference Include="src\Contracts\Schema\MigrationsSqlGenerators\cbsMigrations.Contracts.Schema.MigrationsSqlGenerators.MigrationsSqlGenerator.pas"/>
         <DCCReference Include="src\Schema\MigrationsSqlGenerators\cbsMigrations.Schema.MigrationsSqlGenerators.MigrationsSqlGenerator.pas"/>
         <DCCReference Include="src\Contracts\Schema\MigrationsSqlGenerators\cbsMigrations.Contracts.Schema.MigrationsSqlGenerators.SqlServerMigrationsSqlGenerator.pas"/>
@@ -302,6 +302,7 @@
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.EnsureSchemaOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.RenameColumnOperation.pas"/>
         <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation.pas"/>
+        <DCCReference Include="src\Migrations\_2025_05_30_00000001_create_migration_schema.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -346,6 +347,12 @@
                 </DeployFile>
                 <DeployFile LocalName="$(BDS)\Redist\osx64\libcgsqlite3.dylib" Class="DependencyModule"/>
                 <DeployFile LocalName="..\..\..\..\..\Public\Documents\Embarcadero\Studio\20.0\Bpl\hgnMigrations.bpl" Configuration="Debug" Class="ProjectOutput"/>
+                <DeployFile LocalName="..\..\build\Win32\Debug\cbsMigrations.bpl" Configuration="Debug" Class="ProjectOutput">
+                    <Platform Name="Win32">
+                        <RemoteName>cbsMigrations.bpl</RemoteName>
+                        <Overwrite>true</Overwrite>
+                    </Platform>
+                </DeployFile>
                 <DeployFile LocalName="..\..\build\Win32\deVCL\.bpl\cbsMigrations.bpl" Configuration="deVCL" Class="ProjectOutput"/>
                 <DeployFile LocalName="..\..\build\Win32\deVCL\.bpl\hgnMigrations.bpl" Configuration="deVCL" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">

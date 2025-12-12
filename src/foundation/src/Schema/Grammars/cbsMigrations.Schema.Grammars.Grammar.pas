@@ -21,7 +21,8 @@ type
     function TableName(const ASchema, ATable: string): string;
     procedure RunUp(const ADriverID: DriverID; const AMigrationType: MigrationType; const ABuilder: IMigrationCommandListBuilder);
   public
-    function CompileCreateRepository(const ADriverID: DriverID; const ATable: string): IMigrationCommands; virtual;
+    function CompileCreateRepository(const ADriverID: DriverID; const ASchema, ATable: string): IMigrationCommands; virtual;
+    function CompileCreateSchema(const ADriverID: DriverID; const AName: string): IMigrationCommands;
     function CompileGetRan(const ASchema, ATable: string): IMigrationCommand; virtual;
     function CompileGetLastBatchNumber(const ASchema, ATable: string): IMigrationCommand; virtual;
     function CompileRunPending(const ADriverID: DriverID; const AMigrationTypes: TArray<TClass>; const ABatch: Integer; const ATable: string): IMigrationCommands; virtual;
@@ -39,19 +40,31 @@ uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Migration,
   cbsMigrations.Migrations.MigrationCommandListBuilder,
-  _2025_05_30_00000001_create_migrations_history_table;
+  _2025_05_30_00000001_create_migration_schema,
+  _2025_05_30_00000002_create_migrations_history_table;
 
 { TGrammar }
 
-function TGrammar.CompileCreateRepository(const ADriverID: DriverID; const ATable: string): IMigrationCommands;
+function TGrammar.CompileCreateRepository(const ADriverID: DriverID; const ASchema, ATable: string): IMigrationCommands;
 
   function CreateMigrationsHistory: IMigration;
   begin
-    Result := CreateMigrationsHistoryTable.Create(ADriverID, ATable);
+    Result := CreateMigrationsHistoryTable.Create(ADriverID, ASchema, ATable);
   end;
 
 begin
   Result := CreateSqlGenerator.Generate(CreateMigrationsHistory.UpOperations);
+end;
+
+function TGrammar.CompileCreateSchema(const ADriverID: DriverID; const AName: string): IMigrationCommands;
+
+  function CreateSchema: IMigration;
+  begin
+    Result := CreateMigrationSchema.Create(ADriverID, AName);
+  end;
+
+begin
+  Result := CreateSqlGenerator.Generate(CreateSchema.UpOperations);
 end;
 
 function TGrammar.CompileGetLastBatchNumber(const ASchema, ATable: string): IMigrationCommand;

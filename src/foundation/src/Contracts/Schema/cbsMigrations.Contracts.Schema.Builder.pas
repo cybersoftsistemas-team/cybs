@@ -13,8 +13,8 @@ type
     function GetLastBatchNumber(const ATable: string): Integer;
     function GetRan(const ATable: string): TArray<string>;
     function HasTable(const ATable: string): Boolean;
-    procedure CreateIfNotExists(const ATable: string);
-    procedure RunPending(const AMigrationTypes: TArray<TClass>; const ATable: string);
+    procedure CreateIfNotExists(const ASchema: string; const ATable: string);
+    procedure RunPending(const AMigrationTypes: TArray<TClass>; const ASchema, ATable: string);
     property Grammar: IGrammar read GetGrammar;
   end;
 

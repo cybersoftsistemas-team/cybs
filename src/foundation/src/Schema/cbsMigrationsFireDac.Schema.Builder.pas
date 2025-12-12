@@ -16,12 +16,13 @@ type
     function GetNextBatchNumber(const ATable: string): Integer;
   protected
     function GetInternalSchemaGrammar: IGrammar; override;
-    procedure CreateRepository(const ATable: string); override;
+    procedure CreateRepository(const ASchema, ATable: string); override;
+    procedure CreateSchema(const AName: string); override;
   public
     function GetLastBatchNumber(const ATable: string): Integer; override;
     function GetRan(const ATable: string): TArray<string>; override;
-    procedure CreateIfNotExists(const ATable: string); override;
-    procedure RunPending(const AMigrationTypes: TArray<TClass>; const ATable: string); override;
+    procedure CreateIfNotExists(const ASchema, ATable: string); override;
+    procedure RunPending(const AMigrationTypes: TArray<TClass>; const ASchema, ATable: string); override;
     property Resolver: IFDConnectionResolver read GetResolver;
   end;
 
@@ -76,7 +77,7 @@ begin
   Result := TFDConnectionResolver(inherited Resolver);
 end;
 
-procedure TFDBuilder.RunPending(const AMigrationTypes: TArray<TClass>; const ATable: string);
+procedure TFDBuilder.RunPending(const AMigrationTypes: TArray<TClass>; const ASchema, ATable: string);
 var
   LCommandList: ICommandList;
 begin
@@ -88,17 +89,23 @@ begin
   end;
 end;
 
-procedure TFDBuilder.CreateIfNotExists(const ATable: string);
+procedure TFDBuilder.CreateIfNotExists(const ASchema: string; const ATable: string);
 begin
-  if not HasTable(ATable) then
+  if not HasTable(concat(ASchema, '.', ATable)) then
   begin
-    CreateRepository(ATable);
+    CreateSchema(ASchema);
+    CreateRepository(ASchema, ATable);
   end;
 end;
 
-procedure TFDBuilder.CreateRepository(const ATable: string);
+procedure TFDBuilder.CreateRepository(const ASchema, ATable: string);
 begin
-  Resolver.CreateCommandExecutor.ExecuteNonQuery(Grammar.CompileCreateRepository(Resolver.DriverID, ATable));
+  Resolver.CreateCommandExecutor.ExecuteNonQuery(Grammar.CompileCreateRepository(Resolver.DriverID, ASchema, ATable));
+end;
+
+procedure TFDBuilder.CreateSchema(const AName: string);
+begin
+  Resolver.CreateCommandExecutor.ExecuteNonQuery(Grammar.CompileCreateSchema(Resolver.DriverID, AName));
 end;
 
 end.

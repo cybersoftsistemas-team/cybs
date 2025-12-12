@@ -41,17 +41,17 @@ end;
 
 procedure TFDDatabaseMigrationRepository.RunInternalPending(const AMigrationTypes: TArray<TClass>);
 begin
-  Resolver.GetSchemaBuilder.RunPending(AMigrationTypes, Table);
+  Resolver.GetSchemaBuilder.RunPending(AMigrationTypes, Schema, Table);
 end;
 
 procedure TFDDatabaseMigrationRepository.CreateInternalIfNotExists;
 begin
-  Resolver.GetSchemaBuilder.CreateIfNotExists(Table);
+  Resolver.GetSchemaBuilder.CreateIfNotExists(Schema, Table);
 end;
 
 function TFDDatabaseMigrationRepository.GetInternalRan: TArray<TMigrationName>;
 begin
-  Result := Resolver.GetSchemaBuilder.GetRan(Table);
+  Result := Resolver.GetSchemaBuilder.GetRan(Concat(Schema, '.', Table));
 end;
 
 end.

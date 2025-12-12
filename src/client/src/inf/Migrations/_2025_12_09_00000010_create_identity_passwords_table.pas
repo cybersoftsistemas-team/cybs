@@ -33,7 +33,7 @@ begin
    .Constraints([
      PrimaryKey('Id')
     ,ForeignKey('UserId', 'user_authentications', 'Id')
-    ,Unique('UserId', 'Password')
+    ,Unique(['UserId', 'Password'])
    ]);
 end;
 

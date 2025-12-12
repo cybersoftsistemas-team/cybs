@@ -26,7 +26,7 @@ begin
     ,StringColumn('FirstName').HasMaxLength(127).IsRequired
     ,StringColumn('LastName').HasMaxLength(127).IsOptional
     ,DateTimeColumn('Birthday').IsOptional
-    ,IntColumn('SSN').IsOptional // SSN – Social Security Number (CPF)
+    ,IntColumn('SSN').IsRequired // SSN – Social Security Number (CPF)
     ,StringColumn('IDCard').HasMaxLength(15).IsOptional // ID Card (RG)
     ,GuidColumn('PlaceOfBirthId').IsOptional // Naturalidade
     ,GuidColumn('NationalityId').IsOptional // Nacionalidade

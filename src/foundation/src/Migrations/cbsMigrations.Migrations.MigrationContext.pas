@@ -17,22 +17,22 @@ type
     FConnection: TCustomConnection;
     FMigrationTypeList: TMigrationTypeList;
     FOwnsConnection: Boolean;
-    FRepositoryPrefix: string;
     FRepository: IDatabaseMigrationRepository;
+    FRepositoryPrefix: string;
     FResolver: IConnectionResolver;
     function GetConnection: TCustomConnection;
-    function GetRepositoryPrefix: string;
     function GetRepositoryName: string;
+    function GetRepositoryPrefix: string;
     procedure GetDeclaredMigrationTypes;
+    procedure RejectMigrationTypes(const ARan: TArray<string>);
     procedure SetConnection(const AValue: TCustomConnection);
     procedure SetRepositoryPrefix(const AValue: string);
     procedure SortMigrationTypes;
-    procedure RejectMigrationTypes(const ARan: TArray<string>);
   protected
-    const
-      RepositoryPrefixDef = 'CBS';
+  const
       RepositoryNameDef = '__%sMigrationsHistory';
-  protected
+      RepositoryPrefixDef = 'CBS';
+      RepositorySchema = 'migration';
     function CreateRepository: IDatabaseMigrationRepository; virtual; abstract;
     function CreateResolver: IConnectionResolver; virtual; abstract;
     procedure DoUpdateDatabase; virtual;
@@ -76,32 +76,19 @@ begin
   inherited;
 end;
 
-function TMigrationContext.GetConnection: TCustomConnection;
-begin
-  Result := FConnection;
-end;
-
-function TMigrationContext.GetRepositoryPrefix: string;
-begin
-  if FRepositoryPrefix.Trim.IsEmpty then
-  begin
-    Exit(RepositoryPrefixDef);
-  end;
-  Result := FRepositoryPrefix;
-end;
-
-function TMigrationContext.GetRepositoryName: string;
-begin
-  Result := Format(RepositoryNameDef, [RepositoryPrefix]);
-end;
-
 procedure TMigrationContext.DoUpdateDatabase;
 begin
   GetDeclaredMigrationTypes;
+  FRepository.Schema := RepositorySchema;
   FRepository.Table := GetRepositoryName;
   FRepository.CreateIfNotExists;
   RejectMigrationTypes(FRepository.GetRan);
   FRepository.RunPending(FMigrationTypeList.Values.ToArray);
+end;
+
+function TMigrationContext.GetConnection: TCustomConnection;
+begin
+  Result := FConnection;
 end;
 
 procedure TMigrationContext.GetDeclaredMigrationTypes;
@@ -114,6 +101,32 @@ begin
       FMigrationTypeList.Add(AMigrationType.UnitName, AMigrationType);
     end);
   SortMigrationTypes;
+end;
+
+function TMigrationContext.GetRepositoryName: string;
+begin
+  Result := Format(RepositoryNameDef, [RepositoryPrefix]);
+end;
+
+function TMigrationContext.GetRepositoryPrefix: string;
+begin
+  if FRepositoryPrefix.Trim.IsEmpty then
+  begin
+    Exit(RepositoryPrefixDef);
+  end;
+  Result := FRepositoryPrefix;
+end;
+
+procedure TMigrationContext.RejectMigrationTypes(const ARan: TArray<string>);
+var
+  LRanSet: IRanSet;
+begin
+  LRanSet := CreateRanSet(ARan);
+  FMigrationTypeList.RemoveAll(
+    function(const AMigrationTypeItem: TMigrationTypeItem): Boolean
+    begin
+      Result := LRanSet.Contains(AMigrationTypeItem.Key);
+    end);
 end;
 
 procedure TMigrationContext.SetConnection(const AValue: TCustomConnection);
@@ -144,18 +157,6 @@ begin
     CreateMigrationTypeList(FMigrationTypeList.Ordered);
   FMigrationTypeList.Clear;
   FMigrationTypeList.AddRange(LOrderedMigrationTypes);
-end;
-
-procedure TMigrationContext.RejectMigrationTypes(const ARan: TArray<string>);
-var
-  LRanSet: IRanSet;
-begin
-  LRanSet := CreateRanSet(ARan);
-  FMigrationTypeList.RemoveAll(
-    function(const AMigrationTypeItem: TMigrationTypeItem): Boolean
-    begin
-      Result := LRanSet.Contains(AMigrationTypeItem.Key);
-    end);
 end;
 
 procedure TMigrationContext.UpdateDatabase(const ASeed: TProc);

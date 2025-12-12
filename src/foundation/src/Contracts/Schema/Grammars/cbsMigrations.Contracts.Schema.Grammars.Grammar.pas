@@ -11,7 +11,8 @@ uses
 type
   IGrammar = interface(IUnknown)
     ['{CAA63EE1-CC33-4A56-A9BF-FC3AF6A7D240}']
-    function CompileCreateRepository(const ADriverID: DriverID; const ATable: string): IMigrationCommands;
+    function CompileCreateRepository(const ADriverID: DriverID; const ASchema, ATable: string): IMigrationCommands;
+    function CompileCreateSchema(const ADriverID: DriverID; const AName: string): IMigrationCommands;
     function CompileGetRan(const ASchema, ATable: string): IMigrationCommand;
     function CompileGetLastBatchNumber(const ASchema, ATable: string): IMigrationCommand;
     function CompileRunPending(const ADriverID: DriverID; const AMigrationTypes: TArray<TClass>; const ABatch: Integer; const ATable: string): IMigrationCommands;

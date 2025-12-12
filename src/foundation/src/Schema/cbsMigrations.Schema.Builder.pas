@@ -23,7 +23,8 @@ type
     function GetRan(const ADataSet: TDataSet): TArray<string>; overload;
     function HasTable(const ADataSet: TDataSet): Boolean; overload;
     function ParseSchemaAndTable(const AReference: string): ISchemaAndTableParts;
-    procedure CreateRepository(const ATable: string); virtual; abstract;
+    procedure CreateRepository(const ASchema, ATable: string); virtual; abstract;
+    procedure CreateSchema(const AName: string); virtual; abstract;
     property Resolver: IConnectionResolver read FResolver;
   public
     constructor Create(const AResolver: IConnectionResolver);
@@ -31,8 +32,8 @@ type
     function GetLastBatchNumber(const ATable: string): Integer; overload; virtual; abstract;
     function GetRan(const ATable: string): TArray<string>; overload; virtual; abstract;
     function HasTable(const ATable: string): Boolean; overload; virtual; abstract;
-    procedure CreateIfNotExists(const ATable: string); virtual; abstract;
-    procedure RunPending(const AMigrationTypes: TArray<TClass>; const ATable: string); virtual; abstract;
+    procedure CreateIfNotExists(const ASchema: string; const ATable: string); virtual; abstract;
+    procedure RunPending(const AMigrationTypes: TArray<TClass>; const ASchema, ATable: string); virtual; abstract;
     property Grammar: IGrammar read GetGrammar;
   end;
 

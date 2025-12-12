@@ -11,20 +11,24 @@ type
   TDatabaseMigrationRepository = class abstract(TInterfacedObject, IDatabaseMigrationRepository)
   private
     FResolver: IConnectionResolver;
+    FSchema: string;
     FTable: string;
+    function GetSchema: string;
     function GetTable: string;
+    procedure SetSchema(const AValue: string);
     procedure SetTable(const AValue: string);
   protected
-    function GetInternalRan: TArray<TMigrationName>; virtual; abstract;
     procedure CreateInternalIfNotExists; virtual; abstract;
+    function GetInternalRan: TArray<TMigrationName>; virtual; abstract;
     procedure RunInternalPending(const AMigrationType: TArray<TClass>); virtual; abstract;
     property Resolver: IConnectionResolver read FResolver;
   public
     constructor Create(const AResolver: IConnectionResolver);
     destructor Destroy; override;
-    function GetRan: TArray<TMigrationName>;
     procedure CreateIfNotExists;
+    function GetRan: TArray<TMigrationName>;
     procedure RunPending(const AMigrationType: TArray<TClass>);
+    property Schema: string read GetSchema write SetSchema;
     property Table: string read GetTable write SetTable;
   end;
 
@@ -45,9 +49,19 @@ begin
   inherited;
 end;
 
+procedure TDatabaseMigrationRepository.CreateIfNotExists;
+begin
+  CreateInternalIfNotExists;
+end;
+
 function TDatabaseMigrationRepository.GetRan: TArray<TMigrationName>;
 begin
   Result := GetInternalRan;
+end;
+
+function TDatabaseMigrationRepository.GetSchema: string;
+begin
+  Result := FSchema;
 end;
 
 function TDatabaseMigrationRepository.GetTable: string;
@@ -60,9 +74,9 @@ begin
   RunInternalPending(AMigrationType);
 end;
 
-procedure TDatabaseMigrationRepository.CreateIfNotExists;
+procedure TDatabaseMigrationRepository.SetSchema(const AValue: string);
 begin
-  CreateInternalIfNotExists;
+  FSchema := AValue;
 end;
 
 procedure TDatabaseMigrationRepository.SetTable(const AValue: string);
