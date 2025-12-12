@@ -24,8 +24,8 @@ begin
    .Columns([
      GuidColumn('PersonId').IsRequired
     ,GuidColumn('TypeId').IsRequired
-    ,GuidColumn('CityId').IsRequired
     ,IntColumn('Number').HasDefaultValueSql('0').IsRequired
+    ,GuidColumn('CityId').IsRequired
    ])
    .Constraints([
      PrimaryKey(['PersonId', 'TypeId'])

@@ -27,9 +27,9 @@ begin
    .HasSchema('identity')
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
-    ,GuidColumn('ManagedById').IsOptional
     ,StringColumn('Name').HasMaxLength(255).IsRequired
     ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
+    ,GuidColumn('ManagedById').IsOptional
     ,GuidColumn('ParentId').IsOptional
    ])
    .Constraints([
