@@ -35,7 +35,7 @@ begin
    ])
    .Constraints([
      PrimaryKey('Id')
-    ,ForeignKey('PersonId', 'person_naturals', 'Id').HasPrincipalSchema('people')
+    ,ForeignKey('PersonId', 'naturals', 'Id').HasPrincipalSchema('person')
     ,Unique('Name')
    ]);
 end;

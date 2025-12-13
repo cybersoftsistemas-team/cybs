@@ -43,14 +43,14 @@ uses
   _2025_12_08_00000035_create_address_streets_table,
   _2025_12_08_00000040_create_address_streettypes_table,
   _2025_12_08_00000045_create_address_addresses_table,
-  _2025_12_08_00000050_create_people_schema,
-  _2025_12_08_00000055_create_people_nationalities_table,
-  _2025_12_08_00000060_create_people_persons_table,
-  _2025_12_08_00000070_create_people_person_naturals_table,
-  _2025_12_08_00000065_create_people_person_legals_table,
-  _2025_12_08_00000075_create_people_person_addresses_table,
-  _2025_12_08_00000075_create_people_person_emails_table,
-  _2025_12_08_00000075_create_people_person_phones_table;
+  _2025_12_08_00000050_create_person_schema,
+  _2025_12_08_00000055_create_person_nationalities_table,
+  _2025_12_08_00000060_create_person_persons_table,
+  _2025_12_08_00000070_create_person_naturals_table,
+  _2025_12_08_00000065_create_person_legals_table,
+  _2025_12_08_00000075_create_person_addresses_table,
+  _2025_12_08_00000075_create_person_emails_table,
+  _2025_12_08_00000075_create_person_phones_table;
 
 procedure TMigrations.BeforeRun(const AModules: IModuleManager);
 begin
@@ -147,14 +147,14 @@ begin
   RegisterMigration(TDbSystemContext, CreateAddressStreetsTable);
   RegisterMigration(TDbSystemContext, CreateAddressStreetTypesTable);
   RegisterMigration(TDbSystemContext, CreateAddressAddressesTable);
-  RegisterMigration(TDbSystemContext, CreatePeopleSchema);
-  RegisterMigration(TDbSystemContext, CreatePeopleNationalitiesTable);
-  RegisterMigration(TDbSystemContext, CreatePeoplePersonsTable);
-  RegisterMigration(TDbSystemContext, CreatePeoplePersonAddressesTable);
-  RegisterMigration(TDbSystemContext, CreatePeoplePersonLegalsTable);
-  RegisterMigration(TDbSystemContext, CreatePeoplePersonNaturalsTable);
-  RegisterMigration(TDbSystemContext, CreatePeoplePersonEmailsTable);
-  RegisterMigration(TDbSystemContext, CreatePeoplePersonPhonesTable);
+  RegisterMigration(TDbSystemContext, CreatePersonSchema);
+  RegisterMigration(TDbSystemContext, CreatePersonNationalitiesTable);
+  RegisterMigration(TDbSystemContext, CreatePersonPersonsTable);
+  RegisterMigration(TDbSystemContext, CreatePersonAddressesTable);
+  RegisterMigration(TDbSystemContext, CreatePersonLegalsTable);
+  RegisterMigration(TDbSystemContext, CreatePersonNaturalsTable);
+  RegisterMigration(TDbSystemContext, CreatePersonEmailsTable);
+  RegisterMigration(TDbSystemContext, CreatePersonPhonesTable);
 end;
 
 procedure TMigrations.RunSystenMigrations;

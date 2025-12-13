@@ -1,4 +1,4 @@
-unit _2025_12_09_00000030_create_identity_domain_accesses_table;
+unit _2025_12_09_00000030_create_domain_accesses_table;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateIdentityDomainAccessesTable = class(TMigration)
+  CreateDomainAccessesTable = class(TMigration)
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -19,12 +19,12 @@ uses
 {PROJECT}
   cbsUAuth.inf.DbUAuthContext;
 
-{ CreateIdentityDomainAccessesTable }
+{ CreateDomainAccessesTable }
 
-procedure CreateIdentityDomainAccessesTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateDomainAccessesTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('domain_accesses')
-   .HasSchema('identity')
+  ASchema.CreateTable('accesses')
+   .HasSchema('domain')
    .Columns([
      GuidColumn('DomainId').IsRequired
     ,GuidColumn('UserId').IsRequired
@@ -33,19 +33,19 @@ begin
    .Constraints([
      PrimaryKey(['DomainId', 'UserId'])
     ,ForeignKey('DomainId', 'domains', 'Id')
-    ,ForeignKey('UserId', 'user_authentications', 'Id')
+    ,ForeignKey('UserId', 'user_authentications', 'Id').HasPrincipalSchema('identity')
    ]);
 end;
 
-procedure CreateIdentityDomainAccessesTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateDomainAccessesTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('domain_accesses')
-   .HasSchema('identity');
+  ASchema.DropTable('accesses')
+   .HasSchema('domain');
 end;
 
 initialization
 begin
-  RegisterMigration(TDbUAuthContext, CreateIdentityDomainAccessesTable);
+  RegisterMigration(TDbUAuthContext, CreateDomainAccessesTable);
 end;
 
 end.

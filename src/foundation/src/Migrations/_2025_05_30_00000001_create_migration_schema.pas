@@ -9,26 +9,26 @@ uses
 type
   CreateMigrationSchema = class(TMigration)
   private
-    FName: string;
+    FDefaultSchema: string;
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
   public
-    constructor Create(const ADriverID: DriverID; const AName: string);
+    constructor Create(const ADriverID: DriverID; const ADefaultSchema: string);
   end;
 
 implementation
 
 { CreateMigrationSchema }
 
-constructor CreateMigrationSchema.Create(const ADriverID: DriverID; const AName: string);
+constructor CreateMigrationSchema.Create(const ADriverID: DriverID; const ADefaultSchema: string);
 begin
   inherited Create(ADriverID);
-  FName := AName;
+  FDefaultSchema := ADefaultSchema;
 end;
 
 procedure CreateMigrationSchema.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.EnsureSchema(FName);
+  ASchema.EnsureSchema(FDefaultSchema);
 end;
 
 end.

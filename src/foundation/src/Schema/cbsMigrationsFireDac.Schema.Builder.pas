@@ -84,7 +84,7 @@ begin
   if Low(AMigrationTypes) < Length(AMigrationTypes) then
   begin
     LCommandList := CreateCommandList;
-    LCommandList.AddRange(Grammar.CompileRunPending(Resolver.DriverID, AMigrationTypes, GetNextBatchNumber(ATable), ATable));
+    LCommandList.AddRange(Grammar.CompileRunPending(Resolver.DriverID, AMigrationTypes, GetNextBatchNumber(concat(ASchema, '.', ATable)), concat(ASchema, '.', ATable)));
     Resolver.CreateCommandExecutor.ExecuteNonQuery(LCommandList);
   end;
 end;

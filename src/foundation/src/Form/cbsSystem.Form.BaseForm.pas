@@ -7,7 +7,7 @@ uses
   cbsSystem.Contracts.Form.BaseForm,
   cbsSystem.Contracts.Module.BaseModule,
   cbsSystem.MessageBox,
-  cbsSystem.Module.BaseModule,
+
 {IDE}
   Data.DB, Dialogs, uniGUIDialogs, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
 

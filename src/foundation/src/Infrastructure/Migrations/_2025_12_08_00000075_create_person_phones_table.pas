@@ -1,4 +1,4 @@
-unit _2025_12_08_00000075_create_people_person_phones_table;
+unit _2025_12_08_00000075_create_person_phones_table;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreatePeoplePersonPhonesTable = class(TMigration)
+  CreatePersonPhonesTable = class(TMigration)
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -15,12 +15,12 @@ type
 
 implementation
 
-{ CreatePeoplePersonPhonesTable }
+{ CreatePersonPhonesTable }
 
-procedure CreatePeoplePersonPhonesTable.Up(const ASchema: IMigrationBuilder);
+procedure CreatePersonPhonesTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('person_phones')
-   .HasSchema('people')
+  ASchema.CreateTable('phones')
+   .HasSchema('person')
    .Columns([
      GuidColumn('PersonId').IsRequired
     ,GuidColumn('TypeId').IsRequired
@@ -35,10 +35,10 @@ begin
    ]);
 end;
 
-procedure CreatePeoplePersonPhonesTable.Down(const ASchema: IMigrationBuilder);
+procedure CreatePersonPhonesTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('person_phones')
-   .HasSchema('people');
+  ASchema.DropTable('phones')
+   .HasSchema('person');
 end;
 
 end.
