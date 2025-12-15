@@ -1,4 +1,4 @@
-unit _2025_12_09_00000015_create_identity_user_authentication_options_table;
+unit _2025_12_09_00000015_create_identity_options_table;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateIdentityUserAuthenticationOptionsTable = class(TMigration)
+  CreateIdentityOptionsTable = class(TMigration)
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -19,11 +19,11 @@ uses
 {PROJECT}
   cbsUAuth.inf.DbUAuthContext;
 
-{ CreateIdentityUserAuthenticationOptionsTable }
+{ CreateIdentityOptionsTable }
 
-procedure CreateIdentityUserAuthenticationOptionsTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateIdentityOptionsTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('user_authentication_options')
+  ASchema.CreateTable('options')
    .HasSchema('identity')
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
@@ -36,15 +36,15 @@ begin
    ]);
 end;
 
-procedure CreateIdentityUserAuthenticationOptionsTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateIdentityOptionsTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('user_authentication_options')
+  ASchema.DropTable('options')
    .HasSchema('identity');
 end;
 
 initialization
 begin
-  RegisterMigration(TDbUAuthContext, CreateIdentityUserAuthenticationOptionsTable);
+  RegisterMigration(TDbUAuthContext, CreateIdentityOptionsTable);
 end;
 
 end.

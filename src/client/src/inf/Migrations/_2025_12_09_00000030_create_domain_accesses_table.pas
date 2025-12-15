@@ -33,7 +33,7 @@ begin
    .Constraints([
      PrimaryKey(['DomainId', 'UserId'])
     ,ForeignKey('DomainId', 'domains', 'Id')
-    ,ForeignKey('UserId', 'user_authentications', 'Id').HasPrincipalSchema('identity')
+    ,ForeignKey('UserId', 'users', 'Id').HasPrincipalSchema('identity')
    ]);
 end;
 

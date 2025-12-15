@@ -30,9 +30,9 @@ type
     procedure SortMigrationTypes;
   protected
   const
-      RepositoryNameDef = '__%sMigrationsHistory';
-      RepositoryPrefixDef = 'CBS';
-      RepositorySchema = 'migration';
+      RepositoryNameDef = 'migrations';
+      RepositoryPrefixDef = '';
+      RepositorySchema = 'general';
     function CreateRepository: IDatabaseMigrationRepository; virtual; abstract;
     function CreateResolver: IConnectionResolver; virtual; abstract;
     procedure DoUpdateDatabase; virtual;

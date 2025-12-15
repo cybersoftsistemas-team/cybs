@@ -33,8 +33,8 @@ uses
   cbsSystem.Migrations.DbSystemContext,
   cbsSystem.Module.Manager.CycleInfo,
   // Migrations...
-  _2025_12_08_00000001_create_auxiliary_data_schema,
-  _2025_12_08_00000005_create_auxiliary_data_categories_table,
+  _2025_12_08_00000001_create_general_schema,
+  _2025_12_08_00000005_create_general_categories_table,
   _2025_12_08_00000010_create_address_schema,
   _2025_12_08_00000015_create_address_countries_table,
   _2025_12_08_00000020_create_address_states_table,
@@ -84,7 +84,7 @@ begin
     if LCycle.HasCycle then
     begin
       raise Exception.Create('Dependências circulares detectadas!' +
-        sLineBreak + String.Join(' → ', LCycle.Path));
+        sLineBreak + String.Join(' ? ', LCycle.Path));
     end;
   end;
 end;
@@ -137,8 +137,8 @@ end;
 
 procedure TMigrations.RegisterSystemMigrations;
 begin
-  RegisterMigration(TDbSystemContext, CreateAuxiliaryDataSchema);
-  RegisterMigration(TDbSystemContext, CreateAuxiliaryDataCategoriesTable);
+  RegisterMigration(TDbSystemContext, CreateGeneralSchema);
+  RegisterMigration(TDbSystemContext, CreateGeneralCategoriesTable);
   RegisterMigration(TDbSystemContext, CreateAddressSchema);
   RegisterMigration(TDbSystemContext, CreateAddressCountriesTable);
   RegisterMigration(TDbSystemContext, CreateAddressStatesTable);

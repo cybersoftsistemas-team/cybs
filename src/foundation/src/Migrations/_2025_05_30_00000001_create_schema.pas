@@ -1,4 +1,4 @@
-unit _2025_05_30_00000001_create_migration_schema;
+unit _2025_05_30_00000001_create_schema;
 
 interface
 

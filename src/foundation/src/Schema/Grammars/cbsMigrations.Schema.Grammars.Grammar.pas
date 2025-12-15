@@ -40,7 +40,7 @@ uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Migration,
   cbsMigrations.Migrations.MigrationCommandListBuilder,
-  _2025_05_30_00000001_create_migration_schema,
+  _2025_05_30_00000001_create_schema,
   _2025_05_30_00000002_create_migrations_history_table;
 
 { TGrammar }

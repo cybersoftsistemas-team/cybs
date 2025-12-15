@@ -302,7 +302,7 @@
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.EnsureSchemaOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.RenameColumnOperation.pas"/>
         <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation.pas"/>
-        <DCCReference Include="src\Migrations\_2025_05_30_00000001_create_migration_schema.pas"/>
+        <DCCReference Include="src\Migrations\_2025_05_30_00000001_create_schema.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

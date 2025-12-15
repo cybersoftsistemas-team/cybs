@@ -1,4 +1,4 @@
-unit _2025_12_08_00000005_create_auxiliary_data_categories_table;
+unit _2025_12_08_00000005_create_general_categories_table;
 
 interface
 
@@ -7,7 +7,7 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateAuxiliaryDataCategoriesTable = class(TMigration)
+  CreateGeneralCategoriesTable = class(TMigration)
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -15,12 +15,12 @@ type
 
 implementation
 
-{ CreateAuxiliaryDataCategoriesTable }
+{ CreateGeneralCategoriesTable }
 
-procedure CreateAuxiliaryDataCategoriesTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateGeneralCategoriesTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable('categories')
-   .HasSchema('auxiliary_data')
+   .HasSchema('general')
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
@@ -38,10 +38,10 @@ begin
    ]);
 end;
 
-procedure CreateAuxiliaryDataCategoriesTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateGeneralCategoriesTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable('categories')
-   .HasSchema('auxiliary_data');
+   .HasSchema('general');
 end;
 
 end.

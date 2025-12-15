@@ -27,7 +27,7 @@ begin
    ])
    .Constraints([
      PrimaryKey('Id')
-    ,ForeignKey('PersonTypeId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
+    ,ForeignKey('PersonTypeId', 'categories', 'Id').HasPrincipalSchema('general')
    ])
    .Indexes([
      CreateIndex('PersonTypeId')
@@ -41,3 +41,4 @@ begin
 end;
 
 end.
+

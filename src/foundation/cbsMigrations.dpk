@@ -200,7 +200,7 @@ contains
   cbsMigrations.Migrations.Operations.EnsureSchemaOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.EnsureSchemaOperation.pas',
   cbsMigrations.Migrations.Operations.RenameColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.RenameColumnOperation.pas',
   cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation.pas',
-  _2025_05_30_00000001_create_migration_schema in 'src\Migrations\_2025_05_30_00000001_create_migration_schema.pas';
+  _2025_05_30_00000001_create_schema in 'src\Migrations\_2025_05_30_00000001_create_schema.pas';
 
 end.
 

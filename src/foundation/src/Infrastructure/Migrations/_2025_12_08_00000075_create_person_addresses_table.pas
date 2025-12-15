@@ -33,7 +33,7 @@ begin
      PrimaryKey(['PersonId', 'TypeId'])
     ,ForeignKey('AddressId', 'addresses', 'Id').HasPrincipalSchema('address')
     ,ForeignKey('PersonId', 'persons', 'Id')
-    ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
+    ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('general')
    ]);
 end;
 

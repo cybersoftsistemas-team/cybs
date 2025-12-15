@@ -34,7 +34,7 @@ begin
    ])
    .Constraints([
      PrimaryKey('Id')
-    ,ForeignKey('GenderId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
+    ,ForeignKey('GenderId', 'categories', 'Id').HasPrincipalSchema('general')
     ,ForeignKey('NationalityId', 'nationalities', 'Id')
     ,ForeignKey('persons', 'Id')
     ,ForeignKey('PlaceOfBirthId', 'cities', 'Id').HasPrincipalSchema('address')

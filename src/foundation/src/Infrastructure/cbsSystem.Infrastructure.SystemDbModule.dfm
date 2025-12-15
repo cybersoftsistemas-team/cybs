@@ -33,7 +33,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Emails (Pai)'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           '    ('#39'4F8A1A7E-DC1E-4BD8-B2CB-0E2DF4F8A9C1'#39', '#39'Emails'#39', NULL)'
           ') AS S (Id, Name, ParentId)'
@@ -48,7 +48,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Email'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'9E7C5DA2-54C1-49B3-91C5-51CA7BE8F24A'#39', '#39'Email'#39', '#39'4F8A1A7E-' +
@@ -65,7 +65,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Email 2'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'F1BD5F43-86DD-4AC3-93D3-6C9AF1C7A82E'#39', '#39'Email 2'#39', '#39'4F8A1A7' +
@@ -82,7 +82,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Outro'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'A0F42F11-97AA-4BB2-BF4A-E4539960D715'#39', '#39'Outro'#39', '#39'4F8A1A7E-' +
@@ -117,7 +117,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Endere'#231'o (Pai)'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           '    ('#39'9C4A9BCB-2E8B-4E2D-9B61-7B0C2C3B2E44'#39', '#39'Endere'#231'o'#39', NULL)'
           ') AS S (Id, Name, ParentId)'
@@ -132,7 +132,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Comercial'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'2A1A3C4D-8EFA-41C4-9F72-3B77A6D2D1C5'#39', '#39'Comercial'#39', '#39'9C4A9' +
@@ -149,7 +149,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Residencial'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'7E2F6BD1-1F73-4DA3-9248-81B2B278D9A6'#39', '#39'Residencial'#39', '#39'9C4' +
@@ -166,7 +166,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Outro'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'B54E0D9F-1881-4C23-8396-2EF71C4499FB'#39', '#39'Outro'#39', '#39'9C4A9BCB-' +
@@ -203,7 +203,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Telefones (Pai)'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           '    ('#39'B5EB8F0C-6ED3-4C3E-9A99-9C6F0FDF4457'#39', '#39'Telefones'#39', NULL)'
           ') AS S (Id, Name, ParentId)'
@@ -218,7 +218,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Assistente'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'6E4EAA97-33EB-4B3A-9A7A-4F1AE13F7F90'#39', '#39'Assistente'#39', '#39'B5EB' +
@@ -235,7 +235,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Celular'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'F711B8F4-0D22-4A14-8FB1-6B42DA2BC917'#39', '#39'Celular'#39', '#39'B5EB8F0' +
@@ -252,7 +252,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Celular 2'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'9F38A0D4-4E38-47A7-9E0A-64C94EAF8834'#39', '#39'Celular 2'#39', '#39'B5EB8' +
@@ -269,7 +269,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Comercial'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'C1B25C46-83C3-4D93-8AE7-B2F4C50954F2'#39', '#39'Comercial'#39', '#39'B5EB8' +
@@ -303,7 +303,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Tipos de Empresa (Pai)'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'E3A2C0C9-42B8-4F6D-B6E7-5E5FE0F3C2A1'#39', '#39'Tipos de Empresa'#39',' +
@@ -320,7 +320,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- P'#250'blica'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'A9F04E2C-3B6F-43D4-9518-88D53A4D6B22'#39', '#39'P'#250'blica'#39', '#39'E3A2C0C' +
@@ -337,7 +337,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Privada'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'1F7A53B9-9BFB-4A17-8F0C-10A2D5330C11'#39', '#39'Privada'#39', '#39'E3A2C0C' +
@@ -371,7 +371,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Sexo (Pai)'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           '    ('#39'6A1D9EBC-25E9-4F39-B9C5-8D8766A2F4C7'#39', '#39'Sexo'#39', NULL)'
           ') AS S (Id, Name, ParentId)'
@@ -386,7 +386,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Feminino'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'C8E3A9FF-AB0C-4BBA-9EF8-3E209CCA4C98'#39', '#39'Feminino'#39', '#39'6A1D9E' +
@@ -403,7 +403,7 @@ inherited damSystemDb: TdamSystemDb
           '---------------------------------------------------------'
           '-- Masculino'
           '---------------------------------------------------------'
-          'MERGE INTO auxiliary_data.categories AS T'
+          'MERGE INTO general.categories AS T'
           'USING (VALUES '
           
             '    ('#39'0CFAF5E2-96A0-40E3-81E5-52EA3B4576F1'#39', '#39'Masculino'#39', '#39'6A1D9' +

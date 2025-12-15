@@ -29,7 +29,7 @@ begin
    .Constraints([
      PrimaryKey(['PersonId', 'TypeId'])
     ,ForeignKey('PersonId', 'persons', 'Id')
-    ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
+    ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('general')
    ]);
 end;
 

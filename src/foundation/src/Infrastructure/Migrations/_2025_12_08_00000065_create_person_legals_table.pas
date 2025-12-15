@@ -35,7 +35,7 @@ begin
    ])
    .Constraints([
      PrimaryKey('Id')
-    ,ForeignKey('CompanyTypeId', 'categories', 'Id').HasPrincipalSchema('auxiliary_data')
+    ,ForeignKey('CompanyTypeId', 'categories', 'Id').HasPrincipalSchema('general')
     ,ForeignKey('NationalityId', 'nationalities', 'Id')
     ,ForeignKey('persons', 'Id')
     ,ForeignKey('StateId', 'states', 'Id').HasPrincipalSchema('address')
