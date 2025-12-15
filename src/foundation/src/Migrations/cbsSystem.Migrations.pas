@@ -32,6 +32,7 @@ uses
   cbsSystem.Infrastructure.SystemDbModule,
   cbsSystem.Migrations.DbSystemContext,
   cbsSystem.Module.Manager.CycleInfo,
+  cbsSystem.Support.Migrations.Execute,
   // Migrations...
   _2025_12_08_00000001_create_general_schema,
   _2025_12_08_00000005_create_general_categories_table,
@@ -159,28 +160,7 @@ end;
 
 procedure TMigrations.RunSystenMigrations;
 begin
-  var damSysDb := TdamSystemDb.Create(nil);
-  try
-    damSysDb.Connection.StartTransaction;
-    try
-      var LDbContext := TDbSystemContext.Create;
-      try
-        LDbContext.Connection := damSysDb.Connection;
-        LDbContext.UpdateDatabase(damSysDb.RunSeed);
-      finally
-        FreeAndNil(LDbContext);
-      end;
-    except
-      on E: Exception do
-      begin
-        damSysDb.Connection.Rollback;
-        raise Exception.Create(E.Message);
-      end;
-    end;
-    damSysDb.Connection.Commit;
-  finally
-    FreeAndNil(damSysDb);
-  end;
+  InternalExecuteMigrations(TdamSystemDb, TDbSystemContext);
 end;
 
 end.

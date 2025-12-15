@@ -51,7 +51,7 @@ function TBuilders.GetDriver(const ADriverID: DriverID): BuilderType;
 begin
   if not FBuilderList.ContainsKey(ADriverID) then
   begin
-    raise Exception.Create('Error Message');
+    raise Exception.Create('[Migrations][TBuilders.GetDriver] Driver ID is not defined. Set or add DriverID to your connection definition.');
   end;
   Result := FBuilderList[ADriverID];
 end;

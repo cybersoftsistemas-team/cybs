@@ -100,7 +100,8 @@ contains
   _2025_12_08_00000065_create_person_legals_table in 'src\Infrastructure\Migrations\_2025_12_08_00000065_create_person_legals_table.pas',
   _2025_12_08_00000075_create_person_addresses_table in 'src\Infrastructure\Migrations\_2025_12_08_00000075_create_person_addresses_table.pas',
   _2025_12_08_00000075_create_person_emails_table in 'src\Infrastructure\Migrations\_2025_12_08_00000075_create_person_emails_table.pas',
-  _2025_12_08_00000075_create_person_phones_table in 'src\Infrastructure\Migrations\_2025_12_08_00000075_create_person_phones_table.pas';
+  _2025_12_08_00000075_create_person_phones_table in 'src\Infrastructure\Migrations\_2025_12_08_00000075_create_person_phones_table.pas',
+  cbsSystem.Support.Migrations.Execute in 'src\Support\cbsSystem.Support.Migrations.Execute.pas';
 
 end.
 

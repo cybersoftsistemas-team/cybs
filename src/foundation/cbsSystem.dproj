@@ -216,6 +216,7 @@
         <DCCReference Include="src\Infrastructure\Migrations\_2025_12_08_00000075_create_person_addresses_table.pas"/>
         <DCCReference Include="src\Infrastructure\Migrations\_2025_12_08_00000075_create_person_emails_table.pas"/>
         <DCCReference Include="src\Infrastructure\Migrations\_2025_12_08_00000075_create_person_phones_table.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Migrations.Execute.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

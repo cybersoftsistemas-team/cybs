@@ -7,13 +7,11 @@ uses
   cbsSystem.Infrastructure.BaseDbModule,
 {IDE}
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def, FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys,
-  FireDAC.VCLUI.Wait, FireDAC.Phys.MSSQLDef, FireDAC.Stan.StorageBin, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL, System.Classes, Data.DB, FireDAC.Comp.Client;
+  FireDAC.VCLUI.Wait, FireDAC.Phys.MSSQLDef, FireDAC.Stan.StorageBin, FireDAC.Phys.ODBCBase, FireDAC.Phys.MSSQL, System.Classes, Data.DB, FireDAC.Comp.Client,
+  FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Comp.Script;
 
 type
-  TdamDb = class(TdamBaseDb)
-  protected
-    procedure OnRunSeed; override;
-  end;
+  TdamDb = class(TdamBaseDb);
 
   function damDb: TdamDb;
 
@@ -28,13 +26,6 @@ uses
 function damDb: TdamDb;
 begin
   Result := TdamDb(UniApplication.UniMainModule.GetModuleInstance(TdamDb));
-end;
-
-{ TdamDb }
-
-procedure TdamDb.OnRunSeed;
-begin
-  inherited;
 end;
 
 end.
