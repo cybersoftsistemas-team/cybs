@@ -16,6 +16,7 @@ type
     ['{90C65F66-DB44-4943-AFEF-31121D567CB3}']
     function GetFormTypes: IFormTypes;
     procedure Register(const AFormType: FormType);
+    procedure RegisterMain(const AFormType: FormType);
   end;
 
   IFormTypeList = IList<FormType>;

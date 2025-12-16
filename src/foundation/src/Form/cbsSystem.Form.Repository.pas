@@ -10,11 +10,13 @@ type
   TcbsFormTypeRepository = class(TInterfacedObject, IFormTypeRepository)
   private
     FFormTypeList: IFormTypeList;
+    FMainForm: FormType;
   public
     constructor Create;
     destructor Destroy; override;
     function GetFormTypes: IFormTypes;
     procedure Register(const AFormType: FormType);
+    procedure RegisterMain(const AFormType: FormType);
   end;
 
 implementation
@@ -45,6 +47,11 @@ begin
   begin
     FFormTypeList.Add(AFormType);
   end;
+end;
+
+procedure TcbsFormTypeRepository.RegisterMain(const AFormType: FormType);
+begin
+  FMainForm := AFormType;
 end;
 
 end.

@@ -53,8 +53,8 @@ implementation
 uses
 {IDE}
   System.SysUtils,
-  uniGUIApplication,
 {PROJECT}
+  cbsMain.data.module.MainModule,
   cbsSystem.Contracts.Module.Main,
   cbsSystem.Support.Form,
   cbsSystem.Support.RunTime,
@@ -65,7 +65,7 @@ uses
 
 function frmLogin: TfrmLogin;
 begin
-  Result := TfrmLogin(UniApplication.UniMainModule.GetFormInstance(TfrmLogin));
+  Result := TfrmLogin(damMain.GetFormInstance(TfrmLogin));
 end;
 
 { TfrmLogin }

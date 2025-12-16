@@ -130,49 +130,34 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
+        <DCCReference Include="cbsMain.dcp"/>
         <DCCReference Include="cbsSystem.dcp"/>
         <DCCReference Include="src\ui\cbsUAuth.ui.LoginForm.pas">
             <Form>frmLogin</Form>
             <DesignClass>TUniLoginForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\data\module\cbsUAuth.data.module.LoginModule.pas"/>
-        <DCCReference Include="src\exports\cbsSystem.Exprts.pas"/>
-        <DCCReference Include="src\inf\cbsUAuth.inf.DbModule.pas">
-            <Form>damDb</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="src\ui\cbsUAuth.ui.OptionsForm.pas">
             <Form>frmOptions</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\ui\cbsUAuth.ui.ConnEditorForm.pas">
             <Form>frmConnEditor</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\inf\cbsUAuth.inf.DbUAuthContext.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000001_create_identity_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000001_create_identity_schema.pas"/>
         <DCCReference Include="src\ui\cbsUAuth.ui.DomainsForm.pas">
             <Form>frmDomains</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\support\cbsSystem.Support.Form.pas"/>
-        <DCCReference Include="src\support\cbsSystem.Support.Module.pas"/>
-        <DCCReference Include="src\exports\cbsSystem.Exprts.FormTypeRepository.pas"/>
-        <DCCReference Include="src\exports\cbsSystem.Exprts.ModuleTypeRepository.pas"/>
-        <DCCReference Include="src\exports\cbsSystem.Exprts.MigrationContextTypeRepository.pas"/>
-        <DCCReference Include="src\support\cbsSystem.Support.Migration.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000005_create_identity_users_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000010_create_identity_passwords_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000015_create_identity_options_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000020_create_identity_settings_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000025_create_domain_domains_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000030_create_domain_accesses_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000035_create_domain_persons_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000021_create_domain_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000005_create_identity_users_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000010_create_identity_passwords_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000015_create_identity_options_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000020_create_identity_settings_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000030_create_domain_domains_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000035_create_domain_accesses_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000040_create_domain_persons_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000025_create_domain_schema.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

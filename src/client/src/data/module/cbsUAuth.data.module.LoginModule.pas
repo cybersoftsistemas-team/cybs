@@ -49,12 +49,11 @@ implementation
 uses
 {IDE}
   System.SysUtils,
-  uniGUIApplication,
 {PROJECT}
+  cbsMain.data.module.MainModule,
   cbsSystem.Support.DataSet.Extensions,
   cbsSystem.Support.Module,
-  cbsSystem.Support.ServerModule,
-  cbsUAuth.inf.DbModule;
+  cbsSystem.Support.ServerModule;
 
 const
   CST_FILENAME_LOGON   = 'logon.dat';
@@ -64,7 +63,7 @@ const
 
 function damLogin: TdamLogin;
 begin
-  Result := TdamLogin(UniApplication.UniMainModule.GetModuleInstance(TdamLogin));
+  Result := TdamLogin(damMain.GetModuleInstance(TdamLogin));
 end;
 
 { TdamLogin }

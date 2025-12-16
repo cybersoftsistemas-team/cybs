@@ -16,6 +16,7 @@ type
     ['{45813152-838E-4E5C-943F-22DC39CE0489}']
     function GetModuleTypes: IModuleTypes;
     procedure Register(const AModuleType: ModuleType);
+    procedure RegisterMain(const AModuleType: ModuleType);
   end;
 
   IModuleTypeList = IList<ModuleType>;

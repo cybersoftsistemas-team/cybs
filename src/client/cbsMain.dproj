@@ -1,14 +1,14 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{BACECD78-EB4A-413A-9C23-1324EE542F79}</ProjectGuid>
-        <MainSource>cbsSystem.dpk</MainSource>
+        <ProjectGuid>{6001B624-D7A3-409B-B104-7670E2759FBF}</ProjectGuid>
+        <MainSource>cbsMain.dpk</MainSource>
         <ProjectVersion>20.3</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
-        <ProjectName Condition="'$(ProjectName)'==''">cbsSystem</ProjectName>
-        <TargetedPlatforms>129</TargetedPlatforms>
+        <ProjectName Condition="'$(ProjectName)'==''">cbsMain</ProjectName>
+        <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Package</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -67,14 +67,13 @@
         <GenPackage>true</GenPackage>
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <DCC_CBuilderOutput>All</DCC_CBuilderOutput>
-        <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
-        <VerInfo_Locale>1046</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <SanitizedProjectName>cbsSystem</SanitizedProjectName>
-        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\..\build\$(Platform)\$(Config)\modules;C:\Projects\cybs\src\modules\spring4d\Source;C:\Projects\cybs\src\modules\spring4d\Source\Base;C:\Projects\cybs\src\modules\spring4d\Source\Base\Collections;C:\Projects\cybs\src\modules\spring4d\Source\Base\Logging;C:\Projects\cybs\src\modules\spring4d\Source\Base\Patches;C:\Projects\cybs\src\modules\spring4d\Source\Base\Patterns;C:\Projects\cybs\src\modules\spring4d\Source\Core\Container;C:\Projects\cybs\src\modules\spring4d\Source\Core\Interception;C:\Projects\cybs\src\modules\spring4d\Source\Core\Logging;C:\Projects\cybs\src\modules\spring4d\Source\Core\Mocking;C:\Projects\cybs\src\modules\spring4d\Source\Core\Services;C:\Projects\cybs\src\modules\spring4d\Source\Data\ObjectDataSet;C:\Projects\cybs\src\modules\spring4d\Source\Extensions\Cryptography;C:\Projects\cybs\src\modules\spring4d\Source\Extensions\Utils;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Adapters;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Core;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Criteria;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Mapping;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\SQL;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <SanitizedProjectName>cbsMain</SanitizedProjectName>
+        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\..\build\$(Platform)\$(Config)\modules;..\foundation\src\Form;..\foundation\src\Module;..\modules\spring4d\Source;..\modules\spring4d\Source\Base;..\modules\spring4d\Source\Base\Collections;..\modules\spring4d\Source\Base\Logging;..\modules\spring4d\Source\Base\Patches;..\modules\spring4d\Source\Base\Patterns;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Logging;..\modules\spring4d\Source\Core\Mocking;..\modules\spring4d\Source\Core\Services;..\modules\spring4d\Source\Data\ObjectDataSet;..\modules\spring4d\Source\Extensions\Cryptography;..\modules\spring4d\Source\Extensions\Utils;..\modules\spring4d\Source\Persistence\Adapters;..\modules\spring4d\Source\Persistence\Core;..\modules\spring4d\Source\Persistence\Criteria;..\modules\spring4d\Source\Persistence\Mapping;..\modules\spring4d\Source\Persistence\SQL;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
         <DCC_BplOutput>..\..\build\$(Platform)\$(Config)</DCC_BplOutput>
-        <DCC_UNSUPPORTED_CONSTRUCT>false</DCC_UNSUPPORTED_CONSTRUCT>
+        <VerInfo_Locale>1046</VerInfo_Locale>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
         <DCC_CBuilderOutput>None</DCC_CBuilderOutput>
@@ -123,81 +122,41 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="dbrtl.dcp"/>
-        <DCCReference Include="vcl.dcp"/>
-        <DCCReference Include="soaprtl.dcp"/>
-        <DCCReference Include="vclimg.dcp"/>
-        <DCCReference Include="IndySystem.dcp"/>
-        <DCCReference Include="FireDAC.dcp"/>
-        <DCCReference Include="FireDACCommon.dcp"/>
-        <DCCReference Include="uniGUI30Core.dcp"/>
-        <DCCReference Include="uniTools30.dcp"/>
-        <DCCReference Include="uIndy30.dcp"/>
-        <DCCReference Include="vclFireDAC.dcp"/>
-        <DCCReference Include="FireDACCommonODBC.dcp"/>
-        <DCCReference Include="FireDACMSSQLDriver.dcp"/>
-        <DCCReference Include="uniGUI30.dcp"/>
-        <DCCReference Include="cbsMigrations.dcp"/>
-        <DCCReference Include="cbsMigrationsFireDac.dcp"/>
-        <DCCReference Include="src\Module\cbsSystem.Module.BaseModule.pas">
-            <Form>damBase</Form>
+        <DCCReference Include="cbsSystem.dcp"/>
+        <DCCReference Include="src\data\module\cbsMain.data.module.MainModule.pas">
+            <Form>damMain</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniGUIMainModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\ui\cbsMain.ui.MainForm.pas">
+            <Form>frmMain</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\inf\cbsMain.inf.DbContext.pas"/>
+        <DCCReference Include="src\inf\cbsMain.inf.DbModule.pas">
+            <Form>damDb</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Form\cbsSystem.Form.BaseForm.pas">
-            <Form>frmBase</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\Form\cbsSystem.Form.Repository.pas"/>
-        <DCCReference Include="src\Module\cbsSystem.Module.Repository.pas"/>
-        <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.Repository.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.Repository.pas"/>
-        <DCCReference Include="src\Contracts\Module\Manager\cbsSystem.Contracts.Module.Manager.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.pas"/>
-        <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.pas"/>
-        <DCCReference Include="src\Module\cbsSystem.Module.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.ModuleManager.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.RunTime.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.DataSet.Extensions.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.Main.pas"/>
-        <DCCReference Include="src\Infrastructure\cbsSystem.Infrastructure.BaseDbModule.pas">
-            <Form>damBaseDb</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\Support\cbsSystem.Support.Utils.pas"/>
-        <DCCReference Include="src\MessageBox\cbsSystem.MessageBox.pas">
-            <Form>frmMessageBox</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\Support\cbsSystem.Support.MessageBox.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.ServerModule.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.ServerModule.pas"/>
-        <DCCReference Include="src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas"/>
-        <DCCReference Include="src\DataStorage\cbsSystem.DataStorage.pas"/>
-        <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.CycleInfo.pas"/>
-        <DCCReference Include="src\Migrations\cbsSystem.Migrations.pas"/>
-        <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas"/>
-        <DCCReference Include="src\Contracts\Database\cbsSystem.Contracts.Database.pas"/>
-        <DCCReference Include="src\Database\cbsSystem.Database.pas"/>
-        <DCCReference Include="src\Form\cbsSystem.Form.DialogBaseForm.pas">
-            <Form>frmDialogBase</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.BaseForm.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.BaseModule.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Migrations.pas"/>
-        <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.MigrationContextTypeRepository.pas"/>
-        <DCCReference Include="src\Migrations\cbsSystem.Migrations.MigrationContextTypeRepository.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Migrations.Execute.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.FormTypeRepository.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.ModuleTypeRepository.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Form.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Module.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000001_create_general_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000005_create_general_categories_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000010_create_address_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000015_create_address_countries_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000020_create_address_states_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000025_create_address_cities_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000030_create_address_neighborhoods_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000035_create_address_streets_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000040_create_address_streettypes_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000045_create_address_addresses_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000050_create_person_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000055_create_person_nationalities_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000060_create_person_persons_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000065_create_person_legals_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000070_create_person_naturals_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000075_create_person_addresses_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000080_create_person_emails_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000085_create_person_phones_table.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -215,13 +174,13 @@
         <Borland.ProjectType>Package</Borland.ProjectType>
         <BorlandProject>
             <Delphi.Personality>
+                <Source>
+                    <Source Name="MainSource">cbsMain.dpk</Source>
+                </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k370.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
-                <Source>
-                    <Source Name="MainSource">cbsSystem.dpk</Source>
-                </Source>
             </Delphi.Personality>
             <Deployment Version="5">
                 <DeployFile LocalName="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib" Class="DependencyModule">
@@ -239,9 +198,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\build\Win32\Debug\cbsSystem.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\build\Win32\Debug\cbsMain.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>cbsSystem.bpl</RemoteName>
+                        <RemoteName>cbsMain.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1102,7 +1061,7 @@
                 <Platform value="Android64">False</Platform>
                 <Platform value="iOSDevice64">False</Platform>
                 <Platform value="iOSSimARM64">False</Platform>
-                <Platform value="Linux64">True</Platform>
+                <Platform value="Linux64">False</Platform>
                 <Platform value="OSX64">False</Platform>
                 <Platform value="OSXARM64">False</Platform>
                 <Platform value="Win32">True</Platform>

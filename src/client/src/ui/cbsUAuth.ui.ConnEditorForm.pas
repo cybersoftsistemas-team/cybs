@@ -89,7 +89,8 @@ uses
   System.Types,
   System.UITypes,
   System.Variants,
-  uniGUIApplication,
+{PROJECT}
+  cbsMain.data.module.MainModule,
 {SPRING}
   Spring.Collections;
 
@@ -98,7 +99,7 @@ const
 
 function frmConnEditor: TfrmConnEditor;
 begin
-  Result := TfrmConnEditor(UniApplication.UniMainModule.GetFormInstance(TfrmConnEditor));
+  Result := TfrmConnEditor(damMain.GetFormInstance(TfrmConnEditor));
 end;
 
 function GUIxSetupEditor(AItems: TStrings; const AType: String): Integer;

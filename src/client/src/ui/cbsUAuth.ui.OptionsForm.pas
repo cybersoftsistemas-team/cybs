@@ -60,8 +60,8 @@ uses
   FireDAC.Stan.Util,
   System.SysUtils,
   System.UITypes,
-  uniGUIApplication,
 {PROJECT}
+  cbsMain.data.module.MainModule,
   cbsSystem.Support.DataSet.Extensions,
   cbsSystem.Support.ServerModule,
   cbsUAuth.data.module.LoginModule,
@@ -69,7 +69,7 @@ uses
 
 function frmOptions: TfrmOptions;
 begin
-  Result := TfrmOptions(UniApplication.UniMainModule.GetFormInstance(TfrmOptions));
+  Result := TfrmOptions(damMain.GetFormInstance(TfrmOptions));
 end;
 
 { TfrmOptions }

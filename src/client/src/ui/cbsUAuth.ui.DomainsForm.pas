@@ -26,14 +26,13 @@ implementation
 {$R *.dfm}
 
 uses
-{IDE}
-  uniGUIApplication,
 {PROJECT}
+  cbsMain.data.module.MainModule,
   cbsUAuth.data.module.LoginModule;
 
 function frmDomains: TfrmDomains;
 begin
-  Result := TfrmDomains(UniApplication.UniMainModule.GetFormInstance(TfrmDomains));
+  Result := TfrmDomains(damMain.GetFormInstance(TfrmDomains));
 end;
 
 { TfrmDomains }

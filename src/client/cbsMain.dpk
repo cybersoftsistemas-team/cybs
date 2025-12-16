@@ -1,0 +1,58 @@
+package cbsMain;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  cbsSystem;
+
+contains
+  cbsMain.data.module.MainModule in 'src\data\module\cbsMain.data.module.MainModule.pas' {damMain: TUniGUIMainModule},
+  cbsMain.ui.MainForm in 'src\ui\cbsMain.ui.MainForm.pas' {frmMain: TUniForm},
+  cbsMain.inf.DbContext in 'src\inf\cbsMain.inf.DbContext.pas',
+  cbsMain.inf.DbModule in 'src\inf\cbsMain.inf.DbModule.pas' {damDb: TDataModule},
+  _2025_12_09_00000001_create_general_schema in 'src\inf\Migrations\_2025_12_09_00000001_create_general_schema.pas',
+  _2025_12_09_00000005_create_general_categories_table in 'src\inf\Migrations\_2025_12_09_00000005_create_general_categories_table.pas',
+  _2025_12_09_00000010_create_address_schema in 'src\inf\Migrations\_2025_12_09_00000010_create_address_schema.pas',
+  _2025_12_09_00000015_create_address_countries_table in 'src\inf\Migrations\_2025_12_09_00000015_create_address_countries_table.pas',
+  _2025_12_09_00000020_create_address_states_table in 'src\inf\Migrations\_2025_12_09_00000020_create_address_states_table.pas',
+  _2025_12_09_00000025_create_address_cities_table in 'src\inf\Migrations\_2025_12_09_00000025_create_address_cities_table.pas',
+  _2025_12_09_00000030_create_address_neighborhoods_table in 'src\inf\Migrations\_2025_12_09_00000030_create_address_neighborhoods_table.pas',
+  _2025_12_09_00000035_create_address_streets_table in 'src\inf\Migrations\_2025_12_09_00000035_create_address_streets_table.pas',
+  _2025_12_09_00000040_create_address_streettypes_table in 'src\inf\Migrations\_2025_12_09_00000040_create_address_streettypes_table.pas',
+  _2025_12_09_00000045_create_address_addresses_table in 'src\inf\Migrations\_2025_12_09_00000045_create_address_addresses_table.pas',
+  _2025_12_09_00000050_create_person_schema in 'src\inf\Migrations\_2025_12_09_00000050_create_person_schema.pas',
+  _2025_12_09_00000055_create_person_nationalities_table in 'src\inf\Migrations\_2025_12_09_00000055_create_person_nationalities_table.pas',
+  _2025_12_09_00000060_create_person_persons_table in 'src\inf\Migrations\_2025_12_09_00000060_create_person_persons_table.pas',
+  _2025_12_09_00000065_create_person_legals_table in 'src\inf\Migrations\_2025_12_09_00000065_create_person_legals_table.pas',
+  _2025_12_09_00000070_create_person_naturals_table in 'src\inf\Migrations\_2025_12_09_00000070_create_person_naturals_table.pas',
+  _2025_12_09_00000075_create_person_addresses_table in 'src\inf\Migrations\_2025_12_09_00000075_create_person_addresses_table.pas',
+  _2025_12_09_00000080_create_person_emails_table in 'src\inf\Migrations\_2025_12_09_00000080_create_person_emails_table.pas',
+  _2025_12_09_00000085_create_person_phones_table in 'src\inf\Migrations\_2025_12_09_00000085_create_person_phones_table.pas';
+
+end.
