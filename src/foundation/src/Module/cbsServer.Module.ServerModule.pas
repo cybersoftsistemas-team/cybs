@@ -48,7 +48,9 @@ uses
   Winapi.ShellAPI,
 {$ENDIF}
 {PROJECT}
-  cbsSystem.Database,
+  cbsMain.data.module.MainModule,
+  cbsMain.ui.MainForm,
+  cbsServer.Database,
   cbsSystem.DataStorage,
   cbsSystem.Support.FormTypeRepository,
   cbsSystem.Support.ModuleManager,
@@ -67,8 +69,6 @@ end;
 
 procedure RegisterAppFormsAndDataModules;
 begin
-  RegisterMainModuleClass(ModuleTypeRepository.GetMainModule);
-  RegisterMainFormClass(FormTypeRepository.GetMainFormType);
   for var LModuleType in ModuleTypeRepository.GetModuleTypes do
   begin
     RegisterModuleClass(LModuleType);
@@ -110,7 +110,7 @@ begin
   inherited;
   InitServerModule(Self);
   FDataStorage := TcbsDataStorage.Create(Self);
-  FDatabase := TcbsDatabase.Create(Self);
+  FDatabase := TDatabase.Create(Self);
   RegisterInternalSystemServerModule(Self);
   FDatabase.ExecuteMigrations;
 end;
@@ -146,6 +146,8 @@ end;
 initialization
 begin
   RegisterServerModuleClass(TcbsServerModule);
+  RegisterMainModuleClass(TdamMain);
+  RegisterMainFormClass(TfrmMain);
   LoadSystemModules;
   RegisterAppFormsAndDataModules;
   FDManager.Open;

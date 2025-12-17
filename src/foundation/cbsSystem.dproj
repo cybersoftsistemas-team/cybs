@@ -178,7 +178,6 @@
         <DCCReference Include="src\Support\cbsSystem.Support.ServerModule.pas"/>
         <DCCReference Include="src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas"/>
         <DCCReference Include="src\DataStorage\cbsSystem.DataStorage.pas"/>
-        <DCCReference Include="src\Migrations\cbsSystem.Migrations.pas"/>
         <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas"/>
         <DCCReference Include="src\Contracts\Database\cbsSystem.Contracts.Database.pas"/>
         <DCCReference Include="src\Database\cbsSystem.Database.pas"/>
@@ -189,9 +188,6 @@
         </DCCReference>
         <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.BaseForm.pas"/>
         <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.BaseModule.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Migrations.pas"/>
-        <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.MigrationContextTypeRepository.pas"/>
-        <DCCReference Include="src\Migrations\cbsSystem.Migrations.MigrationContextTypeRepository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.Migrations.Execute.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.FormTypeRepository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.ModuleTypeRepository.pas"/>

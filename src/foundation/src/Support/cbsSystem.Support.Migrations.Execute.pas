@@ -27,7 +27,7 @@ begin
           var LDbContext := TDbContext.Create;
           try
             LDbContext.Connection := LConnection;
-            LDbContext.UpdateDatabase(LdamDb.RunSeed);
+            LDbContext.UpdateDatabase{(LdamDb.RunSeed)};
           finally
             FreeAndNil(LDbContext);
           end;

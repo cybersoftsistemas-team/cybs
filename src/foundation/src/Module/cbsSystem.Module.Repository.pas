@@ -9,15 +9,12 @@ uses
 type
   TcbsModuleTypeRepository = class(TInterfacedObject, IModuleTypeRepository)
   private
-    FMainModuleType: MainModuleType;
     FModuleTypeList: IModuleTypeList;
   public
     constructor Create;
     destructor Destroy; override;
-    function GetMainModule: MainModuleType;
     function GetModuleTypes: IModuleTypes;
     procedure Register(const AModuleType: ModuleType);
-    procedure RegisterMain(const AMainModuleType: MainModuleType);
   end;
 
 implementation
@@ -36,11 +33,6 @@ begin
   inherited;
 end;
 
-function TcbsModuleTypeRepository.GetMainModule: MainModuleType;
-begin
-  Result := FMainModuleType;
-end;
-
 function TcbsModuleTypeRepository.GetModuleTypes: IModuleTypes;
 begin
   Result := FModuleTypeList;
@@ -53,11 +45,6 @@ begin
   begin
     FModuleTypeList.Add(AModuleType);
   end;
-end;
-
-procedure TcbsModuleTypeRepository.RegisterMain(const AMainModuleType: MainModuleType);
-begin
-  FMainModuleType := AMainModuleType;
 end;
 
 end.

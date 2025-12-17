@@ -2,7 +2,8 @@ library cbsServer;
 
 uses
   Forms,
-  cbsServer.Module.ServerModule in 'src\Module\cbsServer.Module.ServerModule.pas' {cbsServerModule: TUniGUIServerModule};
+  cbsServer.Module.ServerModule in 'src\Module\cbsServer.Module.ServerModule.pas' {cbsServerModule: TUniGUIServerModule},
+  cbsServer.Database in 'src\Database\cbsServer.Database.pas';
 
 {$R *.res}
 

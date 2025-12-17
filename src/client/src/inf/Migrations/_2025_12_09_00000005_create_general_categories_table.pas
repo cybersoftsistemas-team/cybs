@@ -15,10 +15,6 @@ type
 
 implementation
 
-uses
-{PROJECT}
-  cbsMain.inf.DbContext;
-
 { CreateGeneralCategoriesTable }
 
 procedure CreateGeneralCategoriesTable.Up(const ASchema: IMigrationBuilder);
@@ -46,11 +42,6 @@ procedure CreateGeneralCategoriesTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable('categories')
    .HasSchema('general');
-end;
-
-initialization
-begin
-  RegisterMigration(TDbContext, CreateGeneralCategoriesTable);
 end;
 
 end.

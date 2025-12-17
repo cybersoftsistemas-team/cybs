@@ -15,10 +15,6 @@ type
 
 implementation
 
-uses
-{PROJECT}
-  cbsMain.inf.DbContext;
-
 { CreatePersonLegalsTable }
 
 procedure CreatePersonLegalsTable.Up(const ASchema: IMigrationBuilder);
@@ -56,11 +52,6 @@ procedure CreatePersonLegalsTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable('legals')
    .HasSchema('person');
-end;
-
-initialization
-begin
-  RegisterMigration(TDbContext, CreatePersonLegalsTable);
 end;
 
 end.

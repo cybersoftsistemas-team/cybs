@@ -167,6 +167,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniGUIServerModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="src\Database\cbsServer.Database.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

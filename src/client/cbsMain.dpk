@@ -34,7 +34,6 @@ requires
 contains
   cbsMain.data.module.MainModule in 'src\data\module\cbsMain.data.module.MainModule.pas' {damMain: TUniGUIMainModule},
   cbsMain.ui.MainForm in 'src\ui\cbsMain.ui.MainForm.pas' {frmMain: TUniForm},
-  cbsMain.inf.DbContext in 'src\inf\cbsMain.inf.DbContext.pas',
   cbsMain.inf.DbModule in 'src\inf\cbsMain.inf.DbModule.pas' {damDb: TDataModule},
   _2025_12_09_00000001_create_general_schema in 'src\inf\Migrations\_2025_12_09_00000001_create_general_schema.pas',
   _2025_12_09_00000005_create_general_categories_table in 'src\inf\Migrations\_2025_12_09_00000005_create_general_categories_table.pas',
@@ -53,6 +52,8 @@ contains
   _2025_12_09_00000070_create_person_naturals_table in 'src\inf\Migrations\_2025_12_09_00000070_create_person_naturals_table.pas',
   _2025_12_09_00000075_create_person_addresses_table in 'src\inf\Migrations\_2025_12_09_00000075_create_person_addresses_table.pas',
   _2025_12_09_00000080_create_person_emails_table in 'src\inf\Migrations\_2025_12_09_00000080_create_person_emails_table.pas',
-  _2025_12_09_00000085_create_person_phones_table in 'src\inf\Migrations\_2025_12_09_00000085_create_person_phones_table.pas';
+  _2025_12_09_00000085_create_person_phones_table in 'src\inf\Migrations\_2025_12_09_00000085_create_person_phones_table.pas',
+  cbsMain.inf.DbContext in 'src\inf\cbsMain.inf.DbContext.pas',
+  cbsMain.support.RegisterMigrations in 'src\support\cbsMain.support.RegisterMigrations.pas';
 
 end.

@@ -13,10 +13,10 @@ uses
 type
   TcbsDatabase = class(TInterfacedObject, IcbsDatabase)
   private
-    DatabaseId: TGuidField;
-    DatabaseConnectionName: TStringField;
-    DatabaseConnectionString: TStringField;
     FDatabase: TFDMemTable;
+    FDatabaseConnectionName: TStringField;
+    FDatabaseConnectionString: TStringField;
+    FDatabaseId: TGuidField;
     FLoading: Boolean;
     FOwner: IServerModule;
     function GetConnectionName: string;
@@ -29,17 +29,21 @@ type
     procedure SetConnectionString(const AValue: string);
     procedure SetDatabaseFields;
     procedure SetId(const AValue: TGuid);
+  protected
+    function IsPossibleExecuteMigrations: Boolean; virtual;
+    procedure BeforeExecuteMigrations; virtual;
+    procedure OnExecuteMigrations; virtual;
   public
     constructor Create(const AOwner: IServerModule);
     destructor Destroy; override;
     procedure BeginUpdate;
-    procedure Clear;
     procedure CancelUpdate;
+    procedure Clear;
     procedure EndUpdate;
     procedure ExecuteMigrations;
-    property Id: TGuid read GetId write SetId;
     property ConnectionName: string read GetConnectionName write SetConnectionName;
     property ConnectionString: string read GetConnectionString write SetConnectionString;
+    property Id: TGuid read GetId write SetId;
   end;
 
 implementation
@@ -48,9 +52,7 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsSystem.Support.DataSet.Extensions,
-  cbsSystem.Support.Migrations,
-  cbsSystem.Support.ModuleManager;
+  cbsSystem.Support.DataSet.Extensions;
 
 const
   CST_FILENAME = 'database.dat';
@@ -71,25 +73,15 @@ end;
 
 destructor TcbsDatabase.Destroy;
 begin
-  FreeAndNil(DatabaseId);
-  FreeAndNil(DatabaseConnectionString);
+  FreeAndNil(FDatabaseId);
+  FreeAndNil(FDatabaseConnectionString);
   FreeAndNil(FDatabase);
   inherited;
 end;
 
-function TcbsDatabase.GetConnectionName: string;
+procedure TcbsDatabase.BeforeExecuteMigrations;
 begin
-  Result := DatabaseConnectionName.AsString;
-end;
-
-function TcbsDatabase.GetConnectionString: string;
-begin
-  Result := DatabaseConnectionString.AsString;
-end;
-
-function TcbsDatabase.GetId: TGuid;
-begin
-  Result := DatabaseId.AsGuid;
+  // This method can be overwritten by inherited classes.
 end;
 
 procedure TcbsDatabase.BeginUpdate;
@@ -142,11 +134,36 @@ end;
 
 procedure TcbsDatabase.ExecuteMigrations;
 begin
-  if not DatabaseId.IsNull and
-    not DatabaseConnectionString.IsNull then
+  if IsPossibleExecuteMigrations then
   begin
-    Migrations.Run;
+    BeforeExecuteMigrations;
+    OnExecuteMigrations;
   end;
+end;
+
+function TcbsDatabase.GetConnectionName: string;
+begin
+  Result := FDatabaseConnectionName.AsString;
+end;
+
+function TcbsDatabase.GetConnectionString: string;
+begin
+  Result := FDatabaseConnectionString.AsString;
+end;
+
+function TcbsDatabase.GetId: TGuid;
+begin
+  Result := FDatabaseId.AsGuid;
+end;
+
+function TcbsDatabase.IsPossibleExecuteMigrations: Boolean;
+begin
+  Result := not FDatabaseId.IsNull and not FDatabaseConnectionString.IsNull;
+end;
+
+procedure TcbsDatabase.OnExecuteMigrations;
+begin
+  // This method can be overwritten by inherited classes.
 end;
 
 procedure TcbsDatabase.SaveDatabaseData;
@@ -158,7 +175,7 @@ procedure TcbsDatabase.SetConnectionName(const AValue: string);
 begin
   if FDatabase.State in dsEditModes then
   begin
-    DatabaseConnectionName.AsString := AValue;
+    FDatabaseConnectionName.AsString := AValue;
   end;
 end;
 
@@ -166,37 +183,37 @@ procedure TcbsDatabase.SetConnectionString(const AValue: string);
 begin
   if FDatabase.State in dsEditModes then
   begin
-    DatabaseConnectionString.AsString := AValue;
+    FDatabaseConnectionString.AsString := AValue;
   end;
 end;
 
 procedure TcbsDatabase.SetDatabaseFields;
 begin
   // DatabaseId
-  DatabaseId := TGuidField.Create(nil);
-  DatabaseId.FieldName := 'Id';
-  DatabaseId.Name := 'DatabaseId';
-  DatabaseId.Size := 38;
-  DatabaseId.DataSet := FDatabase;
+  FDatabaseId := TGuidField.Create(nil);
+  FDatabaseId.FieldName := 'Id';
+  FDatabaseId.Name := 'DatabaseId';
+  FDatabaseId.Size := 38;
+  FDatabaseId.DataSet := FDatabase;
   // DatabaseConnectionName
-  DatabaseConnectionName := TStringField.Create(nil);
-  DatabaseConnectionName.FieldName := 'ConnectionName';
-  DatabaseConnectionName.Name := 'DatabaseConnectionName';
-  DatabaseConnectionName.Size := 255;
-  DatabaseConnectionName.DataSet := FDatabase;
+  FDatabaseConnectionName := TStringField.Create(nil);
+  FDatabaseConnectionName.FieldName := 'ConnectionName';
+  FDatabaseConnectionName.Name := 'DatabaseConnectionName';
+  FDatabaseConnectionName.Size := 255;
+  FDatabaseConnectionName.DataSet := FDatabase;
   // DatabaseConnectionString
-  DatabaseConnectionString := TStringField.Create(nil);
-  DatabaseConnectionString.FieldName := 'ConnectionString';
-  DatabaseConnectionString.Name := 'DatabaseConnectionString';
-  DatabaseConnectionString.Size := 255;
-  DatabaseConnectionString.DataSet := FDatabase;
+  FDatabaseConnectionString := TStringField.Create(nil);
+  FDatabaseConnectionString.FieldName := 'ConnectionString';
+  FDatabaseConnectionString.Name := 'DatabaseConnectionString';
+  FDatabaseConnectionString.Size := 255;
+  FDatabaseConnectionString.DataSet := FDatabase;
 end;
 
 procedure TcbsDatabase.SetId(const AValue: TGuid);
 begin
   if FDatabase.State in dsEditModes then
   begin
-    DatabaseId.AsGuid := AValue;
+    FDatabaseId.AsGuid := AValue;
   end;
 end;
 

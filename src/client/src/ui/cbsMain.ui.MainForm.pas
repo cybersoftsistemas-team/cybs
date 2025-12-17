@@ -24,17 +24,11 @@ implementation
 
 uses
 {PROJECT}
-  cbsMain.data.module.MainModule,
-  cbsSystem.Support.Form;
+  cbsMain.data.module.MainModule;
 
 function frmMain: TfrmMain;
 begin
   Result := TfrmMain(damMain.GetFormInstance(TfrmMain));
-end;
-
-initialization
-begin
-  RegisterMainFormType(TfrmMain);
 end;
 
 end.

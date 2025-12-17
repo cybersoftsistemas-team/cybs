@@ -15,10 +15,6 @@ type
 
 implementation
 
-uses
-{PROJECT}
-  cbsMain.inf.DbContext;
-
 { CreateGeneralSchema }
 
 procedure CreateGeneralSchema.Up(const ASchema: IMigrationBuilder);
@@ -29,11 +25,6 @@ end;
 procedure CreateGeneralSchema.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropSchema('general')
-end;
-
-initialization
-begin
-  RegisterMigration(TDbContext, CreateGeneralSchema);
 end;
 
 end.

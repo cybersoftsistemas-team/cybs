@@ -17,10 +17,8 @@ type
 
   IModuleTypeRepository = interface(IUnknown)
     ['{45813152-838E-4E5C-943F-22DC39CE0489}']
-    function GetMainModule: MainModuleType;
     function GetModuleTypes: IModuleTypes;
     procedure Register(const AModuleType: ModuleType);
-    procedure RegisterMain(const AMainModuleType: MainModuleType);
   end;
 
   IModuleTypeList = IList<ModuleType>;

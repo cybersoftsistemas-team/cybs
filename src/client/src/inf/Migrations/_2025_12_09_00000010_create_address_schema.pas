@@ -15,10 +15,6 @@ type
 
 implementation
 
-uses
-{PROJECT}
-  cbsMain.inf.DbContext;
-
 { CreateAddressSchema }
 
 procedure CreateAddressSchema.Up(const ASchema: IMigrationBuilder);
@@ -29,11 +25,6 @@ end;
 procedure CreateAddressSchema.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropSchema('address')
-end;
-
-initialization
-begin
-  RegisterMigration(TDbContext, CreateAddressSchema);
 end;
 
 end.

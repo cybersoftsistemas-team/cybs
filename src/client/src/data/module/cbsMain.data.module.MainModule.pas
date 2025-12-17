@@ -26,9 +26,7 @@ implementation
 
 uses
 {IDE}
-  uniGUIApplication,
-{PROJECT}
-  cbsSystem.Support.Module;
+  uniGUIApplication;
 
 function damMain: TdamMain;
 begin
@@ -45,11 +43,6 @@ end;
 procedure TdamMain.SetIsElectron(const AValue: Boolean);
 begin
   FIsElectron := AValue;
-end;
-
-initialization
-begin
-  RegisterMainModuleType(TdamMain);
 end;
 
 end.

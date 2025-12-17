@@ -133,7 +133,6 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\inf\cbsMain.inf.DbContext.pas"/>
         <DCCReference Include="src\inf\cbsMain.inf.DbModule.pas">
             <Form>damDb</Form>
             <FormType>dfm</FormType>
@@ -157,6 +156,8 @@
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000075_create_person_addresses_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000080_create_person_emails_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000085_create_person_phones_table.pas"/>
+        <DCCReference Include="src\inf\cbsMain.inf.DbContext.pas"/>
+        <DCCReference Include="src\support\cbsMain.support.RegisterMigrations.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
