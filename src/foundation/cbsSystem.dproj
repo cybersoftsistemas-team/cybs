@@ -178,7 +178,6 @@
         <DCCReference Include="src\Support\cbsSystem.Support.ServerModule.pas"/>
         <DCCReference Include="src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas"/>
         <DCCReference Include="src\DataStorage\cbsSystem.DataStorage.pas"/>
-        <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.CycleInfo.pas"/>
         <DCCReference Include="src\Migrations\cbsSystem.Migrations.pas"/>
         <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas"/>
         <DCCReference Include="src\Contracts\Database\cbsSystem.Contracts.Database.pas"/>

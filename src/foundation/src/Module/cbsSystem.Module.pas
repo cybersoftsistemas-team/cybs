@@ -6,32 +6,23 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsSystem.Contracts.Form.Repository,
-  cbsSystem.Contracts.Module,
-  cbsSystem.Contracts.Module.Repository;
+  cbsSystem.Contracts.Module;
 
 type
   TcbsModule = class(TInterfacedObject, IModule)
   private
-    FFormTypeList: IFormTypeList;
     FHandle: HMODULE;
-    FModuleTypeList: IModuleTypeList;
     FName: string;
     FRequiredList: IRequiredList;
     function GetHandle: HMODULE;
     function GetName: string;
     function GetRequires: IRequires;
-    procedure LoadFormTypes;
     procedure LoadModule(const AFileName: TFileName);
-    procedure LoadModuleTypes;
     procedure ReadRequires(const AHandle: HMODULE);
     procedure SetModuleName(const AFileName: TFileName);
   public
     constructor Create(const AFileName: TFileName);
     destructor Destroy; override;
-    function FormTypes: IFormTypes;
-    function ModuleTypes: IModuleTypes;
-    procedure ExecuteMigrations;
     property Handle: HMODULE read GetHandle;
     property Name: string read GetName;
     property Requires: IRequires read GetRequires;
@@ -68,43 +59,20 @@ end;
 constructor TcbsModule.Create(const AFileName: TFileName);
 begin
   inherited Create;
-  FFormTypeList := CreateFormTypeList;
-  FModuleTypeList := CreateModuleTypeList;
   FRequiredList := CreateRequiredList;
   SetModuleName(AFileName);
   LoadModule(AFileName);
-  LoadFormTypes;
-  LoadModuleTypes;
   ReadRequires(FHandle);
 end;
 
 destructor TcbsModule.Destroy;
 begin
-  FFormTypeList := nil;
-  FModuleTypeList := nil;
   FRequiredList := nil;
   if FHandle <> 0 then
   begin
     UnloadPackage(FHandle);
   end;
   inherited;
-end;
-
-procedure TcbsModule.ExecuteMigrations;
-type
-  TExecuteMigrations = procedure; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
-begin
-  var ExecuteMigrations: TExecuteMigrations;
-  @ExecuteMigrations := GetProcAddress(FHandle, 'ExecuteMigrations');
-  if Assigned(@ExecuteMigrations) then
-  begin
-    ExecuteMigrations();
-  end;
-end;
-
-function TcbsModule.FormTypes: IFormTypes;
-begin
-  Result := FFormTypeList;
 end;
 
 function TcbsModule.GetHandle: HMODULE;
@@ -122,41 +90,12 @@ begin
   Result := FRequiredList;
 end;
 
-function TcbsModule.ModuleTypes: IModuleTypes;
-begin
-  Result := FModuleTypeList;
-end;
-
-procedure TcbsModule.LoadFormTypes;
-type
-  TGetFormTypes = function: IFormTypes; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
-begin
-  var GetFormTypes: TGetFormTypes;
-  @GetFormTypes := GetProcAddress(FHandle, 'GetFormTypes');
-  if Assigned(@GetFormTypes) then
-  begin
-    FFormTypeList.AddRange(GetFormTypes());
-  end;
-end;
-
 procedure TcbsModule.LoadModule(const AFileName: TFileName);
 begin
   FHandle := LoadPackage(AFileName);
   if FHandle = 0 then
   begin
     raise Exception.CreateFmt('Error loading module "%s".', [AFileName]);
-  end;
-end;
-
-procedure TcbsModule.LoadModuleTypes;
-type
-  TGetModuleTypes = function: IModuleTypes; {$IFDEF MSWINDOWS} stdcall {$ELSE} cdecl {$ENDIF};
-begin
-  var GetModuleTypes: TGetModuleTypes;
-  @GetModuleTypes := GetProcAddress(FHandle, 'GetModuleTypes');
-  if Assigned(@GetModuleTypes) then
-  begin
-    FModuleTypeList.AddRange(GetModuleTypes());
   end;
 end;
 

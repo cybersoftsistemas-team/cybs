@@ -48,7 +48,7 @@ end;
 
 function TcbsModuleManager.GetEnumerator: IModuleEnumerator;
 begin
-  Result := LModuleList.GetEnumerator;
+  Result := LModuleList.Values.GetEnumerator;
 end;
 
 function TcbsModuleManager.GetModuleExtension: string;
@@ -76,9 +76,9 @@ end;
 
 procedure TcbsModuleManager.LoadPackage(const AFileName: TFileName);
 begin
-  if FileExists(AFileName) then
+  if FileExists(AFileName) and not LModuleList.ContainsKey(AFileName) then
   begin
-    LModuleList.Add(TcbsModule.Create(AFileName));
+    LModuleList[AFileName] := TcbsModule.Create(AFileName);
   end;
 end;
 

@@ -3,6 +3,8 @@ unit cbsSystem.Contracts.Module.Repository;
 interface
 
 uses
+{IDE}
+  uniGUIMainModule,
 {PROJECT}
   cbsSystem.Module.BaseModule,
 {SPRING}
@@ -10,13 +12,15 @@ uses
 
 type
   IModuleTypes = IEnumerable<ModuleType>;
+  MainModuleType = TMainModuleClass;
   ModuleType = cbsSystem.Module.BaseModule.ModuleType;
 
   IModuleTypeRepository = interface(IUnknown)
     ['{45813152-838E-4E5C-943F-22DC39CE0489}']
+    function GetMainModule: MainModuleType;
     function GetModuleTypes: IModuleTypes;
     procedure Register(const AModuleType: ModuleType);
-    procedure RegisterMain(const AModuleType: ModuleType);
+    procedure RegisterMain(const AMainModuleType: MainModuleType);
   end;
 
   IModuleTypeList = IList<ModuleType>;

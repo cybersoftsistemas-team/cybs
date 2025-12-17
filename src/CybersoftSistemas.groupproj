@@ -19,10 +19,10 @@
             <Dependencies>foundation\cbsMigrations.dproj;foundation\cbsMigrationsFireDac.dproj;foundation\cbsSystem.dproj</Dependencies>
         </Projects>
         <Projects Include="foundation\cbsServer.dproj">
-            <Dependencies>foundation\cbsSystem.dproj;client\cbsMain.dproj</Dependencies>
+            <Dependencies>foundation\cbsSystem.dproj;client\cbsMain.dproj;client\cbsUAuth.dproj</Dependencies>
         </Projects>
         <Projects Include="client\cbsUAuth.dproj">
-            <Dependencies>foundation\cbsServer.dproj;client\cbsMain.dproj</Dependencies>
+            <Dependencies/>
         </Projects>
     </ItemGroup>
     <ProjectExtensions>
@@ -77,22 +77,22 @@
     <Target Name="cbsMain:Make" DependsOnTargets="cbsMigrations:Make;cbsMigrationsFireDac:Make;cbsSystem:Make">
         <MSBuild Projects="client\cbsMain.dproj" Targets="Make"/>
     </Target>
-    <Target Name="cbsServer" DependsOnTargets="cbsSystem;cbsMain">
+    <Target Name="cbsServer" DependsOnTargets="cbsSystem;cbsMain;cbsUAuth">
         <MSBuild Projects="foundation\cbsServer.dproj"/>
     </Target>
-    <Target Name="cbsServer:Clean" DependsOnTargets="cbsSystem:Clean;cbsMain:Clean">
+    <Target Name="cbsServer:Clean" DependsOnTargets="cbsSystem:Clean;cbsMain:Clean;cbsUAuth:Clean">
         <MSBuild Projects="foundation\cbsServer.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="cbsServer:Make" DependsOnTargets="cbsSystem:Make;cbsMain:Make">
+    <Target Name="cbsServer:Make" DependsOnTargets="cbsSystem:Make;cbsMain:Make;cbsUAuth:Make">
         <MSBuild Projects="foundation\cbsServer.dproj" Targets="Make"/>
     </Target>
-    <Target Name="cbsUAuth" DependsOnTargets="cbsServer;cbsMain">
+    <Target Name="cbsUAuth">
         <MSBuild Projects="client\cbsUAuth.dproj"/>
     </Target>
-    <Target Name="cbsUAuth:Clean" DependsOnTargets="cbsServer:Clean;cbsMain:Clean">
+    <Target Name="cbsUAuth:Clean">
         <MSBuild Projects="client\cbsUAuth.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="cbsUAuth:Make" DependsOnTargets="cbsServer:Make;cbsMain:Make">
+    <Target Name="cbsUAuth:Make">
         <MSBuild Projects="client\cbsUAuth.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">

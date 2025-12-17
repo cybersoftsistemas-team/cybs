@@ -3,6 +3,8 @@ unit cbsSystem.Contracts.Module.Manager;
 interface
 
 uses
+{IDE}
+  System.SysUtils,
 {PROJECT}
   cbsSystem.Contracts.Module,
 {SPRING}
@@ -17,7 +19,7 @@ type
     procedure LoadFromFolder(const AFolder: string);
   end;
 
-  IModuleList = IList<IModule>;
+  IModuleList = IDictionary<TFileName, IModule>;
 
   function CreateModuleList: IModuleList;
 
@@ -25,7 +27,7 @@ implementation
 
 function CreateModuleList: IModuleList;
 begin
-  Result := TCollections.CreateInterfaceList<IModule>;
+  Result := TCollections.CreateDictionary<TFileName, IModule>;
 end;
 
 end.

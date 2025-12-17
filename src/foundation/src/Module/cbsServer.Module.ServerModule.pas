@@ -50,7 +50,9 @@ uses
 {PROJECT}
   cbsSystem.Database,
   cbsSystem.DataStorage,
+  cbsSystem.Support.FormTypeRepository,
   cbsSystem.Support.ModuleManager,
+  cbsSystem.Support.ModuleTypeRepository,
   cbsSystem.Support.ServerModule;
 
 function cbsServerModule: TcbsServerModule;
@@ -65,16 +67,15 @@ end;
 
 procedure RegisterAppFormsAndDataModules;
 begin
-  for var LModule in ModuleManager do
+  RegisterMainModuleClass(ModuleTypeRepository.GetMainModule);
+  RegisterMainFormClass(FormTypeRepository.GetMainFormType);
+  for var LModuleType in ModuleTypeRepository.GetModuleTypes do
   begin
-    for var LFormType in LModule.FormTypes do
-    begin
-      RegisterAppFormClass(LFormType);
-    end;
-    for var LModuleType in LModule.ModuleTypes do
-    begin
-      RegisterModuleClass(LModuleType);
-    end;
+    RegisterModuleClass(LModuleType);
+  end;
+  for var LFormType in FormTypeRepository.GetFormTypes do
+  begin
+    RegisterAppFormClass(LFormType);
   end;
 end;
 

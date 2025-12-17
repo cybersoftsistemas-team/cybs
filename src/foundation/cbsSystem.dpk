@@ -70,7 +70,6 @@ contains
   cbsSystem.Support.ServerModule in 'src\Support\cbsSystem.Support.ServerModule.pas',
   cbsSystem.Contracts.DataStorage in 'src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas',
   cbsSystem.DataStorage in 'src\DataStorage\cbsSystem.DataStorage.pas',
-  cbsSystem.Module.Manager.CycleInfo in 'src\Module\Manager\cbsSystem.Module.Manager.CycleInfo.pas',
   cbsSystem.Migrations in 'src\Migrations\cbsSystem.Migrations.pas',
   cbsSystem.Contracts.Migrations in 'src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas',
   cbsSystem.Contracts.Database in 'src\Contracts\Database\cbsSystem.Contracts.Database.pas',

@@ -145,7 +145,7 @@ begin
   if not DatabaseId.IsNull and
     not DatabaseConnectionString.IsNull then
   begin
-    Migrations.Run(ModuleManager);
+    Migrations.Run;
   end;
 end;
 

@@ -6,16 +6,22 @@ uses
 {PROJECT}
   cbsSystem.Contracts.Module.ServerModule;
 
-var
-  ServerModule: IServerModule = nil;
-
+  function ServerModule: IServerModule;
   procedure RegisterInternalSystemServerModule(const AServerModule: IServerModule);
 
 implementation
 
+var
+  InternalServerModule: IServerModule;
+
+function ServerModule: IServerModule;
+begin
+  Result := InternalServerModule;
+end;
+
 procedure RegisterInternalSystemServerModule(const AServerModule: IServerModule);
 begin
-  ServerModule := AServerModule;
+  InternalServerModule := AServerModule;
 end;
 
 end.
