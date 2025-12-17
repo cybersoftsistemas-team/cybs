@@ -29,7 +29,6 @@ package cbsUAuth;
 {$IMPLICITBUILD ON}
 
 requires
-  cbsSystem,
   cbsMain;
 
 contains

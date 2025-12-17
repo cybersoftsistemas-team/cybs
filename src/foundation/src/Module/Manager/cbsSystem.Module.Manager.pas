@@ -87,7 +87,11 @@ begin
   if TDirectory.Exists(AFolder) then
   begin
     for var LFileName in TDirectory.GetFiles(AFolder,
-      GetModuleMask, TSearchOption.soAllDirectories) do
+      GetModuleMask, TSearchOption.soAllDirectories) do if
+      (TPath.GetFileName(LFileName).CompareTo('cbsMain.bpl') > 0) and
+      (TPath.GetFileName(LFileName).CompareTo('cbsMigrations.bpl') > 0) and
+      (TPath.GetFileName(LFileName).CompareTo('cbsMigrationsFireDac.bpl') > 0) and
+      (TPath.GetFileName(LFileName).CompareTo('cbsSystem.bpl') > 0) then
     begin
       LoadPackage(LFileName);
     end;
