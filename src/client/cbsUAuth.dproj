@@ -130,8 +130,8 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="cbsMain.dcp"/>
         <DCCReference Include="cbsSystem.dcp"/>
+        <DCCReference Include="cbsMain.dcp"/>
         <DCCReference Include="src\ui\cbsUAuth.ui.LoginForm.pas">
             <Form>frmLogin</Form>
             <DesignClass>TUniLoginForm</DesignClass>

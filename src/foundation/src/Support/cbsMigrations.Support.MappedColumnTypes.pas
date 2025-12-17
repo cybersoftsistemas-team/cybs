@@ -48,7 +48,7 @@ begin
     .Register(IFloatColumnOperation    , DriverID.MSSQL, 'FLOAT'            )
     .Register(IGuidColumnOperation     , DriverID.MSSQL, 'UNIQUEIDENTIFIER' )
     .Register(IIntColumnOperation      , DriverID.MSSQL, 'INT'              )
-    .Register(IStringColumnOperation   , DriverID.MSSQL, 'VARCHAR'          );
+    .Register(IStringColumnOperation   , DriverID.MSSQL, 'NVARCHAR'         );
 end;
 
 finalization

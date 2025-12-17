@@ -29,8 +29,8 @@ package cbsUAuth;
 {$IMPLICITBUILD ON}
 
 requires
-  cbsMain,
-  cbsSystem;
+  cbsSystem,
+  cbsMain;
 
 contains
   cbsUAuth.ui.LoginForm in 'src\ui\cbsUAuth.ui.LoginForm.pas' {frmLogin: TUniLoginForm},

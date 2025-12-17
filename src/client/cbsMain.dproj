@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{6001B624-D7A3-409B-B104-7670E2759FBF}</ProjectGuid>
+        <ProjectGuid>{CC8DE5A6-D662-4BA4-ADEB-DDB32D73108C}</ProjectGuid>
         <MainSource>cbsMain.dpk</MainSource>
         <ProjectVersion>20.3</ProjectVersion>
         <FrameworkType>VCL</FrameworkType>
@@ -8,7 +8,7 @@
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
         <ProjectName Condition="'$(ProjectName)'==''">cbsMain</ProjectName>
-        <TargetedPlatforms>1</TargetedPlatforms>
+        <TargetedPlatforms>129</TargetedPlatforms>
         <AppType>Package</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -68,12 +68,10 @@
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <DCC_CBuilderOutput>All</DCC_CBuilderOutput>
         <SanitizedProjectName>cbsMain</SanitizedProjectName>
-        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\..\build\$(Platform)\$(Config)\modules;..\foundation\src\Form;..\foundation\src\Module;..\modules\spring4d\Source;..\modules\spring4d\Source\Base;..\modules\spring4d\Source\Base\Collections;..\modules\spring4d\Source\Base\Logging;..\modules\spring4d\Source\Base\Patches;..\modules\spring4d\Source\Base\Patterns;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Logging;..\modules\spring4d\Source\Core\Mocking;..\modules\spring4d\Source\Core\Services;..\modules\spring4d\Source\Data\ObjectDataSet;..\modules\spring4d\Source\Extensions\Cryptography;..\modules\spring4d\Source\Extensions\Utils;..\modules\spring4d\Source\Persistence\Adapters;..\modules\spring4d\Source\Persistence\Core;..\modules\spring4d\Source\Persistence\Criteria;..\modules\spring4d\Source\Persistence\Mapping;..\modules\spring4d\Source\Persistence\SQL;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
+        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\..\build\$(Platform)\$(Config)\modules;C:\Projects\cybs\src\modules\spring4d\Source;C:\Projects\cybs\src\modules\spring4d\Source\Base;C:\Projects\cybs\src\modules\spring4d\Source\Base\Collections;C:\Projects\cybs\src\modules\spring4d\Source\Base\Logging;C:\Projects\cybs\src\modules\spring4d\Source\Base\Patches;C:\Projects\cybs\src\modules\spring4d\Source\Base\Patterns;C:\Projects\cybs\src\modules\spring4d\Source\Core\Container;C:\Projects\cybs\src\modules\spring4d\Source\Core\Interception;C:\Projects\cybs\src\modules\spring4d\Source\Core\Logging;C:\Projects\cybs\src\modules\spring4d\Source\Core\Mocking;C:\Projects\cybs\src\modules\spring4d\Source\Core\Services;C:\Projects\cybs\src\modules\spring4d\Source\Data\ObjectDataSet;C:\Projects\cybs\src\modules\spring4d\Source\Extensions\Cryptography;C:\Projects\cybs\src\modules\spring4d\Source\Extensions\Utils;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Adapters;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Core;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Criteria;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\Mapping;C:\Projects\cybs\src\modules\spring4d\Source\Persistence\SQL;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
         <DCC_BplOutput>..\..\build\$(Platform)\$(Config)</DCC_BplOutput>
-        <VerInfo_Locale>1046</VerInfo_Locale>
-        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-        <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
         <DCC_CBuilderOutput>None</DCC_CBuilderOutput>
@@ -110,7 +108,6 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <Debugger_HostApplication>C:\Projects\cybs\build\Win32\Debug\cbs.exe</Debugger_HostApplication>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -128,11 +125,7 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniGUIMainModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\cbsMain.ui.MainForm.pas">
-            <Form>frmMain</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
+        <DCCReference Include="src\inf\cbsMain.inf.DbContext.pas"/>
         <DCCReference Include="src\inf\cbsMain.inf.DbModule.pas">
             <Form>damDb</Form>
             <FormType>dfm</FormType>
@@ -156,7 +149,11 @@
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000075_create_person_addresses_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000080_create_person_emails_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000085_create_person_phones_table.pas"/>
-        <DCCReference Include="src\inf\cbsMain.inf.DbContext.pas"/>
+        <DCCReference Include="src\ui\cbsMain.ui.MainForm.pas">
+            <Form>frmMain</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <DCCReference Include="src\support\cbsMain.support.RegisterMigrations.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
@@ -1062,7 +1059,7 @@
                 <Platform value="Android64">False</Platform>
                 <Platform value="iOSDevice64">False</Platform>
                 <Platform value="iOSSimARM64">False</Platform>
-                <Platform value="Linux64">False</Platform>
+                <Platform value="Linux64">True</Platform>
                 <Platform value="OSX64">False</Platform>
                 <Platform value="OSXARM64">False</Platform>
                 <Platform value="Win32">True</Platform>
