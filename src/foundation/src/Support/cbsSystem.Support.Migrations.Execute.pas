@@ -7,7 +7,8 @@ uses
   System.SysUtils,
 {PROJECT}
   cbsMigrationsFireDac.Migrations.MigrationContextBase,
-  cbsSystem.Infrastructure.BaseDbModule;
+  cbsSystem.Infrastructure.BaseDbModule,
+  cbsSystem.Support.DatabaseSeederRepository;
 
   procedure InternalExecuteMigrations(const TdamDb: DbConnectionModuleType; const TDbContext: MigrationContextType);
 
@@ -27,7 +28,19 @@ begin
           var LDbContext := TDbContext.Create;
           try
             LDbContext.Connection := LConnection;
-            LDbContext.UpdateDatabase{(LdamDb.RunSeed)};
+            LDbContext.UpdateDatabase(
+              procedure
+              begin
+                for var TDbSeed in DatabaseSeederRepository do
+                begin
+                  var LDbSeed := TDbSeed.Create;
+                  try
+                    LDbSeed.Run;
+                  finally
+                    FreeAndNil(LDbSeed);
+                  end;
+                end;
+              end);
           finally
             FreeAndNil(LDbContext);
           end;

@@ -29,7 +29,8 @@ uses
 {IDE}
   System.IOUtils,
 {PROJECT}
-  cbsSystem.Module;
+  cbsSystem.Module,
+  cbsSystem.Support.RuntimePackages.Detector;
 
 { TcbsModuleManager }
 
@@ -71,10 +72,6 @@ end;
 
 procedure TcbsModuleManager.LoadFromFolder(const AFolder: string);
 begin
-  LModuleList[TPath.Combine(AFolder, 'cbsMigrations.bpl')] := nil;
-  LModuleList[TPath.Combine(AFolder, 'cbsMigrationsFireDac.bpl')] := nil;
-  LModuleList[TPath.Combine(AFolder, 'cbsSystem.bpl')] := nil;
-  LModuleList[TPath.Combine(AFolder, 'cbsMain.bpl')] := nil;
   LoadPackages(AFolder);
 end;
 
@@ -91,7 +88,8 @@ begin
   if TDirectory.Exists(AFolder) then
   begin
     for var LFileName in TDirectory.GetFiles(AFolder,
-      GetModuleMask, TSearchOption.soAllDirectories) do
+      GetModuleMask, TSearchOption.soAllDirectories) do if
+      not RuntimePackageDetector.IsRuntimePackage(LFileName) then
     begin
       LoadPackage(LFileName);
     end;

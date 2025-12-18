@@ -80,7 +80,15 @@ contains
   cbsSystem.Support.FormTypeRepository in 'src\Support\cbsSystem.Support.FormTypeRepository.pas',
   cbsSystem.Support.ModuleTypeRepository in 'src\Support\cbsSystem.Support.ModuleTypeRepository.pas',
   cbsSystem.Support.Form in 'src\Support\cbsSystem.Support.Form.pas',
-  cbsSystem.Support.Module in 'src\Support\cbsSystem.Support.Module.pas';
+  cbsSystem.Support.Module in 'src\Support\cbsSystem.Support.Module.pas',
+  cbsSystem.Support.RuntimePackages.Detector in 'src\Support\cbsSystem.Support.RuntimePackages.Detector.pas',
+  cbsSystem.Database.Seeders.DatabaseSeeder in 'src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeeder.pas',
+  cbsSystem.Contracts.Database.Seeders.DatabaseSeeder in 'src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeeder.pas',
+  cbsSystem.Database.Seeders.DatabaseSeederModule in 'src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederModule.pas' {DatabaseSeederModule: TDataModule},
+  cbsSystem.Support.DatabaseSeederRepository in 'src\Support\cbsSystem.Support.DatabaseSeederRepository.pas',
+  cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository in 'src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository.pas',
+  cbsSystem.Database.Seeders.DatabaseSeederRepository in 'src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederRepository.pas',
+  cbsSystem.Support.DatabaseSeeder in 'src\Support\cbsSystem.Support.DatabaseSeeder.pas';
 
 end.
 

@@ -10,6 +10,9 @@ uses
 {PROJECT}
   cbsMain.inf.DbContext,
   cbsMigrations.Support.Migration,
+  cbsSystem.Support.DatabaseSeeder,
+// DbSeed...
+  _00000000_DatabaseSeeder,
 // Migrations...
   _2025_12_09_00000001_create_general_schema,
   _2025_12_09_00000005_create_general_categories_table,
@@ -32,6 +35,7 @@ uses
 
 procedure RegisterMigrations;
 begin
+  // Migrations...
   RegisterMigration(TDbContext, CreateGeneralSchema);
   RegisterMigration(TDbContext, CreateGeneralCategoriesTable);
   RegisterMigration(TDbContext, CreateAddressSchema);
@@ -50,6 +54,8 @@ begin
   RegisterMigration(TDbContext, CreatePersonAddressesTable);
   RegisterMigration(TDbContext, CreatePersonEmailsTable);
   RegisterMigration(TDbContext, CreatePersonPhonesTable);
+  // DbSeed...
+  RegisterDatabaseSeeder(TcbsMainDatabaseSeeder);
 end;
 
 end.

@@ -193,6 +193,18 @@
         <DCCReference Include="src\Support\cbsSystem.Support.ModuleTypeRepository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.Form.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.Module.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.RuntimePackages.Detector.pas"/>
+        <DCCReference Include="src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeeder.pas"/>
+        <DCCReference Include="src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeeder.pas"/>
+        <DCCReference Include="src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederModule.pas">
+            <Form>DatabaseSeederModule</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Support\cbsSystem.Support.DatabaseSeederRepository.pas"/>
+        <DCCReference Include="src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository.pas"/>
+        <DCCReference Include="src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederRepository.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.DatabaseSeeder.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

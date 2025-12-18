@@ -157,6 +157,12 @@
         <DCCReference Include="src\inf\Migrations\_2025_12_10_00000035_create_domain_accesses_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_2025_12_10_00000040_create_domain_persons_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_2025_12_10_00000025_create_domain_schema.pas"/>
+        <DCCReference Include="src\inf\cbsUAuth.inf.DbSeedModule.pas">
+            <Form>damDbSeed</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\inf\Seeders\_00001000_DatabaseSeeder.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -198,7 +204,7 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\build\Win32\Debug\modules\cbsUAuth.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\build\Win32\Debug\cbsUAuth.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>cbsUAuth.bpl</RemoteName>
                         <Overwrite>true</Overwrite>

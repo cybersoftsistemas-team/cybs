@@ -1,6 +1,6 @@
 inherited damBaseDb: TdamBaseDb
   Height = 86
-  Width = 445
+  Width = 384
   object Connection: TFDConnection
     LoginPrompt = False
     BeforeConnect = ConnectionBeforeConnect
@@ -13,17 +13,6 @@ inherited damBaseDb: TdamBaseDb
   end
   object StanStorageBinLink: TFDStanStorageBinLink
     Left = 288
-    Top = 16
-  end
-  object sptSeed: TFDScript
-    SQLScripts = <
-      item
-        Name = 'root'
-      end>
-    Connection = Connection
-    Params = <>
-    Macros = <>
-    Left = 384
     Top = 16
   end
 end

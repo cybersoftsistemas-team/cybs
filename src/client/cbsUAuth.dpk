@@ -45,7 +45,9 @@ contains
   _2025_12_10_00000030_create_domain_domains_table in 'src\inf\Migrations\_2025_12_10_00000030_create_domain_domains_table.pas',
   _2025_12_10_00000035_create_domain_accesses_table in 'src\inf\Migrations\_2025_12_10_00000035_create_domain_accesses_table.pas',
   _2025_12_10_00000040_create_domain_persons_table in 'src\inf\Migrations\_2025_12_10_00000040_create_domain_persons_table.pas',
-  _2025_12_10_00000025_create_domain_schema in 'src\inf\Migrations\_2025_12_10_00000025_create_domain_schema.pas';
+  _2025_12_10_00000025_create_domain_schema in 'src\inf\Migrations\_2025_12_10_00000025_create_domain_schema.pas',
+  cbsUAuth.inf.DbSeedModule in 'src\inf\cbsUAuth.inf.DbSeedModule.pas' {damDbSeed: TDataModule},
+  _00001000_DatabaseSeeder in 'src\inf\Seeders\_00001000_DatabaseSeeder.pas';
 
 end.
 

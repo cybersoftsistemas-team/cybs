@@ -155,6 +155,12 @@
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\support\cbsMain.support.RegisterMigrations.pas"/>
+        <DCCReference Include="src\inf\Seeders\_00000000_DatabaseSeeder.pas"/>
+        <DCCReference Include="src\inf\cbsMain.inf.DbSeedModule.pas">
+            <Form>damDbSeed</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
