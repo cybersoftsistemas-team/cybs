@@ -71,6 +71,10 @@ end;
 
 procedure TcbsModuleManager.LoadFromFolder(const AFolder: string);
 begin
+  LModuleList[TPath.Combine(AFolder, 'cbsMigrations.bpl')] := nil;
+  LModuleList[TPath.Combine(AFolder, 'cbsMigrationsFireDac.bpl')] := nil;
+  LModuleList[TPath.Combine(AFolder, 'cbsSystem.bpl')] := nil;
+  LModuleList[TPath.Combine(AFolder, 'cbsMain.bpl')] := nil;
   LoadPackages(AFolder);
 end;
 
@@ -87,11 +91,7 @@ begin
   if TDirectory.Exists(AFolder) then
   begin
     for var LFileName in TDirectory.GetFiles(AFolder,
-      GetModuleMask, TSearchOption.soAllDirectories) do if
-      (TPath.GetFileName(LFileName).CompareTo('cbsMain.bpl') > 0) and
-      (TPath.GetFileName(LFileName).CompareTo('cbsMigrations.bpl') > 0) and
-      (TPath.GetFileName(LFileName).CompareTo('cbsMigrationsFireDac.bpl') > 0) and
-      (TPath.GetFileName(LFileName).CompareTo('cbsSystem.bpl') > 0) then
+      GetModuleMask, TSearchOption.soAllDirectories) do
     begin
       LoadPackage(LFileName);
     end;

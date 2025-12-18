@@ -64,7 +64,7 @@ end;
 
 procedure LoadSystemModules;
 begin
-  ModuleManager.LoadFromFolder(TPath.Combine(ExtractFilePath(ParamStr(0)), 'modules'));
+  ModuleManager.LoadFromFolder(ExtractFilePath(ParamStr(0)));
 end;
 
 procedure RegisterAppFormsAndDataModules;
