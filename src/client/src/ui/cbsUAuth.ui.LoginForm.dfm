@@ -494,14 +494,14 @@ object frmLogin: TfrmLogin
       FC801FF50283BEB2734FA025415E3000FE3DA38A41B3014A0000000049454E44
       AE426082}
   end
-  object tmrDomains: TUniTimer
+  object tmrControls: TUniTimer
     Enabled = False
     ClientEvent.Strings = (
       'function(sender)'
       '{'
       ' '
       '}')
-    OnTimer = tmrDomainsTimer
+    OnTimer = tmrControlsTimer
     Left = 407
     Top = 16
   end

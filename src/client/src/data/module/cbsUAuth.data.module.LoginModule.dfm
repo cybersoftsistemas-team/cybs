@@ -1,7 +1,7 @@
 inherited damLogin: TdamLogin
   OnCreate = UniGUIMainModuleCreate
   Height = 159
-  Width = 166
+  Width = 311
   object mtbUSE: TFDMemTable
     OnNewRecord = mtbUSENewRecord
     FetchOptions.AssignedValues = [evMode]
@@ -84,5 +84,46 @@ inherited damLogin: TdamLogin
     OnDataChange = dsoDataChange
     Left = 104
     Top = 88
+  end
+  object qryCMR: TFDQuery
+    Connection = damDb.Connection
+    SQL.Strings = (
+      'SELECT Id'
+      ',CustomerId'
+      ',ClientId'
+      ',CreatedAt'
+      'FROM registration.customer;')
+    Left = 176
+    Top = 16
+    object qryCMRId: TIntegerField
+      FieldName = 'Id'
+      Origin = 'Id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+    end
+    object qryCMRCustomerId: TGuidField
+      FieldName = 'CustomerId'
+      Origin = 'CustomerId'
+      Required = True
+      Size = 38
+    end
+    object qryCMRClientId: TGuidField
+      FieldName = 'ClientId'
+      Origin = 'ClientId'
+      Required = True
+      Size = 38
+    end
+    object qryCMRCreatedAt: TSQLTimeStampField
+      FieldName = 'CreatedAt'
+      Origin = 'CreatedAt'
+      Required = True
+    end
+  end
+  object dsoCMR: TDataSource
+    DataSet = qryCMR
+    OnStateChange = dsoStateChange
+    OnDataChange = dsoDataChange
+    Left = 248
+    Top = 16
   end
 end

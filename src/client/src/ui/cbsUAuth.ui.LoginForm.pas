@@ -32,16 +32,16 @@ type
     pnlBody: TUniSimplePanel;
     pnlFooter: TUniSimplePanel;
     pnlHeader: TUniSimplePanel;
-    tmrDomains: TUniTimer;
+    tmrControls: TUniTimer;
     procedure actConnectExecute(Sender: TObject);
     procedure actDomainsExecute(Sender: TObject);
     procedure actOptionsExecute(Sender: TObject);
-    procedure tmrDomainsTimer(Sender: TObject);
+    procedure tmrControlsTimer(Sender: TObject);
     procedure UniLoginFormActivate(Sender: TObject);
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure UniLoginFormCreate(Sender: TObject);
   private
-    procedure SetBtnDomainsEnabled;
+    procedure SetControlsEnabled;
   end;
 
   function frmLogin: TfrmLogin;
@@ -60,6 +60,7 @@ uses
   cbsSystem.Support.RunTime,
   cbsSystem.Support.ServerModule,
   cbsUAuth.data.module.LoginModule,
+  cbsUAuth.ui.CustomerRegistrationForm,
   cbsUAuth.ui.DomainsForm,
   cbsUAuth.ui.OptionsForm;
 
@@ -85,17 +86,21 @@ begin
   frmOptions.ShowModal;
 end;
 
-procedure TfrmLogin.SetBtnDomainsEnabled;
+procedure TfrmLogin.SetControlsEnabled;
 begin
-  actDomains.Enabled := not ServerModule.Database.Id.IsEmpty;
+  edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and damLogin.ExistsRegisteredCustomer;
+  edtPassword.Enabled := edtUserName.Enabled;
+  edtDomainName.Enabled := edtUserName.Enabled;
+  actDomains.Enabled := edtUserName.Enabled;
+  btnConnect.Enabled := edtUserName.Enabled;
 end;
 
-procedure TfrmLogin.tmrDomainsTimer(Sender: TObject);
+procedure TfrmLogin.tmrControlsTimer(Sender: TObject);
 begin
-  SetBtnDomainsEnabled;
+  SetControlsEnabled;
   if actDomains.Enabled then
   begin
-    tmrDomains.Enabled := False;
+    tmrControls.Enabled := False;
   end;
 end;
 
@@ -121,15 +126,19 @@ end;
 
 procedure TfrmLogin.UniLoginFormCreate(Sender: TObject);
 begin
-  SetBtnDomainsEnabled;
+  SetControlsEnabled;
   if not actDomains.Enabled then
   begin
-    tmrDomains.Enabled := True;
+    tmrControls.Enabled := True;
   end;
   actOptions.Visible := RunTime.IsClientRunningInServer;
   if not actOptions.Visible then
   begin
     btnConnect.Left := btnDomains.Left - btnConnect.Width + btnDomains.Width;
+  end;
+  if actOptions.Visible and not damLogin.ExistsRegisteredCustomer then
+  begin
+    frmCustomerRegistration.ShowModal;
   end;
 end;
 

@@ -205,6 +205,8 @@
         <DCCReference Include="src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederRepository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.DatabaseSeeder.pas"/>
         <DCCReference Include="src\cbsSystem.Reflection.pas"/>
+        <DCCReference Include="src\Wizard\cbsSystem.Wizard.pas"/>
+        <DCCReference Include="src\Contracts\Wizard\cbsSystem.Contracts.Wizard.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

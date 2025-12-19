@@ -20,12 +20,12 @@ implementation
 {$R *.dfm}
 
 uses
-{IDE}
-  uniGUIApplication;
+{PROJECT}
+  cbsMain.data.module.MainModule;
 
 function damDb: TdamDb;
 begin
-  Result := TdamDb(UniApplication.UniMainModule.GetModuleInstance(TdamDb));
+  Result := TdamDb(damMain.GetModuleInstance(TdamDb));
 end;
 
 end.

@@ -49,6 +49,7 @@ uses
 {$ENDIF}
 {PROJECT}
   cbsMain.data.module.MainModule,
+  cbsMain.inf.DbModule,
   cbsMain.ui.MainForm,
   cbsServer.Database,
   cbsSystem.DataStorage,
@@ -148,6 +149,7 @@ begin
   RegisterServerModuleClass(TcbsServerModule);
   RegisterMainModuleClass(TdamMain);
   RegisterMainFormClass(TfrmMain);
+  RegisterModuleClass(TdamDb);
   LoadSystemModules;
   RegisterAppFormsAndDataModules;
   FDManager.Open;

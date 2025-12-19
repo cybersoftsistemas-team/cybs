@@ -4,13 +4,15 @@ interface
 
 uses
 {PROJECT}
+  cbsMain.inf.DbModule,
   cbsSystem.Module.BaseModule,
 {IDE}
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, System.Classes, FireDAC.Comp.DataSet,
-  FireDAC.Comp.Client;
+  FireDAC.Comp.Client, FireDAC.Stan.Async, FireDAC.DApt;
 
 type
   TdamLogin = class(TdamBase)
+    dsoCMR: TDataSource;
     dsoCNS: TDataSource;
     dsoUSE: TDataSource;
     mtbCNS: TFDMemTable;
@@ -23,6 +25,11 @@ type
     mtbUSEId: TGuidField;
     mtbUSEName: TStringField;
     mtbUSEPassword: TStringField;
+    qryCMR: TFDQuery;
+    qryCMRClientId: TGuidField;
+    qryCMRCreatedAt: TSQLTimeStampField;
+    qryCMRCustomerId: TGuidField;
+    qryCMRId: TIntegerField;
     procedure mtbCNSAfterDelete(DataSet: TDataSet);
     procedure mtbCNSAfterOpen(DataSet: TDataSet);
     procedure mtbCNSAfterPost(DataSet: TDataSet);
@@ -31,8 +38,10 @@ type
     procedure mtbUSENewRecord(DataSet: TDataSet);
     procedure UniGUIMainModuleCreate(Sender: TObject);
   private
+    FdamDb: TdamDb;
     procedure SaveOptions;
   public
+    function ExistsRegisteredCustomer: Boolean;
     procedure LoadData(const AFile, AData: string);
     procedure mtbCNSEmptyDataSet;
     procedure SaveLogonData;
@@ -67,6 +76,11 @@ begin
 end;
 
 { TdamLogin }
+
+function TdamLogin.ExistsRegisteredCustomer: Boolean;
+begin
+  Result := not qryCMR.IsEmpty;
+end;
 
 procedure TdamLogin.LoadData(const AFile, AData: string);
 begin
@@ -137,8 +151,11 @@ end;
 procedure TdamLogin.UniGUIMainModuleCreate(Sender: TObject);
 begin
   inherited;
+  FdamDb := TdamDb.Create(Self);
   mtbUSE.CreateDataSet;
   mtbCNS.CreateDataSet;
+  qryCMR.Close;
+  qryCMR.Open;
 end;
 
 initialization

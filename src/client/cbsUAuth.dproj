@@ -163,6 +163,17 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\inf\Seeders\_00001000_DatabaseSeeder.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000050_create_registration_customer_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_10_00000045_create_registration_table.pas"/>
+        <DCCReference Include="src\data\module\cbsUAuth.data.module.CustomerRegistrationModule.pas">
+            <Form>damCustomerRegistration</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\ui\cbsUAuth.ui.CustomerRegistrationForm.pas">
+            <Form>frmCustomerRegistration</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -88,7 +88,9 @@ contains
   cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository in 'src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository.pas',
   cbsSystem.Database.Seeders.DatabaseSeederRepository in 'src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederRepository.pas',
   cbsSystem.Support.DatabaseSeeder in 'src\Support\cbsSystem.Support.DatabaseSeeder.pas',
-  cbsSystem.Reflection in 'src\cbsSystem.Reflection.pas';
+  cbsSystem.Reflection in 'src\cbsSystem.Reflection.pas',
+  cbsSystem.Wizard in 'src\Wizard\cbsSystem.Wizard.pas',
+  cbsSystem.Contracts.Wizard in 'src\Contracts\Wizard\cbsSystem.Contracts.Wizard.pas';
 
 end.
 

@@ -5,6 +5,7 @@ inherited damDb: TdamDb
       'User_Name=cybersoft'
       'Password=cybersoft@123'
       'Server=localhost'
+      'ODBCAdvanced=TrustServerCertificate=Yes'
       'DriverID=MSSQL')
   end
 end
