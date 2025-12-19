@@ -76,7 +76,6 @@ contains
   cbsSystem.Form.DialogBaseForm in 'src\Form\cbsSystem.Form.DialogBaseForm.pas' {frmDialogBase: TUniForm},
   cbsSystem.Contracts.Form.BaseForm in 'src\Contracts\Form\cbsSystem.Contracts.Form.BaseForm.pas',
   cbsSystem.Contracts.Module.BaseModule in 'src\Contracts\Module\cbsSystem.Contracts.Module.BaseModule.pas',
-  cbsSystem.Support.Migrations.Execute in 'src\Support\cbsSystem.Support.Migrations.Execute.pas',
   cbsSystem.Support.FormTypeRepository in 'src\Support\cbsSystem.Support.FormTypeRepository.pas',
   cbsSystem.Support.ModuleTypeRepository in 'src\Support\cbsSystem.Support.ModuleTypeRepository.pas',
   cbsSystem.Support.Form in 'src\Support\cbsSystem.Support.Form.pas',
@@ -88,7 +87,8 @@ contains
   cbsSystem.Support.DatabaseSeederRepository in 'src\Support\cbsSystem.Support.DatabaseSeederRepository.pas',
   cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository in 'src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository.pas',
   cbsSystem.Database.Seeders.DatabaseSeederRepository in 'src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederRepository.pas',
-  cbsSystem.Support.DatabaseSeeder in 'src\Support\cbsSystem.Support.DatabaseSeeder.pas';
+  cbsSystem.Support.DatabaseSeeder in 'src\Support\cbsSystem.Support.DatabaseSeeder.pas',
+  cbsSystem.Reflection in 'src\cbsSystem.Reflection.pas';
 
 end.
 

@@ -188,7 +188,6 @@
         </DCCReference>
         <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.BaseForm.pas"/>
         <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.BaseModule.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Migrations.Execute.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.FormTypeRepository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.ModuleTypeRepository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.Form.pas"/>
@@ -205,6 +204,7 @@
         <DCCReference Include="src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository.pas"/>
         <DCCReference Include="src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederRepository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.DatabaseSeeder.pas"/>
+        <DCCReference Include="src\cbsSystem.Reflection.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
