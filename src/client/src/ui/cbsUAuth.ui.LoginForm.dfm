@@ -101,8 +101,6 @@ object frmLogin: TfrmLogin
       ParentColor = False
       Align = alClient
       TabOrder = 2
-      ExplicitLeft = -2
-      ExplicitTop = 45
       DesignSize = (
         453
         162)
@@ -129,7 +127,6 @@ object frmLogin: TfrmLogin
           Align = alRight
           TabOrder = 3
           ImageIndex = 1
-          ExplicitLeft = 181
         end
         object btnConnect: TUniBitBtn
           AlignWithMargins = True
@@ -145,7 +142,6 @@ object frmLogin: TfrmLogin
           Align = alRight
           TabOrder = 1
           ImageIndex = 0
-          ExplicitLeft = 231
         end
         object btnRegister: TUniBitBtn
           AlignWithMargins = True
@@ -161,7 +157,6 @@ object frmLogin: TfrmLogin
           Align = alRight
           TabOrder = 2
           ImageIndex = 3
-          ExplicitLeft = 181
         end
       end
       object edtUserName: TUniDBEdit

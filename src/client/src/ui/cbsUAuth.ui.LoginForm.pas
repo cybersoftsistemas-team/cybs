@@ -111,6 +111,7 @@ begin
   actOptions.Visible := RunTime.IsClientRunningInServer;
   actRegister.Visible := actOptions.Visible and not LExistsRegisteredCustomer;
   actConnect.Visible := not actOptions.Visible or LExistsRegisteredCustomer;
+  actConnect.Enabled := edtUserName.Enabled;
 end;
 
 procedure TfrmLogin.UniLoginFormActivate(Sender: TObject);
