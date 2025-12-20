@@ -101,9 +101,69 @@ object frmLogin: TfrmLogin
       ParentColor = False
       Align = alClient
       TabOrder = 2
+      ExplicitLeft = -2
+      ExplicitTop = 45
       DesignSize = (
         453
         162)
+      object pnlButtons: TUniContainerPanel
+        Left = 28
+        Top = 124
+        Width = 392
+        Height = 25
+        Hint = ''
+        ParentColor = False
+        Anchors = [akLeft, akRight, akBottom]
+        TabOrder = 5
+        object btnOptions: TUniBitBtn
+          AlignWithMargins = True
+          Left = 317
+          Top = 0
+          Width = 75
+          Height = 25
+          Margins.Left = 6
+          Margins.Top = 0
+          Margins.Right = 0
+          Margins.Bottom = 0
+          Action = actOptions
+          Align = alRight
+          TabOrder = 3
+          ImageIndex = 1
+          ExplicitLeft = 181
+        end
+        object btnConnect: TUniBitBtn
+          AlignWithMargins = True
+          Left = 150
+          Top = 0
+          Width = 80
+          Height = 25
+          Margins.Left = 6
+          Margins.Top = 0
+          Margins.Right = 0
+          Margins.Bottom = 0
+          Action = actConnect
+          Align = alRight
+          TabOrder = 1
+          ImageIndex = 0
+          ExplicitLeft = 231
+        end
+        object btnRegister: TUniBitBtn
+          AlignWithMargins = True
+          Left = 236
+          Top = 0
+          Width = 75
+          Height = 25
+          Margins.Left = 6
+          Margins.Top = 0
+          Margins.Right = 0
+          Margins.Bottom = 0
+          Action = actRegister
+          Align = alRight
+          TabOrder = 2
+          ImageIndex = 3
+          ExplicitLeft = 181
+        end
+      end
       object edtUserName: TUniDBEdit
         Left = 28
         Top = 40
@@ -145,25 +205,6 @@ object frmLogin: TfrmLogin
         FieldLabel = 'Dom'#237'nio'
         FieldLabelWidth = 156
         ReadOnlyMode = urmNotEditable
-      end
-      object btnConnect: TUniBitBtn
-        Left = 259
-        Top = 124
-        Width = 80
-        Height = 25
-        Action = actConnect
-        Anchors = [akLeft, akRight, akBottom]
-        TabOrder = 5
-        ImageIndex = 0
-      end
-      object btnOptions: TUniBitBtn
-        Left = 345
-        Top = 124
-        Width = 75
-        Height = 25
-        Action = actOptions
-        TabOrder = 6
-        ImageIndex = 1
       end
       object btnDomains: TUniSpeedButton
         Left = 397
@@ -458,6 +499,11 @@ object frmLogin: TfrmLogin
       ImageIndex = 2
       OnExecute = actDomainsExecute
     end
+    object actRegister: TAction
+      Caption = 'Registrar'
+      ImageIndex = 3
+      OnExecute = actRegisterExecute
+    end
   end
   object ilaMain: TUniImageListAdapter
     UniImageList = nilstMain
@@ -468,7 +514,7 @@ object frmLogin: TfrmLogin
     Left = 379
     Top = 16
     Images = {
-      03000000FFFFFF1F04AE00000089504E470D0A1A0A0000000D49484452000000
+      04000000FFFFFF1F04AE00000089504E470D0A1A0A0000000D49484452000000
       100000001008060000001FF3FF61000000017352474200AECE1CE90000000467
       414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA864
       0000004349444154384F6360A005A8ADADFD9F9393F31F179F20B0B4B4FC0FC2
@@ -492,17 +538,14 @@ object frmLogin: TfrmLogin
       310804AFC16B630B4955E9CEE0C129C124FB303EC6C72A23888F88186FEBF243
       72232F8843CE2E3F094004A81168B882F594B89D834940868F7D1384ED1C140B
       FC801FF50283BEB2734FA025415E3000FE3DA38A41B3014A0000000049454E44
-      AE426082}
-  end
-  object tmrControls: TUniTimer
-    Enabled = False
-    ClientEvent.Strings = (
-      'function(sender)'
-      '{'
-      ' '
-      '}')
-    OnTimer = tmrControlsTimer
-    Left = 407
-    Top = 16
+      AE426082FFFFFF1F04F800000089504E470D0A1A0A0000000D49484452000000
+      100000001008060000001FF3FF610000001974455874536F6674776172650041
+      646F626520496D616765526561647971C9653C0000002C744558745469746C65
+      004164643B4974656D3B4164644974656D3B426172733B526962626F6E3B4974
+      656D3B506C75734E32EF810000006249444154785ED5D3C10980300C85E1EEE4
+      1C2E2539671E9771110F461E34A287BE48444A0B3FC9217CB71633FBD4B58888
+      918E3A270AB007405537205900637724033CE2006F54605E56E400F67E000A01
+      3FA2FD0A30AC786F3F530834BB1FB780139B0320D9EACDD2140000000049454E
+      44AE426082}
   end
 end

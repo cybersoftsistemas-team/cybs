@@ -79,6 +79,8 @@ end;
 
 function TdamLogin.ExistsRegisteredCustomer: Boolean;
 begin
+  qryCMR.Close;
+  qryCMR.Open;
   Result := not qryCMR.IsEmpty;
 end;
 
@@ -154,8 +156,6 @@ begin
   FdamDb := TdamDb.Create(Self);
   mtbUSE.CreateDataSet;
   mtbCNS.CreateDataSet;
-  qryCMR.Close;
-  qryCMR.Open;
 end;
 
 initialization

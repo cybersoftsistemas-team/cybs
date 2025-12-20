@@ -13,9 +13,7 @@ type
     actConnect: TAction;
     actDomains: TAction;
     actOptions: TAction;
-    btnConnect: TUniBitBtn;
     btnDomains: TUniSpeedButton;
-    btnOptions: TUniBitBtn;
     edtDomainName: TUniDBEdit;
     edtPassword: TUniDBEdit;
     edtUserName: TUniDBEdit;
@@ -32,16 +30,20 @@ type
     pnlBody: TUniSimplePanel;
     pnlFooter: TUniSimplePanel;
     pnlHeader: TUniSimplePanel;
-    tmrControls: TUniTimer;
+    pnlButtons: TUniContainerPanel;
+    btnOptions: TUniBitBtn;
+    btnConnect: TUniBitBtn;
+    actRegister: TAction;
+    btnRegister: TUniBitBtn;
     procedure actConnectExecute(Sender: TObject);
     procedure actDomainsExecute(Sender: TObject);
     procedure actOptionsExecute(Sender: TObject);
-    procedure tmrControlsTimer(Sender: TObject);
+    procedure actRegisterExecute(Sender: TObject);
     procedure UniLoginFormActivate(Sender: TObject);
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure UniLoginFormCreate(Sender: TObject);
   private
-    procedure SetControlsEnabled;
+    procedure SetStateControls;
   end;
 
   function frmLogin: TfrmLogin;
@@ -83,25 +85,32 @@ end;
 
 procedure TfrmLogin.actOptionsExecute(Sender: TObject);
 begin
-  frmOptions.ShowModal;
+  frmOptions.ShowModal(
+    procedure(Sender: TComponent; Result: Integer)
+    begin
+      SetStateControls;
+    end);
 end;
 
-procedure TfrmLogin.SetControlsEnabled;
+procedure TfrmLogin.actRegisterExecute(Sender: TObject);
 begin
-  edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and damLogin.ExistsRegisteredCustomer;
+  frmCustomerRegistration.ShowModal(
+    procedure(Sender: TComponent; Result: Integer)
+    begin
+      SetStateControls;
+    end);
+end;
+
+procedure TfrmLogin.SetStateControls;
+begin
+  var LExistsRegisteredCustomer := damLogin.ExistsRegisteredCustomer;
+  edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and LExistsRegisteredCustomer;
   edtPassword.Enabled := edtUserName.Enabled;
   edtDomainName.Enabled := edtUserName.Enabled;
   actDomains.Enabled := edtUserName.Enabled;
-  btnConnect.Enabled := edtUserName.Enabled;
-end;
-
-procedure TfrmLogin.tmrControlsTimer(Sender: TObject);
-begin
-  SetControlsEnabled;
-  if actDomains.Enabled then
-  begin
-    tmrControls.Enabled := False;
-  end;
+  actOptions.Visible := RunTime.IsClientRunningInServer;
+  actRegister.Visible := actOptions.Visible and not LExistsRegisteredCustomer;
+  actConnect.Visible := not actOptions.Visible or LExistsRegisteredCustomer;
 end;
 
 procedure TfrmLogin.UniLoginFormActivate(Sender: TObject);
@@ -126,20 +135,7 @@ end;
 
 procedure TfrmLogin.UniLoginFormCreate(Sender: TObject);
 begin
-  SetControlsEnabled;
-  if not actDomains.Enabled then
-  begin
-    tmrControls.Enabled := True;
-  end;
-  actOptions.Visible := RunTime.IsClientRunningInServer;
-  if not actOptions.Visible then
-  begin
-    btnConnect.Left := btnDomains.Left - btnConnect.Width + btnDomains.Width;
-  end;
-  if actOptions.Visible and not damLogin.ExistsRegisteredCustomer then
-  begin
-    frmCustomerRegistration.ShowModal;
-  end;
+  SetStateControls;
 end;
 
 initialization

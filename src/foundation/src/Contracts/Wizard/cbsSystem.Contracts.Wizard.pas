@@ -4,21 +4,34 @@ interface
 
 uses
 {IDE}
+  ActnList,
   uniPanel,
-  uniBitBtn;
+{PROJECT}
+  Spring.Collections;
 
 type
   IWizard = interface(IUnknown)
     ['{F2FE4383-B715-420F-8A4B-F035B3651525}']
     function AddStep(const AStep: TUniContainerPanel): IWizard;
     function GetActiveStepIndex: Integer;
-    function SetBackButton(const AButton: TUniBitBtn): IWizard;
-    function SetFinishButton(const AButton: TUniBitBtn): IWizard;
-    function SetNextButton(const AButton: TUniBitBtn): IWizard;
+    function SetBackAction(const Action: TAction): IWizard;
+    function SetFinishAction(const Action: TAction): IWizard;
+    function SetNextAction(const Action: TAction): IWizard;
+    procedure Back;
+    procedure Next;
     procedure SetActiveStepIndex(const AValue: Integer);
     property ActiveStepIndex: Integer read GetActiveStepIndex write SetActiveStepIndex;
   end;
 
+  IStepList = IList<TUniContainerPanel>;
+
+  function CreateStepList: IStepList;
+
 implementation
+
+function CreateStepList: IStepList;
+begin
+  Result := TCollections.CreateList<TUniContainerPanel>;
+end;
 
 end.

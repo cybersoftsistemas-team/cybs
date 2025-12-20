@@ -18,7 +18,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     Height = 25
     Action = actFinish
     Anchors = [akRight, akBottom]
-    TabOrder = 0
+    TabOrder = 4
     IconAlign = iaRight
   end
   object btnNext: TUniBitBtn [1]
@@ -28,7 +28,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     Height = 25
     Action = actNext
     Anchors = [akRight, akBottom]
-    TabOrder = 1
+    TabOrder = 3
     IconAlign = iaRight
   end
   object btnBack: TUniBitBtn [2]
@@ -49,7 +49,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     Enabled = False
     BodyRTL = False
     Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 3
+    TabOrder = 1
     ShowCaption = False
     Caption = 'UniPanel1'
   end
@@ -62,8 +62,25 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     Cancel = True
     ModalResult = 2
     Anchors = [akRight, akBottom]
-    TabOrder = 4
+    TabOrder = 5
     IconAlign = iaRight
+  end
+  object UniContainerPanel1: TUniContainerPanel [5]
+    Left = 11
+    Top = 8
+    Width = 429
+    Height = 287
+    Hint = ''
+    ParentColor = False
+    TabOrder = 0
+    object UniDBEdit1: TUniDBEdit
+      Left = 104
+      Top = 80
+      Width = 121
+      Height = 22
+      Hint = ''
+      TabOrder = 1
+    end
   end
   inherited aclMain: TUniActionList
     object actBack: TAction
