@@ -18,12 +18,8 @@ type
 
 implementation
 
-{%CLASSGROUP 'System.Classes.TPersistent'}
+{%CLASSGROUP 'Vcl.Controls.TControl'}
 
 {$R *.dfm}
-
-uses
-{PROJTECT}
-  cbsMain.inf.DbModule;
 
 end.

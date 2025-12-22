@@ -11,36 +11,256 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
   ExplicitWidth = 451
   ExplicitHeight = 347
   TextHeight = 15
-  object btnFinish: TUniBitBtn [0]
-    Left = 270
-    Top = 312
-    Width = 80
-    Height = 25
-    Action = actFinish
-    Anchors = [akRight, akBottom]
-    TabOrder = 4
-    IconAlign = iaRight
+  object pnlStep01: TUniContainerPanel [0]
+    Left = 11
+    Top = 8
+    Width = 429
+    Height = 287
+    Hint = ''
+    ParentColor = False
+    TabOrder = 1
+    object labTitle: TUniLabel
+      Left = 3
+      Top = 8
+      Width = 255
+      Height = 21
+      Hint = ''
+      Caption = 'Bem-vindo ao Registro de Cliente'
+      ParentFont = False
+      Font.Height = -16
+      Font.Style = [fsBold]
+      TabOrder = 1
+    end
+    object labInfo: TUniLabel
+      Left = 22
+      Top = 112
+      Width = 400
+      Height = 42
+      Hint = ''
+      AutoSize = False
+      Caption = 
+        'Este assistente ir'#225' gui'#225'-lo passo a passo no processo de registr' +
+        'o de um novo cliente no sistema. Voc'#234' s'#243' precisa seguir as etapa' +
+        's, preencher as informa'#231#245'es'#13#10'solicitadas e avan'#231'ar quando estive' +
+        'r pronto.'
+      TabOrder = 2
+    end
   end
-  object btnNext: TUniBitBtn [1]
-    Left = 184
+  object pnlStep02: TUniContainerPanel [1]
+    Left = 11
+    Top = 8
+    Width = 429
+    Height = 287
+    Hint = ''
+    ParentColor = False
+    TabOrder = 0
+    DesignSize = (
+      429
+      287)
+    object pnlBreakTop: TUniPanel
+      Left = 0
+      Top = 49
+      Width = 429
+      Height = 1
+      Hint = ''
+      Enabled = False
+      BodyRTL = False
+      Anchors = [akLeft, akRight, akBottom]
+      TabOrder = 3
+      ShowCaption = False
+      Caption = 'pnlBreak'
+    end
+    object rbtNatural: TUniRadioButton
+      Left = 0
+      Top = 56
+      Width = 101
+      Height = 18
+      Hint = ''
+      Checked = True
+      Caption = 'Pessoa F'#237'sica'
+      TabOrder = 6
+      Group = 1
+    end
+    object rbtLegal: TUniRadioButton
+      Left = 0
+      Top = 79
+      Width = 101
+      Height = 18
+      Hint = ''
+      Caption = 'Pessoa Jur'#237'dica'
+      TabOrder = 7
+      Group = 1
+    end
+    object pnlBreakLeft: TUniPanel
+      Left = 101
+      Top = 55
+      Width = 1
+      Height = 234
+      Hint = ''
+      Enabled = False
+      BodyRTL = False
+      TabOrder = 5
+      ShowCaption = False
+      Caption = 'pnlBreak'
+    end
+    object labStep02Title: TUniLabel
+      Left = 0
+      Top = 0
+      Width = 89
+      Height = 13
+      Hint = ''
+      Caption = 'Dados do Cliente'
+      ParentFont = False
+      Font.Style = [fsBold]
+      TabOrder = 0
+    end
+    object labStep02SubTitle: TUniLabel
+      Left = 0
+      Top = 17
+      Width = 442
+      Height = 27
+      Hint = ''
+      AutoSize = False
+      Caption = 
+        'Marque o tipo de registro (Pessoa F'#237'sica ou Jur'#237'dica) e preencha' +
+        ' os dados nos campos abaixo.'
+      ParentFont = False
+      TabOrder = 2
+    end
+    object UniContainerPanel1: TUniContainerPanel
+      Left = 107
+      Top = 49
+      Width = 322
+      Height = 238
+      Hint = ''
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      TabOrder = 4
+      object edtFirstName: TUniDBEdit
+        Left = 4
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        TabOrder = 1
+        FieldLabel = 'Primeiro Nome'
+        FieldLabelAlign = laTop
+      end
+      object edtLastName: TUniDBEdit
+        Left = 166
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        TabOrder = 2
+        FieldLabel = 'Sobrenome'
+        FieldLabelAlign = laTop
+      end
+      object edtBirthday: TUniDBDateTimePicker
+        Left = 4
+        Top = 45
+        Width = 79
+        Hint = ''
+        DateTime = 46012.000000000000000000
+        DateFormat = 'dd/MM/yyyy'
+        TimeFormat = 'HH:mm:ss'
+        TabOrder = 3
+        FieldLabel = 'Nascimento'
+        FieldLabelAlign = laTop
+      end
+      object edtSSN: TUniDBEdit
+        Left = 90
+        Top = 45
+        Width = 112
+        Height = 22
+        Hint = ''
+        TabOrder = 4
+        FieldLabel = 'CPF'
+        FieldLabelAlign = laTop
+      end
+      object edtIDCard: TUniDBEdit
+        Left = 209
+        Top = 45
+        Width = 112
+        Height = 22
+        Hint = ''
+        TabOrder = 5
+        FieldLabel = 'RG'
+        FieldLabelAlign = laTop
+      end
+    end
+  end
+  object pnlButtons: TUniSimplePanel [2]
+    Left = 11
     Top = 312
-    Width = 80
+    Width = 429
     Height = 25
-    Action = actNext
-    Anchors = [akRight, akBottom]
+    Hint = ''
+    ParentColor = False
+    Anchors = [akLeft, akRight, akBottom]
     TabOrder = 3
-    IconAlign = iaRight
+    object btnCancel: TUniBitBtn
+      AlignWithMargins = True
+      Left = 347
+      Top = 0
+      Width = 82
+      Height = 25
+      Margins.Left = 10
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Action = actCancel
+      Cancel = True
+      ModalResult = 2
+      Align = alRight
+      TabOrder = 4
+      IconAlign = iaRight
+    end
+    object btnFinish: TUniBitBtn
+      AlignWithMargins = True
+      Left = 255
+      Top = 0
+      Width = 82
+      Height = 25
+      Margins.Left = 7
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Action = actFinish
+      Align = alRight
+      TabOrder = 3
+      IconAlign = iaRight
+    end
+    object btnNext: TUniBitBtn
+      AlignWithMargins = True
+      Left = 166
+      Top = 0
+      Width = 82
+      Height = 25
+      Margins.Left = 7
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Action = actNext
+      Align = alRight
+      TabOrder = 2
+      IconAlign = iaRight
+    end
+    object btnBack: TUniBitBtn
+      AlignWithMargins = True
+      Left = 77
+      Top = 0
+      Width = 82
+      Height = 25
+      Margins.Left = 7
+      Margins.Top = 0
+      Margins.Right = 0
+      Margins.Bottom = 0
+      Action = actBack
+      Align = alRight
+      TabOrder = 1
+    end
   end
-  object btnBack: TUniBitBtn [2]
-    Left = 98
-    Top = 312
-    Width = 80
-    Height = 25
-    Action = actBack
-    Anchors = [akRight, akBottom]
-    TabOrder = 2
-  end
-  object pnlLine02: TUniPanel [3]
+  object pnlBreak: TUniPanel [3]
     Left = 11
     Top = 301
     Width = 429
@@ -49,42 +269,16 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     Enabled = False
     BodyRTL = False
     Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 1
+    TabOrder = 2
     ShowCaption = False
-    Caption = 'UniPanel1'
-  end
-  object btnCancel: TUniBitBtn [4]
-    Left = 360
-    Top = 312
-    Width = 80
-    Height = 25
-    Action = actCancel
-    Cancel = True
-    ModalResult = 2
-    Anchors = [akRight, akBottom]
-    TabOrder = 5
-    IconAlign = iaRight
-  end
-  object UniContainerPanel1: TUniContainerPanel [5]
-    Left = 11
-    Top = 8
-    Width = 429
-    Height = 287
-    Hint = ''
-    ParentColor = False
-    TabOrder = 0
-    object UniDBEdit1: TUniDBEdit
-      Left = 104
-      Top = 80
-      Width = 121
-      Height = 22
-      Hint = ''
-      TabOrder = 1
-    end
+    Caption = 'pnlBreak'
   end
   inherited aclMain: TUniActionList
+    Left = 11
+    Top = 310
     object actBack: TAction
       Caption = '< Voltar'
+      OnExecute = actBackExecute
     end
     object actCancel: TAction
       Caption = 'Cancelar'
@@ -93,10 +287,17 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       Caption = 'Finalizar >>|'
     end
     object actNext: TAction
-      Caption = 'Pr'#243'ximo >'
+      Caption = 'Avan'#231'ar >'
+      OnExecute = actNextExecute
     end
   end
+  inherited ilaMain: TUniImageListAdapter
+    Left = 39
+    Top = 310
+  end
   inherited nilstMain: TUniNativeImageList
+    Left = 67
+    Top = 310
     Images = {
       03000000FFFFFF1F04DD00000089504E470D0A1A0A0000000D49484452000000
       100000001008060000001FF3FF610000001974455874536F6674776172650041

@@ -62,7 +62,6 @@ uses
   System.UITypes,
 {PROJECT}
   cbsMain.data.module.MainModule,
-  cbsSystem.Support.DataSet.Extensions,
   cbsSystem.Support.ServerModule,
   cbsUAuth.data.module.LoginModule,
   cbsUAuth.ui.ConnEditorForm;

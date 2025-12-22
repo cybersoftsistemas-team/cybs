@@ -25,10 +25,6 @@ implementation
 
 {$R *.dfm}
 
-uses
-{PROJECT}
-  cbsSystem.Support.ServerModule;
-
 { TdamDatabaseSeeder }
 
 procedure TDatabaseSeederModule.AfterRunSeed;
@@ -39,7 +35,7 @@ end;
 procedure TDatabaseSeederModule.BeforeRunSeed;
 begin
   // This method can be overwritten by inherited classes.
-  if sptSeed.SQLScripts.Count > 0 then
+  if not sptSeed.IsEmpty then
   begin
     sptSeed.ValidateAll;
   end;
@@ -48,7 +44,7 @@ end;
 procedure TDatabaseSeederModule.OnRunSeed;
 begin
   // This method can be overwritten by inherited classes.
-  if sptSeed.SQLScripts.Count > 0 then
+  if not sptSeed.IsEmpty then
   begin
     sptSeed.ExecuteAll;
   end;

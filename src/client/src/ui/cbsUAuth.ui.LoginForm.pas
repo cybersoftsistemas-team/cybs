@@ -43,7 +43,7 @@ type
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure UniLoginFormCreate(Sender: TObject);
   private
-    procedure SetStateControls;
+    procedure UpdateUi;
   end;
 
   function frmLogin: TfrmLogin;
@@ -88,7 +88,7 @@ begin
   frmOptions.ShowModal(
     procedure(Sender: TComponent; Result: Integer)
     begin
-      SetStateControls;
+      UpdateUi;
     end);
 end;
 
@@ -97,11 +97,11 @@ begin
   frmCustomerRegistration.ShowModal(
     procedure(Sender: TComponent; Result: Integer)
     begin
-      SetStateControls;
+      UpdateUi;
     end);
 end;
 
-procedure TfrmLogin.SetStateControls;
+procedure TfrmLogin.UpdateUi;
 begin
   var LExistsRegisteredCustomer := damLogin.ExistsRegisteredCustomer;
   edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and LExistsRegisteredCustomer;
@@ -109,8 +109,8 @@ begin
   edtDomainName.Enabled := edtUserName.Enabled;
   actDomains.Enabled := edtUserName.Enabled;
   actOptions.Visible := RunTime.IsClientRunningInServer;
-  actRegister.Visible := actOptions.Visible and not LExistsRegisteredCustomer;
-  actConnect.Visible := not actOptions.Visible or LExistsRegisteredCustomer;
+  actRegister.Visible := actOptions.Visible and not ServerModule.Database.Id.IsEmpty and not LExistsRegisteredCustomer;
+  actConnect.Visible := not actOptions.Visible or ServerModule.Database.Id.IsEmpty or LExistsRegisteredCustomer;
   actConnect.Enabled := edtUserName.Enabled;
 end;
 
@@ -136,7 +136,7 @@ end;
 
 procedure TfrmLogin.UniLoginFormCreate(Sender: TObject);
 begin
-  SetStateControls;
+  UpdateUi;
 end;
 
 initialization

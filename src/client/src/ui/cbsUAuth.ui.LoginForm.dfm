@@ -482,11 +482,13 @@ object frmLogin: TfrmLogin
     object actConnect: TAction
       Caption = 'Entrar'
       ImageIndex = 0
+      Visible = False
       OnExecute = actConnectExecute
     end
     object actOptions: TAction
       Caption = 'Op'#231#245'es'
       ImageIndex = 1
+      Visible = False
       OnExecute = actOptionsExecute
     end
     object actDomains: TAction
@@ -497,6 +499,7 @@ object frmLogin: TfrmLogin
     object actRegister: TAction
       Caption = 'Registrar'
       ImageIndex = 3
+      Visible = False
       OnExecute = actRegisterExecute
     end
   end

@@ -79,9 +79,17 @@ end;
 
 function TdamLogin.ExistsRegisteredCustomer: Boolean;
 begin
-  qryCMR.Close;
-  qryCMR.Open;
-  Result := not qryCMR.IsEmpty;
+  Result := not ServerModule.Database.Id.IsEmpty;
+  if Result then
+  begin
+    qryCMR.Close;
+    try
+      qryCMR.Open;
+      Result := not qryCMR.IsEmpty;
+    except
+      Result := False;
+    end;
+  end;
 end;
 
 procedure TdamLogin.LoadData(const AFile, AData: string);

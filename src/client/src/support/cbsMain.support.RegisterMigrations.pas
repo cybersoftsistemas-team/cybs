@@ -18,6 +18,7 @@ uses
   _2025_12_09_00000005_create_general_categories_table,
   _2025_12_09_00000010_create_address_schema,
   _2025_12_09_00000015_create_address_countries_table,
+  _2025_12_09_00000016_create_address_country_codes_table,
   _2025_12_09_00000020_create_address_states_table,
   _2025_12_09_00000025_create_address_cities_table,
   _2025_12_09_00000030_create_address_neighborhoods_table,
@@ -40,6 +41,7 @@ begin
   RegisterMigration(TDbContext, CreateGeneralCategoriesTable);
   RegisterMigration(TDbContext, CreateAddressSchema);
   RegisterMigration(TDbContext, CreateAddressCountriesTable);
+  RegisterMigration(TDbContext, CreateAddressCountryCodesTable);
   RegisterMigration(TDbContext, CreateAddressStatesTable);
   RegisterMigration(TDbContext, CreateAddressCitiesTable);
   RegisterMigration(TDbContext, CreateAddressNeighborhoodsTable);

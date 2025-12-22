@@ -40,42 +40,39 @@ end;
 
 procedure TDatabase.InternalExecuteMigrations(const TDbModule: DbConnectionModuleType; const TDbMigrationContext: MigrationContextType);
 begin
-  if Assigned(TDbModule) then
+  if Assigned(TDbModule) and Assigned(TDbMigrationContext) then
   begin
     var LdamDb := TDbModule.Create(nil);
     try
       var LConnection := LdamDb.Connection;
-      if Assigned(TDbMigrationContext) then
-      begin
-        LConnection.StartTransaction;
+      LConnection.StartTransaction;
+      try
+        var LDbContext := TDbMigrationContext.Create;
         try
-          var LDbContext := TDbMigrationContext.Create;
-          try
-            LDbContext.Connection := LConnection;
-            LDbContext.UpdateDatabase(
-              procedure
+          LDbContext.Connection := LConnection;
+          LDbContext.UpdateDatabase(
+            procedure
+            begin
+              for var LDatabaseSeederType in DatabaseSeederRepository do
               begin
-                for var LDatabaseSeederType in DatabaseSeederRepository do
-                begin
-                  var LDatabaseSeeder := CreateObject(LDatabaseSeederType).AsType<IDatabaseSeeder>;
-                  try
-                    LDatabaseSeeder.Run;
-                  finally
-                    LDatabaseSeeder := nil;
-                  end;
+                var LDatabaseSeeder := CreateObject(LDatabaseSeederType).AsType<IDatabaseSeeder>;
+                try
+                  LDatabaseSeeder.Run;
+                finally
+                  LDatabaseSeeder := nil;
                 end;
-              end);
-          finally
-            FreeAndNil(LDbContext);
-          end;
-        except
-          on E: Exception do
-          begin
-            LConnection.Rollback;
-            raise Exception.Create(E.Message);
-          end;
+              end;
+            end);
+        finally
+          FreeAndNil(LDbContext);
         end;
         LConnection.Commit;
+      except
+        on E: Exception do
+        begin
+          LConnection.Rollback;
+          raise Exception.Create(E.Message);
+        end;
       end;
     finally
       FreeAndNil(LdamDb);

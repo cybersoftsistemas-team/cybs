@@ -7,5 +7,6 @@ inherited damDb: TdamDb
       'Server=localhost'
       'ODBCAdvanced=TrustServerCertificate=Yes'
       'DriverID=MSSQL')
+    OnError = ConnectionError
   end
 end

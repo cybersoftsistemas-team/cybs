@@ -22,8 +22,4 @@ implementation
 
 {$R *.dfm}
 
-uses
-{PROJTECT}
-  cbsMain.inf.DbModule;
-
 end.

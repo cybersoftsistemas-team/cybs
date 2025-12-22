@@ -7,8 +7,8 @@ uses
   cbsSystem.Contracts.Wizard,
   cbsSystem.Form.BaseForm,
 {IDE}
-  uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Controls, Vcl.Forms, uniGUIClasses, uniButton,
-  uniBitBtn, uniPanel, uniEdit, uniDBEdit;
+  uniGUIBaseClasses, uniGUIClasses, uniRadioButton, System.Classes, System.Actions, Vcl.ActnList, uniPanel, uniLabel, uniButton, uniBitBtn, Vcl.Controls, Vcl.Forms, uniImageList,
+  System.ImageList, Vcl.ImgList, uniMainMenu, uniEdit, uniDBEdit, uniDateTimePicker, uniDBDateTimePicker;
 
 type
   TfrmCustomerRegistration = class(TfrmBase)
@@ -20,9 +20,26 @@ type
     btnCancel: TUniBitBtn;
     btnFinish: TUniBitBtn;
     btnNext: TUniBitBtn;
-    pnlLine02: TUniPanel;
+    labInfo: TUniLabel;
+    labTitle: TUniLabel;
+    pnlBreak: TUniPanel;
+    pnlBreakLeft: TUniPanel;
+    pnlBreakTop: TUniPanel;
+    pnlButtons: TUniSimplePanel;
+    pnlStep01: TUniContainerPanel;
+    pnlStep02: TUniContainerPanel;
+    rbtLegal: TUniRadioButton;
+    rbtNatural: TUniRadioButton;
+    labStep02Title: TUniLabel;
+    labStep02SubTitle: TUniLabel;
     UniContainerPanel1: TUniContainerPanel;
-    UniDBEdit1: TUniDBEdit;
+    edtFirstName: TUniDBEdit;
+    edtLastName: TUniDBEdit;
+    edtBirthday: TUniDBDateTimePicker;
+    edtSSN: TUniDBEdit;
+    edtIDCard: TUniDBEdit;
+    procedure actBackExecute(Sender: TObject);
+    procedure actNextExecute(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
   private
@@ -38,7 +55,6 @@ implementation
 uses
 {PROJECT}
   cbsMain.data.module.MainModule,
-  cbsUAuth.data.module.CustomerRegistrationModule,
   cbsSystem.Wizard;
 
 function frmCustomerRegistration: TfrmCustomerRegistration;
@@ -46,14 +62,27 @@ begin
   Result := TfrmCustomerRegistration(damMain.GetFormInstance(TfrmCustomerRegistration));
 end;
 
+procedure TfrmCustomerRegistration.actBackExecute(Sender: TObject);
+begin
+  FWizard.Back;
+end;
+
+procedure TfrmCustomerRegistration.actNextExecute(Sender: TObject);
+begin
+  FWizard.Next;
+end;
+
 procedure TfrmCustomerRegistration.UniFormCreate(Sender: TObject);
 begin
   inherited;
   FWizard := TcbsWizard.Create
+   // Buttons...
    .SetBackAction(actBack)
    .SetFinishAction(actFinish)
    .SetNextAction(actNext)
-   .AddStep(UniContainerPanel1);
+   // Steps...
+   .AddStep(pnlStep01)
+   .AddStep(pnlStep02);
 end;
 
 procedure TfrmCustomerRegistration.UniFormDestroy(Sender: TObject);

@@ -136,8 +136,12 @@ procedure TcbsDatabase.ExecuteMigrations;
 begin
   if IsPossibleExecuteMigrations then
   begin
-    BeforeExecuteMigrations;
-    OnExecuteMigrations;
+    try
+      BeforeExecuteMigrations;
+      OnExecuteMigrations;
+    except
+      raise;
+    end;
   end;
 end;
 

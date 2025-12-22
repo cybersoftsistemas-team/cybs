@@ -29,8 +29,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsMain.data.module.MainModule,
-  cbsMain.inf.DbModule;
+  cbsMain.data.module.MainModule;
 
 function damCustomerRegistration: TdamCustomerRegistration;
 begin
