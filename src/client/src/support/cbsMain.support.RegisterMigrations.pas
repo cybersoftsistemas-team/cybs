@@ -20,7 +20,9 @@ uses
   _2025_12_09_00000015_create_address_countries_table,
   _2025_12_09_00000016_create_address_country_codes_table,
   _2025_12_09_00000020_create_address_states_table,
+  _2025_12_09_00000021_create_address_state_codes_table,
   _2025_12_09_00000025_create_address_cities_table,
+  _2025_12_09_00000026_create_address_city_codes_table,
   _2025_12_09_00000030_create_address_neighborhoods_table,
   _2025_12_09_00000035_create_address_streets_table,
   _2025_12_09_00000040_create_address_streettypes_table,
@@ -43,7 +45,9 @@ begin
   RegisterMigration(TDbContext, CreateAddressCountriesTable);
   RegisterMigration(TDbContext, CreateAddressCountryCodesTable);
   RegisterMigration(TDbContext, CreateAddressStatesTable);
+  RegisterMigration(TDbContext, CreateAddressStateCodesTable);
   RegisterMigration(TDbContext, CreateAddressCitiesTable);
+  RegisterMigration(TDbContext, CreateAddressCityCodesTable);
   RegisterMigration(TDbContext, CreateAddressNeighborhoodsTable);
   RegisterMigration(TDbContext, CreateAddressStreetsTable);
   RegisterMigration(TDbContext, CreateAddressStreetTypesTable);

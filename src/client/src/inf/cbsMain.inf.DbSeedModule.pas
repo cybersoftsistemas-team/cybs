@@ -10,16 +10,26 @@ uses
 
 type
   TdamDbSeed = class(TDatabaseSeederModule)
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+  protected
+    procedure BeforeRunSeed; override;
   end;
 
 implementation
 
-{%CLASSGROUP 'Vcl.Controls.TControl'}
+{%CLASSGROUP 'System.Classes.TPersistent'}
 
 {$R *.dfm}
+
+uses
+{IDE}
+  System.SysUtils;
+
+{ TdamDbSeed }
+
+procedure TdamDbSeed.BeforeRunSeed;
+begin
+  inherited;
+  sptSeed.Params.ParamByName('CountryId').AsGuid := StringToGUID('{9F6E6D3A-1F5A-4C8C-9C9E-55B55E55B555}');
+end;
 
 end.

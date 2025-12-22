@@ -127,14 +127,25 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       ParentFont = False
       TabOrder = 2
     end
-    object UniContainerPanel1: TUniContainerPanel
+    object pnlNatural: TUniContainerPanel
       Left = 107
       Top = 49
       Width = 322
       Height = 238
       Hint = ''
+      ParentColor = False
       Anchors = [akLeft, akTop, akRight, akBottom]
       TabOrder = 4
+      object cbxGender: TUniDBComboBox
+        Left = 4
+        Top = 91
+        Width = 79
+        Hint = ''
+        TabOrder = 10
+        FieldLabel = 'Sexo'
+        FieldLabelAlign = laTop
+        IconItems = <>
+      end
       object edtFirstName: TUniDBEdit
         Left = 4
         Top = 1
@@ -186,6 +197,57 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         TabOrder = 5
         FieldLabel = 'RG'
         FieldLabelAlign = laTop
+      end
+      object labPlaceOfBirthId: TUniLabel
+        Left = 4
+        Top = 143
+        Width = 68
+        Height = 13
+        Hint = ''
+        Caption = 'Naturalidade'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 6
+      end
+      object cbxNatCountry: TUniDBComboBox
+        Left = 4
+        Top = 157
+        Width = 79
+        Hint = ''
+        TabOrder = 7
+        FieldLabel = 'Pa'#237's'
+        FieldLabelAlign = laTop
+        IconItems = <>
+      end
+      object cbxNatState: TUniDBComboBox
+        Left = 90
+        Top = 157
+        Width = 112
+        Hint = ''
+        TabOrder = 8
+        FieldLabel = 'Estado'
+        FieldLabelAlign = laTop
+        IconItems = <>
+      end
+      object cbxNatCity: TUniDBComboBox
+        Left = 209
+        Top = 157
+        Width = 112
+        Hint = ''
+        TabOrder = 9
+        FieldLabel = 'Cidade'
+        FieldLabelAlign = laTop
+        IconItems = <>
+      end
+      object cbxNationality: TUniDBComboBox
+        Left = 90
+        Top = 91
+        Width = 112
+        Hint = ''
+        TabOrder = 11
+        FieldLabel = 'Nacionalidade'
+        FieldLabelAlign = laTop
+        IconItems = <>
       end
     end
   end

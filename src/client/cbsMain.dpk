@@ -57,6 +57,8 @@ contains
   cbsMain.support.RegisterMigrations in 'src\support\cbsMain.support.RegisterMigrations.pas',
   _00000000_DatabaseSeeder in 'src\inf\Seeders\_00000000_DatabaseSeeder.pas',
   cbsMain.inf.DbSeedModule in 'src\inf\cbsMain.inf.DbSeedModule.pas' {damDbSeed: TDataModule},
-  _2025_12_09_00000016_create_address_country_codes_table in 'src\inf\Migrations\_2025_12_09_00000016_create_address_country_codes_table.pas';
+  _2025_12_09_00000016_create_address_country_codes_table in 'src\inf\Migrations\_2025_12_09_00000016_create_address_country_codes_table.pas',
+  _2025_12_09_00000021_create_address_state_codes_table in 'src\inf\Migrations\_2025_12_09_00000021_create_address_state_codes_table.pas',
+  _2025_12_09_00000026_create_address_city_codes_table in 'src\inf\Migrations\_2025_12_09_00000026_create_address_city_codes_table.pas';
 
 end.

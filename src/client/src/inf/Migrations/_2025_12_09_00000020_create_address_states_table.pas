@@ -30,7 +30,11 @@ begin
    .Constraints([
      PrimaryKey('Id')
     ,ForeignKey('CountryId', 'countries', 'Id')
+    ,Unique(['CountryId', 'Acronym'])
     ,Unique(['CountryId', 'Name'])
+   ])
+   .Indexes([
+     CreateIndex('CountryId')
    ]);
 end;
 

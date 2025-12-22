@@ -162,6 +162,8 @@
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\inf\Migrations\_2025_12_09_00000016_create_address_country_codes_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000021_create_address_state_codes_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_2025_12_09_00000026_create_address_city_codes_table.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

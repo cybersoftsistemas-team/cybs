@@ -8,7 +8,7 @@ uses
   cbsSystem.Form.BaseForm,
 {IDE}
   uniGUIBaseClasses, uniGUIClasses, uniRadioButton, System.Classes, System.Actions, Vcl.ActnList, uniPanel, uniLabel, uniButton, uniBitBtn, Vcl.Controls, Vcl.Forms, uniImageList,
-  System.ImageList, Vcl.ImgList, uniMainMenu, uniEdit, uniDBEdit, uniDateTimePicker, uniDBDateTimePicker;
+  System.ImageList, Vcl.ImgList, uniMainMenu, uniEdit, uniDBEdit, uniDateTimePicker, uniDBDateTimePicker, uniMultiItem, uniComboBox, uniDBComboBox, uniFieldSet;
 
 type
   TfrmCustomerRegistration = class(TfrmBase)
@@ -32,12 +32,18 @@ type
     rbtNatural: TUniRadioButton;
     labStep02Title: TUniLabel;
     labStep02SubTitle: TUniLabel;
-    UniContainerPanel1: TUniContainerPanel;
+    pnlNatural: TUniContainerPanel;
     edtFirstName: TUniDBEdit;
     edtLastName: TUniDBEdit;
     edtBirthday: TUniDBDateTimePicker;
     edtSSN: TUniDBEdit;
     edtIDCard: TUniDBEdit;
+    labPlaceOfBirthId: TUniLabel;
+    cbxNatCountry: TUniDBComboBox;
+    cbxNatState: TUniDBComboBox;
+    cbxNatCity: TUniDBComboBox;
+    cbxGender: TUniDBComboBox;
+    cbxNationality: TUniDBComboBox;
     procedure actBackExecute(Sender: TObject);
     procedure actNextExecute(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);

@@ -12,6 +12,7 @@ type
   protected
     procedure AfterRunSeed; virtual;
     procedure BeforeRunSeed; virtual;
+    function IsRunSeed: Boolean; virtual;
     procedure OnRunSeed; virtual;
   public
     procedure RunSeed;
@@ -35,26 +36,29 @@ end;
 procedure TDatabaseSeederModule.BeforeRunSeed;
 begin
   // This method can be overwritten by inherited classes.
-  if not sptSeed.IsEmpty then
-  begin
-    sptSeed.ValidateAll;
-  end;
+  sptSeed.ValidateAll;
+end;
+
+function TDatabaseSeederModule.IsRunSeed: Boolean;
+begin
+  // This method can be overwritten by inherited classes.
+  Result := not sptSeed.IsEmpty;
 end;
 
 procedure TDatabaseSeederModule.OnRunSeed;
 begin
   // This method can be overwritten by inherited classes.
-  if not sptSeed.IsEmpty then
-  begin
-    sptSeed.ExecuteAll;
-  end;
+  sptSeed.ExecuteAll;
 end;
 
 procedure TDatabaseSeederModule.RunSeed;
 begin
-  BeforeRunSeed;
-  OnRunSeed;
-  AfterRunSeed;
+  if IsRunSeed then
+  begin
+    BeforeRunSeed;
+    OnRunSeed;
+    AfterRunSeed;
+  end;
 end;
 
 end.
