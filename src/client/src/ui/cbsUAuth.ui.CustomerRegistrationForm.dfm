@@ -57,76 +57,6 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     DesignSize = (
       429
       287)
-    object pnlBreakTop: TUniPanel
-      Left = 0
-      Top = 49
-      Width = 429
-      Height = 1
-      Hint = ''
-      Enabled = False
-      BodyRTL = False
-      Anchors = [akLeft, akRight, akBottom]
-      TabOrder = 3
-      ShowCaption = False
-      Caption = 'pnlBreak'
-    end
-    object rbtNatural: TUniRadioButton
-      Left = 0
-      Top = 56
-      Width = 101
-      Height = 18
-      Hint = ''
-      Checked = True
-      Caption = 'Pessoa F'#237'sica'
-      TabOrder = 6
-      Group = 1
-    end
-    object rbtLegal: TUniRadioButton
-      Left = 0
-      Top = 79
-      Width = 101
-      Height = 18
-      Hint = ''
-      Caption = 'Pessoa Jur'#237'dica'
-      TabOrder = 7
-      Group = 1
-    end
-    object pnlBreakLeft: TUniPanel
-      Left = 101
-      Top = 55
-      Width = 1
-      Height = 234
-      Hint = ''
-      Enabled = False
-      BodyRTL = False
-      TabOrder = 5
-      ShowCaption = False
-      Caption = 'pnlBreak'
-    end
-    object labStep02Title: TUniLabel
-      Left = 0
-      Top = 0
-      Width = 89
-      Height = 13
-      Hint = ''
-      Caption = 'Dados do Cliente'
-      ParentFont = False
-      Font.Style = [fsBold]
-      TabOrder = 0
-    end
-    object labStep02SubTitle: TUniLabel
-      Left = 0
-      Top = 17
-      Width = 442
-      Height = 27
-      Hint = ''
-      AutoSize = False
-      Caption = 
-        'Marque o tipo de registro (Pessoa F'#237'sica ou Jur'#237'dica) e preencha' +
-        ' os dados nos campos abaixo.'
-      ParentFont = False
-      TabOrder = 2
-    end
     object pnlNatural: TUniContainerPanel
       Left = 107
       Top = 49
@@ -249,6 +179,89 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         FieldLabelAlign = laTop
         IconItems = <>
       end
+    end
+    object pnlLegal: TUniContainerPanel
+      Left = 107
+      Top = 49
+      Width = 322
+      Height = 238
+      Hint = ''
+      Visible = False
+      ParentColor = False
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      TabOrder = 8
+    end
+    object pnlBreakTop: TUniPanel
+      Left = 0
+      Top = 49
+      Width = 429
+      Height = 1
+      Hint = ''
+      Enabled = False
+      BodyRTL = False
+      Anchors = [akLeft, akRight, akBottom]
+      TabOrder = 3
+      ShowCaption = False
+      Caption = 'pnlBreak'
+    end
+    object rbtNatural: TUniRadioButton
+      Left = 0
+      Top = 56
+      Width = 101
+      Height = 18
+      Hint = ''
+      Checked = True
+      Caption = 'Pessoa F'#237'sica'
+      TabOrder = 6
+      Group = 1
+      OnClick = rbtNaturalClick
+    end
+    object rbtLegal: TUniRadioButton
+      Left = 0
+      Top = 79
+      Width = 101
+      Height = 18
+      Hint = ''
+      Caption = 'Pessoa Jur'#237'dica'
+      TabOrder = 7
+      Group = 1
+      OnClick = rbtLegalClick
+    end
+    object pnlBreakLeft: TUniPanel
+      Left = 101
+      Top = 55
+      Width = 1
+      Height = 234
+      Hint = ''
+      Enabled = False
+      BodyRTL = False
+      TabOrder = 5
+      ShowCaption = False
+      Caption = 'pnlBreak'
+    end
+    object labStep02Title: TUniLabel
+      Left = 0
+      Top = 0
+      Width = 89
+      Height = 13
+      Hint = ''
+      Caption = 'Dados do Cliente'
+      ParentFont = False
+      Font.Style = [fsBold]
+      TabOrder = 0
+    end
+    object labStep02SubTitle: TUniLabel
+      Left = 0
+      Top = 17
+      Width = 442
+      Height = 27
+      Hint = ''
+      AutoSize = False
+      Caption = 
+        'Marque o tipo de registro (Pessoa F'#237'sica ou Jur'#237'dica) e preencha' +
+        ' os dados nos campos abaixo.'
+      ParentFont = False
+      TabOrder = 2
     end
   end
   object pnlButtons: TUniSimplePanel [2]

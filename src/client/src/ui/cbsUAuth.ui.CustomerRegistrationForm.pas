@@ -20,32 +20,35 @@ type
     btnCancel: TUniBitBtn;
     btnFinish: TUniBitBtn;
     btnNext: TUniBitBtn;
+    cbxGender: TUniDBComboBox;
+    cbxNatCity: TUniDBComboBox;
+    cbxNatCountry: TUniDBComboBox;
+    cbxNationality: TUniDBComboBox;
+    cbxNatState: TUniDBComboBox;
+    edtBirthday: TUniDBDateTimePicker;
+    edtFirstName: TUniDBEdit;
+    edtIDCard: TUniDBEdit;
+    edtLastName: TUniDBEdit;
+    edtSSN: TUniDBEdit;
     labInfo: TUniLabel;
+    labPlaceOfBirthId: TUniLabel;
+    labStep02SubTitle: TUniLabel;
+    labStep02Title: TUniLabel;
     labTitle: TUniLabel;
     pnlBreak: TUniPanel;
     pnlBreakLeft: TUniPanel;
     pnlBreakTop: TUniPanel;
     pnlButtons: TUniSimplePanel;
+    pnlLegal: TUniContainerPanel;
+    pnlNatural: TUniContainerPanel;
     pnlStep01: TUniContainerPanel;
     pnlStep02: TUniContainerPanel;
     rbtLegal: TUniRadioButton;
     rbtNatural: TUniRadioButton;
-    labStep02Title: TUniLabel;
-    labStep02SubTitle: TUniLabel;
-    pnlNatural: TUniContainerPanel;
-    edtFirstName: TUniDBEdit;
-    edtLastName: TUniDBEdit;
-    edtBirthday: TUniDBDateTimePicker;
-    edtSSN: TUniDBEdit;
-    edtIDCard: TUniDBEdit;
-    labPlaceOfBirthId: TUniLabel;
-    cbxNatCountry: TUniDBComboBox;
-    cbxNatState: TUniDBComboBox;
-    cbxNatCity: TUniDBComboBox;
-    cbxGender: TUniDBComboBox;
-    cbxNationality: TUniDBComboBox;
     procedure actBackExecute(Sender: TObject);
     procedure actNextExecute(Sender: TObject);
+    procedure rbtLegalClick(Sender: TObject);
+    procedure rbtNaturalClick(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
   private
@@ -76,6 +79,18 @@ end;
 procedure TfrmCustomerRegistration.actNextExecute(Sender: TObject);
 begin
   FWizard.Next;
+end;
+
+procedure TfrmCustomerRegistration.rbtLegalClick(Sender: TObject);
+begin
+  pnlLegal.Visible := True;
+  pnlNatural.Visible := False;
+end;
+
+procedure TfrmCustomerRegistration.rbtNaturalClick(Sender: TObject);
+begin
+  pnlLegal.Visible := False;
+  pnlNatural.Visible := True;
 end;
 
 procedure TfrmCustomerRegistration.UniFormCreate(Sender: TObject);
