@@ -1,4 +1,4 @@
-unit cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository;
+unit cbsSystem.Contracts.Database.Seeders.DatabaseSeederTypeRepository;
 
 interface
 
@@ -9,14 +9,14 @@ uses
   Spring.Collections;
 
 type
-  TDatabaseSeederTypeeItem = TPair<string, DatabaseSeederType>;
+  TDatabaseSeederTypeItem = TPair<string, DatabaseSeederType>;
 
-  IDatabaseSeederEnumerator = IEnumerator<DatabaseSeederType>;
-  IDatabaseSeederTypes = IEnumerable<TDatabaseSeederTypeeItem>;
+  IDatabaseSeederTypeEnumerator = IEnumerator<DatabaseSeederType>;
+  IDatabaseSeederTypes = IEnumerable<TDatabaseSeederTypeItem>;
 
-  IDatabaseSeederRepository = interface(IUnknown)
+  IDatabaseSeederTypeRepository = interface(IUnknown)
     ['{8380E28B-53DF-423B-8F93-36AFABBD786D}']
-    function GetEnumerator: IDatabaseSeederEnumerator;
+    function GetEnumerator: IDatabaseSeederTypeEnumerator;
     procedure Register(const ADatabaseSeederType: DatabaseSeederType);
   end;
 

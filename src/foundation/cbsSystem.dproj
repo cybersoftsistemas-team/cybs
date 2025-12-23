@@ -200,9 +200,9 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Support\cbsSystem.Support.DatabaseSeederRepository.pas"/>
-        <DCCReference Include="src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository.pas"/>
-        <DCCReference Include="src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederRepository.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.DatabaseSeederTypeRepository.pas"/>
+        <DCCReference Include="src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeederTypeRepository.pas"/>
+        <DCCReference Include="src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederTypeRepository.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.DatabaseSeeder.pas"/>
         <DCCReference Include="src\cbsSystem.Reflection.pas"/>
         <DCCReference Include="src\Wizard\cbsSystem.Wizard.pas"/>

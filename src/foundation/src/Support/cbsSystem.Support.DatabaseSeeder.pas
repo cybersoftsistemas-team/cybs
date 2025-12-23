@@ -12,11 +12,11 @@ implementation
 
 uses
 {PROJECT}
-  cbsSystem.Support.DatabaseSeederRepository;
+  cbsSystem.Support.DatabaseSeederTypeRepository;
 
 procedure RegisterDatabaseSeeder(const ADatabaseSeederType: DatabaseSeederType);
 begin
-  DatabaseSeederRepository.Register(ADatabaseSeederType);
+  DatabaseSeederTypeRepository.Register(ADatabaseSeederType);
 end;
 
 end.

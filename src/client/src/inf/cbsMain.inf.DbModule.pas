@@ -13,7 +13,6 @@ uses
 
 type
   TdamDb = class(TdamBaseDb)
-    procedure ConnectionError(ASender, AInitiator: TObject; var AException: Exception);
   end;
 
   function damDb: TdamDb;
@@ -30,11 +29,6 @@ uses
 function damDb: TdamDb;
 begin
   Result := TdamDb(damMain.GetModuleInstance(TdamDb));
-end;
-
-procedure TdamDb.ConnectionError(ASender, AInitiator: TObject; var AException: Exception);
-begin
-  ServerModule.Database.Clear;
 end;
 
 end.

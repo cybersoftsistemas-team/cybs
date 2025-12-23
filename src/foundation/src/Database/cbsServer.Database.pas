@@ -5,8 +5,8 @@ interface
 uses
 {PROJECT}
   cbsMigrationsFireDac.Migrations.MigrationContextBase,
-  cbsSystem.Infrastructure.BaseDbModule,
-  cbsSystem.Database;
+  cbsSystem.Database,
+  cbsSystem.Infrastructure.BaseDbModule;
 
 type
   TDatabase = class(TcbsDatabase)
@@ -28,7 +28,7 @@ uses
   cbsMain.support.RegisterMigrations,
   cbsSystem.Contracts.Database.Seeders.DatabaseSeeder,
   cbsSystem.Reflection,
-  cbsSystem.Support.DatabaseSeederRepository;
+  cbsSystem.Support.DatabaseSeederTypeRepository;
 
 { TDatabase }
 
@@ -40,43 +40,53 @@ end;
 
 procedure TDatabase.InternalExecuteMigrations(const TDbModule: DbConnectionModuleType; const TDbMigrationContext: MigrationContextType);
 begin
-  if Assigned(TDbModule) and Assigned(TDbMigrationContext) then
-  begin
-    var LdamDb := TDbModule.Create(nil);
-    try
+  try
+    if Assigned(TDbModule) and Assigned(TDbMigrationContext) then
+    begin
+      var LdamDb := TDbModule.Create(nil);
       var LConnection := LdamDb.Connection;
-      LConnection.StartTransaction;
       try
-        var LDbContext := TDbMigrationContext.Create;
+        LConnection.StartTransaction;
         try
-          LDbContext.Connection := LConnection;
-          LDbContext.UpdateDatabase(
-            procedure
-            begin
-              for var LDatabaseSeederType in DatabaseSeederRepository do
-              begin
-                var LDatabaseSeeder := CreateObject(LDatabaseSeederType).AsType<IDatabaseSeeder>;
-                try
-                  LDatabaseSeeder.Run;
-                finally
-                  LDatabaseSeeder := nil;
-                end;
-              end;
-            end);
-        finally
-          FreeAndNil(LDbContext);
+          var LDbContext := TDbMigrationContext.Create;
+          try
+            LDbContext.Connection := LConnection;
+            LDbContext.UpdateDatabase;
+          finally
+            FreeAndNil(LDbContext);
+          end;
+          LConnection.Commit;
+        except
+          on E: Exception do
+          begin
+            LConnection.Rollback;
+            raise Exception.Create(E.Message);
+          end;
         end;
-        LConnection.Commit;
-      except
-        on E: Exception do
-        begin
-          LConnection.Rollback;
-          raise Exception.Create(E.Message);
+        LConnection.StartTransaction;
+        try
+          for var LDatabaseSeederType in DatabaseSeederTypeRepository do
+          begin
+            var LDatabaseSeeder := CreateObject(LDatabaseSeederType).AsType<IDatabaseSeeder>;
+            try
+              LDatabaseSeeder.Run;
+            finally
+              LDatabaseSeeder := nil;
+            end;
+          end;
+          LConnection.Commit;
+        except
+          on E: Exception do
+          begin
+            LConnection.Rollback;
+            raise Exception.Create(E.Message);
+          end;
         end;
+      finally
+        FreeAndNil(LdamDb);
       end;
-    finally
-      FreeAndNil(LdamDb);
     end;
+  except
   end;
 end;
 

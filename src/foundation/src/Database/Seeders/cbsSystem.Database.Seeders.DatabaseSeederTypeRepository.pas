@@ -1,40 +1,40 @@
-unit cbsSystem.Database.Seeders.DatabaseSeederRepository;
+unit cbsSystem.Database.Seeders.DatabaseSeederTypeRepository;
 
 interface
 
 uses
 {PROJECT}
-  cbsSystem.Contracts.Database.Seeders.DatabaseSeederRepository,
+  cbsSystem.Contracts.Database.Seeders.DatabaseSeederTypeRepository,
   cbsSystem.Database.Seeders.DatabaseSeeder;
 
 type
-  TcbsDatabaseSeederRepository = class(TInterfacedObject, IDatabaseSeederRepository)
+  TcbsDatabaseSeederTypeRepository = class(TInterfacedObject, IDatabaseSeederTypeRepository)
   private
     FDatabaseSeederTypeList: IDatabaseSeederTypeList;
   public
     constructor Create;
     destructor Destroy; override;
-    function GetEnumerator: IDatabaseSeederEnumerator;
+    function GetEnumerator: IDatabaseSeederTypeEnumerator;
     procedure Register(const ADatabaseSeederType: DatabaseSeederType);
   end;
 
 implementation
 
-{ TcbsDatabaseSeederRepository }
+{ TcbsDatabaseSeederTypeRepository }
 
-constructor TcbsDatabaseSeederRepository.Create;
+constructor TcbsDatabaseSeederTypeRepository.Create;
 begin
   inherited Create;
   FDatabaseSeederTypeList := CreateDatabaseSeederTypeList;
 end;
 
-destructor TcbsDatabaseSeederRepository.Destroy;
+destructor TcbsDatabaseSeederTypeRepository.Destroy;
 begin
   FDatabaseSeederTypeList := nil;
   inherited;
 end;
 
-function TcbsDatabaseSeederRepository.GetEnumerator: IDatabaseSeederEnumerator;
+function TcbsDatabaseSeederTypeRepository.GetEnumerator: IDatabaseSeederTypeEnumerator;
 begin
   var LOrderedDatabaseSeederTypes :=
     CreateDatabaseSeederTypeList(FDatabaseSeederTypeList.Ordered);
@@ -43,7 +43,7 @@ begin
   Result := FDatabaseSeederTypeList.Values.GetEnumerator;
 end;
 
-procedure TcbsDatabaseSeederRepository.Register(const ADatabaseSeederType: DatabaseSeederType);
+procedure TcbsDatabaseSeederTypeRepository.Register(const ADatabaseSeederType: DatabaseSeederType);
 begin
   if not FDatabaseSeederTypeList.ContainsKey(ADatabaseSeederType.UnitName) then
   begin
