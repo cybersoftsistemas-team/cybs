@@ -9,20 +9,23 @@ uses
 {IDE}
   Data.DB, uniGUIBaseClasses, uniDBLookupComboBox, System.Classes, System.Actions, Vcl.ActnList, uniButton, uniBitBtn, uniPanel, uniRadioButton, uniMultiItem, uniComboBox,
   uniDBComboBox, uniDateTimePicker, uniDBDateTimePicker, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, Vcl.Controls, Vcl.Forms, uniImageList, System.ImageList, Vcl.ImgList,
-  uniMainMenu;
+  uniMainMenu, uniSpeedButton;
 
 type
   TfrmCustomerRegistration = class(TfrmBase)
     actBack: TAction;
     actCancel: TAction;
     actFinish: TAction;
+    actNewCity: TAction;
     actNext: TAction;
     btnBack: TUniBitBtn;
     btnCancel: TUniBitBtn;
     btnFinish: TUniBitBtn;
+    btnNewCity: TUniSpeedButton;
     btnNext: TUniBitBtn;
     cbbLegCompanyType: TUniDBLookupComboBox;
     cbbLegNationality: TUniDBComboBox;
+    cbxLegState: TUniDBComboBox;
     cbxNatCity: TUniDBLookupComboBox;
     cbxNatCountry: TUniDBLookupComboBox;
     cbxNatGender: TUniDBLookupComboBox;
@@ -52,13 +55,13 @@ type
     pnlNatural: TUniContainerPanel;
     pnlStep01: TUniContainerPanel;
     pnlStep02: TUniContainerPanel;
+    pnlStep03: TUniContainerPanel;
     rbtLegal: TUniRadioButton;
     rbtNatural: TUniRadioButton;
-    UniDBComboBox2: TUniDBComboBox;
-    pnlStep03: TUniContainerPanel;
     procedure actBackExecute(Sender: TObject);
+    procedure actNewCityExecute(Sender: TObject);
     procedure actNextExecute(Sender: TObject);
-    procedure cbxNatCityTriggerEvent(Sender: TUniCustomComboBox; AButtonId: Integer);
+    procedure cbxNatStateSelect(Sender: TObject);
     procedure rbtLegalClick(Sender: TObject);
     procedure rbtNaturalClick(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
@@ -77,11 +80,14 @@ implementation
 {$R *.dfm}
 
 uses
+{IDE}
   System.SysUtils,
+  System.Variants,
 {PROJECT}
   cbsMain.data.module.MainModule,
   cbsSystem.Wizard,
-  cbsUAuth.data.module.CustomerRegistrationModule;
+  cbsUAuth.data.module.CustomerRegistrationModule,
+  cbsUAuth.ui.CityRegistrationForm;
 
 function frmCustomerRegistration: TfrmCustomerRegistration;
 begin
@@ -93,6 +99,11 @@ begin
   FWizard.Back;
 end;
 
+procedure TfrmCustomerRegistration.actNewCityExecute(Sender: TObject);
+begin
+  frmCityRegistration.ShowModal;
+end;
+
 procedure TfrmCustomerRegistration.actNextExecute(Sender: TObject);
 begin
   if ValidateRequiredFields then
@@ -101,12 +112,9 @@ begin
   end;
 end;
 
-procedure TfrmCustomerRegistration.cbxNatCityTriggerEvent(Sender: TUniCustomComboBox; AButtonId: Integer);
+procedure TfrmCustomerRegistration.cbxNatStateSelect(Sender: TObject);
 begin
-  if AButtonId = 1 then
-  begin
-
-  end;
+  actNewCity.Enabled := not VarIsNull(cbxNatState.KeyValue);
 end;
 
 function TfrmCustomerRegistration.GetDataModule: IDataModule;

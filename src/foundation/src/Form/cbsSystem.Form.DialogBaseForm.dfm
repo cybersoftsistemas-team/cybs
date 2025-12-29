@@ -1,5 +1,6 @@
 inherited frmDialogBase: TfrmDialogBase
   Caption = 'frmDialogBase'
+  BorderStyle = bsDialog
   DesignSize = (
     321
     199)
@@ -24,6 +25,19 @@ inherited frmDialogBase: TfrmDialogBase
     ModalResult = 2
     Anchors = [akRight, akBottom]
     TabOrder = 1
+  end
+  object pnlBreak: TUniPanel [2]
+    Left = 8
+    Top = 154
+    Width = 305
+    Height = 1
+    Hint = ''
+    Enabled = False
+    BodyRTL = False
+    Anchors = [akLeft, akRight, akBottom]
+    TabOrder = 2
+    ShowCaption = False
+    Caption = 'pnlBreak'
   end
   inherited aclMain: TUniActionList
     object actOk: TAction

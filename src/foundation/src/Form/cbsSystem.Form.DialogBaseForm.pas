@@ -7,7 +7,7 @@ uses
   cbsSystem.Form.BaseForm,
 {IDE}
   uniGUIBaseClasses, System.Classes, System.Actions, Vcl.ActnList, Vcl.Controls, Vcl.Forms, uniGUIClasses, uniButton, uniBitBtn, uniImageList, System.ImageList, Vcl.ImgList,
-  uniMainMenu;
+  uniMainMenu, uniPanel;
 
 type
   IDataModule = cbsSystem.Form.BaseForm.IDataModule;
@@ -17,6 +17,7 @@ type
     btnCancel: TUniBitBtn;
     actOk: TAction;
     actCancel: TAction;
+    pnlBreak: TUniPanel;
     procedure actOkExecute(Sender: TObject);
   private
     { Private declarations }

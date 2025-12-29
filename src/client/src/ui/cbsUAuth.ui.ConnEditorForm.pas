@@ -13,41 +13,41 @@ uses
 
 type
   TfrmConnEditor = class(TfrmBase)
+    actCancel: TAction;
+    actDefaults: TAction;
+    actOk: TAction;
+    actTestConn: TAction;
+    btnCancel: TUniBitBtn;
+    btnDefaults: TUniBitBtn;
+    btnOk: TUniBitBtn;
+    btnTestConn: TUniBitBtn;
+    cbxCombo: TUniDBComboBox;
+    dsoPRM: TDataSource;
+    edtConnectionName: TUniEdit;
+    grdParams: TUniDBGrid;
     imgDb: TUniImage;
     labInfo: TUniLabel;
-    btnOk: TUniBitBtn;
-    btnCancel: TUniBitBtn;
-    actOk: TAction;
-    actCancel: TAction;
     mtbPRM: TFDMemTable;
-    mtbPRMParam: TStringField;
-    mtbPRMValue: TStringField;
     mtbPRMDefault: TStringField;
-    dsoPRM: TDataSource;
-    actTestConn: TAction;
-    actDefaults: TAction;
-    btnTestConn: TUniBitBtn;
-    btnDefaults: TUniBitBtn;
-    grdParams: TUniDBGrid;
+    mtbPRMParam: TStringField;
     mtbPRMParamType: TStringField;
-    pnlValue: TUniPanel;
-    cbxCombo: TUniDBComboBox;
-    edtConnectionName: TUniEdit;
+    mtbPRMValue: TStringField;
     pnlLine02: TUniPanel;
+    pnlValue: TUniPanel;
     usmTestConnection: TUniScreenMask;
     procedure actDefaultsExecute(Sender: TObject);
     procedure actOkExecute(Sender: TObject);
     procedure actTestConnExecute(Sender: TObject);
     procedure cbxComboSelect(Sender: TObject);
+    procedure dsoPRMDataChange(Sender: TObject; Field: TField);
+    procedure edtConnectionNameChange(Sender: TObject);
     procedure grdParamsAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure grdParamsDrawColumnCell(Sender: TObject; ACol, ARow: Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
     procedure grdParamsSelectionChange(Sender: TObject);
     procedure mtbPRMAfterPost(DataSet: TDataSet);
     procedure mtbPRMAfterScroll(DataSet: TDataSet);
-    procedure UniFormDestroy(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
-    procedure dsoPRMDataChange(Sender: TObject; Field: TField);
-    procedure edtConnectionNameChange(Sender: TObject);
+    procedure UniFormDestroy(Sender: TObject);
   private
     FConnection: TFDCustomConnection;
     FConnectionString: string;
@@ -56,20 +56,20 @@ type
     FDriverID: String;
     FEdited: TStrings;
     FResults: TStrings;
+    procedure BeforeOk;
+    procedure FillConnParams(const AParams: TStrings);
+    procedure FillParamGrids;
+    procedure FillParamValues(const AAsIs: Boolean);
     function GetConnectionName: string;
+    procedure GetDriverParams(const ADrvID: String; AStrs: TStrings);
     function GetTempConnection: TFDCustomConnection;
     function IsDriverKnown(const ADrvID: String; out ADrvMeta: IFDPhysDriverMetadata): Boolean;
-    procedure BeforeOk;
-    procedure FillParamGrids;
-    procedure FillConnParams(const AParams: TStrings);
-    procedure FillParamValues(const AAsIs: Boolean);
-    procedure GetDriverParams(const ADrvID: String; AStrs: TStrings);
     procedure OverrideBy(AThis, AByThat: TStrings);
     procedure PostDataSet;
     procedure PostEdited;
     procedure ResetConnectionDef;
-    procedure SetConnectionParams(const AConnection: TFDCustomConnection);
     procedure SetConnectionName(const AValue: string);
+    procedure SetConnectionParams(const AConnection: TFDCustomConnection);
     procedure SetConnectionString(const AValue: string);
   public
     property ConnectionName: string read GetConnectionName write SetConnectionName;
@@ -163,26 +163,6 @@ begin
       AItems.EndUpdate;
     end;
   end;
-end;
-
-{ TfrmConnEditor }
-
-function TfrmConnEditor.GetConnectionName: string;
-begin
-  Result := string(edtConnectionName.Text).Trim;
-end;
-
-function TfrmConnEditor.IsDriverKnown(const ADrvID: String; out ADrvMeta: IFDPhysDriverMetadata): Boolean;
-begin
-  var LManMeta: IFDPhysManagerMetadata;
-  FDPhysManager.CreateMetadata(LManMeta);
-  for var I := 0 to LManMeta.DriverCount - 1 do if
-    CompareText(LManMeta.DriverID[I], ADrvID) = 0 then
-  begin
-    LManMeta.CreateDriverMetadata(ADrvID, ADrvMeta);
-    Exit(True);
-  end;
-  Result := False;
 end;
 
 procedure TfrmConnEditor.actDefaultsExecute(Sender: TObject);
@@ -357,6 +337,13 @@ begin
   end;
 end;
 
+{ TfrmConnEditor }
+
+function TfrmConnEditor.GetConnectionName: string;
+begin
+  Result := string(edtConnectionName.Text).Trim;
+end;
+
 procedure TfrmConnEditor.GetDriverParams(const ADrvID: String; AStrs: TStrings);
 begin
   var LDrvMeta: IFDPhysDriverMetadata;
@@ -436,6 +423,19 @@ begin
   end;
   var LDataSet := grdParams.DataSource.DataSet;
   LCurrentColumn.ReadOnly := LDataSet.RecNo = 1;
+end;
+
+function TfrmConnEditor.IsDriverKnown(const ADrvID: String; out ADrvMeta: IFDPhysDriverMetadata): Boolean;
+begin
+  var LManMeta: IFDPhysManagerMetadata;
+  FDPhysManager.CreateMetadata(LManMeta);
+  for var I := 0 to LManMeta.DriverCount - 1 do if
+    CompareText(LManMeta.DriverID[I], ADrvID) = 0 then
+  begin
+    LManMeta.CreateDriverMetadata(ADrvID, ADrvMeta);
+    Exit(True);
+  end;
+  Result := False;
 end;
 
 procedure TfrmConnEditor.mtbPRMAfterPost(DataSet: TDataSet);
