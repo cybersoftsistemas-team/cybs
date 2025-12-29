@@ -11,7 +11,16 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
   ExplicitWidth = 451
   ExplicitHeight = 347
   TextHeight = 15
-  object pnlStep01: TUniContainerPanel [0]
+  object pnlStep03: TUniContainerPanel [0]
+    Left = 11
+    Top = 8
+    Width = 429
+    Height = 287
+    Hint = ''
+    ParentColor = False
+    TabOrder = 2
+  end
+  object pnlStep01: TUniContainerPanel [1]
     Left = 11
     Top = 8
     Width = 429
@@ -46,7 +55,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       TabOrder = 2
     end
   end
-  object pnlStep02: TUniContainerPanel [1]
+  object pnlStep02: TUniContainerPanel [2]
     Left = 11
     Top = 8
     Width = 429
@@ -57,129 +66,6 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     DesignSize = (
       429
       287)
-    object pnlNatural: TUniContainerPanel
-      Left = 107
-      Top = 49
-      Width = 322
-      Height = 238
-      Hint = ''
-      ParentColor = False
-      Anchors = [akLeft, akTop, akRight, akBottom]
-      TabOrder = 4
-      object cbxGender: TUniDBComboBox
-        Left = 4
-        Top = 91
-        Width = 79
-        Hint = ''
-        TabOrder = 10
-        FieldLabel = 'Sexo'
-        FieldLabelAlign = laTop
-        IconItems = <>
-      end
-      object edtFirstName: TUniDBEdit
-        Left = 4
-        Top = 1
-        Width = 155
-        Height = 22
-        Hint = ''
-        TabOrder = 1
-        FieldLabel = 'Primeiro Nome'
-        FieldLabelAlign = laTop
-      end
-      object edtLastName: TUniDBEdit
-        Left = 166
-        Top = 1
-        Width = 155
-        Height = 22
-        Hint = ''
-        TabOrder = 2
-        FieldLabel = 'Sobrenome'
-        FieldLabelAlign = laTop
-      end
-      object edtBirthday: TUniDBDateTimePicker
-        Left = 4
-        Top = 45
-        Width = 79
-        Hint = ''
-        DateTime = 46012.000000000000000000
-        DateFormat = 'dd/MM/yyyy'
-        TimeFormat = 'HH:mm:ss'
-        TabOrder = 3
-        FieldLabel = 'Nascimento'
-        FieldLabelAlign = laTop
-      end
-      object edtSSN: TUniDBEdit
-        Left = 90
-        Top = 45
-        Width = 112
-        Height = 22
-        Hint = ''
-        TabOrder = 4
-        FieldLabel = 'CPF'
-        FieldLabelAlign = laTop
-      end
-      object edtIDCard: TUniDBEdit
-        Left = 209
-        Top = 45
-        Width = 112
-        Height = 22
-        Hint = ''
-        TabOrder = 5
-        FieldLabel = 'RG'
-        FieldLabelAlign = laTop
-      end
-      object labPlaceOfBirthId: TUniLabel
-        Left = 4
-        Top = 143
-        Width = 68
-        Height = 13
-        Hint = ''
-        Caption = 'Naturalidade'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 6
-      end
-      object cbxNatCountry: TUniDBComboBox
-        Left = 4
-        Top = 157
-        Width = 79
-        Hint = ''
-        TabOrder = 7
-        FieldLabel = 'Pa'#237's'
-        FieldLabelAlign = laTop
-        IconItems = <>
-      end
-      object cbxNatState: TUniDBComboBox
-        Left = 90
-        Top = 157
-        Width = 112
-        Hint = ''
-        TabOrder = 8
-        FieldLabel = 'Estado'
-        FieldLabelAlign = laTop
-        IconItems = <>
-      end
-      object cbxNatCity: TUniDBComboBox
-        Left = 209
-        Top = 157
-        Width = 112
-        Hint = ''
-        TabOrder = 9
-        FieldLabel = 'Cidade'
-        FieldLabelAlign = laTop
-        IconItems = <>
-      end
-      object cbxNationality: TUniDBComboBox
-        Left = 90
-        Top = 91
-        Width = 112
-        Hint = ''
-        TabOrder = 11
-        FieldLabel = 'Nacionalidade'
-        FieldLabelAlign = laTop
-        IconItems = <>
-      end
-    end
     object pnlLegal: TUniContainerPanel
       Left = 107
       Top = 49
@@ -189,7 +75,277 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       Visible = False
       ParentColor = False
       Anchors = [akLeft, akTop, akRight, akBottom]
-      TabOrder = 8
+      TabOrder = 4
+      object edtLegName: TUniDBEdit
+        Left = 4
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        TabOrder = 1
+        FieldLabel = 'Nome'
+        FieldLabelAlign = laTop
+      end
+      object edtLegDoingBusinessAs: TUniDBEdit
+        Left = 166
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        TabOrder = 2
+        FieldLabel = 'Nome fantasia'
+        FieldLabelAlign = laTop
+      end
+      object edtLegFoundationDate: TUniDBDateTimePicker
+        Left = 4
+        Top = 45
+        Width = 79
+        Hint = ''
+        DateTime = 46014.000000000000000000
+        DateFormat = 'dd/MM/yyyy'
+        TimeFormat = 'HH:mm:ss'
+        TabOrder = 3
+        FieldLabel = 'Fundada em'
+        FieldLabelAlign = laTop
+      end
+      object edtLegCRN: TUniDBEdit
+        Left = 90
+        Top = 45
+        Width = 112
+        Height = 22
+        Hint = ''
+        TabOrder = 4
+        FieldLabel = 'CNPJ'
+        FieldLabelAlign = laTop
+      end
+      object cbbLegCompanyType: TUniDBLookupComboBox
+        Left = 209
+        Top = 45
+        Width = 112
+        Hint = ''
+        ListFieldIndex = 0
+        TabOrder = 5
+        Color = clWindow
+        FieldLabel = 'Tipo'
+        FieldLabelAlign = laTop
+      end
+      object cbbLegNationality: TUniDBComboBox
+        Left = 4
+        Top = 89
+        Width = 112
+        Hint = ''
+        TabOrder = 6
+        FieldLabel = 'Nacionalidade'
+        FieldLabelAlign = laTop
+        IconItems = <>
+      end
+      object UniDBComboBox2: TUniDBComboBox
+        Left = 124
+        Top = 89
+        Width = 111
+        Hint = ''
+        TabOrder = 7
+        FieldLabel = 'Estado'
+        FieldLabelAlign = laTop
+        IconItems = <>
+      end
+      object edtLegStateInscriptionNumber: TUniDBEdit
+        Left = 4
+        Top = 134
+        Width = 154
+        Height = 22
+        Hint = ''
+        TabOrder = 8
+        FieldLabel = 'Inscri'#231#227'o Estadual'
+        FieldLabelAlign = laTop
+      end
+      object edtLegMunicipalInscription: TUniDBEdit
+        Left = 166
+        Top = 134
+        Width = 154
+        Height = 22
+        Hint = ''
+        TabOrder = 9
+        FieldLabel = 'Inscri'#231#227'o Municipal'
+        FieldLabelAlign = laTop
+      end
+    end
+    object pnlNatural: TUniContainerPanel
+      Left = 107
+      Top = 49
+      Width = 322
+      Height = 238
+      Hint = ''
+      ParentColor = False
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      TabOrder = 5
+      object cbxNatCity: TUniDBLookupComboBox
+        Left = 209
+        Top = 154
+        Width = 110
+        Hint = ''
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoCYT
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        DataField = 'PlaceOfBirthId'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 11
+        Color = clWindow
+        MatchFieldWidth = False
+        RemoteQuery = True
+        FieldLabel = 'Cidade'
+        FieldLabelAlign = laTop
+        Triggers = <
+          item
+            ButtonId = 0
+          end
+          item
+            ImageIndex = 0
+            ButtonId = 1
+          end>
+        Images = nilstMain
+        OnTriggerEvent = cbxNatCityTriggerEvent
+      end
+      object cbxNatState: TUniDBLookupComboBox
+        Left = 93
+        Top = 154
+        Width = 110
+        Hint = ''
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoSTA
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        TabOrder = 10
+        Color = clWindow
+        MatchFieldWidth = False
+        RemoteQuery = True
+        FieldLabel = 'Estado'
+        FieldLabelAlign = laTop
+      end
+      object cbxNatCountry: TUniDBLookupComboBox
+        Left = 4
+        Top = 154
+        Width = 82
+        Hint = ''
+        ListOnlyMode = lmFollowSource
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoCOU
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        TabOrder = 9
+        Color = clWindow
+        MatchFieldWidth = False
+        RemoteQuery = True
+        FieldLabel = 'Pa'#237's'
+        FieldLabelAlign = laTop
+      end
+      object cbxNatNationality: TUniDBLookupComboBox
+        Left = 93
+        Top = 89
+        Width = 110
+        Hint = ''
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoNTU
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        DataField = 'NationalityId'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 7
+        Color = clWindow
+        RemoteQuery = True
+        FieldLabel = 'Nacionalidade'
+        FieldLabelAlign = laTop
+      end
+      object cbxNatGender: TUniDBLookupComboBox
+        Left = 4
+        Top = 89
+        Width = 82
+        Hint = ''
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoGEN
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        DataField = 'GenderId'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 6
+        Color = clWindow
+        FieldLabel = 'Sexo'
+        FieldLabelAlign = laTop
+      end
+      object edtNatFirstName: TUniDBEdit
+        Left = 4
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        DataField = 'FirstName'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 1
+        FieldLabel = 'Primeiro Nome'
+        FieldLabelAlign = laTop
+      end
+      object edtNatLastName: TUniDBEdit
+        Left = 165
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        DataField = 'LastName'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 2
+        FieldLabel = 'Sobrenome'
+        FieldLabelAlign = laTop
+      end
+      object edtNatBirthday: TUniDBDateTimePicker
+        Left = 4
+        Top = 45
+        Width = 82
+        Hint = ''
+        DataField = 'Birthday'
+        DataSource = damCustomerRegistration.dsoNAT
+        DateTime = 46012.000000000000000000
+        DateFormat = 'dd/MM/yyyy'
+        TimeFormat = 'HH:mm:ss'
+        TabOrder = 3
+        FieldLabel = 'Nascimento'
+        FieldLabelAlign = laTop
+      end
+      object edtNatSSN: TUniDBEdit
+        Left = 93
+        Top = 45
+        Width = 110
+        Height = 22
+        Hint = ''
+        DataField = 'SSN'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 4
+        FieldLabel = 'CPF'
+        FieldLabelAlign = laTop
+      end
+      object edtNatIDCard: TUniDBEdit
+        Left = 210
+        Top = 45
+        Width = 110
+        Height = 22
+        Hint = ''
+        DataField = 'IDCard'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 5
+        FieldLabel = 'RG'
+        FieldLabelAlign = laTop
+      end
+      object labPlaceOfBirthId: TUniLabel
+        Left = 4
+        Top = 140
+        Width = 68
+        Height = 13
+        Hint = ''
+        Caption = 'Naturalidade'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 8
+      end
     end
     object pnlBreakTop: TUniPanel
       Left = 0
@@ -212,7 +368,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       Hint = ''
       Checked = True
       Caption = 'Pessoa F'#237'sica'
-      TabOrder = 6
+      TabOrder = 7
       Group = 1
       OnClick = rbtNaturalClick
     end
@@ -223,7 +379,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       Height = 18
       Hint = ''
       Caption = 'Pessoa Jur'#237'dica'
-      TabOrder = 7
+      TabOrder = 8
       Group = 1
       OnClick = rbtLegalClick
     end
@@ -235,7 +391,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       Hint = ''
       Enabled = False
       BodyRTL = False
-      TabOrder = 5
+      TabOrder = 6
       ShowCaption = False
       Caption = 'pnlBreak'
     end
@@ -264,7 +420,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       TabOrder = 2
     end
   end
-  object pnlButtons: TUniSimplePanel [2]
+  object pnlButtons: TUniSimplePanel [3]
     Left = 11
     Top = 312
     Width = 429
@@ -272,7 +428,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     Hint = ''
     ParentColor = False
     Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 3
+    TabOrder = 4
     object btnCancel: TUniBitBtn
       AlignWithMargins = True
       Left = 347
@@ -335,7 +491,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       TabOrder = 1
     end
   end
-  object pnlBreak: TUniPanel [3]
+  object pnlBreak: TUniPanel [4]
     Left = 11
     Top = 301
     Width = 429
@@ -344,7 +500,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     Enabled = False
     BodyRTL = False
     Anchors = [akLeft, akRight, akBottom]
-    TabOrder = 2
+    TabOrder = 3
     ShowCaption = False
     Caption = 'pnlBreak'
   end
@@ -374,27 +530,13 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     Left = 67
     Top = 310
     Images = {
-      03000000FFFFFF1F04DD00000089504E470D0A1A0A0000000D49484452000000
+      01000000FFFFFF1F04EC00000089504E470D0A1A0A0000000D49484452000000
       100000001008060000001FF3FF610000001974455874536F6674776172650041
-      646F626520496D616765526561647971C9653C00000021744558745469746C65
-      00507265763B4172726F773B4C6566743B4261636B3B526577696E640B2B870F
-      0000005249444154785EBD93B10D002008045D90751CC0251CC115DC0EADBE32
-      01AFA0F886E42E24F0CDDD53B1B1ED354FC3374E04828940301108FE16F43505
-      1381602078C0B51BC4127E85AA3F8825055DE06DE439F4E8D3A82E8C6E840000
-      000049454E44AE426082FFFFFF1F04D700000089504E470D0A1A0A0000000D49
-      484452000000100000001008060000001FF3FF610000001974455874536F6674
-      776172650041646F626520496D616765526561647971C9653C0000001C744558
-      745469746C65004E6578743B506C61793B4172726F773B52696768743B52716C
-      480000005149444154785EC5D3C109C0201005D13438ED58409A4809B660771B
-      3CFD4308C81CF4F0F0362CAC7B55D507F760BE2BFE0295880F4CF840E003810F
-      04AD3F3210F840706C028E6D81FD3FD1DF82BF46EF050E8BD3A832CB82150000
-      000049454E44AE426082FFFFFF1F04E700000089504E470D0A1A0A0000000D49
-      484452000000100000001008060000001FF3FF610000001974455874536F6674
-      776172650041646F626520496D616765526561647971C9653C0000002A744558
-      745469746C65004C6173743B4172726F773B466F72776172643B536B69703B4E
-      6578743B526577696E643B5B4492450000005349444154785EC5D3B109002110
-      44D16BF0B76301D7C495600B7637C724069B884CB0C1C740782CE83E9276BC0B
-      9F37554005A9773A021B0901470A3852C031E617018E1450EB04B4BD020D3F31
-      D885681BA37E6F30C8BB3E89258D0000000049454E44AE426082}
+      646F626520496D616765526561647971C9653C0000003D744558745469746C65
+      004E65773B506167653B426172733B526962626F6E3B5374616E646172643B49
+      74656D3B426C616E6B3B44656661756C743B456D7074793B130452ED00000045
+      49444154785EEDCCB10900200C44517772C5D4D9D0452C3C09A820C221499B83
+      CF75AF00087500110169ACAF14603340559B215EC0AE6FC4035C7180C7810412
+      F8EC01424D9E9C52B21F391F500000000049454E44AE426082}
   end
 end

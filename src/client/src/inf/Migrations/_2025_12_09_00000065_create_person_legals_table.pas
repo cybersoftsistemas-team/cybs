@@ -25,7 +25,7 @@ begin
      GuidColumn('Id').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
     ,StringColumn('DoingBusinessAs').HasMaxLength(255).IsRequired // Nome fantasia
-    ,IntColumn('CRN').IsRequired // CRN – Company Registration Number (CNPJ)
+    ,StringColumn('CRN').HasMaxLength(14).IsRequired // CRN – Company Registration Number (CNPJ)
     ,DateTimeColumn('FoundationDate').IsRequired
     ,StringColumn('StateInscriptionNumber').HasMaxLength(20).IsOptional // Inscrição Estadual
     ,StringColumn('MunicipalInscription').HasMaxLength(20).IsOptional // Inscrição Municipal

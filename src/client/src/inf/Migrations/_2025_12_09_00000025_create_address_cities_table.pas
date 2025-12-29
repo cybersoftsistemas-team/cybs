@@ -24,7 +24,7 @@ begin
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
-    ,IntColumn('AreaCode').IsRequired
+    ,IntColumn('AreaCode').HasDefaultValueSql('0').IsRequired
     ,GuidColumn('StateId').IsRequired
    ])
    .Constraints([

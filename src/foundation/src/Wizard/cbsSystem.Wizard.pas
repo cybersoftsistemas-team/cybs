@@ -16,9 +16,12 @@ type
     FBackAction: TAction;
     FFinishAction: TAction;
     FNextAction: TAction;
+    FOnChangeStep: TChangeStepEvent;
     FStepList: IStepList;
     function GetActiveStepIndex: Integer;
+    function GetOnChangeStep: TChangeStepEvent;
     procedure SetActiveStepIndex(const AValue: Integer);
+    procedure SetOnChangeStep(const AValue: TChangeStepEvent);
     procedure UpdateUI;
   public
     constructor Create;
@@ -30,6 +33,7 @@ type
     function SetFinishAction(const AAction: TAction): IWizard;
     function SetNextAction(const AAction: TAction): IWizard;
     property ActiveStepIndex: Integer read GetActiveStepIndex write SetActiveStepIndex default 0;
+    property OnChangeStep: TChangeStepEvent read GetOnChangeStep write SetOnChangeStep;
   end;
 
 implementation
@@ -70,6 +74,11 @@ begin
   Result := FActiveStepIndex;
 end;
 
+function TcbsWizard.GetOnChangeStep: TChangeStepEvent;
+begin
+  Result := FOnChangeStep;
+end;
+
 procedure TcbsWizard.Next;
 begin
   SetActiveStepIndex(FActiveStepIndex + 1);
@@ -85,8 +94,13 @@ begin
   begin
     Exit;
   end;
+  var LOldIndex := FActiveStepIndex;
   FActiveStepIndex := AValue;
   UpdateUI;
+  if Assigned(FOnChangeStep) then
+  begin
+    FOnChangeStep(Self, LOldIndex, FActiveStepIndex);
+  end;
 end;
 
 function TcbsWizard.SetBackAction(const AAction: TAction): IWizard;
@@ -120,6 +134,11 @@ begin
   end;
   UpdateUI;
   Result := Self;
+end;
+
+procedure TcbsWizard.SetOnChangeStep(const AValue: TChangeStepEvent);
+begin
+  FOnChangeStep := AValue;
 end;
 
 procedure TcbsWizard.UpdateUI;

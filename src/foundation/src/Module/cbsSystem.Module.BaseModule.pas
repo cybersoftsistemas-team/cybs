@@ -13,6 +13,7 @@ type
   TdamBase = class(TDataModule, IDataModule)
     procedure CpfOrCnpfGetText(Sender: TField; var Text: string; DisplayText: Boolean);
     procedure CpfOrCnpfSetText(Sender: TField; const Text: string);
+    procedure DataModuleCreate(Sender: TObject);
     procedure DataSetBeforePost(DataSet: TDataSet);
     procedure dsoDataChange(Sender: TObject; Field: TField);
     procedure dsoStateChange(Sender: TObject);
@@ -22,8 +23,11 @@ type
     FFormListenerList: IFormListenerList;
     procedure CheckRequiredFields(const ADataSet: TDataSet);
   protected
+    procedure CloseDataSets; virtual;
     procedure DoDataChange(Sender: TObject; Field: TField); virtual;
     procedure DoStateChange(Sender: TObject); virtual;
+    procedure OpenDataSets; virtual;
+    procedure SetNewGuid(const AField: TGuidField);
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -74,6 +78,11 @@ begin
   end;
 end;
 
+procedure TdamBase.CloseDataSets;
+begin
+  // This method can be overwritten by inherited classes.
+end;
+
 procedure TdamBase.CpfOrCnpfGetText(Sender: TField; var Text: string; DisplayText: Boolean);
 begin
   if not FCpfOrCnpfDBFieldDisplayText then
@@ -87,6 +96,12 @@ end;
 procedure TdamBase.CpfOrCnpfSetText(Sender: TField; const Text: string);
 begin
   Sender.AsString := GetOnlyNumbers(Text);
+end;
+
+procedure TdamBase.DataModuleCreate(Sender: TObject);
+begin
+  CloseDataSets;
+  OpenDataSets;
 end;
 
 procedure TdamBase.DataSetBeforePost(DataSet: TDataSet);
@@ -122,9 +137,22 @@ begin
   DoStateChange(Sender);
 end;
 
+procedure TdamBase.OpenDataSets;
+begin
+  // This method can be overwritten by inherited classes.
+end;
+
 procedure TdamBase.RemoveFormListener(const AForm: IForm);
 begin
   FFormListenerList.Remove(AForm);
+end;
+
+procedure TdamBase.SetNewGuid(const AField: TGuidField);
+begin
+  if Assigned(AField.DataSet) and (AField.DataSet.State in dsEditModes) then
+  begin
+    AField.AsGuid := TGuid.NewGuid;
+  end;
 end;
 
 procedure TdamBase.SetZeroToTheLeft(Sender: TField; var Text: string; DisplayText: Boolean);
