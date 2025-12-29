@@ -131,6 +131,11 @@ begin
   RegisterRequiredField(edtNatBirthday);
   RegisterRequiredField(edtNatSSN);
   RegisterRequiredField(edtNatIDCard);
+  RegisterRequiredField(cbxNatGender);
+  RegisterRequiredField(cbxNatNationality);
+  RegisterRequiredField(cbxNatCountry);
+  RegisterRequiredField(cbxNatState);
+  RegisterRequiredField(cbxNatCity);
 end;
 
 procedure TfrmCustomerRegistration.UniFormCreate(Sender: TObject);

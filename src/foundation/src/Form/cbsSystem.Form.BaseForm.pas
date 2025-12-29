@@ -8,8 +8,8 @@ uses
   cbsSystem.Contracts.Module.BaseModule,
   cbsSystem.MessageBox,
 {IDE}
-  Data.DB, Dialogs, uniEdit, uniDateTimePicker, uniGUIForm, uniGUIClasses, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions,
-  Vcl.ActnList, uniMainMenu;
+  Data.DB, Dialogs, uniEdit, uniDateTimePicker, uniDBLookupComboBox, uniGUIForm, uniGUIClasses, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes,
+  System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
   FormType = class of TUniForm;
@@ -49,7 +49,8 @@ implementation
 
 uses
 {IDE}
-  System.SysUtils;
+  System.SysUtils,
+  System.Variants;
 
 type
   THackUniFormControl = class(TUniFormControl);
@@ -165,6 +166,15 @@ begin
     begin
       var LValue := THackUniDateTimePicker(LControl).DateTime;
       if LValue = 0 then
+      begin
+        MarkInvalid(LControl, LRequiredField.Message);
+        Result := False;
+      end;
+    end
+    else if LControl is TUniCustomDBLookupComboBox then
+    begin
+      var LValue := TUniCustomDBLookupComboBox(LControl).KeyValue;
+      if VarIsNull(LValue) then
       begin
         MarkInvalid(LControl, LRequiredField.Message);
         Result := False;
