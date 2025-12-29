@@ -151,14 +151,15 @@ begin
   Result := True;
   for var LRequiredField in FRequiredFieldList do
   begin
-    ClearInvalid(LRequiredField.Control);
     var LControl := LRequiredField.Control;
+    var LMessage := LRequiredField.Message;
+    ClearInvalid(LControl);
     if LControl is TUniCustomEdit then
     begin
       var LValue := Trim(TUniCustomEdit(LControl).Text);
       if LValue.IsEmpty then
       begin
-        MarkInvalid(LControl, LRequiredField.Message);
+        MarkInvalid(LControl, LMessage);
         Result := False;
       end;
     end
@@ -167,7 +168,7 @@ begin
       var LValue := THackUniDateTimePicker(LControl).DateTime;
       if LValue = 0 then
       begin
-        MarkInvalid(LControl, LRequiredField.Message);
+        MarkInvalid(LControl, LMessage);
         Result := False;
       end;
     end
@@ -176,7 +177,7 @@ begin
       var LValue := TUniCustomDBLookupComboBox(LControl).KeyValue;
       if VarIsEmpty(LValue) or VarIsNull(LValue) then
       begin
-        MarkInvalid(LControl, LRequiredField.Message);
+        MarkInvalid(LControl, LMessage);
         Result := False;
       end;
     end;
