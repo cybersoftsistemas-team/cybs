@@ -174,7 +174,7 @@ begin
     else if LControl is TUniCustomDBLookupComboBox then
     begin
       var LValue := TUniCustomDBLookupComboBox(LControl).KeyValue;
-      if VarIsNull(LValue) then
+      if VarIsEmpty(LValue) or VarIsNull(LValue) then
       begin
         MarkInvalid(LControl, LRequiredField.Message);
         Result := False;
