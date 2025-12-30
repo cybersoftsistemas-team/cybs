@@ -26,6 +26,8 @@ type
     aclMain: TUniActionList;
     ilaMain: TUniImageListAdapter;
     nilstMain: TUniNativeImageList;
+    procedure DisableCpfOrCnpfDBFieldDisplayText(Sender: TObject);
+    procedure EnableCpfOrCnpfDBFieldDisplayText(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
     procedure UniFormDestroy(Sender: TObject);
   private
@@ -66,8 +68,8 @@ uses
 
 type
   THackUniDateTimePicker = class(TUniCustomDateTimePicker);
-  THackUniCustomDBLookupComboBox = class(TUniCustomDBLookupComboBox);
   THackUniCustomDBComboBox = class(TUniCustomDBComboBox);
+  THackUniCustomDBLookupComboBox = class(TUniCustomDBLookupComboBox);
   THackUniFormControl = class(TUniFormControl);
 
 resourcestring
@@ -86,6 +88,16 @@ destructor TfrmBase.Destroy;
 begin
   FRequiredFieldList := nil;
   inherited;
+end;
+
+procedure TfrmBase.DisableCpfOrCnpfDBFieldDisplayText(Sender: TObject);
+begin
+  FDataModule.CpfOrCnpfDBFieldDisplayText := False;
+end;
+
+procedure TfrmBase.EnableCpfOrCnpfDBFieldDisplayText(Sender: TObject);
+begin
+  FDataModule.CpfOrCnpfDBFieldDisplayText := True;
 end;
 
 function TfrmBase.BuildRequiredMessage(const AControl: TUniFormControl; const AField: TField): string;
@@ -180,69 +192,66 @@ begin
 end;
 
 procedure TfrmBase.RegisterRequiredFieldsFromDataModule;
-var
-  I: Integer;
-  C: TComponent;
-  LDataSource: TDataSource;
-  LDataField: string;
-  LField: TField;
-  LControl: TUniFormControl;
 begin
   if not Assigned(FDataModule) then
-    Exit;
-
-  for I := 0 to ComponentCount - 1 do
   begin
-    C := Components[I];
-
-    if not (C is TUniFormControl) then
+    Exit;
+  end;
+  for var I := 0 to ComponentCount - 1 do
+  begin
+    var LComponent := Components[I];
+    if not (LComponent is TUniFormControl) then
+    begin
       Continue;
-
-    LControl := TUniFormControl(C);
-
+    end;
+    var LControl := TUniFormControl(LComponent);
     // Override manual
     if LControl.Tag < 0 then
+    begin
       Continue;
-
-    LDataField  := '';
-
-    if C is TUniDBEdit then
+    end;
+    var LDataField := '';
+    var LDataSource: TDataSource;
+    if LComponent is TUniDBEdit then
     begin
-      LDataSource := TUniDBEdit(C).DataSource;
-      LDataField  := TUniDBEdit(C).DataField;
+      LDataSource := TUniDBEdit(LComponent).DataSource;
+      LDataField  := TUniDBEdit(LComponent).DataField;
     end
-    else if C is TUniCustomDBLookupComboBox then
+    else if LComponent is TUniCustomDBLookupComboBox then
     begin
-      LDataSource := THackUniCustomDBLookupComboBox(C).DataSource;
-      LDataField  := THackUniCustomDBLookupComboBox(C).DataField;
+      LDataSource := THackUniCustomDBLookupComboBox(LComponent).DataSource;
+      LDataField  := THackUniCustomDBLookupComboBox(LComponent).DataField;
     end
-    else if C is TUniCustomDBComboBox then
+    else if LComponent is TUniCustomDBComboBox then
     begin
-      LDataSource := THackUniCustomDBComboBox(C).DataSource;
-      LDataField  := THackUniCustomDBComboBox(C).DataField;
+      LDataSource := THackUniCustomDBComboBox(LComponent).DataSource;
+      LDataField  := THackUniCustomDBComboBox(LComponent).DataField;
     end
     else
       Continue;
-
     if not Assigned(LDataSource) or not Assigned(LDataSource.DataSet) or LDataField.IsEmpty then
+    begin
       Continue;
-
-    LField := LDataSource.DataSet.FindField(LDataField);
+    end;
+    var LField := LDataSource.DataSet.FindField(LDataField);
     if not Assigned(LField) then
+    begin
       Continue;
-
+    end;
     // Decide se é obrigatório
     if not (LField.Required or (LControl.Tag > 0)) then
+    begin
       Continue;
-
+    end;
     if not CanValidateControl(LControl, LField) then
+    begin
       Continue;
-
+    end;
     if IsAlreadyRegistered(LControl) then
+    begin
       Continue;
-
-    RegisterRequiredField(
-      LControl,
+    end;
+    RegisterRequiredField(LControl,
       BuildRequiredMessage(LControl, LField)
     );
   end;

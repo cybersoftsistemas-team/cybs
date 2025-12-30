@@ -21,7 +21,9 @@ type
   private
     FCpfOrCnpfDBFieldDisplayText: Boolean;
     FFormListenerList: IFormListenerList;
+    function GetCpfOrCnpfDBFieldDisplayText: Boolean;
     procedure CheckRequiredFields(const ADataSet: TDataSet);
+    procedure SetCpfOrCnpfDBFieldDisplayText(const AValue: Boolean);
   protected
     procedure CloseDataSets; virtual;
     procedure DoDataChange(Sender: TObject; Field: TField); virtual;
@@ -33,7 +35,7 @@ type
     destructor Destroy; override;
     procedure AddFormListener(const AForm: IForm);
     procedure RemoveFormListener(const AForm: IForm);
-    property CpfOrCnpfDBFieldDisplayText: Boolean read FCpfOrCnpfDBFieldDisplayText write FCpfOrCnpfDBFieldDisplayText;
+    property CpfOrCnpfDBFieldDisplayText: Boolean read GetCpfOrCnpfDBFieldDisplayText write SetCpfOrCnpfDBFieldDisplayText;
   end;
 
   ModuleType = class of TDataModule;
@@ -121,20 +123,31 @@ end;
 
 procedure TdamBase.dsoDataChange(Sender: TObject; Field: TField);
 begin
-  for var LForm in FFormListenerList do
+  if Assigned(FFormListenerList) then
   begin
-    LForm.DataChange(Sender, Field);
+    for var LForm in FFormListenerList do
+    begin
+      LForm.DataChange(Sender, Field);
+    end;
   end;
   DoDataChange(Sender, Field);
 end;
 
 procedure TdamBase.dsoStateChange(Sender: TObject);
 begin
-  for var LForm in FFormListenerList do
+  if Assigned(FFormListenerList) then
   begin
-    LForm.StateChange(Sender);
+    for var LForm in FFormListenerList do
+    begin
+      LForm.StateChange(Sender);
+    end;
   end;
   DoStateChange(Sender);
+end;
+
+function TdamBase.GetCpfOrCnpfDBFieldDisplayText: Boolean;
+begin
+  Result := FCpfOrCnpfDBFieldDisplayText;
 end;
 
 procedure TdamBase.OpenDataSets;
@@ -145,6 +158,11 @@ end;
 procedure TdamBase.RemoveFormListener(const AForm: IForm);
 begin
   FFormListenerList.Remove(AForm);
+end;
+
+procedure TdamBase.SetCpfOrCnpfDBFieldDisplayText(const AValue: Boolean);
+begin
+  FCpfOrCnpfDBFieldDisplayText := AValue;
 end;
 
 procedure TdamBase.SetNewGuid(const AField: TGuidField);

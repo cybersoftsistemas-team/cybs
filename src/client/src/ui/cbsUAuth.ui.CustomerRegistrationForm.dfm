@@ -66,110 +66,6 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     DesignSize = (
       429
       287)
-    object pnlLegal: TUniContainerPanel
-      Left = 107
-      Top = 49
-      Width = 322
-      Height = 238
-      Hint = ''
-      Visible = False
-      ParentColor = False
-      Anchors = [akLeft, akTop, akRight, akBottom]
-      TabOrder = 4
-      object edtLegName: TUniDBEdit
-        Left = 4
-        Top = 1
-        Width = 155
-        Height = 22
-        Hint = ''
-        TabOrder = 1
-        FieldLabel = 'Nome'
-        FieldLabelAlign = laTop
-      end
-      object edtLegDoingBusinessAs: TUniDBEdit
-        Left = 166
-        Top = 1
-        Width = 155
-        Height = 22
-        Hint = ''
-        TabOrder = 2
-        FieldLabel = 'Nome fantasia'
-        FieldLabelAlign = laTop
-      end
-      object edtLegFoundationDate: TUniDBDateTimePicker
-        Left = 4
-        Top = 45
-        Width = 79
-        Hint = ''
-        DateTime = 46014.000000000000000000
-        DateFormat = 'dd/MM/yyyy'
-        TimeFormat = 'HH:mm:ss'
-        TabOrder = 3
-        FieldLabel = 'Fundada em'
-        FieldLabelAlign = laTop
-      end
-      object edtLegCRN: TUniDBEdit
-        Left = 90
-        Top = 45
-        Width = 112
-        Height = 22
-        Hint = ''
-        TabOrder = 4
-        FieldLabel = 'CNPJ'
-        FieldLabelAlign = laTop
-      end
-      object cbbLegCompanyType: TUniDBLookupComboBox
-        Left = 209
-        Top = 45
-        Width = 112
-        Hint = ''
-        ListFieldIndex = 0
-        TabOrder = 5
-        Color = clWindow
-        FieldLabel = 'Tipo'
-        FieldLabelAlign = laTop
-      end
-      object cbbLegNationality: TUniDBComboBox
-        Left = 4
-        Top = 89
-        Width = 112
-        Hint = ''
-        TabOrder = 6
-        FieldLabel = 'Nacionalidade'
-        FieldLabelAlign = laTop
-        IconItems = <>
-      end
-      object cbxLegState: TUniDBComboBox
-        Left = 124
-        Top = 89
-        Width = 111
-        Hint = ''
-        TabOrder = 7
-        FieldLabel = 'Estado'
-        FieldLabelAlign = laTop
-        IconItems = <>
-      end
-      object edtLegStateInscriptionNumber: TUniDBEdit
-        Left = 4
-        Top = 134
-        Width = 154
-        Height = 22
-        Hint = ''
-        TabOrder = 8
-        FieldLabel = 'Inscri'#231#227'o Estadual'
-        FieldLabelAlign = laTop
-      end
-      object edtLegMunicipalInscription: TUniDBEdit
-        Left = 166
-        Top = 134
-        Width = 154
-        Height = 22
-        Hint = ''
-        TabOrder = 9
-        FieldLabel = 'Inscri'#231#227'o Municipal'
-        FieldLabelAlign = laTop
-      end
-    end
     object pnlNatural: TUniContainerPanel
       Left = 107
       Top = 49
@@ -322,6 +218,8 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         DataField = 'SSN'
         DataSource = damCustomerRegistration.dsoNAT
         TabOrder = 4
+        InputMask.Mask = '999.999.999-99'
+        InputMask.RemoveWhiteSpace = True
         FieldLabel = 'CPF'
         FieldLabelAlign = laTop
       end
@@ -357,6 +255,141 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         ParentColor = False
         ImageIndex = 0
         TabOrder = 12
+      end
+    end
+    object pnlLegal: TUniContainerPanel
+      Left = 107
+      Top = 49
+      Width = 322
+      Height = 238
+      Hint = ''
+      Visible = False
+      ParentColor = False
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      TabOrder = 4
+      object cbxLegStateId: TUniDBLookupComboBox
+        Left = 124
+        Top = 89
+        Width = 111
+        Hint = ''
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoSTE
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        DataField = 'StateId'
+        DataSource = damCustomerRegistration.dsoLEG
+        TabOrder = 9
+        Color = clWindow
+        FieldLabel = 'Estado'
+        FieldLabelAlign = laTop
+      end
+      object cbxLegNationalityId: TUniDBLookupComboBox
+        Left = 4
+        Top = 89
+        Width = 112
+        Hint = ''
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoNTY
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        DataField = 'NationalityId'
+        DataSource = damCustomerRegistration.dsoLEG
+        TabOrder = 8
+        Color = clWindow
+        FieldLabel = 'Nacionalidade'
+        FieldLabelAlign = laTop
+      end
+      object edtLegName: TUniDBEdit
+        Left = 4
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        DataField = 'Name'
+        DataSource = damCustomerRegistration.dsoLEG
+        TabOrder = 1
+        FieldLabel = 'Nome'
+        FieldLabelAlign = laTop
+      end
+      object edtLegDoingBusinessAs: TUniDBEdit
+        Left = 166
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        DataField = 'DoingBusinessAs'
+        DataSource = damCustomerRegistration.dsoLEG
+        TabOrder = 2
+        FieldLabel = 'Nome fantasia'
+        FieldLabelAlign = laTop
+      end
+      object edtLegFoundationDate: TUniDBDateTimePicker
+        Left = 4
+        Top = 45
+        Width = 79
+        Hint = ''
+        DataField = 'FoundationDate'
+        DataSource = damCustomerRegistration.dsoLEG
+        DateTime = 46014.000000000000000000
+        DateFormat = 'dd/MM/yyyy'
+        TimeFormat = 'HH:mm:ss'
+        TabOrder = 3
+        FieldLabel = 'Fundada em'
+        FieldLabelAlign = laTop
+      end
+      object edtLegCRN: TUniDBEdit
+        Left = 90
+        Top = 45
+        Width = 112
+        Height = 22
+        Hint = ''
+        DataField = 'CRN'
+        DataSource = damCustomerRegistration.dsoLEG
+        TabOrder = 4
+        InputMask.Mask = '99.999.999/9999-99'
+        InputMask.RemoveWhiteSpace = True
+        FieldLabel = 'CNPJ'
+        FieldLabelAlign = laTop
+      end
+      object cbxLegCompanyTypeId: TUniDBLookupComboBox
+        Left = 209
+        Top = 45
+        Width = 112
+        Hint = ''
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoCTP
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        DataField = 'CompanyTypeId'
+        DataSource = damCustomerRegistration.dsoLEG
+        TabOrder = 5
+        Color = clWindow
+        FieldLabel = 'Tipo'
+        FieldLabelAlign = laTop
+      end
+      object edtLegStateInscriptionNumber: TUniDBEdit
+        Left = 4
+        Top = 134
+        Width = 154
+        Height = 22
+        Hint = ''
+        DataField = 'StateInscriptionNumber'
+        DataSource = damCustomerRegistration.dsoLEG
+        TabOrder = 6
+        FieldLabel = 'Inscri'#231#227'o Estadual'
+        FieldLabelAlign = laTop
+      end
+      object edtLegMunicipalInscription: TUniDBEdit
+        Left = 166
+        Top = 134
+        Width = 154
+        Height = 22
+        Hint = ''
+        DataField = 'MunicipalInscription'
+        DataSource = damCustomerRegistration.dsoLEG
+        TabOrder = 7
+        FieldLabel = 'Inscri'#231#227'o Municipal'
+        FieldLabelAlign = laTop
       end
     end
     object pnlBreakTop: TUniPanel

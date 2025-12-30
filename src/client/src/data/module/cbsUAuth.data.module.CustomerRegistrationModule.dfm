@@ -1,16 +1,93 @@
 inherited damCustomerRegistration: TdamCustomerRegistration
   Height = 229
-  Width = 497
+  Width = 636
   object qryLEG: TFDQuery
     BeforePost = DataSetBeforePost
+    OnNewRecord = qryLEGNewRecord
     CachedUpdates = True
     Connection = damDb.Connection
     UpdateObject = updLEG
+    SQL.Strings = (
+      'SELECT Id'
+      ',Name'
+      ',DoingBusinessAs'
+      ',CRN'
+      ',FoundationDate'
+      ',StateInscriptionNumber'
+      ',MunicipalInscription'
+      ',CompanyTypeId'
+      ',NationalityId'
+      ',StateId'
+      'FROM person.legals'
+      'WHERE Id = :Id;')
     Left = 22
     Top = 15
+    ParamData = <
+      item
+        Name = 'ID'
+        DataType = ftGuid
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qryLEGId: TGuidField
+      FieldName = 'Id'
+      Origin = 'Id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 38
+    end
+    object qryLEGName: TWideStringField
+      FieldName = 'Name'
+      Origin = 'Name'
+      Required = True
+      Size = 255
+    end
+    object qryLEGDoingBusinessAs: TWideStringField
+      FieldName = 'DoingBusinessAs'
+      Origin = 'DoingBusinessAs'
+      Required = True
+      Size = 255
+    end
+    object qryLEGCRN: TWideStringField
+      FieldName = 'CRN'
+      Origin = 'CRN'
+      Required = True
+      Size = 14
+    end
+    object qryLEGFoundationDate: TSQLTimeStampField
+      FieldName = 'FoundationDate'
+      Origin = 'FoundationDate'
+      Required = True
+    end
+    object qryLEGStateInscriptionNumber: TWideStringField
+      FieldName = 'StateInscriptionNumber'
+      Origin = 'StateInscriptionNumber'
+    end
+    object qryLEGMunicipalInscription: TWideStringField
+      FieldName = 'MunicipalInscription'
+      Origin = 'MunicipalInscription'
+    end
+    object qryLEGCompanyTypeId: TGuidField
+      FieldName = 'CompanyTypeId'
+      Origin = 'CompanyTypeId'
+      Required = True
+      Size = 38
+    end
+    object qryLEGNationalityId: TGuidField
+      FieldName = 'NationalityId'
+      Origin = 'NationalityId'
+      Required = True
+      Size = 38
+    end
+    object qryLEGStateId: TGuidField
+      FieldName = 'StateId'
+      Origin = 'StateId'
+      Size = 38
+    end
   end
   object qryNAT: TFDQuery
     BeforePost = DataSetBeforePost
+    OnNewRecord = qryNATNewRecord
     CachedUpdates = True
     Connection = damDb.Connection
     UpdateObject = updNAT
@@ -86,14 +163,89 @@ inherited damCustomerRegistration: TdamCustomerRegistration
   end
   object updLEG: TFDUpdateSQL
     Connection = damDb.Connection
+    InsertSQL.Strings = (
+      'INSERT INTO person.legals'
+      '(Id'
+      ',Name'
+      ',DoingBusinessAs'
+      ',CRN'
+      ',FoundationDate'
+      ',StateInscriptionNumber'
+      ',MunicipalInscription'
+      ',CompanyTypeId'
+      ',NationalityId'
+      ',StateId)'
+      'VALUES '
+      '(:NEW_Id'
+      ',:NEW_Name'
+      ',:NEW_DoingBusinessAs'
+      ',:NEW_CRN'
+      ',:NEW_FoundationDate'
+      ',:NEW_StateInscriptionNumber'
+      ',:NEW_MunicipalInscription'
+      ',:NEW_CompanyTypeId'
+      ',:NEW_NationalityId'
+      ',:NEW_StateId);'
+      'SELECT Id '
+      ',Name'
+      ',DoingBusinessAs'
+      ',CRN'
+      ',FoundationDate'
+      ',StateInscriptionNumber'
+      ',MunicipalInscription'
+      ',CompanyTypeId'
+      ',NationalityId'
+      ',StateId'
+      'FROM person.legals'
+      'WHERE Id = :NEW_Id;')
+    ModifySQL.Strings = (
+      'UPDATE person.legals'
+      'SET Name = :NEW_Name'
+      ',DoingBusinessAs = :NEW_DoingBusinessAs'
+      ',CRN = :NEW_CRN'
+      ',FoundationDate = :NEW_FoundationDate'
+      ',StateInscriptionNumber = :NEW_StateInscriptionNumber'
+      ',MunicipalInscription = :NEW_MunicipalInscription'
+      ',CompanyTypeId = :NEW_CompanyTypeId'
+      ',NationalityId = :NEW_NationalityId'
+      ',StateId = :NEW_StateId'
+      'WHERE Id = :OLD_Id;'
+      'SELECT Id '
+      ',Name'
+      ',DoingBusinessAs'
+      ',CRN'
+      ',FoundationDate'
+      ',StateInscriptionNumber'
+      ',MunicipalInscription'
+      ',CompanyTypeId'
+      ',NationalityId'
+      ',StateId'
+      'FROM person.legals'
+      'WHERE Id = :NEW_Id;')
+    DeleteSQL.Strings = (
+      '')
+    FetchRowSQL.Strings = (
+      'SELECT Id '
+      ',Name'
+      ',DoingBusinessAs'
+      ',CRN'
+      ',FoundationDate'
+      ',StateInscriptionNumber'
+      ',MunicipalInscription'
+      ',CompanyTypeId'
+      ',NationalityId'
+      ',StateId'
+      'FROM person.legals'
+      'WHERE Id = :OLD_Id;')
     Left = 90
     Top = 15
   end
   object updNAT: TFDUpdateSQL
     Connection = damDb.Connection
     InsertSQL.Strings = (
-      'INSERT INTO CYBS.person.naturals'
-      '(FirstName'
+      'INSERT INTO person.naturals'
+      '(Id'
+      ',FirstName'
       ',LastName'
       ',Birthday'
       ',SSN'
@@ -102,7 +254,8 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',NationalityId'
       ',GenderId)'
       'VALUES '
-      '(:NEW_FirstName'
+      '(:NEW_Id'
+      ',:NEW_FirstName'
       ',:NEW_LastName'
       ',:NEW_Birthday'
       ',:NEW_SSN'
@@ -122,7 +275,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       'FROM person.naturals'
       'WHERE Id = :NEW_Id;')
     ModifySQL.Strings = (
-      'UPDATE CYBS.person.naturals'
+      'UPDATE person.naturals'
       'SET FirstName = :NEW_FirstName'
       ',LastName = :NEW_LastName'
       ',Birthday = :NEW_Birthday'
@@ -179,8 +332,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
     SQL.Strings = (
       'SELECT Id'
       ',Name'
-      ',Reserved'
-      ',ParentId'
       'FROM general.categories'
       'WHERE ParentId = '#39'6A1D9EBC-25E9-4F39-B9C5-8D8766A2F4C7'#39';')
     Left = 230
@@ -197,16 +348,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       Origin = 'Name'
       Required = True
       Size = 255
-    end
-    object qryGENReserved: TBooleanField
-      FieldName = 'Reserved'
-      Origin = 'Reserved'
-      Required = True
-    end
-    object qryGENParentId: TGuidField
-      FieldName = 'ParentId'
-      Origin = 'ParentId'
-      Size = 38
     end
   end
   object dsoGEN: TDataSource
@@ -402,5 +543,98 @@ inherited damCustomerRegistration: TdamCustomerRegistration
   object updCYT: TFDUpdateSQL
     Left = 90
     Top = 160
+  end
+  object qryCTP: TFDQuery
+    Connection = damDb.Connection
+    SQL.Strings = (
+      'SELECT Id'
+      ',Name'
+      'FROM general.categories'
+      'WHERE ParentId = '#39'E3A2C0C9-42B8-4F6D-B6E7-5E5FE0F3C2A1'#39';')
+    Left = 230
+    Top = 160
+    object qryCTPId: TGuidField
+      FieldName = 'Id'
+      Origin = 'Id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 38
+    end
+    object qryCTPName: TWideStringField
+      FieldName = 'Name'
+      Origin = 'Name'
+      Required = True
+      Size = 255
+    end
+  end
+  object dsoCTP: TDataSource
+    DataSet = qryCTP
+    OnStateChange = dsoStateChange
+    OnDataChange = dsoDataChange
+    Left = 298
+    Top = 160
+  end
+  object qryNTY: TFDQuery
+    Connection = damDb.Connection
+    SQL.Strings = (
+      'SELECT NAT.Id'
+      ',NAT.Name'
+      ',NAT.CountryId'
+      'FROM person.nationalities AS NAT;')
+    Left = 368
+    Top = 160
+    object qryNTYId: TGuidField
+      FieldName = 'Id'
+      Origin = 'Id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 38
+    end
+    object qryNTYName: TWideStringField
+      FieldName = 'Name'
+      Origin = 'Name'
+      Required = True
+      Size = 255
+    end
+    object qryNTYCountryId: TGuidField
+      FieldName = 'CountryId'
+      Origin = 'CountryId'
+      Size = 38
+    end
+  end
+  object dsoNTY: TDataSource
+    DataSet = qryNTY
+    OnStateChange = dsoStateChange
+    OnDataChange = dsoDataChange
+    Left = 438
+    Top = 160
+  end
+  object qrySTE: TFDQuery
+    Connection = damDb.Connection
+    SQL.Strings = (
+      'SELECT Id'
+      ',Name'
+      'FROM address.states'
+      'WHERE CountryId = '#39'9F6E6D3A-1F5A-4C8C-9C9E-55B55E55B555'#39';')
+    Left = 510
+    Top = 15
+    object qrySTEId: TGuidField
+      FieldName = 'Id'
+      Origin = 'Id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 38
+    end
+    object qrySTEName: TWideStringField
+      FieldName = 'Name'
+      Origin = 'Name'
+      Required = True
+      Size = 255
+    end
+  end
+  object dsoSTE: TDataSource
+    DataSet = qrySTE
+    Left = 576
+    Top = 15
   end
 end

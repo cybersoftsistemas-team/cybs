@@ -24,9 +24,7 @@ type
     btnFinish: TUniBitBtn;
     btnNewCity: TUniSpeedButton;
     btnNext: TUniBitBtn;
-    cbbLegCompanyType: TUniDBLookupComboBox;
-    cbbLegNationality: TUniDBComboBox;
-    cbxLegState: TUniDBComboBox;
+    cbxLegCompanyTypeId: TUniDBLookupComboBox;
     cbxNatCity: TUniDBLookupComboBox;
     cbxNatCountry: TUniDBLookupComboBox;
     cbxNatGender: TUniDBLookupComboBox;
@@ -59,6 +57,8 @@ type
     pnlStep03: TUniContainerPanel;
     rbtLegal: TUniRadioButton;
     rbtNatural: TUniRadioButton;
+    cbxLegNationalityId: TUniDBLookupComboBox;
+    cbxLegStateId: TUniDBLookupComboBox;
     procedure actBackExecute(Sender: TObject);
     procedure actNewCityExecute(Sender: TObject);
     procedure actNextExecute(Sender: TObject);
@@ -137,6 +137,13 @@ begin
   ClearInvalids;
   pnlLegal.Visible := True;
   pnlNatural.Visible := False;
+  RegisterRequiredField(edtLegName);
+  RegisterRequiredField(edtLegDoingBusinessAs);
+  RegisterRequiredField(edtLegFoundationDate);
+  RegisterRequiredField(edtLegCRN);
+  RegisterRequiredField(cbxLegCompanyTypeId);
+  RegisterRequiredField(cbxLegNationalityId);
+  RegisterRequiredField(cbxLegStateId);
 end;
 
 procedure TfrmCustomerRegistration.rbtNaturalClick(Sender: TObject);

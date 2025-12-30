@@ -30,9 +30,17 @@ type
     qryGEN: TFDQuery;
     qryGENId: TGuidField;
     qryGENName: TWideStringField;
-    qryGENParentId: TGuidField;
-    qryGENReserved: TBooleanField;
     qryLEG: TFDQuery;
+    qryLEGCompanyTypeId: TGuidField;
+    qryLEGCRN: TWideStringField;
+    qryLEGDoingBusinessAs: TWideStringField;
+    qryLEGFoundationDate: TSQLTimeStampField;
+    qryLEGId: TGuidField;
+    qryLEGMunicipalInscription: TWideStringField;
+    qryLEGName: TWideStringField;
+    qryLEGNationalityId: TGuidField;
+    qryLEGStateId: TGuidField;
+    qryLEGStateInscriptionNumber: TWideStringField;
     qryNAT: TFDQuery;
     qryNATBirthday: TSQLTimeStampField;
     qryNATFirstName: TWideStringField;
@@ -52,16 +60,30 @@ type
     qrySTACountryId: TGuidField;
     qrySTAId: TGuidField;
     qrySTAName: TWideStringField;
+    updCYT: TFDUpdateSQL;
     updLEG: TFDUpdateSQL;
     updNAT: TFDUpdateSQL;
-    updCYT: TFDUpdateSQL;
+    qryCTP: TFDQuery;
+    qryCTPId: TGuidField;
+    qryCTPName: TWideStringField;
+    dsoCTP: TDataSource;
+    qryNTY: TFDQuery;
+    dsoNTY: TDataSource;
+    qryNTYId: TGuidField;
+    qryNTYName: TWideStringField;
+    qryNTYCountryId: TGuidField;
+    qrySTE: TFDQuery;
+    dsoSTE: TDataSource;
+    qrySTEId: TGuidField;
+    qrySTEName: TWideStringField;
     procedure qryCYTNewRecord(DataSet: TDataSet);
+    procedure qryLEGNewRecord(DataSet: TDataSet);
+    procedure qryNATNewRecord(DataSet: TDataSet);
   protected
     procedure CloseDataSets; override;
     procedure OpenDataSets; override;
   end;
 
-//  function damCustomerRegistration: TdamCustomerRegistration;
 var
   damCustomerRegistration: TdamCustomerRegistration;
 
@@ -76,11 +98,6 @@ uses
   cbsMain.data.module.MainModule,
   cbsSystem.Support.Module;
 
-//function damCustomerRegistration: TdamCustomerRegistration;
-//begin
-//  Result := TdamCustomerRegistration(damMain.GetModuleInstance(TdamCustomerRegistration));
-//end;
-
 { TdamCustomerRegistration }
 
 procedure TdamCustomerRegistration.CloseDataSets;
@@ -91,6 +108,10 @@ begin
   qryCOU.Close;
   qrySTA.Close;
   qryCYT.Close;
+  qryCTP.Close;
+  qryNTY.Close;
+  qrySTE.Close;
+  qryLEG.Close;
   qryNAT.Close;
 end;
 
@@ -102,6 +123,10 @@ begin
   qryCOU.Open;
   qrySTA.Open;
   qryCYT.Open;
+  qryCTP.Open;
+  qryNTY.Open;
+  qrySTE.Open;
+  qryLEG.Open;
   qryNAT.Open;
 end;
 
@@ -111,9 +136,16 @@ begin
   SetNewGuid(qryCYTId);
 end;
 
-initialization
+procedure TdamCustomerRegistration.qryLEGNewRecord(DataSet: TDataSet);
 begin
-//  RegisterModuleType(TdamCustomerRegistration);
+  inherited;
+  SetNewGuid(qryLEGId);
+end;
+
+procedure TdamCustomerRegistration.qryNATNewRecord(DataSet: TDataSet);
+begin
+  inherited;
+  SetNewGuid(qryNATId);
 end;
 
 end.
