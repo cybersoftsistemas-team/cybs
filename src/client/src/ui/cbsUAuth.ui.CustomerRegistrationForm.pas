@@ -6,6 +6,7 @@ uses
 {PROJECT}
   cbsSystem.Contracts.Wizard,
   cbsSystem.Form.BaseForm,
+  cbsUAuth.data.module.CustomerRegistrationModule,
 {IDE}
   Data.DB, uniGUIBaseClasses, uniDBLookupComboBox, System.Classes, System.Actions, Vcl.ActnList, uniButton, uniBitBtn, uniPanel, uniRadioButton, uniMultiItem, uniComboBox,
   uniDBComboBox, uniDateTimePicker, uniDBDateTimePicker, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, Vcl.Controls, Vcl.Forms, uniImageList, System.ImageList, Vcl.ImgList,
@@ -86,7 +87,6 @@ uses
 {PROJECT}
   cbsMain.data.module.MainModule,
   cbsSystem.Wizard,
-  cbsUAuth.data.module.CustomerRegistrationModule,
   cbsUAuth.ui.CityRegistrationForm;
 
 function frmCustomerRegistration: TfrmCustomerRegistration;
@@ -101,7 +101,15 @@ end;
 
 procedure TfrmCustomerRegistration.actNewCityExecute(Sender: TObject);
 begin
-  frmCityRegistration.ShowModal;
+  frmCityRegistration.ShowModal(
+    procedure(Sender: TComponent; Result: Integer)
+    begin
+      if Result = mrOk then
+      begin
+        cbxNatCity.Update;
+        cbxNatCity.KeyValue := damCustomerRegistration.qryCYTId.AsString;
+      end;
+    end);
 end;
 
 procedure TfrmCustomerRegistration.actNextExecute(Sender: TObject);
@@ -119,6 +127,8 @@ end;
 
 function TfrmCustomerRegistration.GetDataModule: IDataModule;
 begin
+  if not Assigned(damCustomerRegistration) then
+    damCustomerRegistration := TdamCustomerRegistration.Create(nil);
   Result := damCustomerRegistration;
 end;
 
@@ -148,6 +158,7 @@ end;
 
 procedure TfrmCustomerRegistration.UniFormCreate(Sender: TObject);
 begin
+  SetRequiredFieldMode(rfmManual);
   inherited;
   FWizard := TcbsWizard.Create
    .AddStep(pnlStep01)
@@ -163,6 +174,7 @@ procedure TfrmCustomerRegistration.UniFormDestroy(Sender: TObject);
 begin
   FWizard := nil;
   inherited;
+  FreeAndNil(damCustomerRegistration);
 end;
 
 procedure TfrmCustomerRegistration.WizardOnChangeStep(const ASender: TObject; const AOldIndex, ANewIndex: Integer);

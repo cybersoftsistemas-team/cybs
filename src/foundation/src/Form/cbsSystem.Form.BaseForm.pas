@@ -8,10 +8,16 @@ uses
   cbsSystem.Contracts.Module.BaseModule,
   cbsSystem.MessageBox,
 {IDE}
-  Data.DB, Dialogs, uniEdit, uniDateTimePicker, uniDBLookupComboBox, uniGUIForm, uniGUIClasses, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes,
-  System.Actions, Vcl.ActnList, uniMainMenu;
+  Data.DB, Dialogs, uniEdit, uniDBEdit, uniDBComboBox, uniDateTimePicker, uniDBLookupComboBox, uniGUIForm, uniGUIClasses, uniGUIBaseClasses, uniImageList, System.ImageList,
+  Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
+  TRequiredFieldMode = (
+    rfmAutomatic,
+    rfmManual,
+    rfmHybrid
+  );
+
   FormType = class of TUniForm;
 
   IDataModule = cbsSystem.Contracts.Module.BaseModule.IDataModule;
@@ -25,8 +31,13 @@ type
   private
     FDataModule: IDataModule;
     FRequiredFieldList: IRequiredFieldList;
+    FRequiredFieldMode: TRequiredFieldMode;
+    function BuildRequiredMessage(const AControl: TUniFormControl; const AField: TField): string;
+    function CanValidateControl(const AControl: TUniFormControl; const AField: TField): Boolean;
     procedure ClearInvalid(const AControl: TUniControl);
+    function IsAlreadyRegistered(const AControl: TUniFormControl): Boolean;
     procedure MarkInvalid(const AControl: TUniControl; const AMessage: string);
+    procedure RegisterRequiredFieldsFromDataModule;
   protected
     procedure ClearInvalids;
     function GetDataModule: IDataModule; virtual;
@@ -35,6 +46,7 @@ type
     procedure RegisterRequiredField(const AControl: TUniFormControl); overload;
     procedure RegisterRequiredField(const AControl: TUniFormControl; const AMessage: string); overload;
     procedure RegisterRequiredField(const AControl: TUniFormControl; const AMessage: string; const AArgs: array of const); overload;
+    procedure SetRequiredFieldMode(const AValue: TRequiredFieldMode);
     function ValidateRequiredFields: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
@@ -53,8 +65,13 @@ uses
   System.Variants;
 
 type
-  THackUniFormControl = class(TUniFormControl);
   THackUniDateTimePicker = class(TUniCustomDateTimePicker);
+  THackUniCustomDBLookupComboBox = class(TUniCustomDBLookupComboBox);
+  THackUniCustomDBComboBox = class(TUniCustomDBComboBox);
+  THackUniFormControl = class(TUniFormControl);
+
+resourcestring
+  SRequiredField = 'O campo %s é de preenchimento obrigatório.';
 
 { TfrmBase }
 
@@ -62,12 +79,40 @@ constructor TfrmBase.Create(AOwner: TComponent);
 begin
   inherited;
   FRequiredFieldList := CreateRequiredFieldList;
+  SetRequiredFieldMode(rfmAutomatic);
 end;
 
 destructor TfrmBase.Destroy;
 begin
   FRequiredFieldList := nil;
   inherited;
+end;
+
+function TfrmBase.BuildRequiredMessage(const AControl: TUniFormControl; const AField: TField): string;
+var
+  LLabel: string;
+begin
+  if Assigned(AField) and not AField.DisplayLabel.IsEmpty then
+    LLabel := AField.DisplayLabel
+  else
+    LLabel := THackUniFormControl(AControl).FieldLabel;
+  Result := Format(SRequiredField, [LLabel]);
+end;
+
+function TfrmBase.CanValidateControl(const AControl: TUniFormControl; const AField: TField): Boolean;
+begin
+  Result := True;
+  if not AControl.Visible then
+    Exit(False);
+  if AControl.ReadOnly then
+    Exit(False);
+  if Assigned(AField) then
+  begin
+    if AField.Calculated then
+      Exit(False);
+    if AField.FieldKind in [fkLookup, fkCalculated] then
+      Exit(False);
+  end;
 end;
 
 procedure TfrmBase.ClearInvalid(const AControl: TUniControl);
@@ -94,6 +139,16 @@ begin
   Result := nil;
 end;
 
+function TfrmBase.IsAlreadyRegistered(const AControl: TUniFormControl): Boolean;
+begin
+  Result := False;
+  for var LItem in FRequiredFieldList do if
+    LItem.Control = AControl then
+  begin
+    Exit(True);
+  end;
+end;
+
 procedure TfrmBase.MarkInvalid(const AControl: TUniControl; const AMessage: string);
 begin
   UniSession.AddJS(Format('%s.markInvalid(%s);', [AControl.JSName, QuotedStr(AMessage)]));
@@ -103,6 +158,11 @@ procedure TfrmBase.MessageBox(const ATitle, AMessage, ADetails: string; const AI
   AHeight: Integer);
 begin
   ExecuteMessageBox(ATitle, AMessage, ADetails, AButtons, AIcon, ACallback, AWidth, AHeight);
+end;
+
+procedure TfrmBase.RegisterRequiredField(const AControl: TUniFormControl);
+begin
+  RegisterRequiredField(AControl, SRequiredField, [THackUniFormControl(AControl).FieldLabel]);
 end;
 
 procedure TfrmBase.RegisterRequiredField(const AControl: TUniFormControl; const AMessage: string);
@@ -119,9 +179,78 @@ begin
   RegisterRequiredField(AControl, Format(AMessage, AArgs));
 end;
 
-procedure TfrmBase.RegisterRequiredField(const AControl: TUniFormControl);
+procedure TfrmBase.RegisterRequiredFieldsFromDataModule;
+var
+  I: Integer;
+  C: TComponent;
+  LDataSource: TDataSource;
+  LDataField: string;
+  LField: TField;
+  LControl: TUniFormControl;
 begin
-  RegisterRequiredField(AControl, 'O campo %s é de preenchimento obrigatório.', [THackUniFormControl(AControl).FieldLabel]);
+  if not Assigned(FDataModule) then
+    Exit;
+
+  for I := 0 to ComponentCount - 1 do
+  begin
+    C := Components[I];
+
+    if not (C is TUniFormControl) then
+      Continue;
+
+    LControl := TUniFormControl(C);
+
+    // Override manual
+    if LControl.Tag < 0 then
+      Continue;
+
+    LDataField  := '';
+
+    if C is TUniDBEdit then
+    begin
+      LDataSource := TUniDBEdit(C).DataSource;
+      LDataField  := TUniDBEdit(C).DataField;
+    end
+    else if C is TUniCustomDBLookupComboBox then
+    begin
+      LDataSource := THackUniCustomDBLookupComboBox(C).DataSource;
+      LDataField  := THackUniCustomDBLookupComboBox(C).DataField;
+    end
+    else if C is TUniCustomDBComboBox then
+    begin
+      LDataSource := THackUniCustomDBComboBox(C).DataSource;
+      LDataField  := THackUniCustomDBComboBox(C).DataField;
+    end
+    else
+      Continue;
+
+    if not Assigned(LDataSource) or not Assigned(LDataSource.DataSet) or LDataField.IsEmpty then
+      Continue;
+
+    LField := LDataSource.DataSet.FindField(LDataField);
+    if not Assigned(LField) then
+      Continue;
+
+    // Decide se é obrigatório
+    if not (LField.Required or (LControl.Tag > 0)) then
+      Continue;
+
+    if not CanValidateControl(LControl, LField) then
+      Continue;
+
+    if IsAlreadyRegistered(LControl) then
+      Continue;
+
+    RegisterRequiredField(
+      LControl,
+      BuildRequiredMessage(LControl, LField)
+    );
+  end;
+end;
+
+procedure TfrmBase.SetRequiredFieldMode(const AValue: TRequiredFieldMode);
+begin
+  FRequiredFieldMode := AValue;
 end;
 
 procedure TfrmBase.StateChange(Sender: TObject);
@@ -135,6 +264,10 @@ begin
   if Assigned(FDataModule) then
   begin
     FDataModule.AddFormListener(Self);
+    case FRequiredFieldMode of
+      rfmAutomatic, rfmHybrid:
+        RegisterRequiredFieldsFromDataModule;
+    end;
   end;
 end;
 

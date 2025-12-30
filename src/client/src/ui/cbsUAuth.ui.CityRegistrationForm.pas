@@ -46,8 +46,11 @@ end;
 
 procedure TfrmCityRegistration.actOkExecute(Sender: TObject);
 begin
-  damCustomerRegistration.qryCYT.Post;
-  inherited;
+  if ValidateRequiredFields then
+  begin
+    damCustomerRegistration.qryCYT.Post;
+    inherited;
+  end;
 end;
 
 function TfrmCityRegistration.GetDataModule: IDataModule;

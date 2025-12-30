@@ -10,6 +10,7 @@ uses
   uniMainMenu, uniPanel;
 
 type
+  TRequiredFieldMode = cbsSystem.Form.BaseForm.TRequiredFieldMode;
   IDataModule = cbsSystem.Form.BaseForm.IDataModule;
 
   TfrmDialogBase = class(TfrmBase)

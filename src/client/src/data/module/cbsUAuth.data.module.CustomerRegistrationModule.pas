@@ -61,7 +61,9 @@ type
     procedure OpenDataSets; override;
   end;
 
-  function damCustomerRegistration: TdamCustomerRegistration;
+//  function damCustomerRegistration: TdamCustomerRegistration;
+var
+  damCustomerRegistration: TdamCustomerRegistration;
 
 implementation
 
@@ -74,10 +76,12 @@ uses
   cbsMain.data.module.MainModule,
   cbsSystem.Support.Module;
 
-function damCustomerRegistration: TdamCustomerRegistration;
-begin
-  Result := TdamCustomerRegistration(damMain.GetModuleInstance(TdamCustomerRegistration));
-end;
+//function damCustomerRegistration: TdamCustomerRegistration;
+//begin
+//  Result := TdamCustomerRegistration(damMain.GetModuleInstance(TdamCustomerRegistration));
+//end;
+
+{ TdamCustomerRegistration }
 
 procedure TdamCustomerRegistration.CloseDataSets;
 begin
@@ -109,7 +113,7 @@ end;
 
 initialization
 begin
-  RegisterModuleType(TdamCustomerRegistration);
+//  RegisterModuleType(TdamCustomerRegistration);
 end;
 
 end.

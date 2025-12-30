@@ -373,12 +373,14 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       Size = 38
     end
     object qryCYTName: TWideStringField
+      DisplayLabel = 'Cidade'
       FieldName = 'Name'
       Origin = 'Name'
       Required = True
       Size = 255
     end
     object qryCYTAreaCode: TIntegerField
+      DisplayLabel = 'DDD'
       FieldName = 'AreaCode'
       Origin = 'AreaCode'
       Required = True
