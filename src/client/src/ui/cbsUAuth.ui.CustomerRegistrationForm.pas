@@ -10,7 +10,7 @@ uses
 {IDE}
   Data.DB, uniGUIBaseClasses, uniDBLookupComboBox, System.Classes, System.Actions, Vcl.ActnList, uniButton, uniBitBtn, uniPanel, uniRadioButton, uniMultiItem, uniComboBox,
   uniDBComboBox, uniDateTimePicker, uniDBDateTimePicker, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, Vcl.Controls, Vcl.Forms, uniImageList, System.ImageList, Vcl.ImgList,
-  uniMainMenu, uniSpeedButton;
+  uniMainMenu, uniSpeedButton, uniDBText;
 
 type
   TfrmCustomerRegistration = class(TfrmBase)
@@ -25,6 +25,8 @@ type
     btnNewCity: TUniSpeedButton;
     btnNext: TUniBitBtn;
     cbxLegCompanyTypeId: TUniDBLookupComboBox;
+    cbxLegNationalityId: TUniDBLookupComboBox;
+    cbxLegStateId: TUniDBLookupComboBox;
     cbxNatCity: TUniDBLookupComboBox;
     cbxNatCountry: TUniDBLookupComboBox;
     cbxNatGender: TUniDBLookupComboBox;
@@ -42,23 +44,41 @@ type
     edtNatLastName: TUniDBEdit;
     edtNatSSN: TUniDBEdit;
     labInfo: TUniLabel;
+    labNatBirthday: TUniLabel;
+    labNatFirstName: TUniLabel;
+    labNatGender: TUniLabel;
+    labNatGender2: TUniLabel;
+    labNatIDCard: TUniLabel;
+    labNatLastName: TUniLabel;
+    labNatNationality: TUniLabel;
+    labNatNationality2: TUniLabel;
+    labNatPlaceOfBirthId: TUniLabel;
+    labNatPlaceOfBirthId2: TUniLabel;
+    labNatSSN: TUniLabel;
     labPlaceOfBirthId: TUniLabel;
     labStep02SubTitle: TUniLabel;
     labStep02Title: TUniLabel;
+    labStep03SubTitle: TUniLabel;
+    labStep03Title: TUniLabel;
     labTitle: TUniLabel;
     pnlBreak: TUniPanel;
     pnlBreakLeft: TUniPanel;
     pnlBreakTop: TUniPanel;
+    pnlBreakTop2: TUniPanel;
     pnlButtons: TUniSimplePanel;
     pnlLegal: TUniContainerPanel;
+    pnlNatLabel: TUniContainerPanel;
     pnlNatural: TUniContainerPanel;
     pnlStep01: TUniContainerPanel;
     pnlStep02: TUniContainerPanel;
     pnlStep03: TUniContainerPanel;
     rbtLegal: TUniRadioButton;
     rbtNatural: TUniRadioButton;
-    cbxLegNationalityId: TUniDBLookupComboBox;
-    cbxLegStateId: TUniDBLookupComboBox;
+    txtNatBirthday: TUniDBText;
+    txtNatFirstName: TUniDBText;
+    txtNatIDCard: TUniDBText;
+    txtNatLastName: TUniDBText;
+    labNatSSN2: TUniLabel;
     procedure actBackExecute(Sender: TObject);
     procedure actNewCityExecute(Sender: TObject);
     procedure actNextExecute(Sender: TObject);
@@ -86,6 +106,7 @@ uses
   System.Variants,
 {PROJECT}
   cbsMain.data.module.MainModule,
+  cbsSystem.Support.Utils,
   cbsSystem.Wizard,
   cbsUAuth.ui.CityRegistrationForm;
 
@@ -101,15 +122,7 @@ end;
 
 procedure TfrmCustomerRegistration.actNewCityExecute(Sender: TObject);
 begin
-  frmCityRegistration.ShowModal(
-    procedure(Sender: TComponent; Result: Integer)
-    begin
-      if Result = mrOk then
-      begin
-        cbxNatCity.Update;
-        cbxNatCity.KeyValue := damCustomerRegistration.qryCYTId.AsString;
-      end;
-    end);
+  frmCityRegistration.ShowModal;
 end;
 
 procedure TfrmCustomerRegistration.actNextExecute(Sender: TObject);
@@ -187,6 +200,11 @@ end;
 procedure TfrmCustomerRegistration.WizardOnChangeStep(const ASender: TObject; const AOldIndex, ANewIndex: Integer);
 begin
   ClearInvalids;
+  pnlNatLabel.Visible := False;
+  labNatSSN2.Caption := '';
+  labNatGender2.Caption := '';
+  labNatNationality2.Caption := '';
+  labNatPlaceOfBirthId2.Caption := '';
   if ANewIndex = 1 then
   begin
     if rbtNatural.Checked then
@@ -196,6 +214,21 @@ begin
     else if rbtLegal.Checked then
     begin
       rbtLegalClick(rbtLegal);
+    end;
+  end
+  else if ANewIndex = 2 then
+  begin
+    if rbtNatural.Checked then
+    begin
+      labNatSSN2.Caption := GetCpfOrCnpfMask(GetOnlyNumbers(damCustomerRegistration.qryNATSSN.AsString));
+      labNatGender2.Caption := cbxNatGender.Text;
+      labNatNationality2.Caption := cbxNatNationality.Text;
+      labNatPlaceOfBirthId2.Caption := cbxNatCity.Text;
+      pnlNatLabel.Visible := True;
+    end
+    else if rbtLegal.Checked then
+    begin
+
     end;
   end;
 end;

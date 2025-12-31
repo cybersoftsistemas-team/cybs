@@ -37,49 +37,58 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       Size = 38
     end
     object qryLEGName: TWideStringField
+      DisplayLabel = 'Raz'#227'o Social'
       FieldName = 'Name'
       Origin = 'Name'
       Required = True
       Size = 255
     end
     object qryLEGDoingBusinessAs: TWideStringField
+      DisplayLabel = 'Nome Fantasia'
       FieldName = 'DoingBusinessAs'
       Origin = 'DoingBusinessAs'
       Required = True
       Size = 255
     end
     object qryLEGCRN: TWideStringField
+      DisplayLabel = 'CNPJ'
       FieldName = 'CRN'
       Origin = 'CRN'
       Required = True
       Size = 14
     end
     object qryLEGFoundationDate: TSQLTimeStampField
+      DisplayLabel = 'Fundada em'
       FieldName = 'FoundationDate'
       Origin = 'FoundationDate'
       Required = True
     end
     object qryLEGStateInscriptionNumber: TWideStringField
+      DisplayLabel = 'Inscri'#231#227'o Estadual'
       FieldName = 'StateInscriptionNumber'
       Origin = 'StateInscriptionNumber'
     end
     object qryLEGMunicipalInscription: TWideStringField
+      DisplayLabel = 'Inscri'#231#227'o Municipal'
       FieldName = 'MunicipalInscription'
       Origin = 'MunicipalInscription'
     end
     object qryLEGCompanyTypeId: TGuidField
+      DisplayLabel = 'Tipo'
       FieldName = 'CompanyTypeId'
       Origin = 'CompanyTypeId'
       Required = True
       Size = 38
     end
     object qryLEGNationalityId: TGuidField
+      DisplayLabel = 'Nacionalidade'
       FieldName = 'NationalityId'
       Origin = 'NationalityId'
       Required = True
       Size = 38
     end
     object qryLEGStateId: TGuidField
+      DisplayLabel = 'Estado'
       FieldName = 'StateId'
       Origin = 'StateId'
       Size = 38
