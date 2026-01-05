@@ -148,11 +148,11 @@ begin
   actConnect.Visible := not actOptions.Visible or ServerModule.Database.Id.IsEmpty or LExistsRegisteredCustomer;
   actConnect.Enabled := edtUserName.Enabled;
   pnlMsg.Visible := False;
-  if damLogin.mtbCNS.Active and damLogin.mtbCNS.IsEmpty then
+  if actOptions.Visible and damLogin.mtbCNS.Active and damLogin.mtbCNS.IsEmpty then
   begin
     ShowMsg('Não existe uma configuração de conexão com o banco de dados.');
   end
-  else if ServerModule.Database.Id.IsEmpty then
+  else if actOptions.Visible and ServerModule.Database.Id.IsEmpty then
   begin
     ShowMsg('É necessário selecionar uma conexão com o banco de dados.');
   end
