@@ -40,7 +40,6 @@ type
     edtLegStateInscriptionNumber: TUniDBEdit;
     edtNatBirthday: TUniDBDateTimePicker;
     edtNatFirstName: TUniDBEdit;
-    edtNatIDCard: TUniDBEdit;
     edtNatLastName: TUniDBEdit;
     edtNatSSN: TUniDBEdit;
     labInfo: TUniLabel;
@@ -48,7 +47,6 @@ type
     labNatFirstName: TUniLabel;
     labNatGender: TUniLabel;
     labNatGender2: TUniLabel;
-    labNatIDCard: TUniLabel;
     labNatLastName: TUniLabel;
     labNatNationality: TUniLabel;
     labNatNationality2: TUniLabel;
@@ -76,9 +74,12 @@ type
     rbtNatural: TUniRadioButton;
     txtNatBirthday: TUniDBText;
     txtNatFirstName: TUniDBText;
-    txtNatIDCard: TUniDBText;
     txtNatLastName: TUniDBText;
     labNatSSN2: TUniLabel;
+    labTipo: TUniLabel;
+    labTipo2: TUniLabel;
+    labClientID: TUniLabel;
+    labClientID2: TUniLabel;
     procedure actBackExecute(Sender: TObject);
     procedure actNewCityExecute(Sender: TObject);
     procedure actNextExecute(Sender: TObject);
@@ -168,7 +169,6 @@ begin
   RegisterRequiredField(edtNatLastName);
   RegisterRequiredField(edtNatBirthday);
   RegisterRequiredField(edtNatSSN);
-  RegisterRequiredField(edtNatIDCard);
   RegisterRequiredField(cbxNatGender);
   RegisterRequiredField(cbxNatNationality);
   RegisterRequiredField(cbxNatCountry);
@@ -201,10 +201,12 @@ procedure TfrmCustomerRegistration.WizardOnChangeStep(const ASender: TObject; co
 begin
   ClearInvalids;
   pnlNatLabel.Visible := False;
+  labTipo2.Caption := '';
   labNatSSN2.Caption := '';
   labNatGender2.Caption := '';
   labNatNationality2.Caption := '';
   labNatPlaceOfBirthId2.Caption := '';
+  labClientID2.Caption := '';
   if ANewIndex = 1 then
   begin
     if rbtNatural.Checked then
@@ -220,6 +222,7 @@ begin
   begin
     if rbtNatural.Checked then
     begin
+      labTipo2.Caption := rbtNatural.Caption;
       labNatSSN2.Caption := GetCpfOrCnpfMask(GetOnlyNumbers(damCustomerRegistration.qryNATSSN.AsString));
       labNatGender2.Caption := cbxNatGender.Text;
       labNatNationality2.Caption := cbxNatNationality.Text;
@@ -228,7 +231,7 @@ begin
     end
     else if rbtLegal.Checked then
     begin
-
+      labTipo2.Caption := rbtLegal.Caption;
     end;
   end;
 end;

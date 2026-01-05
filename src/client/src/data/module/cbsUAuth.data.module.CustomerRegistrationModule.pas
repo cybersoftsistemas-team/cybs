@@ -46,7 +46,6 @@ type
     qryNATFirstName: TWideStringField;
     qryNATGenderId: TGuidField;
     qryNATId: TGuidField;
-    qryNATIDCard: TWideStringField;
     qryNATLastName: TWideStringField;
     qryNATNationalityId: TGuidField;
     qryNATPlaceOfBirthId: TGuidField;

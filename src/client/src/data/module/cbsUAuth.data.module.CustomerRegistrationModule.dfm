@@ -95,6 +95,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
     end
   end
   object qryNAT: TFDQuery
+    Active = True
     BeforePost = DataSetBeforePost
     OnNewRecord = qryNATNewRecord
     CachedUpdates = True
@@ -106,7 +107,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',LastName'
       ',Birthday'
       ',SSN'
-      ',IDCard'
       ',PlaceOfBirthId'
       ',NationalityId'
       ',GenderId'
@@ -142,11 +142,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
     object qryNATBirthday: TSQLTimeStampField
       FieldName = 'Birthday'
       Origin = 'Birthday'
-    end
-    object qryNATIDCard: TWideStringField
-      FieldName = 'IDCard'
-      Origin = 'IDCard'
-      Size = 15
     end
     object qryNATSSN: TWideStringField
       FieldName = 'SSN'
@@ -258,7 +253,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',LastName'
       ',Birthday'
       ',SSN'
-      ',IDCard'
       ',PlaceOfBirthId'
       ',NationalityId'
       ',GenderId)'
@@ -268,7 +262,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',:NEW_LastName'
       ',:NEW_Birthday'
       ',:NEW_SSN'
-      ',:NEW_IDCard'
       ',:NEW_PlaceOfBirthId'
       ',:NEW_NationalityId'
       ',:NEW_GenderId);'
@@ -277,7 +270,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',LastName'
       ',Birthday'
       ',SSN'
-      ',IDCard'
       ',PlaceOfBirthId'
       ',NationalityId'
       ',GenderId'
@@ -289,7 +281,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',LastName = :NEW_LastName'
       ',Birthday = :NEW_Birthday'
       ',SSN = :NEW_SSN'
-      ',IDCard = :NEW_IDCard'
       ',PlaceOfBirthId = :NEW_PlaceOfBirthId'
       ',NationalityId = :NEW_NationalityId'
       ',GenderId = :NEW_GenderId'
@@ -299,7 +290,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',LastName'
       ',Birthday'
       ',SSN'
-      ',IDCard'
       ',PlaceOfBirthId'
       ',NationalityId'
       ',GenderId'
@@ -313,7 +303,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',LastName'
       ',Birthday'
       ',SSN'
-      ',IDCard'
       ',PlaceOfBirthId'
       ',NationalityId'
       ',GenderId'

@@ -11,7 +11,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
   ExplicitWidth = 451
   ExplicitHeight = 347
   TextHeight = 15
-  object pnlStep01: TUniContainerPanel [0]
+  object pnlStep03: TUniContainerPanel [0]
     Left = 11
     Top = 8
     Width = 429
@@ -19,6 +19,241 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     Hint = ''
     ParentColor = False
     TabOrder = 2
+    DesignSize = (
+      429
+      287)
+    object pnlNatLabel: TUniContainerPanel
+      Left = 86
+      Top = 107
+      Width = 289
+      Height = 123
+      Hint = ''
+      ParentColor = False
+      TabOrder = 6
+      object labNatFirstName: TUniLabel
+        Left = 50
+        Top = 3
+        Width = 35
+        Height = 13
+        Hint = ''
+        Caption = 'Nome:'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 1
+      end
+      object labNatLastName: TUniLabel
+        Left = 22
+        Top = 20
+        Width = 63
+        Height = 13
+        Hint = ''
+        Caption = 'Sobrenome:'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 3
+      end
+      object labNatBirthday: TUniLabel
+        Left = 20
+        Top = 37
+        Width = 65
+        Height = 13
+        Hint = ''
+        Caption = 'Nascimento:'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 5
+      end
+      object txtNatFirstName: TUniDBText
+        Left = 95
+        Top = 3
+        Width = 82
+        Height = 13
+        Hint = ''
+        DataField = 'FirstName'
+        DataSource = damCustomerRegistration.dsoNAT
+      end
+      object txtNatLastName: TUniDBText
+        Left = 95
+        Top = 20
+        Width = 80
+        Height = 13
+        Hint = ''
+        DataField = 'LastName'
+        DataSource = damCustomerRegistration.dsoNAT
+      end
+      object txtNatBirthday: TUniDBText
+        Left = 95
+        Top = 37
+        Width = 74
+        Height = 13
+        Hint = ''
+        DataField = 'Birthday'
+        DataSource = damCustomerRegistration.dsoNAT
+      end
+      object labNatSSN: TUniLabel
+        Left = 62
+        Top = 54
+        Width = 23
+        Height = 13
+        Hint = ''
+        Caption = 'CPF:'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 7
+      end
+      object labNatGender: TUniLabel
+        Left = 57
+        Top = 71
+        Width = 28
+        Height = 13
+        Hint = ''
+        Caption = 'Sexo:'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 9
+      end
+      object labNatNationality: TUniLabel
+        Left = 7
+        Top = 88
+        Width = 78
+        Height = 13
+        Hint = ''
+        Caption = 'Nacionalidade:'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 11
+      end
+      object labNatGender2: TUniLabel
+        Left = 95
+        Top = 71
+        Width = 78
+        Height = 13
+        Hint = ''
+        Caption = 'labNatGender2'
+        TabOrder = 10
+      end
+      object labNatNationality2: TUniLabel
+        Left = 95
+        Top = 88
+        Width = 96
+        Height = 13
+        Hint = ''
+        Caption = 'labNatNationality2'
+        TabOrder = 12
+      end
+      object labNatPlaceOfBirthId: TUniLabel
+        Left = 14
+        Top = 105
+        Width = 71
+        Height = 13
+        Hint = ''
+        Caption = 'Naturalidade:'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 13
+      end
+      object labNatPlaceOfBirthId2: TUniLabel
+        Left = 95
+        Top = 105
+        Width = 114
+        Height = 13
+        Hint = ''
+        Caption = 'labNatPlaceOfBirthId2'
+        TabOrder = 14
+      end
+      object labNatSSN2: TUniLabel
+        Left = 95
+        Top = 54
+        Width = 60
+        Height = 13
+        Hint = ''
+        Caption = 'labNatSSN2'
+        TabOrder = 8
+      end
+    end
+    object pnlBreakTop2: TUniPanel
+      Left = 0
+      Top = 42
+      Width = 429
+      Height = 1
+      Hint = ''
+      Enabled = False
+      BodyRTL = False
+      Anchors = [akLeft, akRight, akBottom]
+      TabOrder = 3
+      ShowCaption = False
+      Caption = 'pnlBreak'
+    end
+    object labStep03SubTitle: TUniLabel
+      Left = 16
+      Top = 20
+      Width = 297
+      Height = 13
+      Hint = ''
+      Caption = 'Verifique os dados fornecidos e clique no bot'#227'o Finalizar.'
+      ParentFont = False
+      TabOrder = 2
+    end
+    object labStep03Title: TUniLabel
+      Left = 0
+      Top = 0
+      Width = 165
+      Height = 13
+      Hint = ''
+      Caption = 'Completar o Registro de Cliente'
+      ParentFont = False
+      Font.Style = [fsBold]
+      TabOrder = 0
+    end
+    object labTipo: TUniLabel
+      Left = 145
+      Top = 88
+      Width = 26
+      Height = 13
+      Hint = ''
+      Caption = 'Tipo:'
+      ParentFont = False
+      Font.Style = [fsBold]
+      TabOrder = 4
+    end
+    object labTipo2: TUniLabel
+      Left = 181
+      Top = 88
+      Width = 44
+      Height = 13
+      Hint = ''
+      Caption = 'labTipo2'
+      TabOrder = 5
+    end
+    object labClientID: TUniLabel
+      Left = 124
+      Top = 233
+      Width = 47
+      Height = 13
+      Hint = ''
+      Caption = 'Client ID:'
+      ParentFont = False
+      Font.Style = [fsBold]
+      TabOrder = 7
+    end
+    object labClientID2: TUniLabel
+      Left = 181
+      Top = 233
+      Width = 63
+      Height = 13
+      Hint = ''
+      Caption = 'labClientID2'
+      TabOrder = 8
+    end
+  end
+  object pnlStep01: TUniContainerPanel [1]
+    Left = 11
+    Top = 8
+    Width = 429
+    Height = 287
+    Hint = ''
+    ParentColor = False
+    TabOrder = 1
     object labTitle: TUniLabel
       Left = 3
       Top = 8
@@ -46,14 +281,14 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       TabOrder = 2
     end
   end
-  object pnlStep02: TUniContainerPanel [1]
+  object pnlStep02: TUniContainerPanel [2]
     Left = 11
     Top = 8
     Width = 429
     Height = 287
     Hint = ''
     ParentColor = False
-    TabOrder = 1
+    TabOrder = 0
     DesignSize = (
       429
       287)
@@ -213,7 +448,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         ListFieldIndex = 0
         DataField = 'PlaceOfBirthId'
         DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 11
+        TabOrder = 10
         Color = clWindow
         MatchFieldWidth = False
         RemoteQuery = True
@@ -240,7 +475,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         ListSource = damCustomerRegistration.dsoSTA
         KeyField = 'Id'
         ListFieldIndex = 0
-        TabOrder = 10
+        TabOrder = 9
         Color = clWindow
         MatchFieldWidth = False
         RemoteQuery = True
@@ -258,7 +493,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         ListSource = damCustomerRegistration.dsoCOU
         KeyField = 'Id'
         ListFieldIndex = 0
-        TabOrder = 9
+        TabOrder = 8
         Color = clWindow
         MatchFieldWidth = False
         RemoteQuery = True
@@ -276,7 +511,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         ListFieldIndex = 0
         DataField = 'NationalityId'
         DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 7
+        TabOrder = 6
         Color = clWindow
         RemoteQuery = True
         FieldLabel = 'Nacionalidade'
@@ -293,7 +528,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         ListFieldIndex = 0
         DataField = 'GenderId'
         DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 6
+        TabOrder = 5
         Color = clWindow
         FieldLabel = 'Sexo'
         FieldLabelAlign = laTop
@@ -351,18 +586,6 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         FieldLabel = 'CPF'
         FieldLabelAlign = laTop
       end
-      object edtNatIDCard: TUniDBEdit
-        Left = 210
-        Top = 45
-        Width = 110
-        Height = 22
-        Hint = ''
-        DataField = 'IDCard'
-        DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 5
-        FieldLabel = 'RG'
-        FieldLabelAlign = laTop
-      end
       object labPlaceOfBirthId: TUniLabel
         Left = 4
         Top = 140
@@ -372,7 +595,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         Caption = 'Naturalidade'
         ParentFont = False
         Font.Style = [fsBold]
-        TabOrder = 8
+        TabOrder = 7
       end
       object btnNewCity: TUniSpeedButton
         Left = 297
@@ -382,7 +605,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         Action = actNewCity
         ParentColor = False
         ImageIndex = 0
-        TabOrder = 12
+        TabOrder = 11
       end
     end
     object pnlBreakTop: TUniPanel
@@ -458,7 +681,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       TabOrder = 2
     end
   end
-  object pnlButtons: TUniSimplePanel [2]
+  object pnlButtons: TUniSimplePanel [3]
     Left = 11
     Top = 312
     Width = 429
@@ -529,7 +752,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
       TabOrder = 1
     end
   end
-  object pnlBreak: TUniPanel [3]
+  object pnlBreak: TUniPanel [4]
     Left = 11
     Top = 301
     Width = 429
@@ -541,221 +764,6 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     TabOrder = 3
     ShowCaption = False
     Caption = 'pnlBreak'
-  end
-  object pnlStep03: TUniContainerPanel [4]
-    Left = 11
-    Top = 8
-    Width = 429
-    Height = 287
-    Hint = ''
-    ParentColor = False
-    TabOrder = 0
-    DesignSize = (
-      429
-      287)
-    object pnlNatLabel: TUniContainerPanel
-      Left = 86
-      Top = 113
-      Width = 289
-      Height = 141
-      Hint = ''
-      ParentColor = False
-      TabOrder = 4
-      object labNatFirstName: TUniLabel
-        Left = 3
-        Top = 3
-        Width = 82
-        Height = 13
-        Hint = ''
-        Caption = 'Primeiro Nome:'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 1
-      end
-      object labNatLastName: TUniLabel
-        Left = 22
-        Top = 20
-        Width = 63
-        Height = 13
-        Hint = ''
-        Caption = 'Sobrenome:'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 3
-      end
-      object labNatBirthday: TUniLabel
-        Left = 20
-        Top = 37
-        Width = 65
-        Height = 13
-        Hint = ''
-        Caption = 'Nascimento:'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 5
-      end
-      object txtNatFirstName: TUniDBText
-        Left = 95
-        Top = 3
-        Width = 82
-        Height = 13
-        Hint = ''
-        DataField = 'FirstName'
-        DataSource = damCustomerRegistration.dsoNAT
-      end
-      object txtNatLastName: TUniDBText
-        Left = 95
-        Top = 20
-        Width = 80
-        Height = 13
-        Hint = ''
-        DataField = 'LastName'
-        DataSource = damCustomerRegistration.dsoNAT
-      end
-      object txtNatBirthday: TUniDBText
-        Left = 95
-        Top = 37
-        Width = 74
-        Height = 13
-        Hint = ''
-        DataField = 'Birthday'
-        DataSource = damCustomerRegistration.dsoNAT
-      end
-      object labNatSSN: TUniLabel
-        Left = 62
-        Top = 54
-        Width = 23
-        Height = 13
-        Hint = ''
-        Caption = 'CPF:'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 7
-      end
-      object labNatIDCard: TUniLabel
-        Left = 67
-        Top = 71
-        Width = 18
-        Height = 13
-        Hint = ''
-        Caption = 'RG:'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 9
-      end
-      object labNatGender: TUniLabel
-        Left = 57
-        Top = 87
-        Width = 28
-        Height = 13
-        Hint = ''
-        Caption = 'Sexo:'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 11
-      end
-      object labNatNationality: TUniLabel
-        Left = 7
-        Top = 104
-        Width = 78
-        Height = 13
-        Hint = ''
-        Caption = 'Nacionalidade:'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 13
-      end
-      object txtNatIDCard: TUniDBText
-        Left = 95
-        Top = 71
-        Width = 66
-        Height = 13
-        Hint = ''
-        DataField = 'IDCard'
-        DataSource = damCustomerRegistration.dsoNAT
-      end
-      object labNatGender2: TUniLabel
-        Left = 95
-        Top = 87
-        Width = 78
-        Height = 13
-        Hint = ''
-        Caption = 'labNatGender2'
-        TabOrder = 12
-      end
-      object labNatNationality2: TUniLabel
-        Left = 95
-        Top = 104
-        Width = 96
-        Height = 13
-        Hint = ''
-        Caption = 'labNatNationality2'
-        TabOrder = 14
-      end
-      object labNatPlaceOfBirthId: TUniLabel
-        Left = 14
-        Top = 121
-        Width = 71
-        Height = 13
-        Hint = ''
-        Caption = 'Naturalidade:'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 15
-      end
-      object labNatPlaceOfBirthId2: TUniLabel
-        Left = 95
-        Top = 121
-        Width = 114
-        Height = 13
-        Hint = ''
-        Caption = 'labNatPlaceOfBirthId2'
-        TabOrder = 16
-      end
-      object labNatSSN2: TUniLabel
-        Left = 95
-        Top = 54
-        Width = 60
-        Height = 13
-        Hint = ''
-        Caption = 'labNatSSN2'
-        TabOrder = 8
-      end
-    end
-    object pnlBreakTop2: TUniPanel
-      Left = 0
-      Top = 42
-      Width = 429
-      Height = 1
-      Hint = ''
-      Enabled = False
-      BodyRTL = False
-      Anchors = [akLeft, akRight, akBottom]
-      TabOrder = 3
-      ShowCaption = False
-      Caption = 'pnlBreak'
-    end
-    object labStep03SubTitle: TUniLabel
-      Left = 16
-      Top = 20
-      Width = 297
-      Height = 13
-      Hint = ''
-      Caption = 'Verifique os dados fornecidos e clique no bot'#227'o Finalizar.'
-      ParentFont = False
-      TabOrder = 2
-    end
-    object labStep03Title: TUniLabel
-      Left = 0
-      Top = 0
-      Width = 165
-      Height = 13
-      Hint = ''
-      Caption = 'Completar o Registro de Cliente'
-      ParentFont = False
-      Font.Style = [fsBold]
-      TabOrder = 0
-    end
   end
   inherited aclMain: TUniActionList
     Left = 11
