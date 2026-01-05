@@ -104,6 +104,55 @@ object frmLogin: TfrmLogin
       DesignSize = (
         453
         162)
+      object pnlMsg: TUniSimplePanel
+        Left = 28
+        Top = 6
+        Width = 392
+        Height = 22
+        Hint = ''
+        Visible = False
+        ParentColor = False
+        Color = clInfoBk
+        Border = True
+        ClientEvents.ExtEvents.Strings = (
+          
+            'afterrender=function afterrender(sender, eOpts)'#13#10'{'#13#10'  sender.set' +
+            'Style({'#13#10'    borderRadius: '#39'2px'#39','#13#10'    overflow: '#39'hidden'#39#13#10'  });' +
+            #13#10'}')
+        TabOrder = 6
+        object labMsg: TUniLabel
+          AlignWithMargins = True
+          Left = 23
+          Top = 3
+          Width = 366
+          Height = 19
+          Hint = ''
+          Margins.Left = 0
+          Margins.Bottom = 0
+          AutoSize = False
+          Caption = ''
+          Align = alClient
+          ParentFont = False
+          Font.Color = 3618615
+          TabOrder = 1
+        end
+        object imgMsg: TUniImage
+          AlignWithMargins = True
+          Left = 2
+          Top = 2
+          Width = 21
+          Height = 20
+          Hint = ''
+          Margins.Left = 2
+          Margins.Top = 2
+          Margins.Right = 0
+          Margins.Bottom = 0
+          Align = alLeft
+          Transparent = True
+          Images = nilstMain
+          ImageIndex = 4
+        end
+      end
       object pnlButtons: TUniContainerPanel
         Left = 28
         Top = 124
@@ -512,7 +561,7 @@ object frmLogin: TfrmLogin
     Left = 379
     Top = 16
     Images = {
-      04000000FFFFFF1F04AE00000089504E470D0A1A0A0000000D49484452000000
+      05000000FFFFFF1F04AE00000089504E470D0A1A0A0000000D49484452000000
       100000001008060000001FF3FF61000000017352474200AECE1CE90000000467
       414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA864
       0000004349444154384F6360A005A8ADADFD9F9393F31F179F20B0B4B4FC0FC2
@@ -544,6 +593,14 @@ object frmLogin: TfrmLogin
       1C2E2539671E9771110F461E34A287BE48444A0B3FC9217CB71633FBD4B58888
       918E3A270AB007405537205900637724033CE2006F54605E56E400F67E000A01
       3FA2FD0A30AC786F3F530834BB1FB780139B0320D9EACDD2140000000049454E
-      44AE426082}
+      44AE426082FFFFFF1F04F400000089504E470D0A1A0A0000000D494844520000
+      00100000001008060000001FF3FF610000001974455874536F66747761726500
+      41646F626520496D616765526561647971C9653C0000000B744558745469746C
+      6500496E666F3B6D122D860000007F49444154785EADD3C10904210C05D09492
+      6A72DBA6F6AC556C13DB41DA112C20F3850C88E02E337F847750C247A3CAEBFD
+      5D19547068C973CDD6FA79A250A0436CF4ACD13540E193457F65ADCE0105E2A2
+      7206D86EDB1832FC388E493627AE06A42AD9E1B8C947402376D01E097022C0E9
+      26D2D7483E24FE29F39F89FECE074CA754D1009116650000000049454E44AE42
+      6082}
   end
 end

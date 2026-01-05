@@ -13,7 +13,11 @@ type
     actConnect: TAction;
     actDomains: TAction;
     actOptions: TAction;
+    actRegister: TAction;
+    btnConnect: TUniBitBtn;
     btnDomains: TUniSpeedButton;
+    btnOptions: TUniBitBtn;
+    btnRegister: TUniBitBtn;
     edtDomainName: TUniDBEdit;
     edtPassword: TUniDBEdit;
     edtUserName: TUniDBEdit;
@@ -28,13 +32,12 @@ type
     nilstMain: TUniNativeImageList;
     pnlAuthenticate: TUniPanel;
     pnlBody: TUniSimplePanel;
+    pnlButtons: TUniContainerPanel;
     pnlFooter: TUniSimplePanel;
     pnlHeader: TUniSimplePanel;
-    pnlButtons: TUniContainerPanel;
-    btnOptions: TUniBitBtn;
-    btnConnect: TUniBitBtn;
-    actRegister: TAction;
-    btnRegister: TUniBitBtn;
+    pnlMsg: TUniSimplePanel;
+    labMsg: TUniLabel;
+    imgMsg: TUniImage;
     procedure actConnectExecute(Sender: TObject);
     procedure actDomainsExecute(Sender: TObject);
     procedure actOptionsExecute(Sender: TObject);
@@ -43,6 +46,7 @@ type
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure UniLoginFormCreate(Sender: TObject);
   private
+    procedure ShowMsg(const ACaption: string);
     procedure UpdateUi;
   end;
 
@@ -101,17 +105,10 @@ begin
     end);
 end;
 
-procedure TfrmLogin.UpdateUi;
+procedure TfrmLogin.ShowMsg(const ACaption: string);
 begin
-  var LExistsRegisteredCustomer := damLogin.ExistsRegisteredCustomer;
-  edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and LExistsRegisteredCustomer;
-  edtPassword.Enabled := edtUserName.Enabled;
-  edtDomainName.Enabled := edtUserName.Enabled;
-  actDomains.Enabled := edtUserName.Enabled;
-  actOptions.Visible := RunTime.IsClientRunningInServer;
-  actRegister.Visible := actOptions.Visible and not ServerModule.Database.Id.IsEmpty and not LExistsRegisteredCustomer;
-  actConnect.Visible := not actOptions.Visible or ServerModule.Database.Id.IsEmpty or LExistsRegisteredCustomer;
-  actConnect.Enabled := edtUserName.Enabled;
+  labMsg.Caption := ACaption;
+  pnlMsg.Visible := True;
 end;
 
 procedure TfrmLogin.UniLoginFormActivate(Sender: TObject);
@@ -137,6 +134,36 @@ end;
 procedure TfrmLogin.UniLoginFormCreate(Sender: TObject);
 begin
   UpdateUi;
+end;
+
+procedure TfrmLogin.UpdateUi;
+begin
+  var LExistsRegisteredCustomer := damLogin.ExistsRegisteredCustomer;
+  edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and LExistsRegisteredCustomer;
+  edtPassword.Enabled := edtUserName.Enabled;
+  edtDomainName.Enabled := edtUserName.Enabled;
+  actDomains.Enabled := edtUserName.Enabled;
+  actOptions.Visible := RunTime.IsClientRunningInServer;
+  actRegister.Visible := actOptions.Visible and not ServerModule.Database.Id.IsEmpty and not LExistsRegisteredCustomer;
+  actConnect.Visible := not actOptions.Visible or ServerModule.Database.Id.IsEmpty or LExistsRegisteredCustomer;
+  actConnect.Enabled := edtUserName.Enabled;
+  pnlMsg.Visible := False;
+  if damLogin.mtbCNS.Active and damLogin.mtbCNS.IsEmpty then
+  begin
+    ShowMsg('Não existe uma configuração de conexão com o banco de dados.');
+  end
+  else if ServerModule.Database.Id.IsEmpty then
+  begin
+    ShowMsg('É necessário selecionar uma conexão com o banco de dados.');
+  end
+  else if actRegister.Visible then
+  begin
+    ShowMsg('Registre um cliente para ter acesso ao sistema.');
+  end
+  else if actConnect.Visible and not actConnect.Enabled then
+  begin
+    ShowMsg('O acesso ao sistema está temporariamente indisponível.');
+  end;
 end;
 
 initialization
