@@ -124,19 +124,16 @@ end;
 
 procedure TGrammar.CompileMigrationInserts(LBuilder: IMigrationCommandListBuilder; const AMigrationTypes: TArray<TClass>; const ADriverID: DriverID; const ATable: string; const ABatch: Integer);
 var
-  LCreatedAtDefaultValue: string;
   LLast: TClass;
   LType: TClass;
 begin
-  LCreatedAtDefaultValue := '';
-  if ADriverID = DriverID.MSSQL then
-  begin
-    LCreatedAtDefaultValue := 'GETDATE()';
-  end;
   LBuilder
    .AppendLine
-   .Append('INSERT INTO ')
+   .Append('INSERT INTO')
+   .Append(' ')
    .Append(ATable)
+   .Append(' ')
+   .Append('([migration], [batch])')
    .Append(' ')
    .Append('VALUES')
    .Append(' ');
@@ -148,8 +145,6 @@ begin
      .Append(LType.UnitName)
      .Append(''', ')
      .Append(ABatch.ToString)
-     .Append(', ')
-     .Append(LCreatedAtDefaultValue)
      .Append(')');
     if not (LLast = LType) then
     begin

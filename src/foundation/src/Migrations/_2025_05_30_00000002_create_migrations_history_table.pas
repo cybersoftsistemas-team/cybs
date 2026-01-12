@@ -34,15 +34,16 @@ begin
   ASchema.CreateTable(FDefaultTableName)
    .HasSchema(FDefaultSchema)
    .Columns([
-     StringColumn('Migration').HasMaxLength(255).IsRequired
-    ,IntColumn('Batch').IsRequired
-    ,DateTimeColumn('CreatedAt').IsRequired
+     IntColumn('id').HasIncrement().IsRequired
+    ,StringColumn('migration').HasMaxLength(255).IsRequired
+    ,IntColumn('batch').IsRequired
    ])
    .Constraints([
-     PrimaryKey('Migration')
+     PrimaryKey('id')
+    ,Unique('migration')
    ])
    .Indexes([
-     CreateIndex('Batch')
+     CreateIndex('batch')
    ]);
 end;
 

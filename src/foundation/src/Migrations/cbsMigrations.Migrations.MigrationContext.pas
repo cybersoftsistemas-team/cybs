@@ -29,10 +29,10 @@ type
     procedure SetRepositoryPrefix(const AValue: string);
     procedure SortMigrationTypes;
   protected
-  const
+    const
       RepositoryNameDef = 'migrations';
       RepositoryPrefixDef = '';
-      RepositorySchema = 'general';
+      RepositorySchema = 'dbo';
     function CreateRepository: IDatabaseMigrationRepository; virtual; abstract;
     function CreateResolver: IConnectionResolver; virtual; abstract;
     procedure DoUpdateDatabase; virtual;

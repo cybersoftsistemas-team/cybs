@@ -91,6 +91,7 @@ uses
   System.SysUtils,
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.ConstraintOperation,
+  cbsMigrations.Contracts.Migrations.Operations.IntColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.StringColumnOperation,
   cbsMigrations.Migrations.Operations.AddCheckConstraintOperation,
   cbsMigrations.Migrations.Operations.AddForeignKeyOperation,
@@ -98,6 +99,7 @@ uses
   cbsMigrations.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Migrations.Operations.ColumnOperation,
   cbsMigrations.Migrations.Operations.CreateIndexOperation,
+  cbsMigrations.Migrations.Operations.IntColumnOperation,
   cbsMigrations.Migrations.Operations.StringColumnOperation;
 
 { TMigrationsSqlGenerator }
@@ -133,29 +135,44 @@ begin
 end;
 
 procedure TMigrationsSqlGenerator.ColumnDefinition(const ASchema, ATable, AName: string; const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
-var
-  LCollation: string;
 begin
   ABuilder
    .Append(DelimitIdentifier(AName))
    .Append(' ')
    .Append(AOperation.ColumnType);
-  LCollation :='';
-  if Supports(AOperation, IAlterColumnOperation) then
+  if Supports(AOperation, IIntColumnOperation) then
   begin
-    LCollation := TAlterColumnOperation(AOperation).Collation;
+    var LOperation := TIntColumnOperation(AOperation);
+    if LOperation.IsIncrement then
+    begin
+      ABuilder
+       .Append(' ')
+       .Append('IDENTITY(')
+       .Append(LOperation.Seed.ToString)
+       .Append(',')
+       .Append(LOperation.Increment.ToString)
+       .Append(')');
+    end
   end
-  else if Supports(AOperation, IStringColumnOperation) then
+  else
   begin
-    LCollation := TStringColumnOperation(AOperation).Collation;
-  end;
-  if not LCollation.Trim.IsEmpty then
-  begin
-    ABuilder
-     .Append(' ')
-     .Append('COLLATE')
-     .Append(' ')
-     .Append(LCollation);
+    var LCollation :='';
+    if Supports(AOperation, IAlterColumnOperation) then
+    begin
+      LCollation := TAlterColumnOperation(AOperation).Collation;
+    end
+    else if Supports(AOperation, IStringColumnOperation) then
+    begin
+      LCollation := TStringColumnOperation(AOperation).Collation;
+    end;
+    if not LCollation.Trim.IsEmpty then
+    begin
+      ABuilder
+       .Append(' ')
+       .Append('COLLATE')
+       .Append(' ')
+       .Append(LCollation);
+    end;
   end;
   ABuilder.Append(IfThen(AOperation.Nullable, ' NULL', ' NOT NULL'));
   DefaultValue(AOperation.DefaultValueSql, ABuilder);

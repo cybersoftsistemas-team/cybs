@@ -12,6 +12,7 @@ type
   public
     function HasColumnType(const AColumnType: string): IAddIntColumnOperation;
     function HasDefaultValueSql(const ADefaultValueSql: string): IAddIntColumnOperation;
+    function HasIncrement(const ASeed: Integer = 1; const AIncrement: Integer = 1): IAddIntColumnOperation;
     function HasSchema(const ASchema: string): IAddIntColumnOperation;
     function HasTable(const ATable: string): IAddIntColumnOperation;
     function IsOptional: IAddIntColumnOperation;
@@ -30,6 +31,11 @@ end;
 function TAddIntColumnOperation.HasDefaultValueSql(const ADefaultValueSql: string): IAddIntColumnOperation;
 begin
   Result := TAddIntColumnOperation(inherited HasDefaultValueSql(ADefaultValueSql));
+end;
+
+function TAddIntColumnOperation.HasIncrement(const ASeed: Integer = 1; const AIncrement: Integer = 1): IAddIntColumnOperation;
+begin
+  Result := TAddIntColumnOperation(inherited HasIncrement(ASeed, AIncrement));
 end;
 
 function TAddIntColumnOperation.HasSchema(const ASchema: string): IAddIntColumnOperation;

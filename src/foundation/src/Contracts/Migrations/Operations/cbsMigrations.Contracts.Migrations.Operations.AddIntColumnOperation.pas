@@ -11,6 +11,7 @@ type
     ['{9295B0BF-6F9F-4991-A52C-F1DE0F33C975}']
     function HasColumnType(const AColumnType: string): IAddIntColumnOperation;
     function HasDefaultValueSql(const ADefaultValueSql: string): IAddIntColumnOperation;
+    function HasIncrement(const ASeed: Integer = 1; const AIncrement: Integer = 1): IAddIntColumnOperation;
     function HasSchema(const ASchema: string): IAddIntColumnOperation;
     function HasTable(const ATable: string): IAddIntColumnOperation;
     function IsOptional: IAddIntColumnOperation;
