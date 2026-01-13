@@ -8,6 +8,8 @@ uses
 
 type
   CreateGeneralSchema = class(TMigration)
+  private
+    const SchemaName = 'general';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -19,12 +21,12 @@ implementation
 
 procedure CreateGeneralSchema.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.EnsureSchema('general');
+  ASchema.EnsureSchema(SchemaName);
 end;
 
 procedure CreateGeneralSchema.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropSchema('general')
+  ASchema.DropSchema(SchemaName);
 end;
 
 end.

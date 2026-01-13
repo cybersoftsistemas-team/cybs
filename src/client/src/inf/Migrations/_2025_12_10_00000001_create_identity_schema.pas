@@ -8,6 +8,8 @@ uses
 
 type
   CreateIdentitySchema = class(TMigration)
+  private
+    const SchemaName = 'identity';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -23,12 +25,12 @@ uses
 
 procedure CreateIdentitySchema.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.EnsureSchema('identity');
+  ASchema.EnsureSchema(SchemaName);
 end;
 
 procedure CreateIdentitySchema.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropSchema('identity')
+  ASchema.DropSchema(SchemaName);
 end;
 
 initialization

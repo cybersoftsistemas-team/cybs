@@ -8,6 +8,9 @@ uses
 
 type
   CreatePersonNationalitiesTable = class(TMigration)
+  private
+    const TableName = 'nationalities';
+    const SchemaName = 'person';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -19,8 +22,8 @@ implementation
 
 procedure CreatePersonNationalitiesTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('nationalities')
-   .HasSchema('person')
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
@@ -35,8 +38,8 @@ end;
 
 procedure CreatePersonNationalitiesTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('nationalities')
-   .HasSchema('person');
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
 end;
 
 end.

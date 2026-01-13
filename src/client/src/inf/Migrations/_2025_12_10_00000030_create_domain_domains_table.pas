@@ -8,6 +8,9 @@ uses
 
 type
   CreateDomainDomainsTable = class(TMigration)
+  private
+    const TableName = 'domains';
+    const SchemaName = 'domain';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -23,8 +26,8 @@ uses
 
 procedure CreateDomainDomainsTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('domains')
-   .HasSchema('domain')
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
@@ -35,18 +38,19 @@ begin
    .Constraints([
      PrimaryKey('Id')
     ,ForeignKey('ManagedById', 'persons', 'Id').HasPrincipalSchema('person')
-    ,ForeignKey('ParentId', 'domains', 'Id')
+    ,ForeignKey('ParentId', TableName, 'Id')
    ])
    .Indexes([
-     CreateIndex('ParentId')
+     CreateIndex('ManagedById')
+    ,CreateIndex('ParentId')
     ,CreateIndex(['ParentId', 'Id'])
    ]);
 end;
 
 procedure CreateDomainDomainsTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('domains')
-   .HasSchema('domain');
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
 end;
 
 initialization

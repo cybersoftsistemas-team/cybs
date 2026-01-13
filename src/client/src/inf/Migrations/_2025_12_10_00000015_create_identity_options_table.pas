@@ -8,6 +8,9 @@ uses
 
 type
   CreateIdentityOptionsTable = class(TMigration)
+  private
+    const TableName = 'options';
+    const SchemaName = 'identity';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -23,8 +26,8 @@ uses
 
 procedure CreateIdentityOptionsTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('options')
-   .HasSchema('identity')
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
@@ -38,8 +41,8 @@ end;
 
 procedure CreateIdentityOptionsTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('options')
-   .HasSchema('identity');
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
 end;
 
 initialization

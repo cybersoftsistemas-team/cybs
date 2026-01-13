@@ -8,6 +8,9 @@ uses
 
 type
   CreateAddressStreetsTable = class(TMigration)
+  private
+    const TableName = 'streets';
+    const SchemaName = 'address';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -19,8 +22,8 @@ implementation
 
 procedure CreateAddressStreetsTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('streets')
-   .HasSchema('address')
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
@@ -33,8 +36,8 @@ end;
 
 procedure CreateAddressStreetsTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('streets')
-   .HasSchema('address');
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
 end;
 
 end.

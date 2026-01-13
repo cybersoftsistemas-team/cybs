@@ -8,6 +8,8 @@ uses
 
 type
   CreateAddressSchema = class(TMigration)
+  private
+    const SchemaName = 'address';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -19,12 +21,12 @@ implementation
 
 procedure CreateAddressSchema.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.EnsureSchema('address');
+  ASchema.EnsureSchema(SchemaName);
 end;
 
 procedure CreateAddressSchema.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropSchema('address')
+  ASchema.DropSchema(SchemaName);
 end;
 
 end.

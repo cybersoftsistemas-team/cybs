@@ -8,6 +8,9 @@ uses
 
 type
   CreateAddressStateCodesTable = class(TMigration)
+  private
+    const TableName = 'state_codes';
+    const SchemaName = 'address';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -19,8 +22,8 @@ implementation
 
 procedure CreateAddressStateCodesTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('state_codes')
-   .HasSchema('address')
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('CodeType').HasMaxLength(50).IsRequired
@@ -39,8 +42,8 @@ end;
 
 procedure CreateAddressStateCodesTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('state_codes')
-   .HasSchema('address');
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
 end;
 
 end.

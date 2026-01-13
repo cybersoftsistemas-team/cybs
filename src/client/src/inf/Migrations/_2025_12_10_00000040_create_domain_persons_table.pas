@@ -8,6 +8,9 @@ uses
 
 type
   CreateyDomainPersonsTable = class(TMigration)
+  private
+    const TableName = 'persons';
+    const SchemaName = 'domain';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -23,8 +26,8 @@ uses
 
 procedure CreateyDomainPersonsTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('persons')
-   .HasSchema('domain')
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
    .Columns([
      GuidColumn('DomainId').IsRequired
     ,GuidColumn('PersonId').IsRequired
@@ -33,13 +36,17 @@ begin
      PrimaryKey(['DomainId', 'PersonId'])
     ,ForeignKey('DomainId', 'domains', 'Id')
     ,ForeignKey('PersonId', 'persons', 'Id').HasPrincipalSchema('person')
+   ])
+   .Indexes([
+     CreateIndex('DomainId')
+    ,CreateIndex('PersonId')
    ]);
 end;
 
 procedure CreateyDomainPersonsTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('persons')
-   .HasSchema('domain');
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
 end;
 
 initialization

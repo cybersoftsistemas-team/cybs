@@ -8,6 +8,9 @@ uses
 
 type
   CreateGeneralCategoriesTable = class(TMigration)
+  private
+    const TableName = 'categories';
+    const SchemaName = 'general';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -19,8 +22,8 @@ implementation
 
 procedure CreateGeneralCategoriesTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('categories')
-   .HasSchema('general')
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
@@ -29,7 +32,7 @@ begin
    ])
    .Constraints([
      PrimaryKey('Id')
-    ,ForeignKey('ParentId', 'categories', 'Id')
+    ,ForeignKey('ParentId', TableName, 'Id')
     ,Unique(['ParentId', 'Name'])
    ])
    .Indexes([
@@ -40,8 +43,8 @@ end;
 
 procedure CreateGeneralCategoriesTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('categories')
-   .HasSchema('general');
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
 end;
 
 end.

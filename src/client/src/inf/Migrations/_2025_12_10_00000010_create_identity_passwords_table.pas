@@ -8,6 +8,9 @@ uses
 
 type
   CreateIdentityPasswordsTable = class(TMigration)
+  private
+    const TableName = 'passwords';
+    const SchemaName = 'identity';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -23,8 +26,8 @@ uses
 
 procedure CreateIdentityPasswordsTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('passwords')
-   .HasSchema('identity')
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Password').HasMaxLength(255).IsRequired
@@ -39,8 +42,8 @@ end;
 
 procedure CreateIdentityPasswordsTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('passwords')
-   .HasSchema('identity');
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
 end;
 
 initialization

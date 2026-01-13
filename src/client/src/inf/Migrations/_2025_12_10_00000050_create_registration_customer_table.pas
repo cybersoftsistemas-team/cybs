@@ -8,6 +8,9 @@ uses
 
 type
   CreateRegistrationCustomerTable = class(TMigration)
+  private
+    const TableName = 'customer';
+    const SchemaName = 'registration';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -23,8 +26,8 @@ uses
 
 procedure CreateRegistrationCustomerTable.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.CreateTable('customer')
-   .HasSchema('registration')
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
    .Columns([
      IntColumn('Id').HasDefaultValueSql('1').IsRequired
     ,GuidColumn('CustomerId').IsRequired
@@ -34,17 +37,18 @@ begin
    .Constraints([
      PrimaryKey('Id')
     ,ForeignKey('CustomerId', 'persons', 'Id').HasPrincipalSchema('person')
-    ,CheckConstraint('CK_registration_customer_singleton', '(Id = 1)')
+    ,CheckConstraint('chk_registration_customer_singleton', '(Id = 1)')
    ])
    .Indexes([
-     CreateIndex('CustomerId')
+     CreateIndex('ClientId')
+    ,CreateIndex('CustomerId')
    ]);
 end;
 
 procedure CreateRegistrationCustomerTable.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropTable('customer')
-   .HasSchema('registration');
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
 end;
 
 initialization

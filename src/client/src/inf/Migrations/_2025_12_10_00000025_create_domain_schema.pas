@@ -8,6 +8,8 @@ uses
 
 type
   CreateDomainSchema = class(TMigration)
+  private
+    const SchemaName = 'domain';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -23,12 +25,12 @@ uses
 
 procedure CreateDomainSchema.Up(const ASchema: IMigrationBuilder);
 begin
-  ASchema.EnsureSchema('domain');
+  ASchema.EnsureSchema(SchemaName);
 end;
 
 procedure CreateDomainSchema.Down(const ASchema: IMigrationBuilder);
 begin
-  ASchema.DropSchema('domain')
+  ASchema.DropSchema(SchemaName)
 end;
 
 initialization
