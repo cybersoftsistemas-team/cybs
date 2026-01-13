@@ -32,6 +32,11 @@ begin
     ,ForeignKey('CityId', 'cities', 'Id').HasPrincipalSchema('address')
     ,ForeignKey('PersonId', 'persons', 'Id')
     ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('general')
+   ])
+   .Indexes([
+     CreateIndex('CityId')
+    ,CreateIndex('PersonId')
+    ,CreateIndex('TypeId')
    ]);
 end;
 

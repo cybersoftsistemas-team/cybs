@@ -80,7 +80,7 @@ procedure TPrimaryKeyOperation.DoPrepare;
 begin
   if not Table.Trim.IsEmpty and Name.Trim.IsEmpty then
   begin
-    SetName(Format('PK_%s_%s', [QualifiedTableName('_'), string.Join('_', FColumns.ToArray)]));
+    SetName(Format('%s_%s_Primary', [QualifiedTableName('_'), string.Join('_', FColumns.ToArray)]).ToLower);
   end;
 end;
 

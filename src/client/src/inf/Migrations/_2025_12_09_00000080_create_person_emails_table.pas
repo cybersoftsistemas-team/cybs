@@ -30,6 +30,10 @@ begin
      PrimaryKey(['PersonId', 'TypeId'])
     ,ForeignKey('PersonId', 'persons', 'Id')
     ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('general')
+   ])
+   .Indexes([
+     CreateIndex('PersonId')
+    ,CreateIndex('TypeId')
    ]);
 end;
 

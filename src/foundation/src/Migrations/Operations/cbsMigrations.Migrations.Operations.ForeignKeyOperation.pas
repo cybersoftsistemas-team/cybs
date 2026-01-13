@@ -185,8 +185,7 @@ begin
   end;
   if not Table.Trim.IsEmpty and Name.Trim.IsEmpty then
   begin
-    SetName(Format('FK_%s_%s_%s', [QualifiedTableName('_'), QualifiedPrincipalTableName('_'),
-      string.Join('_', FColumns.ToArray)]));
+    SetName(Format('%s_%s_Foreign', [QualifiedTableName('_'), string.Join('_', FColumns.ToArray)]).ToLower);
   end;
 end;
 
