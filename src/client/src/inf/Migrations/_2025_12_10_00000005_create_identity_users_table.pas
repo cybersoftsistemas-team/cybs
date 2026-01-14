@@ -31,7 +31,7 @@ begin
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
-    ,StringColumn('Description').HasColumnType('ntext').IsRequired
+    ,StringColumn('Description').IsRequired
     ,BooleanColumn('AccountBlockedOut').HasDefaultValueSql('0').IsRequired
     ,DateTimeColumn('AccountExpiresDate').IsOptional
     ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired

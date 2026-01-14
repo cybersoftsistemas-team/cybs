@@ -358,7 +358,8 @@ begin
   begin
     ABuilder.Append(ADbType);
   end;
-  if (FDriverID in LengthOrPrecisionSupport) and (AOperation.Length > 0) then
+  if (FDriverID in LengthOrPrecisionSupport) and (AOperation.Length > 0) or
+    (AOperation.MaxLength and not AOperation.FixedLength) then
   begin
     ABuilder.Append('(');
   end;
@@ -370,7 +371,8 @@ begin
   begin
     ABuilder.Append(AOperation.Length.ToString);
   end;
-  if (FDriverID in LengthOrPrecisionSupport) and (AOperation.Length > 0) then
+  if (FDriverID in LengthOrPrecisionSupport) and (AOperation.Length > 0) or
+    (AOperation.MaxLength and not AOperation.FixedLength) then
   begin
     ABuilder.Append(')');
   end;
