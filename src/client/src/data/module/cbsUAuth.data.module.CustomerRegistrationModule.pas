@@ -36,7 +36,7 @@ type
     qryLEGDoingBusinessAs: TWideStringField;
     qryLEGFoundationDate: TSQLTimeStampField;
     qryLEGId: TGuidField;
-    qryLEGMunicipalInscription: TWideStringField;
+    qryLEGMunicipalInscriptionNumber: TWideStringField;
     qryLEGName: TWideStringField;
     qryLEGNationalityId: TGuidField;
     qryLEGStateId: TGuidField;

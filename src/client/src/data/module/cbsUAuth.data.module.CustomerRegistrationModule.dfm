@@ -14,7 +14,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',CRN'
       ',FoundationDate'
       ',StateInscriptionNumber'
-      ',MunicipalInscription'
+      ',MunicipalInscriptionNumber'
       ',CompanyTypeId'
       ',NationalityId'
       ',StateId'
@@ -68,10 +68,10 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       FieldName = 'StateInscriptionNumber'
       Origin = 'StateInscriptionNumber'
     end
-    object qryLEGMunicipalInscription: TWideStringField
+    object qryLEGMunicipalInscriptionNumber: TWideStringField
       DisplayLabel = 'Inscri'#231#227'o Municipal'
-      FieldName = 'MunicipalInscription'
-      Origin = 'MunicipalInscription'
+      FieldName = 'MunicipalInscriptionNumber'
+      Origin = 'MunicipalInscriptionNumber'
     end
     object qryLEGCompanyTypeId: TGuidField
       DisplayLabel = 'Tipo'
@@ -95,7 +95,6 @@ inherited damCustomerRegistration: TdamCustomerRegistration
     end
   end
   object qryNAT: TFDQuery
-    Active = True
     BeforePost = DataSetBeforePost
     OnNewRecord = qryNATNewRecord
     CachedUpdates = True
@@ -175,7 +174,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',CRN'
       ',FoundationDate'
       ',StateInscriptionNumber'
-      ',MunicipalInscription'
+      ',MunicipalInscriptionNumber'
       ',CompanyTypeId'
       ',NationalityId'
       ',StateId)'
@@ -186,7 +185,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',:NEW_CRN'
       ',:NEW_FoundationDate'
       ',:NEW_StateInscriptionNumber'
-      ',:NEW_MunicipalInscription'
+      ',:NEW_MunicipalInscriptionNumber'
       ',:NEW_CompanyTypeId'
       ',:NEW_NationalityId'
       ',:NEW_StateId);'
@@ -196,7 +195,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',CRN'
       ',FoundationDate'
       ',StateInscriptionNumber'
-      ',MunicipalInscription'
+      ',MunicipalInscriptionNumber'
       ',CompanyTypeId'
       ',NationalityId'
       ',StateId'
@@ -209,7 +208,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',CRN = :NEW_CRN'
       ',FoundationDate = :NEW_FoundationDate'
       ',StateInscriptionNumber = :NEW_StateInscriptionNumber'
-      ',MunicipalInscription = :NEW_MunicipalInscription'
+      ',MunicipalInscriptionNumber = :NEW_MunicipalInscriptionNumber'
       ',CompanyTypeId = :NEW_CompanyTypeId'
       ',NationalityId = :NEW_NationalityId'
       ',StateId = :NEW_StateId'
@@ -220,7 +219,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',CRN'
       ',FoundationDate'
       ',StateInscriptionNumber'
-      ',MunicipalInscription'
+      ',MunicipalInscriptionNumber'
       ',CompanyTypeId'
       ',NationalityId'
       ',StateId'
@@ -235,7 +234,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       ',CRN'
       ',FoundationDate'
       ',StateInscriptionNumber'
-      ',MunicipalInscription'
+      ',MunicipalInscriptionNumber'
       ',CompanyTypeId'
       ',NationalityId'
       ',StateId'
