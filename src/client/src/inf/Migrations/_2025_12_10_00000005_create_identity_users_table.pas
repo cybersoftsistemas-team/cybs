@@ -42,6 +42,9 @@ begin
      PrimaryKey('Id')
     ,ForeignKey('PersonId', 'naturals', 'Id').HasPrincipalSchema('person')
     ,Unique('Name')
+   ])
+   .Indexes([
+     CreateIndex('PersonId')
    ]);
 end;
 

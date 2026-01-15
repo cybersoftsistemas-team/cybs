@@ -43,7 +43,12 @@ begin
     ,Unique(['StreetTypeId', 'StreetId', 'NeighborhoodId', 'CityId', 'StateId'])
    ])
    .Indexes([
-     CreateIndex('ZipCode')
+     CreateIndex('CityId')
+    ,CreateIndex('NeighborhoodId')
+    ,CreateIndex('StateId')
+    ,CreateIndex('StreetId')
+    ,CreateIndex('StreetTypeId')
+    ,CreateIndex('ZipCode')
    ]);
 end;
 

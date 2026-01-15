@@ -33,6 +33,9 @@ begin
      PrimaryKey('Id')
     ,ForeignKey('CountryId', 'countries', 'Id').HasPrincipalSchema('address')
     ,Unique(['CountryId', 'Name'])
+   ])
+   .Indexes([
+     CreateIndex('CountryId')
    ]);
 end;
 

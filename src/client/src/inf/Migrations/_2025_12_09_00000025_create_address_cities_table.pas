@@ -34,6 +34,9 @@ begin
      PrimaryKey('Id')
     ,ForeignKey('StateId', 'states', 'Id')
     ,Unique(['StateId', 'Name'])
+   ])
+   .Indexes([
+     CreateIndex('StateId')
    ]);
 end;
 

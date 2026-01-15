@@ -37,6 +37,9 @@ begin
      PrimaryKey('Id')
     ,ForeignKey('UserId', 'users', 'Id')
     ,Unique(['UserId', 'Password'])
+   ])
+   .Indexes([
+     CreateIndex('UserId')
    ]);
 end;
 

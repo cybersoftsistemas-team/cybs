@@ -37,6 +37,10 @@ begin
      PrimaryKey(['UserId', 'OptionId'])
     ,ForeignKey('UserId', 'users', 'Id')
     ,ForeignKey('OptionId', 'options', 'Id')
+   ])
+   .Indexes([
+     CreateIndex('OptionId')
+    ,CreateIndex('UserId')
    ]);
 end;
 

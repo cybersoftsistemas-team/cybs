@@ -33,6 +33,9 @@ begin
      PrimaryKey('Id')
     ,ForeignKey('CityId', 'cities', 'Id')
     ,Unique(['CityId', 'Name'])
+   ])
+   .Indexes([
+     CreateIndex('CityId')
    ]);
 end;
 
