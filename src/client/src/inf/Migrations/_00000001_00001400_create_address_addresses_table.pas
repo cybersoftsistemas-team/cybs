@@ -1,0 +1,61 @@
+unit _00000001_00001400_create_address_addresses_table;
+
+interface
+
+uses
+{PROJECT}
+  cbsMigrations.Support.Migration;
+
+type
+  CreateAddressAddressesTable = class(TMigration)
+  private
+    const TableName = 'addresses';
+    const SchemaName = 'address';
+  protected
+    procedure Up(const ASchema: IMigrationBuilder); override;
+    procedure Down(const ASchema: IMigrationBuilder); override;
+  end;
+
+implementation
+
+{ CreateAddressAddressesTable }
+
+procedure CreateAddressAddressesTable.Up(const ASchema: IMigrationBuilder);
+begin
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
+   .Columns([
+     GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
+    ,IntColumn('ZipCode').IsRequired
+    ,GuidColumn('StreetTypeId').IsRequired
+    ,GuidColumn('StreetId').IsRequired
+    ,GuidColumn('NeighborhoodId').IsRequired
+    ,GuidColumn('CityId').IsRequired
+    ,GuidColumn('StateId').IsRequired
+   ])
+   .Constraints([
+     PrimaryKey('Id')
+    ,ForeignKey('CityId', 'cities', 'Id')
+    ,ForeignKey('NeighborhoodId', 'neighborhoods', 'Id')
+    ,ForeignKey('StateId', 'states', 'Id')
+    ,ForeignKey('StreetId', 'streets', 'Id')
+    ,ForeignKey('StreetTypeId', 'streettypes', 'Id')
+    ,Unique(['StreetTypeId', 'StreetId', 'NeighborhoodId', 'CityId', 'StateId'])
+   ])
+   .Indexes([
+     CreateIndex('CityId')
+    ,CreateIndex('NeighborhoodId')
+    ,CreateIndex('StateId')
+    ,CreateIndex('StreetId')
+    ,CreateIndex('StreetTypeId')
+    ,CreateIndex('ZipCode')
+   ]);
+end;
+
+procedure CreateAddressAddressesTable.Down(const ASchema: IMigrationBuilder);
+begin
+  ASchema.DropTable(TableName)
+   .HasSchema(SchemaName);
+end;
+
+end.

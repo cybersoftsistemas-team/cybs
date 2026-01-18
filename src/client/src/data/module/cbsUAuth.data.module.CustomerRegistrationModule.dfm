@@ -360,7 +360,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       'SELECT NAT.Id'
       ',NAT.Name'
       ',NAT.CountryId'
-      'FROM person.nationalities AS NAT')
+      'FROM country.nationalities AS NAT')
     Left = 230
     Top = 87
     object qryNTUId: TGuidField
@@ -396,7 +396,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       'SELECT Id'
       ',Name'
       ',AreaCode'
-      'FROM address.countries;')
+      'FROM country.countries;')
     Left = 368
     Top = 15
     object qryCOUId: TGuidField
@@ -538,6 +538,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
     Top = 160
   end
   object updCYT: TFDUpdateSQL
+    Connection = damDb.Connection
     Left = 90
     Top = 160
   end
@@ -577,7 +578,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       'SELECT NAT.Id'
       ',NAT.Name'
       ',NAT.CountryId'
-      'FROM person.nationalities AS NAT;')
+      'FROM country.nationalities AS NAT;')
     Left = 368
     Top = 160
     object qryNTYId: TGuidField
