@@ -18,6 +18,10 @@ type
 
 implementation
 
+uses
+{IDE}
+  System.SysUtils;
+
 { CreateGeneralCategoriesTable }
 
 procedure CreateGeneralCategoriesTable.Up(const ASchema: IMigrationBuilder);
