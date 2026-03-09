@@ -68,6 +68,14 @@ type
     function CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
     function CreateIndex(const ATable: string; const AColumn: TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
     function CreateIndex(const ATable: string; const AColumns: array of TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
+    function CreateIndex(const AName, ATable: string; const AColumn: TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const AName, ATable: string; const AColumn: TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const ATable: string; const AColumn: TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const ATable: string; const AColumn: TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
     function CreateTable(const AName: string): ICreateTableOperation;
     function DropCheckConstraint(const AName: string): IDropCheckConstraintOperation;
     function DropColumn(const AName: string): IDropColumnOperation;

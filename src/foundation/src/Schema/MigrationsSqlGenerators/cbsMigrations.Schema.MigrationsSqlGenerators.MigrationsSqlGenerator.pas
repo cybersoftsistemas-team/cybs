@@ -49,6 +49,7 @@ type
     procedure CreateTableUniqueConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure ForeignKeyAction(const AReferentialAction: ReferentialAction; const ABuilder: IMigrationCommandListBuilder);
     procedure ForeignKeyConstraint(const AOperation: IAddForeignKeyOperation; const ABuilder: IMigrationCommandListBuilder);
+    procedure GenerateIncludeColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure GenerateIndexColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure IndexOptions(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure PrimaryKeyConstraint(const AOperation: IAddPrimaryKeyOperation; const ABuilder: IMigrationCommandListBuilder);
@@ -91,7 +92,6 @@ uses
   System.SysUtils,
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.ConstraintOperation,
-  cbsMigrations.Contracts.Migrations.Operations.IntColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.StringColumnOperation,
   cbsMigrations.Migrations.Operations.AddCheckConstraintOperation,
   cbsMigrations.Migrations.Operations.AddForeignKeyOperation,
@@ -99,7 +99,6 @@ uses
   cbsMigrations.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Migrations.Operations.ColumnOperation,
   cbsMigrations.Migrations.Operations.CreateIndexOperation,
-  cbsMigrations.Migrations.Operations.IntColumnOperation,
   cbsMigrations.Migrations.Operations.StringColumnOperation;
 
 { TMigrationsSqlGenerator }
@@ -135,44 +134,29 @@ begin
 end;
 
 procedure TMigrationsSqlGenerator.ColumnDefinition(const ASchema, ATable, AName: string; const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
+var
+  LCollation: string;
 begin
   ABuilder
    .Append(DelimitIdentifier(AName))
    .Append(' ')
    .Append(AOperation.ColumnType);
-  if Supports(AOperation, IIntColumnOperation) then
+  LCollation :='';
+  if Supports(AOperation, IAlterColumnOperation) then
   begin
-    var LOperation := TIntColumnOperation(AOperation);
-    if LOperation.IsIncrement then
-    begin
-      ABuilder
-       .Append(' ')
-       .Append('IDENTITY(')
-       .Append(LOperation.Seed.ToString)
-       .Append(',')
-       .Append(LOperation.Increment.ToString)
-       .Append(')');
-    end
+    LCollation := TAlterColumnOperation(AOperation).Collation;
   end
-  else
+  else if Supports(AOperation, IStringColumnOperation) then
   begin
-    var LCollation :='';
-    if Supports(AOperation, IAlterColumnOperation) then
-    begin
-      LCollation := TAlterColumnOperation(AOperation).Collation;
-    end
-    else if Supports(AOperation, IStringColumnOperation) then
-    begin
-      LCollation := TStringColumnOperation(AOperation).Collation;
-    end;
-    if not LCollation.Trim.IsEmpty then
-    begin
-      ABuilder
-       .Append(' ')
-       .Append('COLLATE')
-       .Append(' ')
-       .Append(LCollation);
-    end;
+    LCollation := TStringColumnOperation(AOperation).Collation;
+  end;
+  if not LCollation.Trim.IsEmpty then
+  begin
+    ABuilder
+     .Append(' ')
+     .Append('COLLATE')
+     .Append(' ')
+     .Append(LCollation);
   end;
   ABuilder.Append(IfThen(AOperation.Nullable, ' NULL', ' NOT NULL'));
   DefaultValue(AOperation.DefaultValueSql, ABuilder);
@@ -457,6 +441,17 @@ begin
   GenerateIndexColumnList(AOperation, ABuilder);
   ABuilder
    .Append(')');
+  if not AOperation.IncludeColumns.IsEmpty then
+  begin
+    ABuilder
+     .Append(' ')
+     .Append('INCLUDE')
+     .Append(' ')
+     .Append('(');
+    GenerateIncludeColumnList(AOperation, ABuilder);
+    ABuilder
+     .Append(')');
+  end;
   IndexOptions(AOperation, ABuilder);
   ABuilder.AppendLine(StatementTerminator);
   EndStatement(ABuilder);
@@ -607,6 +602,24 @@ procedure TMigrationsSqlGenerator.Generate(const AOperation: ISqlOperation; cons
 begin
   ABuilder.AppendLine(NormalizeTheSQLScript(AOperation.Sql));
   EndStatement(ABuilder);
+end;
+
+procedure TMigrationsSqlGenerator.GenerateIncludeColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
+var
+  I: Integer;
+  LColumns: TArray<string>;
+begin
+  LColumns := AOperation.IncludeColumns.ToArray;
+  for I := Low(LColumns) to High(LColumns) do
+  begin
+    if I > 0 then
+    begin
+      ABuilder
+       .Append(',')
+       .Append(' ');
+    end;
+    ABuilder.Append(DelimitIdentifier(LColumns[I]));
+  end;
 end;
 
 procedure TMigrationsSqlGenerator.GenerateIndexColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);

@@ -13,6 +13,7 @@ type
   public
     function HasColumns(const AColumns: array of TIndexColumn): ICreateIndexOperation;
     function HasDescending(const ADescending: TDescending): ICreateIndexOperation;
+    function HasInclude(const AColumns: array of TIncludeColumn): ICreateIndexOperation;
     function HasName(const AName: string): ICreateIndexOperation;
     function HasSchema(const ASchema: string): ICreateIndexOperation;
     function HasTable(const ATable: string): ICreateIndexOperation;
@@ -31,6 +32,11 @@ end;
 function TCreateIndexOperation.HasDescending(const ADescending: TDescending): ICreateIndexOperation;
 begin
   Result := TCreateIndexOperation(inherited HasDescending(ADescending));
+end;
+
+function TCreateIndexOperation.HasInclude(const AColumns: array of TIncludeColumn): ICreateIndexOperation;
+begin
+  Result := TCreateIndexOperation(inherited HasInclude(AColumns));
 end;
 
 function TCreateIndexOperation.HasName(const AName: string): ICreateIndexOperation;

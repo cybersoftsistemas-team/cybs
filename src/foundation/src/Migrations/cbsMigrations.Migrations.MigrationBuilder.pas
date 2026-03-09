@@ -69,6 +69,14 @@ type
     function CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
     function CreateIndex(const ATable: string; const AColumn: TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
     function CreateIndex(const ATable: string; const AColumns: array of TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
+    function CreateIndex(const AName, ATable: string; const AColumn: TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const AName, ATable: string; const AColumn: TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const ATable: string; const AColumn: TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const ATable: string; const AColumn: TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation; overload;
+    function CreateIndex(const ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
     function CreateTable(const AName: string): ICreateTableOperation; overload;
     function CreateTable(const AName, ASchema: string): ICreateTableOperation; overload;
     function DropCheckConstraint(const AName: string): IDropCheckConstraintOperation;
@@ -337,6 +345,55 @@ begin
    .HasUnique(AUnique);
   FOperations.Add(LOperation);
   Result := LOperation;
+end;
+
+function TMigrationBuilder.CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation;
+var
+  LOperation: ICreateIndexOperation;
+begin
+  LOperation := TCreateIndexOperation.Create
+   .HasColumns(AColumns)
+   .HasName(AName)
+   .HasTable(ATable)
+   .HasUnique(False)
+   .HasInclude(AIncludeColumns);
+  FOperations.Add(LOperation);
+  Result := LOperation;
+end;
+
+function TMigrationBuilder.CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation;
+begin
+  Result := CreateIndex(AName, ATable, AColumns, [AIncludeColumn]);
+end;
+
+function TMigrationBuilder.CreateIndex(const AName, ATable: string; const AColumn: TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation;
+begin
+  Result := CreateIndex(AName, ATable, [AColumn], AIncludeColumns);
+end;
+
+function TMigrationBuilder.CreateIndex(const AName, ATable: string; const AColumn: TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation;
+begin
+  Result := CreateIndex(AName, ATable, [AColumn], [AIncludeColumn]);
+end;
+
+function TMigrationBuilder.CreateIndex(const ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation;
+begin
+  Result := CreateIndex('', ATable, AColumns, AIncludeColumns);
+end;
+
+function TMigrationBuilder.CreateIndex(const ATable: string; const AColumns: array of TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation;
+begin
+  Result := CreateIndex('', ATable, AColumns, [AIncludeColumn]);
+end;
+
+function TMigrationBuilder.CreateIndex(const ATable: string; const AColumn: TIndexColumn; const AIncludeColumns: array of TIncludeColumn): ICreateIndexOperation;
+begin
+  Result := CreateIndex('', ATable, [AColumn], AIncludeColumns);
+end;
+
+function TMigrationBuilder.CreateIndex(const ATable: string; const AColumn: TIndexColumn; const AIncludeColumn: TIncludeColumn): ICreateIndexOperation;
+begin
+  Result := CreateIndex('', ATable, [AColumn], [AIncludeColumn]);
 end;
 
 function TMigrationBuilder.CreateTable(const AName: string): ICreateTableOperation;

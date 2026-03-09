@@ -9,7 +9,10 @@ uses
   Spring.Collections;
 
 type
-  TIndexColumn = string;
+  TIncludeColumn = string;
+  TIndexColumn = TIncludeColumn;
+
+  IIncludeColumns = IEnumerable<TIncludeColumn>;
   IIndexColumns = IEnumerable<TIndexColumn>;
 
   TDescending = array of Boolean;
@@ -22,20 +25,29 @@ type
     function GetUnique: Boolean;
     function HasColumns(const AColumns: array of TIndexColumn): IIndexOperation;
     function HasDescending(const ADescending: TDescending): IIndexOperation;
+    function HasInclude(const AColumns: array of TIncludeColumn): IIndexOperation;
     function HasName(const AName: string): IIndexOperation;
     function HasSchema(const ASchema: string): IIndexOperation;
     function HasTable(const ATable: string): IIndexOperation;
     function HasUnique(const AUnique: Boolean): IIndexOperation;
+    function IncludeColumns: IIncludeColumns;
     property Descending: TDescending read GetDescending;
     property Filter: string read GetFilter;
     property Unique: Boolean read GetUnique;
   end;
 
+  IIncludeColumnList = IList<TIncludeColumn>;
   IIndexColumnList = IList<TIndexColumn>;
 
+  function CreateIncludeColumnList: IIncludeColumnList;
   function CreateIndexColumnList: IIndexColumnList;
 
 implementation
+
+function CreateIncludeColumnList: IIncludeColumnList;
+begin
+  Result := TCollections.CreateList<TIncludeColumn>;
+end;
 
 function CreateIndexColumnList: IIndexColumnList;
 begin
