@@ -6,6 +6,7 @@ uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.MigrationCommandListBuilder,
   cbsMigrations.Contracts.Migrations.Operations.AlterColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.ColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.EnsureSchemaOperation,
   cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation,
   cbsMigrations.Contracts.Schema.MigrationsSqlGenerators.SqlServerMigrationsSqlGenerator,
@@ -14,12 +15,19 @@ uses
 type
   TSqlServerMigrationsSqlGenerator = class(TMigrationsSqlGenerator, ISqlServerMigrationsSqlGenerator)
   protected
+    procedure ColumnIdentityDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); override;
     procedure Generate(const AOperation: IAlterColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IEnsureSchemaOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IRenameColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
   end;
 
 implementation
+
+uses
+{IDE}
+  System.SysUtils,
+{PROJECT}
+  cbsMigrations.Contracts.Migrations.Operations.IntColumnOperation;
 
 { TSqlServerMigrationsSqlGenerator }
 
@@ -49,6 +57,23 @@ begin
    .Append(''')')
   .AppendLine(StatementTerminator);
   EndStatement(ABuilder);
+end;
+
+procedure TSqlServerMigrationsSqlGenerator.ColumnIdentityDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
+var
+  LIntColumnOperation: IIntColumnOperation;
+begin
+  if Supports(AOperation, IIntColumnOperation, LIntColumnOperation) and
+    LIntColumnOperation.IsIncrement then
+  begin
+    ABuilder
+     .Append(' ')
+     .Append('IDENTITY(')
+     .Append(LIntColumnOperation.Seed.ToString)
+     .Append(',')
+     .Append(LIntColumnOperation.Increment.ToString)
+     .Append(')');
+  end;
 end;
 
 procedure TSqlServerMigrationsSqlGenerator.Generate(const AOperation: IRenameColumnOperation;

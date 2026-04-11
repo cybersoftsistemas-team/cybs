@@ -57,6 +57,7 @@ type
   protected
     procedure ColumnDefinition(const ASchema, ATable, AName: string; const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual;
     procedure ColumnDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual;
+    procedure ColumnIdentityDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); virtual;
     procedure DefaultValue(const ADefaultValueSql: string; const ABuilder: IMigrationCommandListBuilder);
     procedure Generate(const AOperation: IAddBooleanColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
@@ -135,20 +136,22 @@ end;
 
 procedure TMigrationsSqlGenerator.ColumnDefinition(const ASchema, ATable, AName: string; const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
 var
-  LCollation: string;
+  LAlterColumnOperation: IAlterColumnOperation;
+  LStringColumnOperation: IStringColumnOperation;
 begin
   ABuilder
    .Append(DelimitIdentifier(AName))
    .Append(' ')
    .Append(AOperation.ColumnType);
-  LCollation :='';
-  if Supports(AOperation, IAlterColumnOperation) then
+  ColumnIdentityDefinition(AOperation, ABuilder);
+  var LCollation :='';
+  if Supports(AOperation, IAlterColumnOperation, LAlterColumnOperation) then
   begin
-    LCollation := TAlterColumnOperation(AOperation).Collation;
+    LCollation := LAlterColumnOperation.Collation;
   end
-  else if Supports(AOperation, IStringColumnOperation) then
+  else if Supports(AOperation, IStringColumnOperation, LStringColumnOperation) then
   begin
-    LCollation := TStringColumnOperation(AOperation).Collation;
+    LCollation := LStringColumnOperation.Collation;
   end;
   if not LCollation.Trim.IsEmpty then
   begin
@@ -165,6 +168,11 @@ end;
 procedure TMigrationsSqlGenerator.ColumnDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
 begin
   ColumnDefinition(AOperation.Schema, AOperation.Table, AOperation.Name, AOperation, ABuilder);
+end;
+
+procedure TMigrationsSqlGenerator.ColumnIdentityDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  // This method can be overwritten by inherited classes.
 end;
 
 procedure TMigrationsSqlGenerator.CreateTableCheckConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
