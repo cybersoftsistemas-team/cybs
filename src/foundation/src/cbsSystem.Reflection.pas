@@ -72,11 +72,7 @@ function ExtractGenericArguments(ATypeInfo: PTypeInfo): string;
 begin
   var LName := UTF8ToString(ATypeInfo.Name);
   var LIndex := Pos('<', LName);
-  if LIndex > 0 then
-  begin
-    Exit(Copy(LName, Succ(LIndex), Length(LName) - Succ(LIndex)));
-  end;
-  Result := '';
+  Result := if LIndex > 0 then Copy(LName, Succ(LIndex), Length(LName) - Succ(LIndex)) else '';
 end;
 
 function FindType(const AName: string; out AType: TRttiType): Boolean;
@@ -155,22 +151,14 @@ function TObjectHelper.GetGenericArguments: TArray<TRttiType>;
 var
   LType: TRttiType;
 begin
-  if TryGetType(LType) then
-  begin
-    Exit(LType.GetGenericArguments);
-  end;
-  Result := nil;
+  Result := if TryGetType(LType) then LType.GetGenericArguments else nil;
 end;
 
 class function TObjectHelper.GetMethod(const AName: string): TRttiMethod;
 var
   LType: TRttiType;
 begin
-  if TryGetType(LType) then
-  begin
-    Exit(LType.GetMethod(AName));
-  end;
-  Result := nil;
+  Result := if TryGetType(LType) then LType.GetMethod(AName) else nil;
 end;
 
 class function TObjectHelper.GetMethods(const AName: string): TArray<TRttiMethod>;
