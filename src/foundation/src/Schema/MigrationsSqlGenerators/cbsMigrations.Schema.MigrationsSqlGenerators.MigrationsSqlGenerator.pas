@@ -97,10 +97,8 @@ uses
   cbsMigrations.Migrations.Operations.AddCheckConstraintOperation,
   cbsMigrations.Migrations.Operations.AddForeignKeyOperation,
   cbsMigrations.Migrations.Operations.AddUniqueConstraintOperation,
-  cbsMigrations.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Migrations.Operations.ColumnOperation,
-  cbsMigrations.Migrations.Operations.CreateIndexOperation,
-  cbsMigrations.Migrations.Operations.StringColumnOperation;
+  cbsMigrations.Migrations.Operations.CreateIndexOperation;
 
 { TMigrationsSqlGenerator }
 
