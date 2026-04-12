@@ -80,7 +80,7 @@ procedure TUniqueConstraintOperation.DoPrepare;
 begin
   if not Table.Trim.IsEmpty and Name.Trim.IsEmpty then
   begin
-    SetName(Format('%s_%s_Unique', [QualifiedTableName('_'), string.Join('_', FColumns.ToArray)]).ToLower);
+    SetName(Format('%s_%s_unique', [QualifiedTableName('_'), string.Join('_', FColumns.ToArray)]));
   end;
 end;
 
