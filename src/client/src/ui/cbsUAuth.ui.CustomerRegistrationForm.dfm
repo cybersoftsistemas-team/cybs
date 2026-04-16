@@ -50,7 +50,7 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         Caption = 'Sobrenome:'
         ParentFont = False
         Font.Style = [fsBold]
-        TabOrder = 2
+        TabOrder = 3
       end
       object labNatBirthday: TUniLabel
         Left = 20
@@ -292,186 +292,6 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
     DesignSize = (
       429
       287)
-    object pnlNatural: TUniContainerPanel
-      Left = 107
-      Top = 49
-      Width = 322
-      Height = 238
-      Hint = ''
-      ParentColor = False
-      Anchors = [akLeft, akTop, akRight, akBottom]
-      TabOrder = 5
-      object cbxNatCity: TUniDBLookupComboBox
-        Left = 209
-        Top = 154
-        Width = 85
-        Hint = ''
-        ListField = 'Name'
-        ListSource = damCustomerRegistration.dsoCYT
-        KeyField = 'Id'
-        ListFieldIndex = 0
-        DataField = 'PlaceOfBirthId'
-        DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 10
-        Color = clWindow
-        MatchFieldWidth = False
-        RemoteQuery = True
-        FieldLabel = 'Cidade'
-        FieldLabelAlign = laTop
-        Triggers = <
-          item
-            ButtonId = 0
-          end
-          item
-            ImageIndex = 0
-            ButtonId = 1
-            Visible = False
-            HandleClicks = True
-          end>
-        Images = nilstMain
-      end
-      object cbxNatState: TUniDBLookupComboBox
-        Left = 93
-        Top = 154
-        Width = 110
-        Hint = ''
-        ListField = 'Name'
-        ListSource = damCustomerRegistration.dsoSTA
-        KeyField = 'Id'
-        ListFieldIndex = 0
-        TabOrder = 9
-        Color = clWindow
-        MatchFieldWidth = False
-        RemoteQuery = True
-        FieldLabel = 'Estado'
-        FieldLabelAlign = laTop
-        OnSelect = cbxNatStateSelect
-      end
-      object cbxNatCountry: TUniDBLookupComboBox
-        Left = 4
-        Top = 154
-        Width = 82
-        Hint = ''
-        ListOnlyMode = lmFollowSource
-        ListField = 'Name'
-        ListSource = damCustomerRegistration.dsoCOU
-        KeyField = 'Id'
-        ListFieldIndex = 0
-        TabOrder = 8
-        Color = clWindow
-        MatchFieldWidth = False
-        RemoteQuery = True
-        FieldLabel = 'Pa'#237's'
-        FieldLabelAlign = laTop
-      end
-      object cbxNatNationality: TUniDBLookupComboBox
-        Left = 93
-        Top = 89
-        Width = 110
-        Hint = ''
-        ListField = 'Name'
-        ListSource = damCustomerRegistration.dsoNTU
-        KeyField = 'Id'
-        ListFieldIndex = 0
-        DataField = 'NationalityId'
-        DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 6
-        Color = clWindow
-        RemoteQuery = True
-        FieldLabel = 'Nacionalidade'
-        FieldLabelAlign = laTop
-      end
-      object cbxNatGender: TUniDBLookupComboBox
-        Left = 4
-        Top = 89
-        Width = 82
-        Hint = ''
-        ListField = 'Name'
-        ListSource = damCustomerRegistration.dsoGEN
-        KeyField = 'Id'
-        ListFieldIndex = 0
-        DataField = 'GenderId'
-        DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 5
-        Color = clWindow
-        FieldLabel = 'Sexo'
-        FieldLabelAlign = laTop
-      end
-      object edtNatFirstName: TUniDBEdit
-        Left = 4
-        Top = 1
-        Width = 155
-        Height = 22
-        Hint = ''
-        DataField = 'FirstName'
-        DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 1
-        FieldLabel = 'Primeiro Nome'
-        FieldLabelAlign = laTop
-      end
-      object edtNatLastName: TUniDBEdit
-        Left = 165
-        Top = 1
-        Width = 155
-        Height = 22
-        Hint = ''
-        DataField = 'LastName'
-        DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 2
-        FieldLabel = 'Sobrenome'
-        FieldLabelAlign = laTop
-      end
-      object edtNatBirthday: TUniDBDateTimePicker
-        Left = 4
-        Top = 45
-        Width = 82
-        Hint = ''
-        DataField = 'Birthday'
-        DataSource = damCustomerRegistration.dsoNAT
-        DateTime = 46012.000000000000000000
-        DateFormat = 'dd/MM/yyyy'
-        TimeFormat = 'HH:mm:ss'
-        TabOrder = 3
-        FieldLabel = 'Nascimento'
-        FieldLabelAlign = laTop
-      end
-      object edtNatSSN: TUniDBEdit
-        Left = 93
-        Top = 45
-        Width = 110
-        Height = 22
-        Hint = ''
-        DataField = 'SSN'
-        DataSource = damCustomerRegistration.dsoNAT
-        TabOrder = 4
-        InputMask.Mask = '999.999.999-99'
-        InputMask.UnmaskText = True
-        InputMask.RemoveWhiteSpace = True
-        FieldLabel = 'CPF'
-        FieldLabelAlign = laTop
-      end
-      object labPlaceOfBirthId: TUniLabel
-        Left = 4
-        Top = 140
-        Width = 68
-        Height = 13
-        Hint = ''
-        Caption = 'Naturalidade'
-        ParentFont = False
-        Font.Style = [fsBold]
-        TabOrder = 7
-      end
-      object btnNewCity: TUniSpeedButton
-        Left = 297
-        Top = 177
-        Width = 23
-        Height = 22
-        Action = actNewCity
-        ParentColor = False
-        ImageIndex = 0
-        TabOrder = 11
-      end
-    end
     object pnlLegal: TUniContainerPanel
       Left = 107
       Top = 49
@@ -606,6 +426,189 @@ inherited frmCustomerRegistration: TfrmCustomerRegistration
         TabOrder = 9
         FieldLabel = 'Inscri'#231#227'o Municipal'
         FieldLabelAlign = laTop
+      end
+    end
+    object pnlNatural: TUniContainerPanel
+      Left = 107
+      Top = 49
+      Width = 322
+      Height = 238
+      Hint = ''
+      ParentColor = False
+      Anchors = [akLeft, akTop, akRight, akBottom]
+      TabOrder = 5
+      object cbxNatCity: TUniDBLookupComboBox
+        Left = 209
+        Top = 154
+        Width = 85
+        Hint = ''
+        ListOnlyMode = lmFollowSource
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoCYT
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        DataField = 'PlaceOfBirthId'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 10
+        Color = clWindow
+        MatchFieldWidth = False
+        RemoteQuery = True
+        FieldLabel = 'Cidade'
+        FieldLabelAlign = laTop
+        Triggers = <
+          item
+            ButtonId = 0
+          end
+          item
+            ImageIndex = 0
+            ButtonId = 1
+            Visible = False
+            HandleClicks = True
+          end>
+        Images = nilstMain
+      end
+      object cbxNatState: TUniDBLookupComboBox
+        Left = 93
+        Top = 154
+        Width = 110
+        Hint = ''
+        ListOnlyMode = lmFollowSource
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoSTA
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        TabOrder = 9
+        Color = clWindow
+        MatchFieldWidth = False
+        RemoteQuery = True
+        FieldLabel = 'Estado'
+        FieldLabelAlign = laTop
+        Style = csOwnerDrawFixed
+      end
+      object cbxNatCountry: TUniDBLookupComboBox
+        Left = 4
+        Top = 154
+        Width = 82
+        Hint = ''
+        ListOnlyMode = lmFollowSource
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoCOU
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        TabOrder = 8
+        Color = clWindow
+        MatchFieldWidth = False
+        RemoteQuery = True
+        FieldLabel = 'Pa'#237's'
+        FieldLabelAlign = laTop
+        Style = csOwnerDrawFixed
+      end
+      object cbxNatNationality: TUniDBLookupComboBox
+        Left = 93
+        Top = 89
+        Width = 110
+        Hint = ''
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoNTU
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        DataField = 'NationalityId'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 6
+        Color = clWindow
+        RemoteQuery = True
+        FieldLabel = 'Nacionalidade'
+        FieldLabelAlign = laTop
+      end
+      object cbxNatGender: TUniDBLookupComboBox
+        Left = 4
+        Top = 89
+        Width = 82
+        Hint = ''
+        ListField = 'Name'
+        ListSource = damCustomerRegistration.dsoGEN
+        KeyField = 'Id'
+        ListFieldIndex = 0
+        DataField = 'GenderId'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 5
+        Color = clWindow
+        FieldLabel = 'Sexo'
+        FieldLabelAlign = laTop
+      end
+      object edtNatFirstName: TUniDBEdit
+        Left = 4
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        DataField = 'FirstName'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 1
+        FieldLabel = 'Primeiro Nome'
+        FieldLabelAlign = laTop
+      end
+      object edtNatLastName: TUniDBEdit
+        Left = 165
+        Top = 1
+        Width = 155
+        Height = 22
+        Hint = ''
+        DataField = 'LastName'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 2
+        FieldLabel = 'Sobrenome'
+        FieldLabelAlign = laTop
+      end
+      object edtNatBirthday: TUniDBDateTimePicker
+        Left = 4
+        Top = 45
+        Width = 82
+        Hint = ''
+        DataField = 'Birthday'
+        DataSource = damCustomerRegistration.dsoNAT
+        DateTime = 46012.000000000000000000
+        DateFormat = 'dd/MM/yyyy'
+        TimeFormat = 'HH:mm:ss'
+        TabOrder = 3
+        FieldLabel = 'Nascimento'
+        FieldLabelAlign = laTop
+      end
+      object edtNatSSN: TUniDBEdit
+        Left = 93
+        Top = 45
+        Width = 110
+        Height = 22
+        Hint = ''
+        DataField = 'SSN'
+        DataSource = damCustomerRegistration.dsoNAT
+        TabOrder = 4
+        InputMask.Mask = '999.999.999-99'
+        InputMask.UnmaskText = True
+        InputMask.RemoveWhiteSpace = True
+        FieldLabel = 'CPF'
+        FieldLabelAlign = laTop
+      end
+      object labPlaceOfBirthId: TUniLabel
+        Left = 4
+        Top = 140
+        Width = 68
+        Height = 13
+        Hint = ''
+        Caption = 'Naturalidade'
+        ParentFont = False
+        Font.Style = [fsBold]
+        TabOrder = 7
+      end
+      object btnNewCity: TUniSpeedButton
+        Left = 297
+        Top = 177
+        Width = 23
+        Height = 22
+        Action = actNewCity
+        ParentColor = False
+        ImageIndex = 0
+        TabOrder = 11
       end
     end
     object pnlBreakTop: TUniPanel

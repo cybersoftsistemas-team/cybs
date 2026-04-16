@@ -42,27 +42,32 @@ type
     edtNatFirstName: TUniDBEdit;
     edtNatLastName: TUniDBEdit;
     edtNatSSN: TUniDBEdit;
+    labClientID2: TUniLabel;
+    labClientID: TUniLabel;
     labInfo: TUniLabel;
     labNatBirthday: TUniLabel;
     labNatFirstName: TUniLabel;
-    labNatGender: TUniLabel;
     labNatGender2: TUniLabel;
+    labNatGender: TUniLabel;
     labNatLastName: TUniLabel;
-    labNatNationality: TUniLabel;
     labNatNationality2: TUniLabel;
-    labNatPlaceOfBirthId: TUniLabel;
+    labNatNationality: TUniLabel;
     labNatPlaceOfBirthId2: TUniLabel;
+    labNatPlaceOfBirthId: TUniLabel;
+    labNatSSN2: TUniLabel;
     labNatSSN: TUniLabel;
     labPlaceOfBirthId: TUniLabel;
     labStep02SubTitle: TUniLabel;
     labStep02Title: TUniLabel;
     labStep03SubTitle: TUniLabel;
     labStep03Title: TUniLabel;
+    labTipo2: TUniLabel;
+    labTipo: TUniLabel;
     labTitle: TUniLabel;
     pnlBreak: TUniPanel;
     pnlBreakLeft: TUniPanel;
-    pnlBreakTop: TUniPanel;
     pnlBreakTop2: TUniPanel;
+    pnlBreakTop: TUniPanel;
     pnlButtons: TUniSimplePanel;
     pnlLegal: TUniContainerPanel;
     pnlNatLabel: TUniContainerPanel;
@@ -75,15 +80,9 @@ type
     txtNatBirthday: TUniDBText;
     txtNatFirstName: TUniDBText;
     txtNatLastName: TUniDBText;
-    labNatSSN2: TUniLabel;
-    labTipo: TUniLabel;
-    labTipo2: TUniLabel;
-    labClientID: TUniLabel;
-    labClientID2: TUniLabel;
     procedure actBackExecute(Sender: TObject);
     procedure actNewCityExecute(Sender: TObject);
     procedure actNextExecute(Sender: TObject);
-    procedure cbxNatStateSelect(Sender: TObject);
     procedure rbtLegalClick(Sender: TObject);
     procedure rbtNaturalClick(Sender: TObject);
     procedure UniFormCreate(Sender: TObject);
@@ -93,6 +92,8 @@ type
     procedure WizardOnChangeStep(const ASender: TObject; const AOldIndex: Integer; const ANewIndex: Integer);
   protected
     function GetDataModule: IDataModule; override;
+  public
+    procedure DataChange(Sender: TObject; Field: TField); override;
   end;
 
   function frmCustomerRegistration: TfrmCustomerRegistration;
@@ -116,6 +117,15 @@ begin
   Result := TfrmCustomerRegistration(damMain.GetFormInstance(TfrmCustomerRegistration));
 end;
 
+{ TfrmCustomerRegistration }
+
+function TfrmCustomerRegistration.GetDataModule: IDataModule;
+begin
+  if not Assigned(damCustomerRegistration) then
+    damCustomerRegistration := TdamCustomerRegistration.Create(nil);
+  Result := damCustomerRegistration;
+end;
+
 procedure TfrmCustomerRegistration.actBackExecute(Sender: TObject);
 begin
   FWizard.Back;
@@ -134,16 +144,11 @@ begin
   end;
 end;
 
-procedure TfrmCustomerRegistration.cbxNatStateSelect(Sender: TObject);
+procedure TfrmCustomerRegistration.DataChange(Sender: TObject; Field: TField);
 begin
+  inherited;
+  cbxNatState.Enabled := not VarIsNull(cbxNatCountry.KeyValue);
   actNewCity.Enabled := not VarIsNull(cbxNatState.KeyValue);
-end;
-
-function TfrmCustomerRegistration.GetDataModule: IDataModule;
-begin
-  if not Assigned(damCustomerRegistration) then
-    damCustomerRegistration := TdamCustomerRegistration.Create(nil);
-  Result := damCustomerRegistration;
 end;
 
 procedure TfrmCustomerRegistration.rbtLegalClick(Sender: TObject);

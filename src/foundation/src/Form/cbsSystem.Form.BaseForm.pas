@@ -211,21 +211,21 @@ begin
       Continue;
     end;
     var LDataField := '';
-    var LDataSource: TDataSource;
+    var LDataSource: TDataSource := nil;
     if LComponent is TUniDBEdit then
     begin
-      LDataSource := TUniDBEdit(LComponent).DataSource;
       LDataField  := TUniDBEdit(LComponent).DataField;
+      LDataSource := TUniDBEdit(LComponent).DataSource;
     end
     else if LComponent is TUniCustomDBLookupComboBox then
     begin
-      LDataSource := THackUniCustomDBLookupComboBox(LComponent).DataSource;
       LDataField  := THackUniCustomDBLookupComboBox(LComponent).DataField;
+      LDataSource := THackUniCustomDBLookupComboBox(LComponent).DataSource;
     end
     else if LComponent is TUniCustomDBComboBox then
     begin
-      LDataSource := THackUniCustomDBComboBox(LComponent).DataSource;
       LDataField  := THackUniCustomDBComboBox(LComponent).DataField;
+      LDataSource := THackUniCustomDBComboBox(LComponent).DataSource;
     end
     else
       Continue;
