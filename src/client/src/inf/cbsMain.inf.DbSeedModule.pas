@@ -29,7 +29,7 @@ uses
 procedure TdamDbSeed.BeforeRunSeed;
 begin
   inherited;
-  sptSeed.Params.ParamByName('CountryId').AsGuid := StringToGUID('{9F6E6D3A-1F5A-4C8C-9C9E-55B55E55B555}');
+  sptSeed.Params.ParamByName('CountryId').AsGuid := StringToGUID('{46A7433E-F36B-1410-871D-007892B87384}');
 end;
 
 end.

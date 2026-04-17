@@ -31,7 +31,7 @@ begin
   ASchema.CreateTable(TableName)
    .HasSchema(SchemaName)
    .Columns([
-     GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
+     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
     ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
     ,GuidColumn('ManagedById').IsOptional

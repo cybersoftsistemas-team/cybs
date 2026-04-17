@@ -25,7 +25,7 @@ begin
   ASchema.CreateTable(TableName)
    .HasSchema(SchemaName)
    .Columns([
-     GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
+     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
     ,IntColumn('ZipCode').IsRequired
     ,GuidColumn('StreetTypeId').IsRequired
     ,GuidColumn('StreetId').IsRequired

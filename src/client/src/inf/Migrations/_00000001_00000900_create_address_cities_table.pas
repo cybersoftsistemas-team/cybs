@@ -25,7 +25,7 @@ begin
   ASchema.CreateTable(TableName)
    .HasSchema(SchemaName)
    .Columns([
-     GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
+     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
     ,IntColumn('AreaCode').HasDefaultValueSql('0').IsRequired
     ,GuidColumn('StateId').IsRequired

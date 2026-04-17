@@ -29,7 +29,7 @@ begin
   ASchema.CreateTable(TableName)
    .HasSchema(SchemaName)
    .Columns([
-     GuidColumn('Id').HasDefaultValueSql('NEWID()').IsRequired
+     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
     ,StringColumn('Password').HasMaxLength(255).IsRequired
     ,GuidColumn('UserId').IsRequired
    ])

@@ -39,7 +39,7 @@ uses
 
 procedure RegisterMigrations;
 begin
-  // Migrations...
+// Migrations...
   RegisterMigration(TDbContext, CreateGeneralSchema);
   RegisterMigration(TDbContext, CreateGeneralCategoriesTable);
   RegisterMigration(TDbContext, CreateCountrySchema);
@@ -62,7 +62,7 @@ begin
   RegisterMigration(TDbContext, CreatePersonAddressesTable);
   RegisterMigration(TDbContext, CreatePersonEmailsTable);
   RegisterMigration(TDbContext, CreatePersonPhonesTable);
-  // DbSeed...
+// DbSeed...
   RegisterDatabaseSeeder(TcbsMainDatabaseSeeder);
 end;
 
