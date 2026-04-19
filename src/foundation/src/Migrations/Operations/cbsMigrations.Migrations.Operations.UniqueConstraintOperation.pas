@@ -5,7 +5,8 @@ interface
 uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.UniqueConstraintOperation,
-  cbsMigrations.Migrations.Operations.ConstraintOperation;
+  cbsMigrations.Migrations.Operations.ConstraintOperation,
+  cbsMigrations.Migrations.Operations.IncludeColumn;
 
 type
   TUniqueConstraintOperation = class(TConstraintOperation, IUniqueConstraintOperation)
@@ -18,6 +19,7 @@ type
     constructor Create(const AName: string);
     destructor Destroy; override;
     function Columns: IUniqueColumns;
+    function HasColumn(const AColumnName: TUniqueColumn): IUniqueConstraintOperation;
     function HasColumns(const AColumns: array of TUniqueColumn): IUniqueConstraintOperation;
     function HasSchema(const ASchema: string): IUniqueConstraintOperation;
     function HasTable(const ATable: string): IUniqueConstraintOperation;
@@ -31,11 +33,6 @@ uses
 
 { TUniqueConstraintOperation }
 
-function TUniqueConstraintOperation.Columns: IUniqueColumns;
-begin
-  Result := FColumns;
-end;
-
 constructor TUniqueConstraintOperation.Create(const AName: string);
 begin
   inherited Create(AName);
@@ -47,6 +44,16 @@ begin
   FColumns.Clear;
   FColumns := nil;
   inherited;
+end;
+
+function TUniqueConstraintOperation.Columns: IUniqueColumns;
+begin
+  Result := FColumns;
+end;
+
+function TUniqueConstraintOperation.HasColumn(const AColumnName: TUniqueColumn): IUniqueConstraintOperation;
+begin
+  Result := HasColumns([AColumnName]);
 end;
 
 function TUniqueConstraintOperation.HasColumns(const AColumns: array of TUniqueColumn): IUniqueConstraintOperation;

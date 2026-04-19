@@ -5,6 +5,7 @@ interface
 uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.AddBooleanColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateTimeColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddFloatColumnOperation,
@@ -13,7 +14,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddIntColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddPrimaryKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddStringColumnOperation,
-  cbsMigrations.Contracts.Migrations.Operations.AddUniqueConstraintOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Contracts.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateTableOperation,
@@ -33,6 +34,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.SqlOperation,
   cbsMigrations.Contracts.Migrations.Operations.UniqueConstraintOperation,
+  cbsMigrations.Migrations.Operations.IncludeColumn,
   cbsMigrations.Schema.Types,
 {SPRING}
   Spring.Collections;
@@ -44,6 +46,7 @@ type
   IMigrationBuilder = interface(IUnknown)
     ['{75518ED9-6E90-4DCF-9F7A-F33147DE21AA}']
     function AddBooleanColumn(const AName, ATable: string): IAddBooleanColumnOperation;
+    function AddComputedColumn(const AName: string): IAddComputedColumnOperation;
     function AddDateColumn(const AName, ATable: string): IAddDateColumnOperation;
     function AddDateTimeColumn(const AName, ATable: string): IAddDateTimeColumnOperation;
     function AddFloatColumn(const AName, ATable: string): IAddFloatColumnOperation;
@@ -59,10 +62,8 @@ type
     function AddPrimaryKey(const ATable: string; const AColumn: TPrimaryKeyColumn): IAddPrimaryKeyOperation; overload;
     function AddPrimaryKey(const ATable: string; const AColumns: array of TPrimaryKeyColumn): IAddPrimaryKeyOperation; overload;
     function AddStringColumn(const AName, ATable: string): IAddStringColumnOperation;
-    function AddUnique(const AName, ATable: string; const AColumn: TUniqueColumn): IAddUniqueConstraintOperation; overload;
-    function AddUnique(const AName, ATable: string; const AColumns: array of TUniqueColumn): IAddUniqueConstraintOperation; overload;
-    function AddUnique(const ATable: string; const AColumn: TUniqueColumn): IAddUniqueConstraintOperation; overload;
-    function AddUnique(const ATable: string; const AColumns: array of TUniqueColumn): IAddUniqueConstraintOperation; overload;
+    function AddUnique(const AName, ATable: string): IAddUniqueOperation; overload;
+    function AddUnique(const ATable: string): IAddUniqueOperation; overload;
     function AlterColumn(const AName: string): IAlterColumnOperation;
     function CreateIndex(const AName, ATable: string; const AColumn: TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
     function CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;

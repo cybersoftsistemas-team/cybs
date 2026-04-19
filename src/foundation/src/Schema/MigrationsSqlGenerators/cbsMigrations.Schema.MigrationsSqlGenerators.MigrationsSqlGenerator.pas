@@ -6,6 +6,7 @@ uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.AddBooleanColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddCheckConstraintOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateTimeColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddFloatColumnOperation,
@@ -14,7 +15,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddIntColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddPrimaryKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddStringColumnOperation,
-  cbsMigrations.Contracts.Migrations.Operations.AddUniqueConstraintOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Contracts.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.ColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateIndexOperation,
@@ -33,7 +34,8 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.SqlOperation,
   cbsMigrations.Contracts.Migrations.MigrationCommandListBuilder,
   cbsMigrations.Contracts.Schema.MigrationsSqlGenerators.MigrationsSqlGenerator,
-  cbsMigrations.Migrations.MigrationsSqlGeneratorBase;
+  cbsMigrations.Migrations.MigrationsSqlGeneratorBase,
+  cbsMigrations.Migrations.Operations.IncludeColumn;
 
 type
   TMigrationsSqlGenerator = class(TMigrationsSqlGeneratorBase, IMigrationsSqlGenerator)
@@ -49,11 +51,11 @@ type
     procedure CreateTableUniqueConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure ForeignKeyAction(const AReferentialAction: ReferentialAction; const ABuilder: IMigrationCommandListBuilder);
     procedure ForeignKeyConstraint(const AOperation: IAddForeignKeyOperation; const ABuilder: IMigrationCommandListBuilder);
-    procedure GenerateIncludeColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
-    procedure GenerateIndexColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
+    procedure GenerateIncludeColumnList(const AColumns: TArray<string>; const ABuilder: IMigrationCommandListBuilder);
+    procedure GenerateIndexColumnList(const AColumns: TArray<string>; const ADescending: TDescending; const ABuilder: IMigrationCommandListBuilder);
     procedure IndexOptions(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure PrimaryKeyConstraint(const AOperation: IAddPrimaryKeyOperation; const ABuilder: IMigrationCommandListBuilder);
-    procedure UniqueConstraint(const AOperation: IAddUniqueConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
+    procedure UniqueConstraint(const AOperation: IAddUniqueOperation; const ABuilder: IMigrationCommandListBuilder);
   protected
     procedure ColumnDefinition(const ASchema, ATable, AName: string; const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual;
     procedure ColumnDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual;
@@ -61,6 +63,7 @@ type
     procedure DefaultValue(const ADefaultValueSql: string; const ABuilder: IMigrationCommandListBuilder);
     procedure Generate(const AOperation: IAddBooleanColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
+    procedure Generate(const AOperation: IAddComputedColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddDateColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddDateTimeColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddFloatColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
@@ -69,7 +72,7 @@ type
     procedure Generate(const AOperation: IAddIntColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddPrimaryKeyOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddStringColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
-    procedure Generate(const AOperation: IAddUniqueConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
+    procedure Generate(const AOperation: IAddUniqueOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IDropCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
@@ -92,11 +95,12 @@ uses
   System.StrUtils,
   System.SysUtils,
 {PROJECT}
+  cbsMigrations.Contracts.Migrations.Operations.ComputedColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.ConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.StringColumnOperation,
   cbsMigrations.Migrations.Operations.AddCheckConstraintOperation,
   cbsMigrations.Migrations.Operations.AddForeignKeyOperation,
-  cbsMigrations.Migrations.Operations.AddUniqueConstraintOperation,
+  cbsMigrations.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Migrations.Operations.ColumnOperation,
   cbsMigrations.Migrations.Operations.CreateIndexOperation;
 
@@ -135,32 +139,58 @@ end;
 procedure TMigrationsSqlGenerator.ColumnDefinition(const ASchema, ATable, AName: string; const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
 var
   LAlterColumnOperation: IAlterColumnOperation;
+  LComputedColumnOperation: IComputedColumnOperation;
   LStringColumnOperation: IStringColumnOperation;
 begin
   ABuilder
    .Append(DelimitIdentifier(AName))
-   .Append(' ')
-   .Append(AOperation.ColumnType);
-  ColumnIdentityDefinition(AOperation, ABuilder);
-  var LCollation :='';
-  if Supports(AOperation, IAlterColumnOperation, LAlterColumnOperation) then
-  begin
-    LCollation := LAlterColumnOperation.Collation;
-  end
-  else if Supports(AOperation, IStringColumnOperation, LStringColumnOperation) then
-  begin
-    LCollation := LStringColumnOperation.Collation;
-  end;
-  if not LCollation.Trim.IsEmpty then
+   .Append(' ');
+  if Supports(AOperation, IComputedColumnOperation, LComputedColumnOperation) then
   begin
     ABuilder
+     .Append('AS')
      .Append(' ')
-     .Append('COLLATE')
-     .Append(' ')
-     .Append(LCollation);
+     .Append('(')
+     .Append(LComputedColumnOperation.Sql)
+     .Append(')');
+    if LComputedColumnOperation.Stored then
+    begin
+      ABuilder
+       .Append(' ')
+       .Append('PERSISTED');
+    end;
+    if not LComputedColumnOperation.Nullable then
+    begin
+      ABuilder
+       .Append(' ')
+       .Append('NOT NULL');
+    end;
+  end
+  else
+  begin
+    ABuilder
+     .Append(AOperation.ColumnType);
+    ColumnIdentityDefinition(AOperation, ABuilder);
+    var LCollation :='';
+    if Supports(AOperation, IAlterColumnOperation, LAlterColumnOperation) then
+    begin
+      LCollation := LAlterColumnOperation.Collation;
+    end
+    else if Supports(AOperation, IStringColumnOperation, LStringColumnOperation) then
+    begin
+      LCollation := LStringColumnOperation.Collation;
+    end;
+    if not LCollation.Trim.IsEmpty then
+    begin
+      ABuilder
+       .Append(' ')
+       .Append('COLLATE')
+       .Append(' ')
+       .Append(LCollation);
+    end;
+    ABuilder.Append(if AOperation.Nullable then ' NULL' else ' NOT NULL');
+    DefaultValue(AOperation.DefaultValueSql, ABuilder);
   end;
-  ABuilder.Append(IfThen(AOperation.Nullable, ' NULL', ' NOT NULL'));
-  DefaultValue(AOperation.DefaultValueSql, ABuilder);
 end;
 
 procedure TMigrationsSqlGenerator.ColumnDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
@@ -262,12 +292,12 @@ begin
   for LConstraint in AOperation.Constraints.Where(
     function(const AConstraint: IConstraintOperation): Boolean
     begin
-      Result := Supports(AConstraint, IAddUniqueConstraintOperation);
+      Result := Supports(AConstraint, IAddUniqueOperation);
     end
   ) do
   begin
     ABuilder.AppendLine(',');
-    UniqueConstraint(TAddUniqueConstraintOperation(LConstraint), ABuilder);
+    UniqueConstraint(TAddUniqueOperation(LConstraint), ABuilder);
   end;
 end;
 
@@ -350,6 +380,11 @@ begin
   EndStatement(ABuilder);
 end;
 
+procedure TMigrationsSqlGenerator.Generate(const AOperation: IAddComputedColumnOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  AddColumnOperation(TColumnOperation(AOperation), ABuilder);
+end;
+
 procedure TMigrationsSqlGenerator.Generate(const AOperation: IAddDateColumnOperation; const ABuilder: IMigrationCommandListBuilder);
 begin
   AddColumnOperation(TColumnOperation(AOperation), ABuilder);
@@ -408,15 +443,18 @@ begin
   AddColumnOperation(TColumnOperation(AOperation), ABuilder);
 end;
 
-procedure TMigrationsSqlGenerator.Generate(const AOperation: IAddUniqueConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
+procedure TMigrationsSqlGenerator.Generate(const AOperation: IAddUniqueOperation; const ABuilder: IMigrationCommandListBuilder);
 begin
-  ABuilder
-   .Append('ALTER TABLE')
-   .Append(' ')
-   .Append(DelimitIdentifier(AOperation.Table, AOperation.Schema))
-   .Append(' ')
-   .Append('ADD')
-   .Append(' ');
+  if AOperation.IncludeColumns.IsEmpty then
+  begin
+    ABuilder
+     .Append('ALTER TABLE')
+     .Append(' ')
+     .Append(DelimitIdentifier(AOperation.Table, AOperation.Schema))
+     .Append(' ')
+     .Append('ADD')
+     .Append(' ');
+  end;
   UniqueConstraint(AOperation, ABuilder);
   ABuilder.AppendLine(StatementTerminator);
   EndStatement(ABuilder);
@@ -444,7 +482,7 @@ begin
    .Append(DelimitIdentifier(AOperation.Table, AOperation.Schema))
    .Append(' ')
    .Append('(');
-  GenerateIndexColumnList(AOperation, ABuilder);
+  GenerateIndexColumnList(AOperation.Columns.ToArray, AOperation.Descending, ABuilder);
   ABuilder
    .Append(')');
   if not AOperation.IncludeColumns.IsEmpty then
@@ -454,7 +492,7 @@ begin
      .Append('INCLUDE')
      .Append(' ')
      .Append('(');
-    GenerateIncludeColumnList(AOperation, ABuilder);
+    GenerateIncludeColumnList(AOperation.IncludeColumns.ToArray, ABuilder);
     ABuilder
      .Append(')');
   end;
@@ -610,13 +648,9 @@ begin
   EndStatement(ABuilder);
 end;
 
-procedure TMigrationsSqlGenerator.GenerateIncludeColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
-var
-  I: Integer;
-  LColumns: TArray<string>;
+procedure TMigrationsSqlGenerator.GenerateIncludeColumnList(const AColumns: TArray<string>; const ABuilder: IMigrationCommandListBuilder);
 begin
-  LColumns := AOperation.IncludeColumns.ToArray;
-  for I := Low(LColumns) to High(LColumns) do
+  for var I := Low(AColumns) to High(AColumns) do
   begin
     if I > 0 then
     begin
@@ -624,17 +658,13 @@ begin
        .Append(',')
        .Append(' ');
     end;
-    ABuilder.Append(DelimitIdentifier(LColumns[I]));
+    ABuilder.Append(DelimitIdentifier(AColumns[I]));
   end;
 end;
 
-procedure TMigrationsSqlGenerator.GenerateIndexColumnList(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
-var
-  I: Integer;
-  LColumns: TArray<string>;
+procedure TMigrationsSqlGenerator.GenerateIndexColumnList(const AColumns: TArray<string>; const ADescending: TDescending; const ABuilder: IMigrationCommandListBuilder);
 begin
-  LColumns := AOperation.Columns.ToArray;
-  for I := Low(LColumns) to High(LColumns) do
+  for var I := Low(AColumns) to High(AColumns) do
   begin
     if I > 0 then
     begin
@@ -642,10 +672,10 @@ begin
        .Append(',')
        .Append(' ');
     end;
-    ABuilder.Append(DelimitIdentifier(LColumns[I]));
-    if (Length(AOperation.Descending) > 0) and
-      (Length(AOperation.Descending) = Length(LColumns)) and
-      (AOperation.Descending[I]) then
+    ABuilder.Append(DelimitIdentifier(AColumns[I]));
+    if (Length(ADescending) > 0) and
+      (Length(ADescending) = Length(AColumns)) and
+      (ADescending[I]) then
     begin
       ABuilder
        .Append(' ')
@@ -692,18 +722,58 @@ begin
    .Append(')');
 end;
 
-procedure TMigrationsSqlGenerator.UniqueConstraint(const AOperation: IAddUniqueConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
+procedure TMigrationsSqlGenerator.UniqueConstraint(const AOperation: IAddUniqueOperation; const ABuilder: IMigrationCommandListBuilder);
 begin
   ABuilder
-   .Append(' ')
-   .Append('CONSTRAINT')
-   .Append(' ')
-   .Append(DelimitIdentifier(AOperation.Name))
-   .Append(' ')
-   .Append('UNIQUE ')
-   .Append('(')
-   .Append(ColumnList(AOperation.Columns.ToArray))
-   .Append(')');
+   .Append(' ');
+  if AOperation.IncludeColumns.IsEmpty then
+  begin
+    ABuilder
+     .Append('CONSTRAINT')
+     .Append(' ')
+     .Append(DelimitIdentifier(AOperation.Name))
+     .Append(' ');
+  end
+  else
+  begin
+    ABuilder
+     .Append('CREATE')
+     .Append(' ');
+  end;
+  ABuilder
+   .Append('UNIQUE')
+   .Append(' ');
+  if AOperation.IncludeColumns.IsEmpty then
+  begin
+    ABuilder
+     .Append('(')
+     .Append(ColumnList(AOperation.Columns.ToArray))
+     .Append(')');
+  end
+  else
+  begin
+    IndexTraits(AOperation, ABuilder);
+    ABuilder
+     .Append('INDEX')
+     .Append(' ')
+     .Append(DelimitIdentifier(AOperation.Name))
+     .Append(' ')
+     .Append('ON')
+     .Append(' ')
+     .Append(DelimitIdentifier(AOperation.Table, AOperation.Schema))
+     .Append(' ')
+     .Append('(');
+    GenerateIndexColumnList(AOperation.Columns.ToArray, AOperation.Descending, ABuilder);
+    ABuilder
+     .Append(')')
+     .Append(' ')
+     .Append('INCLUDE')
+     .Append(' ')
+     .Append('(');
+    GenerateIncludeColumnList(AOperation.IncludeColumns.ToArray, ABuilder);
+    ABuilder
+     .Append(')');
+  end;
 end;
 
 end.

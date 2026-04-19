@@ -143,7 +143,7 @@ contains
   cbsMigrations.Contracts.Migrations.Operations.AddIntColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddIntColumnOperation.pas',
   cbsMigrations.Contracts.Migrations.Operations.AddPrimaryKeyOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddPrimaryKeyOperation.pas',
   cbsMigrations.Contracts.Migrations.Operations.AddStringColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddStringColumnOperation.pas',
-  cbsMigrations.Contracts.Migrations.Operations.AddUniqueConstraintOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddUniqueConstraintOperation.pas',
+  cbsMigrations.Contracts.Migrations.Operations.AddUniqueOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddUniqueOperation.pas',
   cbsMigrations.Migrations.Operations.AddBooleanColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddBooleanColumnOperation.pas',
   cbsMigrations.Migrations.Operations.AddCheckConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddCheckConstraintOperation.pas',
   cbsMigrations.Migrations.Operations.AddDateColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDateColumnOperation.pas',
@@ -154,7 +154,7 @@ contains
   cbsMigrations.Migrations.Operations.AddIntColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddIntColumnOperation.pas',
   cbsMigrations.Migrations.Operations.AddPrimaryKeyOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddPrimaryKeyOperation.pas',
   cbsMigrations.Migrations.Operations.AddStringColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddStringColumnOperation.pas',
-  cbsMigrations.Migrations.Operations.AddUniqueConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddUniqueConstraintOperation.pas',
+  cbsMigrations.Migrations.Operations.AddUniqueOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddUniqueOperation.pas',
   cbsMigrations.Migrations.Operations.CreateIndexOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.CreateIndexOperation.pas',
   cbsMigrations.Contracts.Migrations.MigrationsSqlGeneratorBase in 'src\Contracts\Migrations\cbsMigrations.Contracts.Migrations.MigrationsSqlGeneratorBase.pas',
   cbsMigrations.Contracts.Migrations.MigrationCommandListBuilder in 'src\Contracts\Migrations\cbsMigrations.Contracts.Migrations.MigrationCommandListBuilder.pas',
@@ -200,7 +200,12 @@ contains
   cbsMigrations.Migrations.Operations.EnsureSchemaOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.EnsureSchemaOperation.pas',
   cbsMigrations.Migrations.Operations.RenameColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.RenameColumnOperation.pas',
   cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation.pas',
-  _2025_05_30_00000001_create_schema in 'src\Migrations\_2025_05_30_00000001_create_schema.pas';
+  _2025_05_30_00000001_create_schema in 'src\Migrations\_2025_05_30_00000001_create_schema.pas',
+  cbsMigrations.Migrations.Operations.IncludeColumn in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.IncludeColumn.pas',
+  cbsMigrations.Contracts.Migrations.Operations.ComputedColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.ComputedColumnOperation.pas',
+  cbsMigrations.Migrations.Operations.ComputedColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.ComputedColumnOperation.pas',
+  cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation.pas',
+  cbsMigrations.Migrations.Operations.AddComputedColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddComputedColumnOperation.pas';
 
 end.
 

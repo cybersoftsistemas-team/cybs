@@ -245,7 +245,7 @@
         <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddIntColumnOperation.pas"/>
         <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddPrimaryKeyOperation.pas"/>
         <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddStringColumnOperation.pas"/>
-        <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddUniqueConstraintOperation.pas"/>
+        <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddUniqueOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddBooleanColumnOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddCheckConstraintOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDateColumnOperation.pas"/>
@@ -256,7 +256,7 @@
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddIntColumnOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddPrimaryKeyOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddStringColumnOperation.pas"/>
-        <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddUniqueConstraintOperation.pas"/>
+        <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddUniqueOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.CreateIndexOperation.pas"/>
         <DCCReference Include="src\Contracts\Migrations\cbsMigrations.Contracts.Migrations.MigrationsSqlGeneratorBase.pas"/>
         <DCCReference Include="src\Contracts\Migrations\cbsMigrations.Contracts.Migrations.MigrationCommandListBuilder.pas"/>
@@ -303,6 +303,11 @@
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.RenameColumnOperation.pas"/>
         <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation.pas"/>
         <DCCReference Include="src\Migrations\_2025_05_30_00000001_create_schema.pas"/>
+        <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.IncludeColumn.pas"/>
+        <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.ComputedColumnOperation.pas"/>
+        <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.ComputedColumnOperation.pas"/>
+        <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation.pas"/>
+        <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddComputedColumnOperation.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

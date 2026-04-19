@@ -27,7 +27,7 @@ begin
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
-    ,IntColumn('AreaCode').HasDefaultValueSql('0').IsRequired
+    ,StringColumn('AreaCode').HasMaxLength(3).HasUnicode(True).IsFixedLength.IsOptional
     ,GuidColumn('StateId').IsRequired
    ])
    .Constraints([

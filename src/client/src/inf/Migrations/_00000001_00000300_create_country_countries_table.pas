@@ -27,11 +27,11 @@ begin
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
     ,StringColumn('Name').HasMaxLength(255).IsRequired
-    ,IntColumn('AreaCode').IsRequired
+    ,StringColumn('DialCode').HasMaxLength(10).IsRequired
    ])
    .Constraints([
      PrimaryKey('Id')
-    ,Unique('AreaCode')
+    ,Unique('DialCode')
     ,Unique('Name')
    ]);
 end;

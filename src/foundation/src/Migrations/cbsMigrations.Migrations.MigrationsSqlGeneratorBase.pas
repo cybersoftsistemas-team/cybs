@@ -7,6 +7,7 @@ uses
   cbsMigrations.Contracts.Migrations.MigrationsSqlGeneratorBase,
   cbsMigrations.Contracts.Migrations.Operations.AddBooleanColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddCheckConstraintOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateTimeColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddFloatColumnOperation,
@@ -15,7 +16,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddIntColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddPrimaryKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddStringColumnOperation,
-  cbsMigrations.Contracts.Migrations.Operations.AddUniqueConstraintOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Contracts.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateTableOperation,
@@ -60,6 +61,7 @@ type
     procedure EndStatement(const ABuilder: IMigrationCommandListBuilder);
     procedure Generate(const AOperation: IAddBooleanColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
+    procedure Generate(const AOperation: IAddComputedColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddDateColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddDateTimeColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddFloatColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
@@ -68,7 +70,7 @@ type
     procedure Generate(const AOperation: IAddIntColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddPrimaryKeyOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddStringColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
-    procedure Generate(const AOperation: IAddUniqueConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
+    procedure Generate(const AOperation: IAddUniqueOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAlterColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
@@ -101,6 +103,7 @@ uses
 {PROJECT}
   cbsMigrations.Migrations.Operations.AddBooleanColumnOperation,
   cbsMigrations.Migrations.Operations.AddCheckConstraintOperation,
+  cbsMigrations.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Migrations.Operations.AddDateTimeColumnOperation,
   cbsMigrations.Migrations.Operations.AddFloatColumnOperation,
@@ -109,7 +112,7 @@ uses
   cbsMigrations.Migrations.Operations.AddIntColumnOperation,
   cbsMigrations.Migrations.Operations.AddPrimaryKeyOperation,
   cbsMigrations.Migrations.Operations.AddStringColumnOperation,
-  cbsMigrations.Migrations.Operations.AddUniqueConstraintOperation,
+  cbsMigrations.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Migrations.Operations.CreateTableOperation,
@@ -141,6 +144,11 @@ begin
     procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)
     begin
       G.Generate(TAddCheckConstraintOperation(O), B);
+    end);
+  FGenerateActions.Add(IAddComputedColumnOperation,
+    procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)
+    begin
+      G.Generate(TAddComputedColumnOperation(O), B);
     end);
   FGenerateActions.Add(IAddDateColumnOperation,
     procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)
@@ -182,10 +190,10 @@ begin
     begin
       G.Generate(TAddStringColumnOperation(O), B);
     end);
-  FGenerateActions.Add(IAddUniqueConstraintOperation,
+  FGenerateActions.Add(IAddUniqueOperation,
     procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)
     begin
-      G.Generate(TAddUniqueConstraintOperation(O), B);
+      G.Generate(TAddUniqueOperation(O), B);
     end);
   FGenerateActions.Add(IAlterColumnOperation,
     procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)

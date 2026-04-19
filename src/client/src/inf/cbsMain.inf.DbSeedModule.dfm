@@ -441,7 +441,7 @@ inherited damDbSeed: TdamDbSeed
           '    Objetivo:'
           '    ----------'
           '    Garantir que o pa'#237's "Brasil" exista na tabela'
-          '    [address].[countries], com Id fixo e AreaCode = 55.'
+          '    [address].[countries], com Id fixo e DialCode = +55.'
           ''
           '    Regras:'
           '    -------'
@@ -459,12 +459,12 @@ inherited damDbSeed: TdamDbSeed
           'USING (VALUES ('
           '    @CountryId, -- Id'
           '    N'#39'Brasil'#39',  -- Name'
-          '    55          -- AreaCode'
-          ')) AS S (Id, Name, AreaCode)'
+          '    N'#39'+55'#39'      -- DialCode'
+          ')) AS S (Id, Name, DialCode)'
           'ON T.Name = S.Name'
           'WHEN NOT MATCHED THEN'
-          '    INSERT (Id, Name, AreaCode)'
-          '    VALUES (S.Id, S.Name, S.AreaCode);')
+          '    INSERT (Id, Name, DialCode)'
+          '    VALUES (S.Id, S.Name, S.DialCode);')
       end
       item
         Name = 'country_codes'

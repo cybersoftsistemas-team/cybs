@@ -30,7 +30,7 @@ begin
     ,GuidColumn('AddressId').IsRequired
     ,StringColumn('AdditionalInformation').HasMaxLength(255).IsOptional
     ,BooleanColumn('Correspondence').HasDefaultValueSql('0').IsRequired
-    ,IntColumn('Number').HasDefaultValueSql('0').IsRequired
+    ,StringColumn('Number').HasMaxLength(20).IsRequired
    ])
    .Constraints([
      PrimaryKey(['PersonId', 'TypeId'])

@@ -211,7 +211,7 @@ begin
       Continue;
     end;
     var LDataField := '';
-    var LDataSource: TDataSource := nil;
+    var LDataSource: TDataSource;
     if LComponent is TUniDBEdit then
     begin
       LDataField  := TUniDBEdit(LComponent).DataField;

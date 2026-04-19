@@ -6,6 +6,7 @@ uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.IndexOperation,
+  cbsMigrations.Migrations.Operations.IncludeColumn,
   cbsMigrations.Migrations.Operations.IndexOperation;
 
 type
@@ -13,7 +14,8 @@ type
   public
     function HasColumns(const AColumns: array of TIndexColumn): ICreateIndexOperation;
     function HasDescending(const ADescending: TDescending): ICreateIndexOperation;
-    function HasInclude(const AColumns: array of TIncludeColumn): ICreateIndexOperation;
+    function HasInclude(const AColumn: TIncludeColumn): ICreateIndexOperation; overload;
+    function HasInclude(const AColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
     function HasName(const AName: string): ICreateIndexOperation;
     function HasSchema(const ASchema: string): ICreateIndexOperation;
     function HasTable(const ATable: string): ICreateIndexOperation;
@@ -32,6 +34,11 @@ end;
 function TCreateIndexOperation.HasDescending(const ADescending: TDescending): ICreateIndexOperation;
 begin
   Result := TCreateIndexOperation(inherited HasDescending(ADescending));
+end;
+
+function TCreateIndexOperation.HasInclude(const AColumn: TIncludeColumn): ICreateIndexOperation;
+begin
+  Result := TCreateIndexOperation(inherited HasInclude(AColumn));
 end;
 
 function TCreateIndexOperation.HasInclude(const AColumns: array of TIncludeColumn): ICreateIndexOperation;

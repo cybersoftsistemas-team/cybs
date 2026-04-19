@@ -5,6 +5,7 @@ interface
 uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.AddBooleanColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateTimeColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddFloatColumnOperation,
@@ -13,7 +14,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddIntColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddPrimaryKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddStringColumnOperation,
-  cbsMigrations.Contracts.Migrations.Operations.AddUniqueConstraintOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Contracts.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateTableOperation,
@@ -33,6 +34,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.SqlOperation,
   cbsMigrations.Contracts.Migrations.Operations.UniqueConstraintOperation,
   cbsMigrations.Contracts.Migrations.MigrationBuilder,
+  cbsMigrations.Migrations.Operations.IncludeColumn,
   cbsMigrations.Schema.Types;
 
 type
@@ -45,6 +47,7 @@ type
     constructor Create(const ADriverID: DriverID);
     destructor Destroy; override;
     function AddBooleanColumn(const AName, ATable: string): IAddBooleanColumnOperation;
+    function AddComputedColumn(const AName: string): IAddComputedColumnOperation;
     function AddDateColumn(const AName, ATable: string): IAddDateColumnOperation;
     function AddDateTimeColumn(const AName, ATable: string): IAddDateTimeColumnOperation;
     function AddFloatColumn(const AName, ATable: string): IAddFloatColumnOperation;
@@ -60,10 +63,8 @@ type
     function AddPrimaryKey(const ATable: string; const AColumn: TPrimaryKeyColumn): IAddPrimaryKeyOperation; overload;
     function AddPrimaryKey(const ATable: string; const AColumns: array of TPrimaryKeyColumn): IAddPrimaryKeyOperation; overload;
     function AddStringColumn(const AName, ATable: string): IAddStringColumnOperation;
-    function AddUnique(const AName, ATable: string; const AColumn: TUniqueColumn): IAddUniqueConstraintOperation; overload;
-    function AddUnique(const AName, ATable: string; const AColumns: array of TUniqueColumn): IAddUniqueConstraintOperation; overload;
-    function AddUnique(const ATable: string; const AColumn: TUniqueColumn): IAddUniqueConstraintOperation; overload;
-    function AddUnique(const ATable: string; const AColumns: array of TUniqueColumn): IAddUniqueConstraintOperation; overload;
+    function AddUnique(const AName, ATable: string): IAddUniqueOperation; overload;
+    function AddUnique(const ATable: string): IAddUniqueOperation; overload;
     function AlterColumn(const AName: string): IAlterColumnOperation;
     function CreateIndex(const AName, ATable: string; const AColumn: TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
     function CreateIndex(const AName, ATable: string; const AColumns: array of TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
@@ -99,6 +100,7 @@ implementation
 uses
 {PROJECT}
   cbsMigrations.Migrations.Operations.AddBooleanColumnOperation,
+  cbsMigrations.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Migrations.Operations.AddDateTimeColumnOperation,
   cbsMigrations.Migrations.Operations.AddFloatColumnOperation,
@@ -107,7 +109,7 @@ uses
   cbsMigrations.Migrations.Operations.AddIntColumnOperation,
   cbsMigrations.Migrations.Operations.AddPrimaryKeyOperation,
   cbsMigrations.Migrations.Operations.AddStringColumnOperation,
-  cbsMigrations.Migrations.Operations.AddUniqueConstraintOperation,
+  cbsMigrations.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Migrations.Operations.CreateTableOperation,
@@ -145,6 +147,16 @@ var
 begin
   LOperation := TAddBooleanColumnOperation.Create(AName)
    .HasTable(ATable)
+   .IsOptional;
+  FOperations.Add(LOperation);
+  Result := LOperation;
+end;
+
+function TMigrationBuilder.AddComputedColumn(const AName: string): IAddComputedColumnOperation;
+var
+  LOperation: IAddComputedColumnOperation;
+begin
+  LOperation := TAddComputedColumnOperation.Create(AName)
    .IsOptional;
   FOperations.Add(LOperation);
   Result := LOperation;
@@ -283,30 +295,19 @@ begin
   Result := LOperation;
 end;
 
-function TMigrationBuilder.AddUnique(const AName, ATable: string; const AColumn: TUniqueColumn): IAddUniqueConstraintOperation;
-begin
-  Result := AddUnique(AName, ATable, [AColumn]);
-end;
-
-function TMigrationBuilder.AddUnique(const AName, ATable: string; const AColumns: array of TUniqueColumn): IAddUniqueConstraintOperation;
+function TMigrationBuilder.AddUnique(const AName, ATable: string): IAddUniqueOperation;
 var
-  LOperation: IAddUniqueConstraintOperation;
+  LOperation: IAddUniqueOperation;
 begin
-  LOperation := TAddUniqueConstraintOperation.Create(AName)
-   .HasColumns(AColumns)
-    .HasTable(ATable);
+  LOperation := TAddUniqueOperation.Create(AName)
+   .HasTable(ATable);
   FOperations.Add(LOperation);
   Result := LOperation;
 end;
 
-function TMigrationBuilder.AddUnique(const ATable: string; const AColumn: TUniqueColumn): IAddUniqueConstraintOperation;
+function TMigrationBuilder.AddUnique(const ATable: string): IAddUniqueOperation;
 begin
-  Result := AddUnique('', ATable, [AColumn]);
-end;
-
-function TMigrationBuilder.AddUnique(const ATable: string; const AColumns: array of TUniqueColumn): IAddUniqueConstraintOperation;
-begin
-  Result := AddUnique('', ATable, AColumns);
+  Result := AddUnique('', ATable);
 end;
 
 function TMigrationBuilder.AlterColumn(const AName: string): IAlterColumnOperation;

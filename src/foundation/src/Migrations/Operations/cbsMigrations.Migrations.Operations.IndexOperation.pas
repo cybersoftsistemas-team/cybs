@@ -5,6 +5,7 @@ interface
 uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.IndexOperation,
+  cbsMigrations.Migrations.Operations.IncludeColumn,
   cbsMigrations.Migrations.Operations.NamedMigrationObjectOperation;
 
 type
@@ -28,7 +29,8 @@ type
     function Columns: IIndexColumns;
     function HasColumns(const AColumns: array of TIndexColumn): IIndexOperation;
     function HasDescending(const ADescending: TDescending): IIndexOperation;
-    function HasInclude(const AColumns: array of TIncludeColumn): IIndexOperation;
+    function HasInclude(const AColumn: TIncludeColumn): IIndexOperation; overload;
+    function HasInclude(const AColumns: array of TIncludeColumn): IIndexOperation; overload;
     function HasName(const AName: string): IIndexOperation;
     function HasSchema(const ASchema: string): IIndexOperation;
     function HasTable(const ATable: string): IIndexOperation;
@@ -98,6 +100,11 @@ begin
   Result := Self;
 end;
 
+function TIndexOperation.HasInclude(const AColumn: TIncludeColumn): IIndexOperation;
+begin
+  Result := HasInclude([AColumn]);
+end;
+
 function TIndexOperation.HasInclude(const AColumns: array of TIncludeColumn): IIndexOperation;
 begin
   for var LIncludeColumn in AColumns do
@@ -156,7 +163,8 @@ procedure TIndexOperation.DoPrepare;
 begin
   if not Table.Trim.IsEmpty and Name.Trim.IsEmpty then
   begin
-    SetName(Format('%s_%s_index', [QualifiedTableName('_'), string.Join('_', FColumns.ToArray)]));
+    var LName := if FUnique then '%s_%s_unique' else '%s_%s_index';
+    SetName(Format(LName, [QualifiedTableName('_'), string.Join('_', FColumns.ToArray)]));
   end;
 end;
 
