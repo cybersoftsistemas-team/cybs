@@ -1,5 +1,5 @@
 inherited damCustomerRegistration: TdamCustomerRegistration
-  Height = 229
+  Height = 355
   Width = 636
   object qryLEG: TFDQuery
     BeforePost = DataSetBeforePost
@@ -395,7 +395,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
     SQL.Strings = (
       'SELECT Id'
       ',Name'
-      ',AreaCode'
+      ',DialCode'
       'FROM country.countries;')
     Left = 368
     Top = 15
@@ -412,9 +412,11 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       Required = True
       Size = 255
     end
-    object qryCOUAreaCode: TIntegerField
-      FieldName = 'AreaCode'
-      Origin = 'AreaCode'
+    object qryCOUDialCode: TWideStringField
+      FieldName = 'DialCode'
+      Origin = 'DialCode'
+      Required = True
+      Size = 10
     end
   end
   object dsoCOU: TDataSource
@@ -488,12 +490,15 @@ inherited damCustomerRegistration: TdamCustomerRegistration
     Connection = damDb.Connection
     UpdateObject = updCYT
     SQL.Strings = (
-      'SELECT Id'
-      ',Name'
-      ',AreaCode'
-      ',StateId'
-      'FROM address.cities'
-      'WHERE StateId = :Id;')
+      'SELECT CIT.Id'
+      ',CIT.Name'
+      ',ARC.AreaCode'
+      ',CIT.AreaCodeId'
+      ',CIT.StateId'
+      'FROM address.cities AS CIT'
+      'LEFT JOIN telecom.areacodes AS ARC '
+      'ON CIT.AreaCodeId = ARC.Id'
+      'WHERE CIT.StateId = :Id;')
     Left = 22
     Top = 160
     ParamData = <
@@ -517,11 +522,16 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       Required = True
       Size = 255
     end
-    object qryCYTAreaCode: TIntegerField
+    object qryCYTAreaCode: TWideStringField
       DisplayLabel = 'DDD'
       FieldName = 'AreaCode'
       Origin = 'AreaCode'
-      Required = True
+      Size = 5
+    end
+    object qryCYTAreaCodeId: TGuidField
+      FieldName = 'AreaCodeId'
+      Origin = 'AreaCodeId'
+      Size = 38
     end
     object qryCYTStateId: TGuidField
       FieldName = 'StateId'
@@ -634,5 +644,50 @@ inherited damCustomerRegistration: TdamCustomerRegistration
     DataSet = qrySTE
     Left = 576
     Top = 15
+  end
+  object qryCAC: TFDQuery
+    IndexFieldNames = 'StateId;AreaCode'
+    MasterSource = dsoSTA
+    MasterFields = 'Id'
+    Connection = damDb.Connection
+    SQL.Strings = (
+      'SELECT Id'
+      ',AreaCode'
+      ',StateId'
+      'FROM telecom.areacodes'
+      'WHERE StateId = :Id;')
+    Left = 510
+    Top = 87
+    ParamData = <
+      item
+        Name = 'ID'
+        DataType = ftGuid
+        ParamType = ptInput
+        Value = Null
+      end>
+    object qryCACId: TGuidField
+      FieldName = 'Id'
+      Origin = 'Id'
+      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
+      Required = True
+      Size = 38
+    end
+    object qryCACAreaCode: TWideStringField
+      FieldName = 'AreaCode'
+      Origin = 'AreaCode'
+      Required = True
+      Size = 5
+    end
+    object qryCACStateId: TGuidField
+      FieldName = 'StateId'
+      Origin = 'StateId'
+      Required = True
+      Size = 38
+    end
+  end
+  object dsoCAC: TDataSource
+    DataSet = qryCAC
+    Left = 576
+    Top = 87
   end
 end

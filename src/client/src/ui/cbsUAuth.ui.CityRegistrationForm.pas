@@ -7,12 +7,12 @@ uses
   cbsSystem.Form.DialogBaseForm,
 {IDE}
   uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Controls, Vcl.Forms, uniGUIClasses, uniButton,
-  uniBitBtn, uniPanel, uniEdit, uniDBEdit;
+  uniBitBtn, uniPanel, uniEdit, uniDBEdit, uniMultiItem, uniComboBox, uniDBComboBox, uniDBLookupComboBox;
 
 type
   TfrmCityRegistration = class(TfrmDialogBase)
-    edtAreaCode: TUniDBEdit;
     edtName: TUniDBEdit;
+    cbxCAC: TUniDBLookupComboBox;
     procedure actCancelExecute(Sender: TObject);
     procedure actOkExecute(Sender: TObject);
     procedure UniFormReady(Sender: TObject);

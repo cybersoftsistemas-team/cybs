@@ -30,12 +30,12 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('Name').HasMaxLength(255).IsRequired
-    ,StringColumn('Description').IsRequired
+    ,StringColumn('Name').HasMaxLength(255).HasUnicode(True).IsRequired
+    ,StringColumn('Description').HasUnicode(True).IsRequired
     ,BooleanColumn('AccountBlockedOut').HasDefaultValueSql('0').IsRequired
     ,DateTimeColumn('AccountExpiresDate').IsOptional
     ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
-    ,StringColumn('Password').HasMaxLength(255).IsRequired
+    ,StringColumn('Password').HasMaxLength(255).HasUnicode(True).IsRequired
     ,GuidColumn('PersonId').IsOptional
    ])
    .Constraints([

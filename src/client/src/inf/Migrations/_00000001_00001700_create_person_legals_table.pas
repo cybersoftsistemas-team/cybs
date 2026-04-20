@@ -26,12 +26,12 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').IsRequired
-    ,StringColumn('Name').HasMaxLength(255).IsRequired
-    ,StringColumn('DoingBusinessAs').HasMaxLength(255).IsRequired // Nome fantasia
-    ,StringColumn('CRN').HasMaxLength(14).IsRequired // CRN – Company Registration Number (CNPJ)
+    ,StringColumn('Name').HasMaxLength(255).HasUnicode(True).IsRequired
+    ,StringColumn('DoingBusinessAs').HasMaxLength(255).HasUnicode(True).IsRequired // Nome fantasia
+    ,StringColumn('CRN').HasMaxLength(14).HasUnicode(True).IsRequired // CRN – Company Registration Number (CNPJ)
     ,DateTimeColumn('FoundationDate').IsRequired
-    ,StringColumn('StateInscriptionNumber').HasMaxLength(20).IsOptional // Inscrição Estadual
-    ,StringColumn('MunicipalInscriptionNumber').HasMaxLength(20).IsOptional // Inscrição Municipal
+    ,StringColumn('StateInscriptionNumber').HasMaxLength(20).HasUnicode(True).IsOptional // Inscrição Estadual
+    ,StringColumn('MunicipalInscriptionNumber').HasMaxLength(20).HasUnicode(True).IsOptional // Inscrição Municipal
     ,GuidColumn('CompanyTypeId').IsRequired
     ,GuidColumn('NationalityId').IsRequired // Nacionalidade
     ,GuidColumn('StateId').IsOptional

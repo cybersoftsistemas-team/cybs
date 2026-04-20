@@ -26,17 +26,19 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('Name').HasMaxLength(255).IsRequired
-    ,StringColumn('AreaCode').HasMaxLength(3).HasUnicode(True).IsFixedLength.IsOptional
+    ,StringColumn('Name').HasMaxLength(255).HasUnicode(True).IsRequired
+    ,GuidColumn('AreaCodeId').IsOptional
     ,GuidColumn('StateId').IsRequired
    ])
    .Constraints([
      PrimaryKey('Id')
+    ,ForeignKey('AreaCodeId', 'areacodes', 'Id').HasPrincipalSchema('telecom')
     ,ForeignKey('StateId', 'states', 'Id')
     ,Unique(['StateId', 'Name'])
    ])
    .Indexes([
-     CreateIndex('StateId')
+     CreateIndex('AreaCodeId')
+    ,CreateIndex('StateId')
    ]);
 end;
 

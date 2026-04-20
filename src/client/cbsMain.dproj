@@ -165,6 +165,8 @@
         <DCCReference Include="src\inf\Migrations\_00000001_00000800_create_address_state_codes_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_00000001_00001000_create_address_city_codes_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_00000001_00000200_create_country_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_00000001_00000805_create_telecom_schema.pas"/>
+        <DCCReference Include="src\inf\Migrations\_00000001_00000810_create_telecom_areacodes_table.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

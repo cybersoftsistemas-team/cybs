@@ -34,7 +34,7 @@ begin
   ASchema.CreateTable(FDefaultTableName)
    .HasSchema(FDefaultSchema)
    .Columns([
-     StringColumn('migration').HasMaxLength(255).IsRequired
+     StringColumn('migration').HasMaxLength(255).HasUnicode(True).IsRequired
     ,IntColumn('batch').IsRequired
    ])
    .Constraints([

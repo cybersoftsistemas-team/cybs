@@ -23,6 +23,8 @@ uses
   _00000001_00000600_create_address_schema,
   _00000001_00000700_create_address_states_table,
   _00000001_00000800_create_address_state_codes_table,
+  _00000001_00000805_create_telecom_schema,
+  _00000001_00000810_create_telecom_areacodes_table,
   _00000001_00000900_create_address_cities_table,
   _00000001_00001000_create_address_city_codes_table,
   _00000001_00001100_create_address_neighborhoods_table,
@@ -49,6 +51,8 @@ begin
   RegisterMigration(TDbContext, CreateAddressSchema);
   RegisterMigration(TDbContext, CreateAddressStatesTable);
   RegisterMigration(TDbContext, CreateAddressStateCodesTable);
+  RegisterMigration(TDbContext, CreateTelecomSchema);
+  RegisterMigration(TDbContext, CreateTelecomAreaCodesSchema);
   RegisterMigration(TDbContext, CreateAddressCitiesTable);
   RegisterMigration(TDbContext, CreateAddressCityCodesTable);
   RegisterMigration(TDbContext, CreateAddressNeighborhoodsTable);

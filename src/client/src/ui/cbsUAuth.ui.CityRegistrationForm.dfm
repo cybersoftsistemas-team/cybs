@@ -39,17 +39,25 @@ inherited frmCityRegistration: TfrmCityRegistration
     FieldLabel = 'Cidade'
     FieldLabelAlign = laTop
   end
-  object edtAreaCode: TUniDBEdit [4]
+  object cbxCAC: TUniDBLookupComboBox [4]
     Left = 254
     Top = 5
     Width = 75
-    Height = 22
     Hint = ''
-    DataField = 'AreaCode'
+    ListOnlyMode = lmFollowSource
+    ListField = 'AreaCode'
+    ListSource = damCustomerRegistration.dsoCAC
+    KeyField = 'Id'
+    ListFieldIndex = 0
+    ClearButton = True
+    DataField = 'AreaCodeId'
     DataSource = damCustomerRegistration.dsoCYT
     TabOrder = 1
+    Color = clWindow
+    RemoteQuery = True
     FieldLabel = 'DDD'
     FieldLabelAlign = laTop
+    Style = csOwnerDrawFixed
   end
   inherited aclMain: TUniActionList
     Left = 8

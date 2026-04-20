@@ -1,7 +1,7 @@
 inherited damDb: TdamDb
   inherited Connection: TFDConnection
     Params.Strings = (
-      'Database=cybs'
+      'Database=cybersoft'
       'User_Name=cybersoft'
       'Password=cybersoft@123'
       'Server=localhost'

@@ -22,14 +22,12 @@ type
     dsoSTA: TDataSource;
     dsoSTE: TDataSource;
     qryCOU: TFDQuery;
-    qryCOUAreaCode: TIntegerField;
     qryCOUId: TGuidField;
     qryCOUName: TWideStringField;
     qryCTP: TFDQuery;
     qryCTPId: TGuidField;
     qryCTPName: TWideStringField;
     qryCYT: TFDQuery;
-    qryCYTAreaCode: TIntegerField;
     qryCYTId: TGuidField;
     qryCYTName: TWideStringField;
     qryCYTStateId: TGuidField;
@@ -75,6 +73,14 @@ type
     updCYT: TFDUpdateSQL;
     updLEG: TFDUpdateSQL;
     updNAT: TFDUpdateSQL;
+    qryCAC: TFDQuery;
+    dsoCAC: TDataSource;
+    qryCYTAreaCodeId: TGuidField;
+    qryCYTAreaCode: TWideStringField;
+    qryCACId: TGuidField;
+    qryCACAreaCode: TWideStringField;
+    qryCACStateId: TGuidField;
+    qryCOUDialCode: TWideStringField;
     procedure qryCYTNewRecord(DataSet: TDataSet);
     procedure qryLEGNewRecord(DataSet: TDataSet);
     procedure qryNATNewRecord(DataSet: TDataSet);
@@ -105,6 +111,7 @@ begin
   qryGEN.Close;
   qryNTU.Close;
   qryCOU.Close;
+  qryCAC.Close;
   qrySTA.Close;
   qryCYT.Close;
   qryCTP.Close;
@@ -121,6 +128,7 @@ begin
   qryNTU.Open;
   qryCOU.Open;
   qrySTA.Open;
+  qryCAC.Open;
   qryCYT.Open;
   qryCTP.Open;
   qryNTY.Open;

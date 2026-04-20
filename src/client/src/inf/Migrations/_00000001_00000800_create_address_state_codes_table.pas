@@ -25,8 +25,8 @@ begin
   ASchema.CreateTable(TableName)
    .HasSchema(SchemaName)
    .Columns([
-     StringColumn('CodeType').HasMaxLength(50).IsRequired
-    ,StringColumn('Code').HasMaxLength(10).IsRequired
+     StringColumn('CodeType').HasMaxLength(50).HasUnicode(True).IsRequired
+    ,StringColumn('Code').HasMaxLength(10).HasUnicode(True).IsRequired
     ,GuidColumn('StateId').IsRequired
    ])
    .Constraints([

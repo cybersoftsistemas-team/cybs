@@ -26,10 +26,10 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').IsRequired
-    ,StringColumn('FirstName').HasMaxLength(127).IsRequired
-    ,StringColumn('LastName').HasMaxLength(127).IsOptional
+    ,StringColumn('FirstName').HasMaxLength(127).HasUnicode(True).IsRequired
+    ,StringColumn('LastName').HasMaxLength(127).HasUnicode(True).IsOptional
     ,DateTimeColumn('Birthday').IsOptional
-    ,StringColumn('SSN').HasMaxLength(11).IsRequired // SSN – Social Security Number (CPF)
+    ,StringColumn('SSN').HasMaxLength(11).HasUnicode(True).IsRequired // SSN – Social Security Number (CPF)
     ,GuidColumn('PlaceOfBirthId').IsOptional // Naturalidade
     ,GuidColumn('NationalityId').IsOptional // Nacionalidade
     ,GuidColumn('GenderId').IsOptional // Gênero
