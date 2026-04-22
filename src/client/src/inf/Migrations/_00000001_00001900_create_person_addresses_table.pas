@@ -27,10 +27,9 @@ begin
    .Columns([
      GuidColumn('PersonId').IsRequired
     ,GuidColumn('TypeId').IsRequired
-    ,GuidColumn('AddressId').IsRequired
     ,StringColumn('AdditionalInformation').HasMaxLength(255).HasUnicode(True).IsOptional
     ,BooleanColumn('Correspondence').HasDefaultValueSql('0').IsRequired
-    ,StringColumn('Number').HasMaxLength(20).HasUnicode(True).IsRequired
+    ,GuidColumn('AddressId').IsRequired
    ])
    .Constraints([
      PrimaryKey(['PersonId', 'TypeId'])

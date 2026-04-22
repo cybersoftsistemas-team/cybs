@@ -28,7 +28,14 @@ begin
      GuidColumn('Id').IsRequired
     ,StringColumn('FirstName').HasMaxLength(127).HasUnicode(True).IsRequired
     ,StringColumn('LastName').HasMaxLength(127).HasUnicode(True).IsOptional
-    ,DateTimeColumn('Birthday').IsOptional
+    ,ComputedColumn('FullName')
+     .HasSqlAs(
+      'CONVERT(NVARCHAR(254),' +
+      '  TRIM(CONCAT([FirstName],'' '',[LastName]))' +
+      ')')
+     .IsOptional
+     .IsStored
+    ,DateTimeColumn('Birthday').IsOptional // Data de nascimento
     ,StringColumn('SSN').HasMaxLength(11).HasUnicode(True).IsRequired // SSN – Social Security Number (CPF)
     ,GuidColumn('PlaceOfBirthId').IsOptional // Naturalidade
     ,GuidColumn('NationalityId').IsOptional // Nacionalidade
@@ -43,7 +50,13 @@ begin
     ,Unique('SSN')
    ])
    .Indexes([
-     CreateIndex('GenderId')
+     CreateIndex('FullName')
+      .HasInclude([
+       'Id',
+       'FirstName',
+       'LastName'
+      ])
+    ,CreateIndex('GenderId')
     ,CreateIndex('NationalityId')
     ,CreateIndex('PlaceOfBirthId')
    ]);

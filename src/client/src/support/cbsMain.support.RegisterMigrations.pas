@@ -31,6 +31,7 @@ uses
   _00000001_00001200_create_address_streets_table,
   _00000001_00001300_create_address_streettypes_table,
   _00000001_00001400_create_address_addresses_table,
+  _00000001_00001405_create_address_addresses_address_trigger,
   _00000001_00001500_create_person_schema,
   _00000001_00001600_create_person_persons_table,
   _00000001_00001700_create_person_legals_table,
@@ -59,6 +60,7 @@ begin
   RegisterMigration(TDbContext, CreateAddressStreetsTable);
   RegisterMigration(TDbContext, CreateAddressStreetTypesTable);
   RegisterMigration(TDbContext, CreateAddressAddressesTable);
+  RegisterMigration(TDbContext, CreateAddressAddressesAddressTrigger);
   RegisterMigration(TDbContext, CreatePersonSchema);
   RegisterMigration(TDbContext, CreatePersonPersonsTable);
   RegisterMigration(TDbContext, CreatePersonLegalsTable);

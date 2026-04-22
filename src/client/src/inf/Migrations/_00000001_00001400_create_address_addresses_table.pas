@@ -26,51 +26,25 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    ,StringColumn('Address').HasUnicode(True).IsOptional
+    ,StringColumn('Number').HasMaxLength(20).HasUnicode(True).IsOptional
     ,StringColumn('ZipCode').HasMaxLength(8).HasUnicode(True).IsFixedLength.IsRequired
     ,GuidColumn('StreetTypeId').IsRequired
     ,GuidColumn('StreetId').IsRequired
     ,GuidColumn('NeighborhoodId').IsRequired
-    ,GuidColumn('CityId').IsRequired
-    ,GuidColumn('StateId').IsRequired
-    ,ComputedColumn('AddressHash')
-     .HasSqlAs(
-      'HASHBYTES(' +
-      '  ''SHA2_256'',' +
-      '  CONCAT(' +
-      '    CAST(StreetTypeId AS BINARY(16)),' +
-      '    CAST(StreetId AS BINARY(16)),' +
-      '    CAST(NeighborhoodId AS BINARY(16)),' +
-      '    CAST(CityId AS BINARY(16)),' +
-      '    CAST(StateId AS BINARY(16))' +
-      '  )' +
-      ')')
-     .IsOptional
-     .IsStored
-    ])
+   ])
    .Constraints([
      PrimaryKey('Id')
-    ,ForeignKey('CityId', 'cities', 'Id')
     ,ForeignKey('NeighborhoodId', 'neighborhoods', 'Id')
-    ,ForeignKey('StateId', 'states', 'Id')
     ,ForeignKey('StreetId', 'streets', 'Id')
     ,ForeignKey('StreetTypeId', 'streettypes', 'Id')
-    ])
+   ])
    .Indexes([
-     CreateIndex('CityId')
-    ,CreateIndex('NeighborhoodId')
-    ,CreateIndex('StateId')
+     CreateIndex('NeighborhoodId')
     ,CreateIndex('StreetId')
     ,CreateIndex('StreetTypeId')
     ,CreateIndex('ZipCode')
-    ,CreateIndex('AddressHash', True)
-     .HasInclude([
-      'StreetTypeId',
-      'StreetId',
-      'NeighborhoodId',
-      'CityId',
-      'StateId'
-      ])
-    ]);
+   ]);
 end;
 
 procedure CreateAddressAddressesTable.Down(const ASchema: IMigrationBuilder);
