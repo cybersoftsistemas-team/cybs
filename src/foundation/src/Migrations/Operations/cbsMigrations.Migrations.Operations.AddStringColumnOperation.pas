@@ -21,6 +21,7 @@ type
     function IsOptional: IAddStringColumnOperation;
     function IsRequired: IAddStringColumnOperation;
     function IsVariableLength: IAddStringColumnOperation;
+    function IsUnicode: IAddStringColumnOperation;
   end;
 
 implementation
@@ -75,6 +76,11 @@ end;
 function TAddStringColumnOperation.IsRequired: IAddStringColumnOperation;
 begin
   Result := TAddStringColumnOperation(inherited IsRequired);
+end;
+
+function TAddStringColumnOperation.IsUnicode: IAddStringColumnOperation;
+begin
+  Result := TAddStringColumnOperation(inherited IsUnicode);
 end;
 
 function TAddStringColumnOperation.IsVariableLength: IAddStringColumnOperation;

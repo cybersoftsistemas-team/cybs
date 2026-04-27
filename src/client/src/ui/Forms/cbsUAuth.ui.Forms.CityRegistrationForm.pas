@@ -1,4 +1,4 @@
-unit cbsUAuth.ui.CityRegistrationForm;
+unit cbsUAuth.ui.Forms.CityRegistrationForm;
 
 interface
 
@@ -28,8 +28,8 @@ implementation
 
 uses
 {PROJECT}
-  cbsMain.data.module.MainModule,
-  cbsUAuth.data.module.CustomerRegistrationModule;
+  cbsMain.ui.Data.Modules.MainModule,
+  cbsUAuth.ui.Data.Modules.CustomerRegistrationModule;
 
 function frmCityRegistration: TfrmCityRegistration;
 begin

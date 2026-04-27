@@ -26,8 +26,8 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('Name').HasMaxLength(255).HasUnicode(True).IsRequired
-    ,StringColumn('Acronym').HasMaxLength(10).HasUnicode(True).IsOptional
+    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
+    ,StringColumn('Acronym').HasMaxLength(10).IsUnicode.IsOptional
     ,GuidColumn('CountryId').IsRequired
    ])
    .Constraints([

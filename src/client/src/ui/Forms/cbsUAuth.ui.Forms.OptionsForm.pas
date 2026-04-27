@@ -1,4 +1,4 @@
-unit cbsUAuth.ui.OptionsForm;
+unit cbsUAuth.ui.Forms.OptionsForm;
 
 interface
 
@@ -61,10 +61,10 @@ uses
   System.SysUtils,
   System.UITypes,
 {PROJECT}
-  cbsMain.data.module.MainModule,
+  cbsMain.ui.Data.Modules.MainModule,
   cbsSystem.Support.ServerModule,
-  cbsUAuth.data.module.LoginModule,
-  cbsUAuth.ui.ConnEditorForm;
+  cbsUAuth.ui.Forms.ConnEditorForm,
+  cbsUAuth.ui.Data.Modules.LoginModule;
 
 function frmOptions: TfrmOptions;
 begin
@@ -232,3 +232,5 @@ begin
 end;
 
 end.
+
+

@@ -7,7 +7,7 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateTelecomAreaCodesSchema = class(TMigration)
+  CreateTelecomAreaCodesTable = class(TMigration)
   private
     const TableName = 'areacodes';
     const SchemaName = 'telecom';
@@ -18,15 +18,15 @@ type
 
 implementation
 
-{ CreateTelecomAreaCodesSchema }
+{ CreateTelecomAreaCodesTable }
 
-procedure CreateTelecomAreaCodesSchema.Up(const ASchema: IMigrationBuilder);
+procedure CreateTelecomAreaCodesTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('AreaCode').HasMaxLength(5).HasUnicode(True).HasUnicode(True).IsRequired
+    ,StringColumn('AreaCode').HasMaxLength(5).IsUnicode.IsRequired
     ,GuidColumn('StateId').IsRequired
    ])
    .Constraints([
@@ -35,14 +35,16 @@ begin
     ,Unique(['StateId', 'AreaCode'])
    ])
    .Indexes([
-     CreateIndex('StateId')
+     CreateIndex('AreaCode')
+    ,CreateIndex('StateId')
    ]);
 end;
 
-procedure CreateTelecomAreaCodesSchema.Down(const ASchema: IMigrationBuilder);
+procedure CreateTelecomAreaCodesTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
    .HasSchema(SchemaName);
 end;
 
 end.
+

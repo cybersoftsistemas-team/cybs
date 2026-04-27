@@ -32,7 +32,6 @@ requires
   cbsSystem;
 
 contains
-  cbsMain.data.module.MainModule in 'src\data\module\cbsMain.data.module.MainModule.pas' {damMain: TUniGUIMainModule},
   cbsMain.inf.DbContext in 'src\inf\cbsMain.inf.DbContext.pas',
   cbsMain.inf.DbModule in 'src\inf\cbsMain.inf.DbModule.pas' {damDb: TDataModule},
   _00000001_00000001_create_general_schema in 'src\inf\Migrations\_00000001_00000001_create_general_schema.pas',
@@ -53,7 +52,6 @@ contains
   _00000001_00001900_create_person_addresses_table in 'src\inf\Migrations\_00000001_00001900_create_person_addresses_table.pas',
   _00000001_00002000_create_person_emails_table in 'src\inf\Migrations\_00000001_00002000_create_person_emails_table.pas',
   _00000001_00002100_create_person_phones_table in 'src\inf\Migrations\_00000001_00002100_create_person_phones_table.pas',
-  cbsMain.ui.MainForm in 'src\ui\cbsMain.ui.MainForm.pas' {frmMain: TUniForm},
   cbsMain.support.RegisterMigrations in 'src\support\cbsMain.support.RegisterMigrations.pas',
   _00000000_DatabaseSeeder in 'src\inf\Seeders\_00000000_DatabaseSeeder.pas',
   cbsMain.inf.DbSeedModule in 'src\inf\cbsMain.inf.DbSeedModule.pas' {damDbSeed: TDataModule},
@@ -63,6 +61,8 @@ contains
   _00000001_00000200_create_country_schema in 'src\inf\Migrations\_00000001_00000200_create_country_schema.pas',
   _00000001_00000805_create_telecom_schema in 'src\inf\Migrations\_00000001_00000805_create_telecom_schema.pas',
   _00000001_00000810_create_telecom_areacodes_table in 'src\inf\Migrations\_00000001_00000810_create_telecom_areacodes_table.pas',
-  _00000001_00001405_create_address_addresses_address_trigger in 'src\inf\Migrations\_00000001_00001405_create_address_addresses_address_trigger.pas';
+  _00000001_00001405_create_address_addresses_address_trigger in 'src\inf\Migrations\_00000001_00001405_create_address_addresses_address_trigger.pas',
+  cbsMain.ui.Data.Modules.MainModule in 'src\ui\Data\Modules\cbsMain.ui.Data.Modules.MainModule.pas' {damMain: TUniGUIMainModule},
+  cbsMain.ui.Forms.MainForm in 'src\ui\Forms\cbsMain.ui.Forms.MainForm.pas' {frmMain: TUniForm};
 
 end.

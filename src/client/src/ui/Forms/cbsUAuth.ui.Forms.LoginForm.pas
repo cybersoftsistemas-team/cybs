@@ -1,4 +1,4 @@
-unit cbsUAuth.ui.LoginForm;
+unit cbsUAuth.ui.Forms.LoginForm;
 
 interface
 
@@ -46,6 +46,10 @@ type
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure UniLoginFormCreate(Sender: TObject);
   private
+    procedure AfterConnect;
+    procedure BeforeConnect;
+    procedure HideMsg;
+    procedure OnConnect;
     procedure ShowMsg(const ACaption: string);
     procedure UpdateUi;
   end;
@@ -60,15 +64,15 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsMain.data.module.MainModule,
+  cbsMain.ui.Data.Modules.MainModule,
   cbsSystem.Contracts.Module.Main,
   cbsSystem.Support.Form,
   cbsSystem.Support.RunTime,
   cbsSystem.Support.ServerModule,
-  cbsUAuth.data.module.LoginModule,
-  cbsUAuth.ui.CustomerRegistrationForm,
-  cbsUAuth.ui.DomainsForm,
-  cbsUAuth.ui.OptionsForm;
+  cbsUAuth.ui.Forms.CustomerRegistrationForm,
+  cbsUAuth.ui.Data.Modules.LoginModule,
+  cbsUAuth.ui.Forms.LoginDomainsForm,
+  cbsUAuth.ui.Forms.OptionsForm;
 
 function frmLogin: TfrmLogin;
 begin
@@ -79,12 +83,31 @@ end;
 
 procedure TfrmLogin.actConnectExecute(Sender: TObject);
 begin
-  ModalResult := mrOK;
+  try
+    BeforeConnect;
+    OnConnect;
+    AfterConnect;
+  except
+    on E: Exception do
+    begin
+      ShowMsg(E.Message);
+    end;
+  end;
 end;
 
 procedure TfrmLogin.actDomainsExecute(Sender: TObject);
 begin
-  frmDomains.ShowModal;
+  frmLoginDomains.ShowModal(
+    procedure(Sender: TComponent; Result: Integer)
+    begin
+      if Result = mrOk then
+      begin
+        damLogin.SetDomain(
+         frmLoginDomains.DomainId
+        ,frmLoginDomains.DomainName);
+      end;
+      UpdateUi;
+    end);
 end;
 
 procedure TfrmLogin.actOptionsExecute(Sender: TObject);
@@ -103,6 +126,47 @@ begin
     begin
       UpdateUi;
     end);
+end;
+
+procedure TfrmLogin.AfterConnect;
+begin
+  ModalResult := mrOK;
+end;
+
+procedure TfrmLogin.BeforeConnect;
+begin
+  if damLogin.mtbUSEName.AsString.Trim.IsEmpty then
+  begin
+    edtUserName.SetFocus;
+    raise Exception.CreateFmt('Digite um %s para fazer o login.', [edtUserName.FieldLabel.ToLower]);
+  end;
+  if damLogin.mtbUSEPassword.AsString.Trim.IsEmpty then
+  begin
+    edtPassword.SetFocus;
+    raise Exception.CreateFmt('Digite uma %s de usuário para fazer o login.', [edtPassword.FieldLabel.ToLower]);
+  end;
+  if damLogin.mtbUSEDomainId.AsGuid.IsEmpty then
+  begin
+    btnDomains.SetFocus;
+    raise Exception.CreateFmt('Selecione um %s de acesso para fazer o login.', [edtDomainName.FieldLabel.ToLower]);
+  end;
+end;
+
+procedure TfrmLogin.HideMsg;
+begin
+  pnlMsg.Visible := False;
+end;
+
+procedure TfrmLogin.OnConnect;
+begin
+  var LError := '';
+  if not damLogin.AuthenticateUser(
+    damLogin.mtbUSEName.AsString,
+    damLogin.mtbUSEPassword.AsString,
+    LError) then
+  begin
+    raise Exception.Create(LError);
+  end;
 end;
 
 procedure TfrmLogin.ShowMsg(const ACaption: string);
@@ -138,7 +202,7 @@ end;
 
 procedure TfrmLogin.UpdateUi;
 begin
-  var LExistsRegisteredCustomer := damLogin.ExistsRegisteredCustomer;
+  var LExistsRegisteredCustomer := True; //damLogin.ExistsRegisteredCustomer;
   edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and LExistsRegisteredCustomer;
   edtPassword.Enabled := edtUserName.Enabled;
   edtDomainName.Enabled := edtUserName.Enabled;
@@ -147,7 +211,7 @@ begin
   actRegister.Visible := actOptions.Visible and not ServerModule.Database.Id.IsEmpty and not LExistsRegisteredCustomer;
   actConnect.Visible := not actOptions.Visible or ServerModule.Database.Id.IsEmpty or LExistsRegisteredCustomer;
   actConnect.Enabled := edtUserName.Enabled;
-  pnlMsg.Visible := False;
+  HideMsg;
   if actOptions.Visible and damLogin.mtbCNS.Active and damLogin.mtbCNS.IsEmpty then
   begin
     ShowMsg('Não existe uma configuração de conexão com o banco de dados.');
@@ -172,3 +236,6 @@ begin
 end;
 
 end.
+
+
+

@@ -1,10 +1,9 @@
-unit cbsUAuth.data.module.LoginModule;
+unit cbsUAuth.ui.Data.Modules.LoginModule;
 
 interface
 
 uses
 {PROJECT}
-  cbsMain.inf.DbModule,
   cbsSystem.Module.BaseModule,
 {IDE}
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, System.Classes, FireDAC.Comp.DataSet,
@@ -38,13 +37,14 @@ type
     procedure mtbUSENewRecord(DataSet: TDataSet);
     procedure UniGUIMainModuleCreate(Sender: TObject);
   private
-    FdamDb: TdamDb;
     procedure SaveOptions;
   public
+    function AuthenticateUser(const AUserName, APassword: string; out AError: string): Boolean;
     function ExistsRegisteredCustomer: Boolean;
     procedure LoadData(const AFile, AData: string);
     procedure mtbCNSEmptyDataSet;
     procedure SaveLogonData;
+    procedure SetDomain(const AId: TGuid; const AName: string);
   end;
 
   function damLogin: TdamLogin;
@@ -57,12 +57,15 @@ implementation
 
 uses
 {IDE}
+
   System.SysUtils,
 {PROJECT}
-  cbsMain.data.module.MainModule,
+  cbsMain.ui.Data.Modules.MainModule,
   cbsSystem.Support.DataSet.Extensions,
   cbsSystem.Support.Module,
-  cbsSystem.Support.ServerModule;
+  cbsSystem.Support.ServerModule,
+  cbsUAuth.app.Services.AuthService,
+  cbsUAuth.dom.Contracts.Services.AuthService;
 
 const
   CST_FILENAME_LOGON   = 'logon.dat';
@@ -76,6 +79,16 @@ begin
 end;
 
 { TdamLogin }
+
+function TdamLogin.AuthenticateUser(const AUserName, APassword: string; out AError: string): Boolean;
+begin
+  var LAuth: IAuthService := TAuthService.Create;
+  try
+    Result := LAuth.Authenticate(mtbUSEName.AsString, mtbUSEPassword.AsString, AError);
+  finally
+    LAuth := nil;
+  end;
+end;
 
 function TdamLogin.ExistsRegisteredCustomer: Boolean;
 begin
@@ -158,10 +171,17 @@ begin
   mtbCNS.SaveData(CST_KEY_OPTIONS, CST_FILENAME_OPTIONS, csmServerSide);
 end;
 
+procedure TdamLogin.SetDomain(const AId: TGuid; const AName: string);
+begin
+  mtbUSE.Edit;
+  mtbUSEDomainId.AsGuid := AId;
+  mtbUSEDomainName.AsString := AName;
+  mtbUSE.Post;
+end;
+
 procedure TdamLogin.UniGUIMainModuleCreate(Sender: TObject);
 begin
   inherited;
-  FdamDb := TdamDb.Create(Self);
   mtbUSE.CreateDataSet;
   mtbCNS.CreateDataSet;
 end;

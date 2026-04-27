@@ -119,7 +119,7 @@ object frmLogin: TfrmLogin
             'afterrender=function afterrender(sender, eOpts)'#13#10'{'#13#10'  sender.set' +
             'Style({'#13#10'    borderRadius: '#39'2px'#39','#13#10'    overflow: '#39'hidden'#39#13#10'  });' +
             #13#10'}')
-        TabOrder = 6
+        TabOrder = 1
         object labMsg: TUniLabel
           AlignWithMargins = True
           Left = 23
@@ -134,7 +134,7 @@ object frmLogin: TfrmLogin
           Align = alClient
           ParentFont = False
           Font.Color = 3618615
-          TabOrder = 1
+          TabOrder = 2
         end
         object imgMsg: TUniImage
           AlignWithMargins = True
@@ -161,7 +161,7 @@ object frmLogin: TfrmLogin
         Hint = ''
         ParentColor = False
         Anchors = [akLeft, akRight, akBottom]
-        TabOrder = 5
+        TabOrder = 6
         object btnOptions: TUniBitBtn
           AlignWithMargins = True
           Left = 317
@@ -217,7 +217,7 @@ object frmLogin: TfrmLogin
         DataField = 'Name'
         DataSource = damLogin.dsoUSE
         Anchors = [akLeft, akRight, akBottom]
-        TabOrder = 1
+        TabOrder = 2
         FieldLabel = 'Nome de usu'#225'rio ou e-mail'
         FieldLabelWidth = 156
       end
@@ -231,7 +231,7 @@ object frmLogin: TfrmLogin
         DataSource = damLogin.dsoUSE
         PasswordChar = '*'
         Anchors = [akLeft, akRight, akBottom]
-        TabOrder = 2
+        TabOrder = 3
         FieldLabel = 'Senha'
         FieldLabelWidth = 156
       end
@@ -244,7 +244,7 @@ object frmLogin: TfrmLogin
         DataField = 'DomainName'
         DataSource = damLogin.dsoUSE
         Anchors = [akLeft, akRight, akBottom]
-        TabOrder = 3
+        TabOrder = 4
         ReadOnly = True
         FieldLabel = 'Dom'#237'nio'
         FieldLabelWidth = 156
@@ -259,7 +259,7 @@ object frmLogin: TfrmLogin
         Anchors = [akRight, akBottom]
         ParentColor = False
         ImageIndex = 2
-        TabOrder = 4
+        TabOrder = 5
       end
     end
     object pnlFooter: TUniSimplePanel

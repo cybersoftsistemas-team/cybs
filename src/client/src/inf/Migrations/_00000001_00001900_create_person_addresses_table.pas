@@ -27,7 +27,7 @@ begin
    .Columns([
      GuidColumn('PersonId').IsRequired
     ,GuidColumn('TypeId').IsRequired
-    ,StringColumn('AdditionalInformation').HasMaxLength(255).HasUnicode(True).IsOptional
+    ,StringColumn('AdditionalInformation').HasMaxLength(255).IsUnicode.IsOptional
     ,BooleanColumn('Correspondence').HasDefaultValueSql('0').IsRequired
     ,GuidColumn('AddressId').IsRequired
    ])

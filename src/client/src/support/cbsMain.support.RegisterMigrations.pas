@@ -53,7 +53,7 @@ begin
   RegisterMigration(TDbContext, CreateAddressStatesTable);
   RegisterMigration(TDbContext, CreateAddressStateCodesTable);
   RegisterMigration(TDbContext, CreateTelecomSchema);
-  RegisterMigration(TDbContext, CreateTelecomAreaCodesSchema);
+  RegisterMigration(TDbContext, CreateTelecomAreaCodesTable);
   RegisterMigration(TDbContext, CreateAddressCitiesTable);
   RegisterMigration(TDbContext, CreateAddressCityCodesTable);
   RegisterMigration(TDbContext, CreateAddressNeighborhoodsTable);

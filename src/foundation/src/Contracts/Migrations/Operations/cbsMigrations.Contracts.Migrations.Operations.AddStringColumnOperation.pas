@@ -19,6 +19,7 @@ type
     function IsMaxLength: IAddStringColumnOperation;
     function IsOptional: IAddStringColumnOperation;
     function IsRequired: IAddStringColumnOperation;
+    function IsUnicode: IAddStringColumnOperation;
     function IsVariableLength: IAddStringColumnOperation;
   end;
 

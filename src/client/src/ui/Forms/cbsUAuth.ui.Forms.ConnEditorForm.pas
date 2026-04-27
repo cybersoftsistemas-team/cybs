@@ -1,4 +1,4 @@
-﻿unit cbsUAuth.ui.ConnEditorForm;
+﻿unit cbsUAuth.ui.Forms.ConnEditorForm;
 
 interface
 
@@ -90,7 +90,7 @@ uses
   System.UITypes,
   System.Variants,
 {PROJECT}
-  cbsMain.data.module.MainModule,
+  cbsMain.ui.Data.Modules.MainModule,
 {SPRING}
   Spring.Collections;
 

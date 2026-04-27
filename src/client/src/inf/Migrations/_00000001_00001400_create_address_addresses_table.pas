@@ -26,9 +26,9 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('Address').HasUnicode(True).IsOptional
-    ,StringColumn('Number').HasMaxLength(20).HasUnicode(True).IsOptional
-    ,StringColumn('ZipCode').HasMaxLength(8).HasUnicode(True).IsFixedLength.IsRequired
+    ,StringColumn('Address').IsUnicode.IsOptional
+    ,StringColumn('Number').HasMaxLength(20).IsUnicode.IsOptional
+    ,StringColumn('ZipCode').HasMaxLength(8).IsUnicode.IsFixedLength.IsRequired
     ,GuidColumn('StreetTypeId').IsRequired
     ,GuidColumn('StreetId').IsRequired
     ,GuidColumn('NeighborhoodId').IsRequired

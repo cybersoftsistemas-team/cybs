@@ -10,10 +10,8 @@ uses
 
 type
   TdamDbSeed = class(TDatabaseSeederModule)
-  private
-    { Private declarations }
-  public
-    { Public declarations }
+  protected
+    procedure AfterRunSeed; override;
   end;
 
 implementation
@@ -21,5 +19,23 @@ implementation
 {%CLASSGROUP 'System.Classes.TPersistent'}
 
 {$R *.dfm}
+
+uses
+{PROJECT}
+  cbsUAuth.dom.Contracts.Services.AuthService,
+  cbsUAuth.app.Services.AuthService;
+
+{ TdamDbSeed }
+
+procedure TdamDbSeed.AfterRunSeed;
+begin
+  inherited;
+  var LAuth: IAuthService := TAuthService.Create;
+  try
+    LAuth.TryCreateAdminWithTemporaryPassword('Administrador', 'Admin@123');
+  finally
+    LAuth := nil;
+  end;
+end;
 
 end.

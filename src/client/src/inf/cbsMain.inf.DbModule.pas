@@ -12,8 +12,7 @@ uses
   System.SysUtils;
 
 type
-  TdamDb = class(TdamBaseDb)
-  end;
+  TdamDb = class(TdamBaseDb);
 
   function damDb: TdamDb;
 
@@ -23,7 +22,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsMain.data.module.MainModule,
+  cbsMain.ui.Data.Modules.MainModule,
   cbsSystem.Support.ServerModule;
 
 function damDb: TdamDb;
@@ -32,3 +31,4 @@ begin
 end;
 
 end.
+

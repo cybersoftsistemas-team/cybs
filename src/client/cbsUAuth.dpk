@@ -32,12 +32,7 @@ requires
   cbsMain;
 
 contains
-  cbsUAuth.ui.LoginForm in 'src\ui\cbsUAuth.ui.LoginForm.pas' {frmLogin: TUniLoginForm},
-  cbsUAuth.data.module.LoginModule in 'src\data\module\cbsUAuth.data.module.LoginModule.pas',
-  cbsUAuth.ui.OptionsForm in 'src\ui\cbsUAuth.ui.OptionsForm.pas' {frmOptions: TUniForm},
-  cbsUAuth.ui.ConnEditorForm in 'src\ui\cbsUAuth.ui.ConnEditorForm.pas' {frmConnEditor: TUniForm},
   _00001000_00000001_create_identity_schema in 'src\inf\Migrations\_00001000_00000001_create_identity_schema.pas',
-  cbsUAuth.ui.DomainsForm in 'src\ui\cbsUAuth.ui.DomainsForm.pas' {frmDomains: TUniForm},
   _00001000_00000100_create_identity_users_table in 'src\inf\Migrations\_00001000_00000100_create_identity_users_table.pas',
   _00001000_00000200_create_identity_passwords_table in 'src\inf\Migrations\_00001000_00000200_create_identity_passwords_table.pas',
   _00001000_00000300_create_identity_options_table in 'src\inf\Migrations\_00001000_00000300_create_identity_options_table.pas',
@@ -50,9 +45,34 @@ contains
   _00001000_DatabaseSeeder in 'src\inf\Seeders\_00001000_DatabaseSeeder.pas',
   _00001000_00001000_create_registration_customer_table in 'src\inf\Migrations\_00001000_00001000_create_registration_customer_table.pas',
   _00001000_00000900_create_registration_table in 'src\inf\Migrations\_00001000_00000900_create_registration_table.pas',
-  cbsUAuth.data.module.CustomerRegistrationModule in 'src\data\module\cbsUAuth.data.module.CustomerRegistrationModule.pas' {damCustomerRegistration: TDataModule},
-  cbsUAuth.ui.CustomerRegistrationForm in 'src\ui\cbsUAuth.ui.CustomerRegistrationForm.pas' {frmCustomerRegistration},
-  cbsUAuth.ui.CityRegistrationForm in 'src\ui\cbsUAuth.ui.CityRegistrationForm.pas' {frmCityRegistration};
+  _00001000_00000805_create_identity_logins_table in 'src\inf\Migrations\_00001000_00000805_create_identity_logins_table.pas',
+  _00001000_00000005_create_identity_configs_table in 'src\inf\Migrations\_00001000_00000005_create_identity_configs_table.pas',
+  cbsUAuth.ui.Data.Modules.CustomerRegistrationModule in 'src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.CustomerRegistrationModule.pas' {damCustomerRegistration: TDataModule},
+  cbsUAuth.ui.Data.Modules.LoginDomainsModule in 'src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginDomainsModule.pas' {damLoginDomains: TDataModule},
+  cbsUAuth.ui.Data.Modules.LoginModule in 'src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginModule.pas' {damLogin: TDataModule},
+  cbsUAuth.ui.Forms.CityRegistrationForm in 'src\ui\Forms\cbsUAuth.ui.Forms.CityRegistrationForm.pas' {frmCityRegistration: TUniForm},
+  cbsUAuth.ui.Forms.ConnEditorForm in 'src\ui\Forms\cbsUAuth.ui.Forms.ConnEditorForm.pas' {frmConnEditor: TUniForm},
+  cbsUAuth.ui.Forms.CustomerRegistrationForm in 'src\ui\Forms\cbsUAuth.ui.Forms.CustomerRegistrationForm.pas' {frmCustomerRegistration: TUniForm},
+  cbsUAuth.ui.Forms.LoginDomainsForm in 'src\ui\Forms\cbsUAuth.ui.Forms.LoginDomainsForm.pas' {frmLoginDomains: TUniForm},
+  cbsUAuth.ui.Forms.LoginForm in 'src\ui\Forms\cbsUAuth.ui.Forms.LoginForm.pas' {frmLogin: TUniLoginForm},
+  cbsUAuth.ui.Forms.OptionsForm in 'src\ui\Forms\cbsUAuth.ui.Forms.OptionsForm.pas' {frmOptions: TUniForm},
+  cbsUAuth.dom.Contracts.Services.PasswordHasher in 'src\dom\Contracts\Services\cbsUAuth.dom.Contracts.Services.PasswordHasher.pas',
+  cbsUAuth.inf.Services.PasswordHasher in 'src\inf\Services\cbsUAuth.inf.Services.PasswordHasher.pas',
+  cbsUAuth.dom.Contracts.Services.AuthService in 'src\dom\Contracts\Services\cbsUAuth.dom.Contracts.Services.AuthService.pas',
+  cbsUAuth.app.Services.AuthService in 'src\app\Services\cbsUAuth.app.Services.AuthService.pas',
+  cbsUAuth.app.Services.AuthError in 'src\app\Services\cbsUAuth.app.Services.AuthError.pas',
+  cbsUAuth.dom.Contracts.Entities.Identity.Config in 'src\dom\Contracts\Entities\Identity\cbsUAuth.dom.Contracts.Entities.Identity.Config.pas',
+  cbsUAuth.dom.Contracts.Entities.Identity.User in 'src\dom\Contracts\Entities\Identity\cbsUAuth.dom.Contracts.Entities.Identity.User.pas',
+  cbsUAuth.dom.Contracts.Entities.Identity.UserOption in 'src\dom\Contracts\Entities\Identity\cbsUAuth.dom.Contracts.Entities.Identity.UserOption.pas',
+  cbsUAuth.dom.Entities.Identity.User in 'src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.User.pas',
+  cbsUAuth.dom.Entities.Identity.UserOption in 'src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.UserOption.pas',
+  cbsUAuth.inf.Repositories.Identity.UserRepository in 'src\inf\Repositories\Identity\cbsUAuth.inf.Repositories.Identity.UserRepository.pas',
+  cbsUAuth.dom.Contracts.Repositories.Identity.UserRepository in 'src\dom\Contracts\Repositories\Identity\cbsUAuth.dom.Contracts.Repositories.Identity.UserRepository.pas',
+  cbsUAuth.dom.Entities.Identity.Config in 'src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.Config.pas',
+  cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository in 'src\dom\Contracts\Repositories\Identity\cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository.pas',
+  cbsUAuth.inf.Repositories.Identity.ConfigRepository in 'src\inf\Repositories\Identity\cbsUAuth.inf.Repositories.Identity.ConfigRepository.pas',
+  cbsUAuth.inf.Repositories.Identity.Data.Modules.damUser in 'src\inf\Repositories\Identity\Data\Modules\cbsUAuth.inf.Repositories.Identity.Data.Modules.damUser.pas' {damUser: TDataModule},
+  cbsUAuth.inf.Repositories.Identity.Data.Modules.damIdentityConfig in 'src\inf\Repositories\Identity\Data\Modules\cbsUAuth.inf.Repositories.Identity.Data.Modules.damIdentityConfig.pas' {damIdentityConfig: TDataModule};
 
 end.
 

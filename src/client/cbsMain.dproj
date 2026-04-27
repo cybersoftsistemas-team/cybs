@@ -120,11 +120,6 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="cbsSystem.dcp"/>
-        <DCCReference Include="src\data\module\cbsMain.data.module.MainModule.pas">
-            <Form>damMain</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniGUIMainModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="src\inf\cbsMain.inf.DbContext.pas"/>
         <DCCReference Include="src\inf\cbsMain.inf.DbModule.pas">
             <Form>damDb</Form>
@@ -149,11 +144,6 @@
         <DCCReference Include="src\inf\Migrations\_00000001_00001900_create_person_addresses_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_00000001_00002000_create_person_emails_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_00000001_00002100_create_person_phones_table.pas"/>
-        <DCCReference Include="src\ui\cbsMain.ui.MainForm.pas">
-            <Form>frmMain</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
         <DCCReference Include="src\support\cbsMain.support.RegisterMigrations.pas"/>
         <DCCReference Include="src\inf\Seeders\_00000000_DatabaseSeeder.pas"/>
         <DCCReference Include="src\inf\cbsMain.inf.DbSeedModule.pas">
@@ -168,6 +158,16 @@
         <DCCReference Include="src\inf\Migrations\_00000001_00000805_create_telecom_schema.pas"/>
         <DCCReference Include="src\inf\Migrations\_00000001_00000810_create_telecom_areacodes_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_00000001_00001405_create_address_addresses_address_trigger.pas"/>
+        <DCCReference Include="src\ui\Data\Modules\cbsMain.ui.Data.Modules.MainModule.pas">
+            <Form>damMain</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniGUIMainModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\ui\Forms\cbsMain.ui.Forms.MainForm.pas">
+            <Form>frmMain</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

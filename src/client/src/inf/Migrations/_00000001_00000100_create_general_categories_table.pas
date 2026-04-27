@@ -30,7 +30,7 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('Name').HasMaxLength(255).HasUnicode(True).IsRequired
+    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
     ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
     ,GuidColumn('ParentId').IsOptional
    ])
@@ -53,3 +53,4 @@ begin
 end;
 
 end.
+

@@ -26,8 +26,8 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').IsRequired
-    ,StringColumn('FirstName').HasMaxLength(127).HasUnicode(True).IsRequired
-    ,StringColumn('LastName').HasMaxLength(127).HasUnicode(True).IsOptional
+    ,StringColumn('FirstName').HasMaxLength(127).IsUnicode.IsRequired
+    ,StringColumn('LastName').HasMaxLength(127).IsUnicode.IsOptional
     ,ComputedColumn('FullName')
      .HasSqlAs(
       'CONVERT(NVARCHAR(254),' +
@@ -36,7 +36,7 @@ begin
      .IsOptional
      .IsStored
     ,DateTimeColumn('Birthday').IsOptional // Data de nascimento
-    ,StringColumn('SSN').HasMaxLength(11).HasUnicode(True).IsRequired // SSN – Social Security Number (CPF)
+    ,StringColumn('SSN').HasMaxLength(11).IsUnicode.IsRequired // SSN – Social Security Number (CPF)
     ,GuidColumn('PlaceOfBirthId').IsOptional // Naturalidade
     ,GuidColumn('NationalityId').IsOptional // Nacionalidade
     ,GuidColumn('GenderId').IsOptional // Gênero

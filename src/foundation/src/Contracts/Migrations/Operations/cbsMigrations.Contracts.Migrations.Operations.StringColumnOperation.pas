@@ -25,6 +25,7 @@ type
     function IsOptional: IStringColumnOperation;
     function IsRequired: IStringColumnOperation;
     function IsVariableLength: IStringColumnOperation;
+    function IsUnicode: IStringColumnOperation;
     property Collation: string read GetCollation;
     property FixedLength: Boolean read GetFixedLength;
     property MaxLength: Boolean read GetMaxLength;

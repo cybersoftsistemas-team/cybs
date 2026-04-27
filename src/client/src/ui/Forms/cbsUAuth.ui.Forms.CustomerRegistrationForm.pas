@@ -1,4 +1,4 @@
-unit cbsUAuth.ui.CustomerRegistrationForm;
+unit cbsUAuth.ui.Forms.CustomerRegistrationForm;
 
 interface
 
@@ -6,11 +6,11 @@ uses
 {PROJECT}
   cbsSystem.Contracts.Wizard,
   cbsSystem.Form.BaseForm,
-  cbsUAuth.data.module.CustomerRegistrationModule,
+  cbsUAuth.ui.Data.Modules.CustomerRegistrationModule,
 {IDE}
   Data.DB, uniGUIBaseClasses, uniDBLookupComboBox, System.Classes, System.Actions, Vcl.ActnList, uniButton, uniBitBtn, uniPanel, uniRadioButton, uniMultiItem, uniComboBox,
   uniDBComboBox, uniDateTimePicker, uniDBDateTimePicker, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, Vcl.Controls, Vcl.Forms, uniImageList, System.ImageList, Vcl.ImgList,
-  uniMainMenu, uniSpeedButton, uniDBText;
+  uniMainMenu, uniSpeedButton, uniDBText, uniMenuButton, Vcl.Menus;
 
 type
   TfrmCustomerRegistration = class(TfrmBase)
@@ -80,6 +80,7 @@ type
     txtNatBirthday: TUniDBText;
     txtNatFirstName: TUniDBText;
     txtNatLastName: TUniDBText;
+    edtEmail: TUniDBEdit;
     procedure actBackExecute(Sender: TObject);
     procedure actNewCityExecute(Sender: TObject);
     procedure actNextExecute(Sender: TObject);
@@ -107,10 +108,10 @@ uses
   System.SysUtils,
   System.Variants,
 {PROJECT}
-  cbsMain.data.module.MainModule,
+  cbsMain.ui.Data.Modules.MainModule,
   cbsSystem.Support.Utils,
   cbsSystem.Wizard,
-  cbsUAuth.ui.CityRegistrationForm;
+  cbsUAuth.ui.Forms.CityRegistrationForm;
 
 function frmCustomerRegistration: TfrmCustomerRegistration;
 begin
@@ -242,3 +243,4 @@ begin
 end;
 
 end.
+

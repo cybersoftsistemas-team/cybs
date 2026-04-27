@@ -30,12 +30,39 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('Name').HasMaxLength(255).HasUnicode(True).IsRequired
-    ,StringColumn('Description').HasUnicode(True).IsRequired
-    ,BooleanColumn('AccountBlockedOut').HasDefaultValueSql('0').IsRequired
+    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
+    ,StringColumn('Description').IsUnicode.IsRequired
+    ,IntColumn('AccessFailedCount').HasDefaultValueSql('0').IsRequired
+    ,ComputedColumn('AccountActivated')
+     .HasSqlAs(
+      'CASE ' +
+      '    WHEN LockoutEnd IS NOT NULL AND LockoutEnd > GETDATE() THEN CAST(0 AS BIT) ' +
+      '    WHEN AccountExpiresDate IS NOT NULL AND AccountExpiresDate < GETDATE() THEN CAST(0 AS BIT) ' +
+      '    ELSE CAST(1 AS BIT) ' +
+      'END')
+     .IsOptional
+    ,ComputedColumn('AccountBlockedOut')
+     .HasSqlAs(
+      'CASE ' +
+      '    WHEN LockoutEnd IS NOT NULL AND LockoutEnd > GETDATE() THEN CAST(1 AS BIT) ' +
+      '    ELSE CAST(0 AS BIT) ' +
+      'END')
+     .IsOptional
+    ,ComputedColumn('AccountExpired')
+     .HasSqlAs(
+      'CASE ' +
+      '    WHEN [AccountExpiresDate] IS NULL THEN CONVERT(bit, 0) ' +
+      '    WHEN [AccountExpiresDate] < GETDATE() THEN CONVERT(bit, 1) ' +
+      '    ELSE CONVERT(bit, 0) ' +
+      'END')
+     .IsOptional
     ,DateTimeColumn('AccountExpiresDate').IsOptional
+    ,DateTimeColumn('LastLoginAt').IsOptional
+    ,DateTimeColumn('LockoutEnd').IsOptional
+    ,StringColumn('PasswordHash').HasColumnType('VARBINARY(64)').IsRequired
+    ,IntColumn('PasswordIterations').HasDefaultValueSql('100000').IsRequired
+    ,StringColumn('PasswordSalt').HasColumnType('VARBINARY(32)').IsRequired
     ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
-    ,StringColumn('Password').HasMaxLength(255).HasUnicode(True).IsRequired
     ,GuidColumn('PersonId').IsOptional
    ])
    .Constraints([
@@ -44,7 +71,9 @@ begin
     ,Unique('Name')
    ])
    .Indexes([
-     CreateIndex('PersonId')
+     CreateIndex('AccountExpiresDate')
+    ,CreateIndex('LockoutEnd')
+    ,CreateIndex('PersonId')
    ]);
 end;
 
@@ -60,3 +89,4 @@ begin
 end;
 
 end.
+

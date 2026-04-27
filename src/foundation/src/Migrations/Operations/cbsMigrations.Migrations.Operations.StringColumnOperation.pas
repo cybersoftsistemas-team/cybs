@@ -32,6 +32,7 @@ type
     function IsOptional: IStringColumnOperation;
     function IsRequired: IStringColumnOperation;
     function IsVariableLength: IStringColumnOperation;
+    function IsUnicode: IStringColumnOperation;
     property Collation: string read GetCollation;
     property FixedLength: Boolean read GetFixedLength;
     property MaxLength: Boolean read GetMaxLength;
@@ -127,6 +128,11 @@ end;
 function TStringColumnOperation.IsRequired: IStringColumnOperation;
 begin
   Result := TStringColumnOperation(inherited IsRequired);
+end;
+
+function TStringColumnOperation.IsUnicode: IStringColumnOperation;
+begin
+  Result := HasUnicode(True);
 end;
 
 function TStringColumnOperation.IsVariableLength: IStringColumnOperation;

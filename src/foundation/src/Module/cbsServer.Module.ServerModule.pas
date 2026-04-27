@@ -48,9 +48,9 @@ uses
   Winapi.ShellAPI,
 {$ENDIF}
 {PROJECT}
-  cbsMain.data.module.MainModule,
   cbsMain.inf.DbModule,
-  cbsMain.ui.MainForm,
+  cbsMain.ui.Data.Modules.MainModule,
+  cbsMain.ui.Forms.MainForm,
   cbsServer.Database,
   cbsSystem.DataStorage,
   cbsSystem.Support.FormTypeRepository,

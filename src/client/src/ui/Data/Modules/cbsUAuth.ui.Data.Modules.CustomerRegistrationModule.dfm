@@ -1,5 +1,5 @@
 inherited damCustomerRegistration: TdamCustomerRegistration
-  Height = 355
+  Height = 232
   Width = 636
   object qryLEG: TFDQuery
     BeforePost = DataSetBeforePost
@@ -330,7 +330,7 @@ inherited damCustomerRegistration: TdamCustomerRegistration
       'SELECT Id'
       ',Name'
       'FROM general.categories'
-      'WHERE ParentId = '#39'6A1D9EBC-25E9-4F39-B9C5-8D8766A2F4C7'#39';')
+      'WHERE ParentId = '#39'34A7433E-F36B-1410-871D-007892B87384'#39';')
     Left = 230
     Top = 15
     object qryGENId: TGuidField

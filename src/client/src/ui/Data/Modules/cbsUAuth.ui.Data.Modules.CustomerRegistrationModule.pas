@@ -1,4 +1,4 @@
-unit cbsUAuth.data.module.CustomerRegistrationModule;
+unit cbsUAuth.ui.Data.Modules.CustomerRegistrationModule;
 
 interface
 
@@ -97,11 +97,6 @@ implementation
 {%CLASSGROUP 'System.Classes.TPersistent'}
 
 {$R *.dfm}
-
-uses
-{PROJECT}
-  cbsMain.data.module.MainModule,
-  cbsSystem.Support.Module;
 
 { TdamCustomerRegistration }
 

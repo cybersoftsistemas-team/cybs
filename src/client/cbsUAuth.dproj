@@ -131,24 +131,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="cbsMain.dcp"/>
-        <DCCReference Include="src\ui\cbsUAuth.ui.LoginForm.pas">
-            <Form>frmLogin</Form>
-            <DesignClass>TUniLoginForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\data\module\cbsUAuth.data.module.LoginModule.pas"/>
-        <DCCReference Include="src\ui\cbsUAuth.ui.OptionsForm.pas">
-            <Form>frmOptions</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\cbsUAuth.ui.ConnEditorForm.pas">
-            <Form>frmConnEditor</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
         <DCCReference Include="src\inf\Migrations\_00001000_00000001_create_identity_schema.pas"/>
-        <DCCReference Include="src\ui\cbsUAuth.ui.DomainsForm.pas">
-            <Form>frmDomains</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
         <DCCReference Include="src\inf\Migrations\_00001000_00000100_create_identity_users_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000200_create_identity_passwords_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000300_create_identity_options_table.pas"/>
@@ -165,18 +148,77 @@
         <DCCReference Include="src\inf\Seeders\_00001000_DatabaseSeeder.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00001000_create_registration_customer_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000900_create_registration_table.pas"/>
-        <DCCReference Include="src\data\module\cbsUAuth.data.module.CustomerRegistrationModule.pas">
+        <DCCReference Include="src\inf\Migrations\_00001000_00000805_create_identity_logins_table.pas"/>
+        <DCCReference Include="src\inf\Migrations\_00001000_00000005_create_identity_configs_table.pas"/>
+        <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.CustomerRegistrationModule.pas">
             <Form>damCustomerRegistration</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\cbsUAuth.ui.CustomerRegistrationForm.pas">
-            <Form>frmCustomerRegistration</Form>
+        <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginDomainsModule.pas">
+            <Form>damLoginDomains</Form>
             <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\cbsUAuth.ui.CityRegistrationForm.pas">
+        <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginModule.pas">
+            <Form>damLogin</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.CityRegistrationForm.pas">
             <Form>frmCityRegistration</Form>
             <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.ConnEditorForm.pas">
+            <Form>frmConnEditor</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.CustomerRegistrationForm.pas">
+            <Form>frmCustomerRegistration</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginDomainsForm.pas">
+            <Form>frmLoginDomains</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginForm.pas">
+            <Form>frmLogin</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniLoginForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.OptionsForm.pas">
+            <Form>frmOptions</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\dom\Contracts\Services\cbsUAuth.dom.Contracts.Services.PasswordHasher.pas"/>
+        <DCCReference Include="src\inf\Services\cbsUAuth.inf.Services.PasswordHasher.pas"/>
+        <DCCReference Include="src\dom\Contracts\Services\cbsUAuth.dom.Contracts.Services.AuthService.pas"/>
+        <DCCReference Include="src\app\Services\cbsUAuth.app.Services.AuthService.pas"/>
+        <DCCReference Include="src\app\Services\cbsUAuth.app.Services.AuthError.pas"/>
+        <DCCReference Include="src\dom\Contracts\Entities\Identity\cbsUAuth.dom.Contracts.Entities.Identity.Config.pas"/>
+        <DCCReference Include="src\dom\Contracts\Entities\Identity\cbsUAuth.dom.Contracts.Entities.Identity.User.pas"/>
+        <DCCReference Include="src\dom\Contracts\Entities\Identity\cbsUAuth.dom.Contracts.Entities.Identity.UserOption.pas"/>
+        <DCCReference Include="src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.User.pas"/>
+        <DCCReference Include="src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.UserOption.pas"/>
+        <DCCReference Include="src\inf\Repositories\Identity\cbsUAuth.inf.Repositories.Identity.UserRepository.pas"/>
+        <DCCReference Include="src\dom\Contracts\Repositories\Identity\cbsUAuth.dom.Contracts.Repositories.Identity.UserRepository.pas"/>
+        <DCCReference Include="src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.Config.pas"/>
+        <DCCReference Include="src\dom\Contracts\Repositories\Identity\cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository.pas"/>
+        <DCCReference Include="src\inf\Repositories\Identity\cbsUAuth.inf.Repositories.Identity.ConfigRepository.pas"/>
+        <DCCReference Include="src\inf\Repositories\Identity\Data\Modules\cbsUAuth.inf.Repositories.Identity.Data.Modules.damUser.pas">
+            <Form>damUser</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\inf\Repositories\Identity\Data\Modules\cbsUAuth.inf.Repositories.Identity.Data.Modules.damIdentityConfig.pas">
+            <Form>damIdentityConfig</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

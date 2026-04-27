@@ -1,4 +1,4 @@
-unit cbsMain.ui.MainForm;
+unit cbsMain.ui.Forms.MainForm;
 
 interface
 
@@ -24,7 +24,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsMain.data.module.MainModule;
+  cbsMain.ui.Data.Modules.MainModule;
 
 function frmMain: TfrmMain;
 begin

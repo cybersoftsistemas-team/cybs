@@ -18,10 +18,6 @@ type
 
 implementation
 
-uses
-{PROJECT}
-  cbsMain.inf.DbContext;
-
 { CreateRegistrationCustomerTable }
 
 procedure CreateRegistrationCustomerTable.Up(const ASchema: IMigrationBuilder);
@@ -53,7 +49,7 @@ end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateRegistrationCustomerTable);
+//  RegisterMigration(TDbContext, CreateRegistrationCustomerTable);
 end;
 
 end.

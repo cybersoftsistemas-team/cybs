@@ -27,7 +27,7 @@ begin
    .Columns([
      GuidColumn('PersonId').IsRequired
     ,GuidColumn('TypeId').IsRequired
-    ,StringColumn('Number').HasMaxLength(9).HasUnicode(True).IsRequired
+    ,StringColumn('Number').HasMaxLength(9).IsUnicode.IsRequired
     ,GuidColumn('CityId').IsRequired
    ])
    .Constraints([

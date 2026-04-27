@@ -27,12 +27,22 @@ begin
    .Columns([
      GuidColumn('PersonId').IsRequired
     ,GuidColumn('TypeId').IsRequired
-    ,StringColumn('Address').HasMaxLength(255).HasUnicode(True).IsRequired
+    ,StringColumn('Address').HasMaxLength(255).IsUnicode.IsRequired
    ])
    .Constraints([
      PrimaryKey(['PersonId', 'TypeId'])
     ,ForeignKey('PersonId', 'persons', 'Id')
     ,ForeignKey('TypeId', 'categories', 'Id').HasPrincipalSchema('general')
+    ,Unique(['PersonId', 'Address'])
+    ,CheckConstraint(
+     SchemaName + '_' + TableName + '_Address_valid_check',
+     'Address LIKE ''%_@_%._%''  AND    ' +
+     'Address NOT LIKE ''% %''   AND    ' +
+     'Address NOT LIKE ''%..%''  AND    ' +
+     'Address NOT LIKE ''@%''    AND    ' +
+     'Address NOT LIKE ''%@%@%'' AND    ' +
+     'LEN(Address) BETWEEN 5     AND 255'
+     )
    ])
    .Indexes([
      CreateIndex('PersonId')

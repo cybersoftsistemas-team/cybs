@@ -30,7 +30,7 @@ begin
    .HasSchema(SchemaName)
    .Columns([
      GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('Password').HasMaxLength(255).HasUnicode(True).IsRequired
+    ,StringColumn('Password').HasMaxLength(255).IsUnicode.IsRequired
     ,GuidColumn('UserId').IsRequired
    ])
    .Constraints([
