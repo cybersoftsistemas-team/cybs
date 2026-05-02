@@ -29,7 +29,8 @@ package cbsUAuth;
 {$IMPLICITBUILD ON}
 
 requires
-  cbsMain;
+  cbsMain,
+  cbsSystem;
 
 contains
   _00001000_00000001_create_identity_schema in 'src\inf\Migrations\_00001000_00000001_create_identity_schema.pas',
@@ -71,8 +72,18 @@ contains
   cbsUAuth.dom.Entities.Identity.Config in 'src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.Config.pas',
   cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository in 'src\dom\Contracts\Repositories\Identity\cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository.pas',
   cbsUAuth.inf.Repositories.Identity.ConfigRepository in 'src\inf\Repositories\Identity\cbsUAuth.inf.Repositories.Identity.ConfigRepository.pas',
-  cbsUAuth.inf.Repositories.Identity.Data.Modules.damUser in 'src\inf\Repositories\Identity\Data\Modules\cbsUAuth.inf.Repositories.Identity.Data.Modules.damUser.pas' {damUser: TDataModule},
-  cbsUAuth.inf.Repositories.Identity.Data.Modules.damIdentityConfig in 'src\inf\Repositories\Identity\Data\Modules\cbsUAuth.inf.Repositories.Identity.Data.Modules.damIdentityConfig.pas' {damIdentityConfig: TDataModule};
+  cbsUAuth.dom.Exceptions.AuthError in 'src\dom\Exceptions\AuthError\cbsUAuth.dom.Exceptions.AuthError.pas',
+  cbsUAuth.app.Common.AuthResult in 'src\app\Common\cbsUAuth.app.Common.AuthResult.pas',
+  cbsUAuth.dom.Common.Identity.SystemUsers in 'src\dom\Common\Identity\cbsUAuth.dom.Common.Identity.SystemUsers.pas',
+  cbsUAuth.inf.iocModules.ContainerRoot in 'src\inf\ioc\Modules\cbsUAuth.inf.iocModules.ContainerRoot.pas',
+  _00001000_00000105_create_identity_users_no_expire_trigger in 'src\inf\Migrations\_00001000_00000105_create_identity_users_no_expire_trigger.pas',
+  _00001000_00000405_create_identity_settings_no_expire_trigger in 'src\inf\Migrations\_00001000_00000405_create_identity_settings_no_expire_trigger.pas',
+  _00001000_00000110_create_identity_users_account_disabled_trigger in 'src\inf\Migrations\_00001000_00000110_create_identity_users_account_disabled_trigger.pas',
+  _00001000_00000410_create_identity_settings_account_disabled_trigger in 'src\inf\Migrations\_00001000_00000410_create_identity_settings_account_disabled_trigger.pas',
+  cbsUAuth.dom.Common.Identity.SystemOptions in 'src\dom\Common\Identity\cbsUAuth.dom.Common.Identity.SystemOptions.pas',
+  cbsUAuth.ui.Forms.LoginChangePassword in 'src\ui\Forms\cbsUAuth.ui.Forms.LoginChangePassword.pas' {frmLoginChangePassword: TUniForm},
+  cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityConfig in 'src\inf\Repositories\DataModules\Identity\cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityConfig.pas' {damIdentityConfig: TDataModule},
+  cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityUser in 'src\inf\Repositories\DataModules\Identity\cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityUser.pas' {damIdentityUser: TDataModule};
 
 end.
 

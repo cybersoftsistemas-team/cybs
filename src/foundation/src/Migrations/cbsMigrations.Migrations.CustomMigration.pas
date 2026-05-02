@@ -23,7 +23,6 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateTableOperation,
-  cbsMigrations.Contracts.Migrations.Operations.IndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.ForeignKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.NumberColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.PrimaryKeyOperation,

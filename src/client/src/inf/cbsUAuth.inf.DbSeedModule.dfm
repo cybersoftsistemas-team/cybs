@@ -28,7 +28,7 @@ inherited damDbSeed: TdamDbSeed
           '------------------------------------------------------------'
           'MERGE INTO [identity].[options] AS T'
           'USING (VALUES ('
-          '    '#39'85A7433E-F36B-1410-871D-007892B87384'#39','
+          '    :ChangePasswordOnNextLoginId,'
           '    N'#39'O usu'#225'rio deve alterar a senha no pr'#243'ximo logon'#39','
           
             '    N'#39'For'#231'a um usu'#225'rio a alterar a senha na pr'#243'xima vez que fize' +
@@ -52,7 +52,7 @@ inherited damDbSeed: TdamDbSeed
           '------------------------------------------------------------'
           'MERGE INTO [identity].[options] AS T'
           'USING (VALUES ('
-          '    '#39'89A7433E-F36B-1410-871D-007892B87384'#39','
+          '    :UserCannotChangeThePasswordId,'
           '    N'#39'O usu'#225'rio n'#227'o pode alterar a senha'#39','
           
             '    N'#39'Impede que os usu'#225'rios alterem suas senhas. Use esta op'#231#227'o' +
@@ -76,7 +76,7 @@ inherited damDbSeed: TdamDbSeed
           '------------------------------------------------------------'
           'MERGE INTO [identity].[options] AS T'
           'USING (VALUES ('
-          '    '#39'8DA7433E-F36B-1410-871D-007892B87384'#39','
+          '    :PasswordNeverExpires,'
           '    N'#39'A senha nunca expira'#39','
           
             '    N'#39'Impede que uma senha do usu'#225'rio expire. '#201' recomend'#225'vel que' +
@@ -99,7 +99,7 @@ inherited damDbSeed: TdamDbSeed
           '------------------------------------------------------------'
           'MERGE INTO [identity].[options] AS T'
           'USING (VALUES ('
-          '    '#39'91A7433E-F36B-1410-871D-007892B87384'#39','
+          '    :AccountDisabledId,'
           '    N'#39'Conta desabilitada'#39','
           
             '    N'#39'Impede que um usu'#225'rio fa'#231'a logon com a conta selecionada. ' +
@@ -124,35 +124,21 @@ inherited damDbSeed: TdamDbSeed
           '------------------------------------------------------------'
           '-- Conta interna: Administrador'
           '------------------------------------------------------------'
-          'DECLARE '
-          '    @TempPassword NVARCHAR(100) = '#39'Admin@123'#39', -- senha padr'#227'o'
-          '    @Salt VARBINARY(32),'
-          '    @Hash VARBINARY(32);'
+          'DECLARE @AdministratorId uniqueidentifier;'
           ''
-          '-- gerar salt'
-          'SET @Salt = CRYPT_GEN_RANDOM(32);'
-          ''
-          '-- gerar hash (salt + senha)'
-          'SET @Hash = HASHBYTES('
-          '    '#39'SHA2_256'#39','
-          '    @Salt + CAST(@TempPassword AS VARBINARY(MAX))'
-          ');'
+          'SET @AdministratorId = :AdministratorId;'
           ''
           'MERGE INTO [identity].[users] AS T'
           'USING (VALUES ('
-          '    '#39'92A7433E-F36B-1410-871D-007892B87384'#39','
+          '    @AdministratorId,'
           '    N'#39'Administrador'#39','
           '    N'#39'Conta interna para a administra'#231#227'o de sistemas/dom'#237'nios.'#39','
-          '    NULL,           -- AccountExpiresDate'
-          '    CAST(1 AS BIT), -- Reserved'
-          '    NULL            -- PersonId'
+          '    CAST(1 AS BIT) -- Reserved'
           ')) AS S ('
           '    Id,'
           '    Name,'
           '    Description,'
-          '    AccountExpiresDate,'
-          '    Reserved,'
-          '    PersonId'
+          '    Reserved'
           ')'
           'ON T.Id = S.Id'
           ''
@@ -160,34 +146,20 @@ inherited damDbSeed: TdamDbSeed
           '    UPDATE SET'
           '        T.Name               = S.Name,'
           '        T.Description        = S.Description,'
-          '        T.AccountExpiresDate = S.AccountExpiresDate,'
-          '        T.Reserved           = S.Reserved,'
-          '        T.PersonId           = S.PersonId'
+          '        T.Reserved           = S.Reserved'
           ''
           'WHEN NOT MATCHED THEN'
           '    INSERT ('
           '        Id,'
           '        Name,'
           '        Description,'
-          '        PasswordHash,'
-          '        PasswordSalt,'
-          '        PasswordIterations,'
-          '        AccountExpiresDate,'
-          '        Reserved,'
-          '        AccessFailedCount,'
-          '        PersonId'
+          '        Reserved'
           '    )'
           '    VALUES ('
           '        S.Id,'
           '        S.Name,'
           '        S.Description,'
-          '        @Hash,'
-          '        @Salt,'
-          '        1, -- iterations (placeholder)'
-          '        S.AccountExpiresDate,'
-          '        S.Reserved,'
-          '        0,'
-          '        S.PersonId'
+          '        S.Reserved'
           '    );')
       end
       item
@@ -203,16 +175,6 @@ inherited damDbSeed: TdamDbSeed
           '    Regra geral:'
           '    -------------'
           '    - Checked = 0 para todas as combina'#231#245'es novas'
-          ''
-          '    Regra especial:'
-          '    ----------------'
-          '    - Para o usu'#225'rio:'
-          '        92A7433E-F36B-1410-871D-007892B87384'
-          
-            '      e a op'#231#227'o '#39'O usu'#225'rio deve alterar a senha no pr'#243'ximo logon' +
-            #39':'
-          '        85A7433E-F36B-1410-871D-007892B87384'
-          '      o campo Checked deve ser inicializado com 1'
           '*/'
           ''
           'INSERT INTO [identity].[settings] ('
@@ -221,16 +183,9 @@ inherited damDbSeed: TdamDbSeed
           '    Checked'
           ')'
           'SELECT'
-          '    U.Id AS UserId,      -- Usu'#225'rio'
-          '    O.Id AS OptionId,    -- Op'#231#227'o'
-          ''
-          '    -- Define o valor inicial de Checked'
-          '    CASE'
-          '        WHEN U.Id = '#39'92A7433E-F36B-1410-871D-007892B87384'#39
-          '         AND O.Id = '#39'85A7433E-F36B-1410-871D-007892B87384'#39
-          '        THEN CAST(1 AS bit)   -- Regra especial (admin/master)'
-          '        ELSE CAST(0 AS bit)   -- Regra padr'#227'o'
-          '    END AS Checked'
+          '    U.Id AS UserId,           -- Usu'#225'rio'
+          '    O.Id AS OptionId,         -- Op'#231#227'o'
+          '    CAST(0 AS bit) AS Checked -- Regra padr'#227'o'
           ''
           'FROM [identity].[users] AS U'
           ''
@@ -246,5 +201,32 @@ inherited damDbSeed: TdamDbSeed
           'WHERE S.UserId IS NULL;')
       end>
     Connection = damDb.Connection
+    ScriptOptions.BreakOnError = True
+    Params = <
+      item
+        Name = 'AccountDisabledId'
+        DataType = ftGuid
+        ParamType = ptInput
+      end
+      item
+        Name = 'AdministratorId'
+        DataType = ftGuid
+        ParamType = ptInput
+      end
+      item
+        Name = 'ChangePasswordOnNextLoginId'
+        DataType = ftGuid
+        ParamType = ptInput
+      end
+      item
+        Name = 'PasswordNeverExpires'
+        DataType = ftGuid
+        ParamType = ptInput
+      end
+      item
+        Name = 'UserCannotChangeThePasswordId'
+        DataType = ftGuid
+        ParamType = ptInput
+      end>
   end
 end

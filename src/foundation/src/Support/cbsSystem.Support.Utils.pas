@@ -2,14 +2,21 @@ unit cbsSystem.Support.Utils;
 
 interface
 
+uses
+{IDE}
+  System.TypInfo;
+
   function GetCpfOrCnpfMask(const AValue: string): string;
+  function GetInterfaceTypeInfoByGUID(const abstract: TGuid): PTypeInfo;
   function GetOnlyNumbers(const AValue: string): string;
+  function GetTypInfo(const abstract: TGuid): PTypeInfo;
 
 implementation
 
 uses
 {IDE}
   System.Character,
+  System.Rtti,
   System.SysUtils;
 
 function GetCpfOrCnpfMask(const AValue: string): string;
@@ -51,6 +58,24 @@ begin
   end;
 end;
 
+function GetInterfaceTypeInfoByGUID(const abstract: TGuid): PTypeInfo;
+begin
+  var LContext := TRttiContext.Create;
+  try
+    for var LItemType in LContext.GetTypes do
+    begin
+      if (LItemType is TRTTIInterfaceType) and
+        IsEqualGUID(TRTTIInterfaceType(LItemType).GUID, abstract) then
+      begin
+        Exit(TRTTIInterfaceType(LItemType).Handle);
+      end;
+    end;
+    Result := nil;
+  finally
+    LContext.Free;
+  end;
+end;
+
 function GetOnlyNumbers(const AValue: string): string;
 begin
   for var I := 1 to Length(AValue) do if
@@ -58,6 +83,11 @@ begin
   begin
     Result := Result + AValue[i];
   end;
+end;
+
+function GetTypInfo(const abstract: TGuid): PTypeInfo;
+begin
+  Result := GetInterfaceTypeInfoByGUID(abstract);
 end;
 
 end.

@@ -73,7 +73,7 @@
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <DCC_CBuilderOutput>All</DCC_CBuilderOutput>
         <SanitizedProjectName>cbsUAuth</SanitizedProjectName>
-        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\foundation\src\Form;..\foundation\src\Module;..\modules\spring4d\Source;..\modules\spring4d\Source\Base;..\modules\spring4d\Source\Base\Collections;..\modules\spring4d\Source\Base\Logging;..\modules\spring4d\Source\Base\Patches;..\modules\spring4d\Source\Base\Patterns;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Logging;..\modules\spring4d\Source\Core\Mocking;..\modules\spring4d\Source\Core\Services;..\modules\spring4d\Source\Data\ObjectDataSet;..\modules\spring4d\Source\Extensions\Cryptography;..\modules\spring4d\Source\Extensions\Utils;..\modules\spring4d\Source\Persistence\Adapters;..\modules\spring4d\Source\Persistence\Core;..\modules\spring4d\Source\Persistence\Criteria;..\modules\spring4d\Source\Persistence\Mapping;..\modules\spring4d\Source\Persistence\SQL;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\foundation\src\Form;..\foundation\src\Module;..\modules\spring4d\Source;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Services;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
         <DCC_BplOutput>..\..\build\$(Platform)\$(Config)</DCC_BplOutput>
         <VerInfo_Locale>1046</VerInfo_Locale>
@@ -131,6 +131,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="cbsMain.dcp"/>
+        <DCCReference Include="cbsSystem.dcp"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000001_create_identity_schema.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000100_create_identity_users_table.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000200_create_identity_passwords_table.pas"/>
@@ -142,7 +143,6 @@
         <DCCReference Include="src\inf\Migrations\_00001000_00000500_create_domain_schema.pas"/>
         <DCCReference Include="src\inf\cbsUAuth.inf.DbSeedModule.pas">
             <Form>damDbSeed</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\inf\Seeders\_00001000_DatabaseSeeder.pas"/>
@@ -152,47 +152,38 @@
         <DCCReference Include="src\inf\Migrations\_00001000_00000005_create_identity_configs_table.pas"/>
         <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.CustomerRegistrationModule.pas">
             <Form>damCustomerRegistration</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginDomainsModule.pas">
             <Form>damLoginDomains</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginModule.pas">
             <Form>damLogin</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.CityRegistrationForm.pas">
             <Form>frmCityRegistration</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.ConnEditorForm.pas">
             <Form>frmConnEditor</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.CustomerRegistrationForm.pas">
             <Form>frmCustomerRegistration</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginDomainsForm.pas">
             <Form>frmLoginDomains</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginForm.pas">
             <Form>frmLogin</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniLoginForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.OptionsForm.pas">
             <Form>frmOptions</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\dom\Contracts\Services\cbsUAuth.dom.Contracts.Services.PasswordHasher.pas"/>
@@ -210,13 +201,27 @@
         <DCCReference Include="src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.Config.pas"/>
         <DCCReference Include="src\dom\Contracts\Repositories\Identity\cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository.pas"/>
         <DCCReference Include="src\inf\Repositories\Identity\cbsUAuth.inf.Repositories.Identity.ConfigRepository.pas"/>
-        <DCCReference Include="src\inf\Repositories\Identity\Data\Modules\cbsUAuth.inf.Repositories.Identity.Data.Modules.damUser.pas">
-            <Form>damUser</Form>
+        <DCCReference Include="src\dom\Exceptions\AuthError\cbsUAuth.dom.Exceptions.AuthError.pas"/>
+        <DCCReference Include="src\app\Common\cbsUAuth.app.Common.AuthResult.pas"/>
+        <DCCReference Include="src\dom\Common\Identity\cbsUAuth.dom.Common.Identity.SystemUsers.pas"/>
+        <DCCReference Include="src\inf\ioc\Modules\cbsUAuth.inf.iocModules.ContainerRoot.pas"/>
+        <DCCReference Include="src\inf\Migrations\_00001000_00000105_create_identity_users_no_expire_trigger.pas"/>
+        <DCCReference Include="src\inf\Migrations\_00001000_00000405_create_identity_settings_no_expire_trigger.pas"/>
+        <DCCReference Include="src\inf\Migrations\_00001000_00000110_create_identity_users_account_disabled_trigger.pas"/>
+        <DCCReference Include="src\inf\Migrations\_00001000_00000410_create_identity_settings_account_disabled_trigger.pas"/>
+        <DCCReference Include="src\dom\Common\Identity\cbsUAuth.dom.Common.Identity.SystemOptions.pas"/>
+        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginChangePassword.pas">
+            <Form>frmLoginChangePassword</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\inf\Repositories\DataModules\Identity\cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityConfig.pas">
+            <Form>damIdentityConfig</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\inf\Repositories\Identity\Data\Modules\cbsUAuth.inf.Repositories.Identity.Data.Modules.damIdentityConfig.pas">
-            <Form>damIdentityConfig</Form>
+        <DCCReference Include="src\inf\Repositories\DataModules\Identity\cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityUser.pas">
+            <Form>damIdentityUser</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>

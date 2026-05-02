@@ -8,20 +8,22 @@ uses
   cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository;
 
 type
-  TConfigRepository = class(TInterfacedObject, IConfigRepository)
+  TIdentityConfigRepository = class(TInterfacedObject, IIdentityConfigRepository)
   private
-    FConfig: IConfig;
+    FConfig: IIdentityConfig;
     function GetLockoutMinutes: Integer;
     function GetMaxAttempts: Integer;
-    procedure Load;
+    function GetPasswordIterations: Integer;
+    procedure LoadData;
     procedure SetLockoutMinutes(const AValue: Integer);
     procedure SetMaxAttempts(const AValue: Integer);
+    procedure SetPasswordIterations(const AValue: Integer);
   public
     constructor Create;
     destructor Destroy; override;
-    procedure Save;
     property LockoutMinutes: Integer read GetLockoutMinutes write SetLockoutMinutes;
     property MaxAttempts: Integer read GetMaxAttempts write SetMaxAttempts;
+    property PasswordIterations: Integer read GetPasswordIterations write SetPasswordIterations;
   end;
 
 implementation
@@ -30,56 +32,62 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsUAuth.dom.Entities.Identity.Config,
-  cbsUAuth.inf.Repositories.Identity.Data.Modules.damIdentityConfig;
+  cbsSystem.Support.Container,
+  cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityConfig;
 
-{ TConfigRepository }
+{ TIdentityConfigRepository }
 
-constructor TConfigRepository.Create;
+constructor TIdentityConfigRepository.Create;
 begin
   inherited Create;
-  Load;
+  FConfig := App.Make<IIdentityConfig>;
+  LoadData;
 end;
 
-destructor TConfigRepository.Destroy;
+destructor TIdentityConfigRepository.Destroy;
 begin
-  FConfig := nil;
+  App.Release(FConfig);
   inherited;
 end;
 
-function TConfigRepository.GetLockoutMinutes: Integer;
+function TIdentityConfigRepository.GetLockoutMinutes: Integer;
 begin
   Result := FConfig.LockoutMinutes;
 end;
 
-function TConfigRepository.GetMaxAttempts: Integer;
+function TIdentityConfigRepository.GetMaxAttempts: Integer;
 begin
   Result := FConfig.MaxAttempts;
 end;
 
-procedure TConfigRepository.Load;
+function TIdentityConfigRepository.GetPasswordIterations: Integer;
 begin
-  var Ldam := TdamIdentityConfig.Create(nil);
+  Result := FConfig.PasswordIterations;
+end;
+
+procedure TIdentityConfigRepository.LoadData;
+begin
+  var LDataModule := App.Make<TdamIdentityConfig>;
   try
-    FConfig := Ldam.GetConfig;
+    FConfig := LDataModule.GetConfig;
   finally
-    FreeAndNil(Ldam);
+    App.Release(LDataModule);
   end;
 end;
 
-procedure TConfigRepository.Save;
-begin
-
-end;
-
-procedure TConfigRepository.SetLockoutMinutes(const AValue: Integer);
+procedure TIdentityConfigRepository.SetLockoutMinutes(const AValue: Integer);
 begin
   FConfig.LockoutMinutes := AValue;
 end;
 
-procedure TConfigRepository.SetMaxAttempts(const AValue: Integer);
+procedure TIdentityConfigRepository.SetMaxAttempts(const AValue: Integer);
 begin
   FConfig.MaxAttempts := AValue;
+end;
+
+procedure TIdentityConfigRepository.SetPasswordIterations(const AValue: Integer);
+begin
+  FConfig.PasswordIterations := AValue;
 end;
 
 end.

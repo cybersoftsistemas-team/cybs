@@ -10,83 +10,76 @@ uses
   cbsUAuth.dom.Contracts.Repositories.Identity.UserRepository;
 
 type
-  TUserRepository = class(TInterfacedObject, IUserRepository)
+  TIdentityUserRepository = class(TInterfacedObject, IIdentityUserRepository)
   public
-    function GetById(const AId: TGuid): IUser;
-    function GetByUserName(const AUserName: string): IUser;
+    function GetById(const AId: TGuid): IIdentityUser;
+    function GetByUserName(const AUserName: string): IIdentityUser;
     procedure IncrementFailed(const AUserId: TGuid);
-    procedure LockUser(const AUserId: TGuid);
     procedure ResetFailed(const AUserId: TGuid);
-    procedure UpdatePassword(const AUserId: TGuid; const AHash, ASalt: TBytes);
+    procedure UpdatePassword(const AUserId: TGuid; const AHash, ASalt: TBytes; const AIterations: Integer; const AChangePasswordOnNextLogin: Boolean = False);
   end;
 
 implementation
 
 uses
 {PROJECT}
+  cbsSystem.Support.Container,
   cbsUAuth.dom.Entities.Identity.User,
-  cbsUAuth.inf.Repositories.Identity.Data.Modules.damUser;
+  cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityUser;
 
-{ TUserRepository }
+{ TIdentityUserRepository }
 
-function TUserRepository.GetById(const AId: TGuid): IUser;
+function TIdentityUserRepository.GetById(const AId: TGuid): IIdentityUser;
 begin
-  var LdamUser := TdamUser.Create(nil);
+  var LDataModule := App.Make<TdamIdentityUser>;
   try
-    Result := LdamUser.GetById(AId);
+    Result := LDataModule.GetById(AId);
   finally
-    FreeAndNil(LdamUser);
+    App.Release(LDataModule);
   end;
 end;
 
-function TUserRepository.GetByUserName(const AUserName: string): IUser;
+function TIdentityUserRepository.GetByUserName(const AUserName: string): IIdentityUser;
 begin
-  var LdamUser := TdamUser.Create(nil);
+  var LDataModule := App.Make<TdamIdentityUser>;
   try
-    Result := LdamUser.GetByUserName(AUserName);
+    Result := LDataModule.GetByUserName(AUserName);
   finally
-    FreeAndNil(LdamUser);
+    App.Release(LDataModule);
   end;
 end;
 
-procedure TUserRepository.IncrementFailed(const AUserId: TGuid);
+procedure TIdentityUserRepository.IncrementFailed(const AUserId: TGuid);
 begin
-  var LdamUser := TdamUser.Create(nil);
+  var LDataModule := App.Make<TdamIdentityUser>;
   try
-    LdamUser.IncrementFailed(AUserId);
+    LDataModule.IncrementFailed(AUserId);
   finally
-    FreeAndNil(LdamUser);
+    App.Release(LDataModule);
   end;
 end;
 
-procedure TUserRepository.LockUser(const AUserId: TGuid);
+procedure TIdentityUserRepository.ResetFailed(const AUserId: TGuid);
 begin
-  var LdamUser := TdamUser.Create(nil);
+  var LDataModule := App.Make<TdamIdentityUser>;
   try
-    LdamUser.LockUser(AUserId);
+    LDataModule.ResetFailed(AUserId);
   finally
-    FreeAndNil(LdamUser);
+    App.Release(LDataModule);
   end;
 end;
 
-procedure TUserRepository.ResetFailed(const AUserId: TGuid);
+procedure TIdentityUserRepository.UpdatePassword(const AUserId: TGuid; const AHash, ASalt: TBytes; const AIterations: Integer; const AChangePasswordOnNextLogin: Boolean);
 begin
-  var LdamUser := TdamUser.Create(nil);
+  var LDataModule := App.Make<TdamIdentityUser>;
   try
-    LdamUser.ResetFailed(AUserId);
+    LDataModule.UpdatePassword(AUserId,  AHash, ASalt, AIterations, AChangePasswordOnNextLogin);
   finally
-    FreeAndNil(LdamUser);
-  end;
-end;
-
-procedure TUserRepository.UpdatePassword(const AUserId: TGuid; const AHash, ASalt: TBytes);
-begin
-  var LdamUser := TdamUser.Create(nil);
-  try
-    LdamUser.UpdatePassword(AUserId,  AHash, ASalt);
-  finally
-    FreeAndNil(LdamUser);
+    App.Release(LDataModule);
   end;
 end;
 
 end.
+
+
+

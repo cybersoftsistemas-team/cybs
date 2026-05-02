@@ -16,6 +16,7 @@ type
   public
     function GenerateSalt: TBytes;
     function Hash(const APassword: string; const ASalt: TBytes; AIterations: Integer): TBytes;
+    function NeedsRehash(const AStoredIterations, ACurrentIterations: Integer): Boolean;
     function Verify(const APassword: string; const AHash, ASalt: TBytes; AIterations: Integer): Boolean;
   end;
 
@@ -52,6 +53,11 @@ begin
     AIterations,
     SIZE
   );
+end;
+
+function TPasswordHasher.NeedsRehash(const AStoredIterations, ACurrentIterations: Integer): Boolean;
+begin
+  Result := AStoredIterations < ACurrentIterations;
 end;
 
 function TPasswordHasher.PBKDF2_HMAC_SHA256(const APassword, ASalt: TBytes; AIterations, ADKLen: Integer): TBytes;

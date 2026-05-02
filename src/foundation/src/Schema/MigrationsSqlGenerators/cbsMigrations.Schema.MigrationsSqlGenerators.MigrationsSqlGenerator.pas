@@ -92,7 +92,6 @@ implementation
 
 uses
 {IDE}
-  System.StrUtils,
   System.SysUtils,
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.ComputedColumnOperation,

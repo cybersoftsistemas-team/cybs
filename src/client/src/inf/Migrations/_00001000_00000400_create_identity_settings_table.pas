@@ -41,6 +41,8 @@ begin
    .Indexes([
      CreateIndex('OptionId')
     ,CreateIndex('UserId')
+    ,CreateIndex(['UserId', 'OptionId'])
+     .HasInclude('Checked')
    ]);
 end;
 

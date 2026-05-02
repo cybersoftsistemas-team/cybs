@@ -30,8 +30,9 @@ begin
   .HasSchema(SchemaName)
   .Columns([
     IntColumn('Id').HasDefaultValueSql('1').IsRequired
-   ,IntColumn('MaxAttempts').HasDefaultValueSql('5').IsRequired
    ,IntColumn('LockoutMinutes').HasDefaultValueSql('15').IsRequired
+   ,IntColumn('MaxAttempts').HasDefaultValueSql('5').IsRequired
+   ,IntColumn('PasswordIterations').HasDefaultValueSql('125000').IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')

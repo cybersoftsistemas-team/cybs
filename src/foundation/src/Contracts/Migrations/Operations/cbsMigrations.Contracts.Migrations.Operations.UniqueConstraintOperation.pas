@@ -5,7 +5,6 @@ interface
 uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.ConstraintOperation,
-  cbsMigrations.Migrations.Operations.IncludeColumn,
 {SPRING}
   Spring.Collections;
 

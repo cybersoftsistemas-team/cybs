@@ -11,9 +11,9 @@ uses
   Spring.Collections;
 
 type
-  IUserSettings = IEnumerable<IUserOption>;
+  IUserSettings = IEnumerable<IIdentityUserOption>;
 
-  IUser = interface(IUnknown)
+  IIdentityUser = interface(IUnknown)
     ['{27235237-7179-49B1-86AE-79A00394B95D}']
     function GetAccessFailedCount: Integer;
     function GetAccountActivated: Boolean;
@@ -28,6 +28,7 @@ type
     function GetSettings: IUserSettings;
     function IsEmpty: Boolean;
     function IsLocked: Boolean;
+    function IsPasswordExists: Boolean;
     procedure SetAccessFailedCount(const AValue: Integer);
     procedure SetAccountActivated(const AValue: Boolean);
     procedure SetAccountBlockedOut(const AValue: Boolean);
@@ -51,7 +52,7 @@ type
     property Settings: IUserSettings read GetSettings;
   end;
 
-  IUserSettingList = IList<IUserOption>;
+  IUserSettingList = IList<IIdentityUserOption>;
 
   function CreateUserSettingList: IUserSettingList;
 
@@ -59,7 +60,10 @@ implementation
 
 function CreateUserSettingList: IUserSettingList;
 begin
-  Result := TCollections.CreateInterfaceList<IUserOption>;
+  Result := TCollections.CreateInterfaceList<IIdentityUserOption>;
 end;
 
 end.
+
+
+

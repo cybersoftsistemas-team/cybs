@@ -5,6 +5,7 @@ interface
 uses
 {PROJECT}
   cbsSystem.Module.BaseModule,
+  cbsUAuth.app.Common.AuthResult,
 {IDE}
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, System.Classes, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, FireDAC.Stan.Async, FireDAC.DApt;
@@ -39,8 +40,9 @@ type
   private
     procedure SaveOptions;
   public
-    function AuthenticateUser(const AUserName, APassword: string; out AError: string): Boolean;
+    function AuthenticateUser(const AUserName, APassword: string): TAuthResult;
     function ExistsRegisteredCustomer: Boolean;
+    procedure ClearUserPassword;
     procedure LoadData(const AFile, AData: string);
     procedure mtbCNSEmptyDataSet;
     procedure SaveLogonData;
@@ -57,15 +59,19 @@ implementation
 
 uses
 {IDE}
-
+  System.Math,
   System.SysUtils,
 {PROJECT}
   cbsMain.ui.Data.Modules.MainModule,
+  cbsSystem.Support.Container,
   cbsSystem.Support.DataSet.Extensions,
   cbsSystem.Support.Module,
   cbsSystem.Support.ServerModule,
+  cbsUAuth.app.Services.AuthError,
   cbsUAuth.app.Services.AuthService,
-  cbsUAuth.dom.Contracts.Services.AuthService;
+  cbsUAuth.dom.Contracts.Entities.Identity.User,
+  cbsUAuth.dom.Contracts.Services.AuthService,
+  cbsUAuth.dom.Exceptions.AuthError;
 
 const
   CST_FILENAME_LOGON   = 'logon.dat';
@@ -80,14 +86,36 @@ end;
 
 { TdamLogin }
 
-function TdamLogin.AuthenticateUser(const AUserName, APassword: string; out AError: string): Boolean;
+function  TdamLogin.AuthenticateUser(const AUserName, APassword: string): TAuthResult;
 begin
-  var LAuth: IAuthService := TAuthService.Create;
+  var LAuth := App.Make<IAuthService>;
   try
-    Result := LAuth.Authenticate(mtbUSEName.AsString, mtbUSEPassword.AsString, AError);
+    Result := LAuth.Authenticate(mtbUSEName.AsString, mtbUSEPassword.AsString);
+    if not Result.IsSuccess then
+    begin
+      ClearUserPassword;
+      mtbUSEPassword.FocusControl;
+      var LUser := Result.Value;
+      case Result.Error of
+        aeAccountLocked:
+        begin
+          var LMinutes := Ceil((LUser.LockoutEnd - Now) * 24 * 60);
+          raise Exception.CreateFmt(AuthErrorToMessage(aeAccountLocked), [LMinutes]);
+        end;
+        else
+          raise Exception.Create(AuthErrorToMessage(Result.Error));
+      end;
+    end;
   finally
-    LAuth := nil;
+    App.Release(LAuth);
   end;
+end;
+
+procedure TdamLogin.ClearUserPassword;
+begin
+  mtbUSE.Edit;
+  mtbUSEPassword.Clear;
+  mtbUSE.Post;
 end;
 
 function TdamLogin.ExistsRegisteredCustomer: Boolean;
@@ -110,9 +138,7 @@ begin
   if SameText(AFile, CST_FILENAME_LOGON) then
   begin
     mtbUSE.LoadData(CST_KEY_LOGON, AData);
-    mtbUSE.Edit;
-    mtbUSEPassword.Clear;
-    mtbUSE.Post;
+    ClearUserPassword;
   end;
 end;
 

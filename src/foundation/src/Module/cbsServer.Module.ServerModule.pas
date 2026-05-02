@@ -8,7 +8,9 @@ uses
 {PROJECT}
   cbsSystem.Contracts.Database,
   cbsSystem.Contracts.DataStorage,
-  cbsSystem.Contracts.Module.ServerModule;
+  cbsSystem.Contracts.Module.ServerModule,
+  cbsSystem.Contracts.Translation.Translator,
+  cbsSystem.Support.Types;
 
 type
   TcbsServerModule = class(TUniGUIServerModule, IServerModule)
@@ -17,6 +19,7 @@ type
   private
     FDatabase: IcbsDatabase;
     FDataStorage: IcbsDataStorage;
+    FTranslator: ITranslator;
     function GetDatabase: IcbsDatabase;
     function GetDataStorage: IcbsDataStorage;
     function GetProgramDataConfigPath: string;
@@ -25,6 +28,8 @@ type
   protected
     procedure FirstInit; override;
   public
+    function Trans(const APath: string; const ADefaultValue: string = ''): string; overload;
+    function Trans(const APath: string; const AReplacements: TForReplacements; const ADefaultValue: string = ''): string; overload;
     property Database: IcbsDatabase read GetDatabase;
     property DataStorage: IcbsDataStorage read GetDataStorage;
     property ProgramDataConfigPath: string read GetProgramDataConfigPath;
@@ -52,11 +57,21 @@ uses
   cbsMain.ui.Data.Modules.MainModule,
   cbsMain.ui.Forms.MainForm,
   cbsServer.Database,
+  cbsSystem.Contracts.MessageBag,
+  cbsSystem.Contracts.Validation.Rules.PasswordPolicy,
   cbsSystem.DataStorage,
+  cbsSystem.Locales.Locale,
+  cbsSystem.MessageBag,
+  cbsSystem.Support.RegisterContainer,
   cbsSystem.Support.FormTypeRepository,
   cbsSystem.Support.ModuleManager,
   cbsSystem.Support.ModuleTypeRepository,
-  cbsSystem.Support.ServerModule;
+  cbsSystem.Support.Translations,
+  cbsSystem.Support.ServerModule,
+  cbsSystem.Translation.Translator,
+  cbsSystem.Validation.Rules.PasswordPolicy,
+{SPRING}
+  Spring.Container;
 
 function cbsServerModule: TcbsServerModule;
 begin
@@ -78,6 +93,27 @@ begin
   begin
     RegisterAppFormClass(LFormType);
   end;
+end;
+
+procedure RegisterContainerTypes;
+begin
+  for var LItem in Container do
+  begin
+    var LShared := LItem.Value.Value;
+    var LRegisterType :=
+      if Assigned(LItem.Value.Key) then
+        GlobalContainer.RegisterType(LItem.Key, LItem.Value.Key)
+      else
+        GlobalContainer.RegisterType(LItem.Key, LItem.Key);
+    if Assigned(LRegisterType) and LShared then
+    begin
+      LRegisterType.AsSingleton;
+    end;
+  end;
+  GlobalContainer.RegisterType<PasswordPolicy>.Implements<IPasswordPolicy>;
+  GlobalContainer.RegisterType<TMessageBag>.Implements<IMessageBag>;
+  GlobalContainer.RegisterType<TTranslator>.Implements<ITranslator>.AsSingleton;
+  GlobalContainer.Build;
 end;
 
 { TcbsServerModule }
@@ -106,6 +142,16 @@ begin
   Result := FilesFolderPath;
 end;
 
+function TcbsServerModule.Trans(const APath, ADefaultValue: string): string;
+begin
+  Result := FTranslator.Translation(APath, ADefaultValue);
+end;
+
+function TcbsServerModule.Trans(const APath: string; const AReplacements: TForReplacements; const ADefaultValue: string): string;
+begin
+  Result := FTranslator.Translation(APath, AReplacements, ADefaultValue);
+end;
+
 procedure TcbsServerModule.FirstInit;
 begin
   inherited;
@@ -114,6 +160,8 @@ begin
   FDatabase := TDatabase.Create(Self);
   RegisterInternalSystemServerModule(Self);
   FDatabase.ExecuteMigrations;
+  FTranslator := GlobalContainer.Resolve<ITranslator>;
+  FTranslator.Locale := TLocale.pt_br;
 end;
 
 procedure TcbsServerModule.HideTrayIconSystem;
@@ -127,6 +175,7 @@ begin
   LNotifyIconData.uID := 1002;
   Shell_NotifyIcon(NIM_DELETE, @LNotifyIconData);
 end;
+
 {$ELSE}
 begin
   // Linux / macOS ? NOP (não existe tray icon)
@@ -142,6 +191,7 @@ procedure TcbsServerModule.UniGUIServerModuleDestroy(Sender: TObject);
 begin
   FDataStorage := nil;
   FDatabase := nil;
+  FTranslator := nil;
 end;
 
 initialization
@@ -151,13 +201,17 @@ begin
   RegisterMainFormClass(TfrmMain);
   RegisterModuleClass(TdamDb);
   LoadSystemModules;
+  RegisterContainerTypes;
   RegisterAppFormsAndDataModules;
   FDManager.Open;
+  CreateTranslations;
 end;
 
 finalization
 begin
   FDManager.Close;
+  CleanupGlobalContainer;
+  DestroyTranslations;
 end;
 
 end.

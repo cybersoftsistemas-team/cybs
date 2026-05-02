@@ -1,4 +1,4 @@
-unit cbsUAuth.inf.Repositories.Identity.Data.Modules.damUser;
+unit cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityUser;
 
 interface
 
@@ -11,12 +11,11 @@ uses
   FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.Client, Data.DB, FireDAC.Comp.DataSet;
 
 type
-  TdamUser = class(TdamBase)
+  TdamIdentityUser = class(TdamBase)
     qryBNA: TFDQuery;
     qryBID: TFDQuery;
     cmdBIN: TFDCommand;
     cmdBRE: TFDCommand;
-    cmdBLU: TFDCommand;
     cmdBUP: TFDCommand;
     qryBSE: TFDQuery;
     qryBSEId: TGuidField;
@@ -25,15 +24,19 @@ type
     qryBSEChecked: TBooleanField;
     dsoBID: TDataSource;
     dsoBNA: TDataSource;
+    qryBPW: TFDQuery;
+    qryBPWUserId: TGuidField;
+    qryBPWHash: TVarBytesField;
+    qryBPWIterations: TIntegerField;
+    qryBPWSalt: TVarBytesField;
   private
-    function GetMappedUser(const ADataSet: TDataSet): IUser;
+    function GetMappedUser(const ADataSet: TDataSet): IIdentityUser;
   public
-    function GetById(const AId: TGuid): IUser;
-    function GetByUserName(const AUserName: string): IUser;
+    function GetById(const AId: TGuid): IIdentityUser;
+    function GetByUserName(const AUserName: string): IIdentityUser;
     procedure IncrementFailed(const AUserId: TGuid);
-    procedure LockUser(const AUserId: TGuid);
     procedure ResetFailed(const AUserId: TGuid);
-    procedure UpdatePassword(const AUserId: TGuid; const AHash, ASalt: TBytes);
+    procedure UpdatePassword(const AUserId: TGuid; const AHash, ASalt: TBytes; const AIterations: Integer; const AChangePasswordOnNextLogin: Boolean = False);
   end;
 
 implementation
@@ -45,35 +48,41 @@ implementation
 uses
 {PROJECT}
   cbsMain.inf.DbModule,
-  cbsUAuth.dom.Contracts.Entities.Identity.UserOption,
-  cbsUAuth.dom.Entities.Identity.User,
-  cbsUAuth.dom.Entities.Identity.UserOption;
+  cbsSystem.Support.Container,
+  cbsUAuth.dom.Common.Identity.SystemOptions,
+  cbsUAuth.dom.Contracts.Entities.Identity.UserOption;
 
 { TdamUser }
 
-function TdamUser.GetById(const AId: TGuid): IUser;
+function TdamIdentityUser.GetById(const AId: TGuid): IIdentityUser;
 begin
   qryBSE.Close;
   qryBSE.MasterSource := dsoBID;
   qryBID.Close;
+  qryBPW.Close;
+  qryBPW.MasterSource := dsoBID;
   qryBID.ParamByName('UserId').AsGuid := AId;
   qryBID.Open;
   qryBSE.Open;
+  qryBPW.Open;
   Result := GetMappedUser(qryBID);
 end;
 
-function TdamUser.GetByUserName(const AUserName: string): IUser;
+function TdamIdentityUser.GetByUserName(const AUserName: string): IIdentityUser;
 begin
   qryBSE.Close;
   qryBSE.MasterSource := dsoBNA;
   qryBNA.Close;
+  qryBPW.Close;
+  qryBPW.MasterSource := dsoBNA;
   qryBNA.ParamByName('UserName').AsString := AUserName;
   qryBNA.Open;
   qryBSE.Open;
+  qryBPW.Open;
   Result := GetMappedUser(qryBNA);
 end;
 
-function TdamUser.GetMappedUser(const ADataSet: TDataSet): IUser;
+function TdamIdentityUser.GetMappedUser(const ADataSet: TDataSet): IIdentityUser;
 begin
   if not ADataSet.IsEmpty then
   begin
@@ -83,7 +92,7 @@ begin
       LSettingList := CreateUserSettingList;
       while not qryBSE.Eof do
       begin
-        var LOption := TUserOption.Create;
+        var LOption := App.Make<IIdentityUserOption>;
         LOption.Id := qryBSEId.AsGuid;
         LOption.Name := qryBSEName.AsString;
         LOption.Description := qryBSEDescription.AsString;
@@ -92,7 +101,7 @@ begin
         qryBSE.Next;
       end;
     end;
-    Result := TUser.Create(LSettingList);
+    Result := App.MakeWith<IIdentityUser>([TParam.From(LSettingList.ToArray)]);
     Result.Id := ADataSet.FieldByName('Id').AsGuid;
     Result.Name := ADataSet.FieldByName('Name').AsString;
     Result.AccessFailedCount := ADataSet.FieldByName('AccessFailedCount').AsInteger;
@@ -100,36 +109,29 @@ begin
     Result.AccountBlockedOut := ADataSet.FieldByName('AccountBlockedOut').AsBoolean;
     Result.LastLoginAt := ADataSet.FieldByName('LastLoginAt').AsDateTime;
     Result.LockoutEnd := ADataSet.FieldByName('LockoutEnd').AsDateTime;
-    Result.Hash := ADataSet.FieldByName('PasswordHash').AsBytes;
-    Result.Iterations := ADataSet.FieldByName('PasswordIterations').AsInteger;
-    Result.Salt := ADataSet.FieldByName('PasswordSalt').AsBytes;
+    Result.Hash := qryBPWHash.AsBytes;
+    Result.Iterations := qryBPWIterations.AsInteger;
+    Result.Salt := qryBPWSalt.AsBytes;
     Exit;
   end;
-  Result := TUser.Create;
+  Result := App.Make<IIdentityUser>;
 end;
 
-procedure TdamUser.IncrementFailed(const AUserId: TGuid);
+procedure TdamIdentityUser.IncrementFailed(const AUserId: TGuid);
 begin
   cmdBIN.ParamByName('UserId').AsGuid := AUserId;
   cmdBIN.Prepare;
   cmdBIN.Execute;
 end;
 
-procedure TdamUser.LockUser(const AUserId: TGuid);
-begin
-  cmdBLU.ParamByName('UserId').AsGuid := AUserId;
-  cmdBLU.Prepare;
-  cmdBLU.Execute;
-end;
-
-procedure TdamUser.ResetFailed(const AUserId: TGuid);
+procedure TdamIdentityUser.ResetFailed(const AUserId: TGuid);
 begin
   cmdBRE.ParamByName('UserId').AsGuid := AUserId;
   cmdBRE.Prepare;
   cmdBRE.Execute;
 end;
 
-procedure TdamUser.UpdatePassword(const AUserId: TGuid; const AHash, ASalt: TBytes);
+procedure TdamIdentityUser.UpdatePassword(const AUserId: TGuid; const AHash, ASalt: TBytes; const AIterations: Integer; const AChangePasswordOnNextLogin: Boolean);
 begin
   cmdBUP.ParamByName('UserId').AsGuid := AUserId;
   var LParamHash := cmdBUP.ParamByName('Hash');
@@ -138,10 +140,15 @@ begin
   var LParamSalt := cmdBUP.ParamByName('Salt');
   LParamSalt.DataType := ftBlob;
   LParamSalt.SetData(@ASalt[0], Length(ASalt));
+  cmdBUP.ParamByName('Iterations').AsInteger := AIterations;
+  cmdBUP.ParamByName('ChangePasswordOnNextLogin').AsBoolean := AChangePasswordOnNextLogin;
+  cmdBUP.ParamByName('ChangePasswordOnNextLoginId').AsGuid := TSystemOptions.ChangePasswordOnNextLoginId;
   cmdBUP.Prepare;
   cmdBUP.Execute;
 end;
 
 end.
+
+
 
 

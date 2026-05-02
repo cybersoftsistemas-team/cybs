@@ -28,7 +28,7 @@ package Spring.Data;
 {$DESCRIPTION 'Spring4D Data package'}
 {$LIBSUFFIX '.Delphi13'}
 {$RUNONLY}
-{$IMPLICITBUILD OFF}
+{$IMPLICITBUILD ON}
 
 requires
   dbrtl,

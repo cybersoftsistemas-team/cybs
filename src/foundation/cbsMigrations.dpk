@@ -30,31 +30,10 @@ package cbsMigrations;
 
 requires
   rtl,
-  dbrtl;
+  dbrtl,
+  Spring.Base;
 
 contains
-  Spring.Collections.Dictionaries,
-  Spring.Collections.LinkedLists,
-  Spring.Collections.MultiSets,
-  Spring.Collections.Queues,
-  Spring.Collections.Sets,
-  Spring.Collections.Stacks,
-  Spring.Collections.Events,
-  Spring.Hash,
-  Spring.ResourceStrings,
-  Spring.Collections.MultiMaps,
-  Spring.Collections.Base,
-  Spring.Collections.Trees,
-  Spring.Collections.Extensions,
-  Spring.Events.Base,
-  Spring.Collections.Lists,
-  Spring.Events,
-  Spring.Collections,
-  Spring.HashTable,
-  Spring,
-  Spring.VirtualClass,
-  Spring.HazardEra,
-  Spring.Comparers,
   cbsMigrations.Contracts.Migrations.Operations.ColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.ColumnOperation.pas',
   cbsMigrations.Contracts.Migrations.Operations.FloatColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.FloatColumnOperation.pas',
   cbsMigrations.Contracts.Migrations.Operations.StringColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.StringColumnOperation.pas',

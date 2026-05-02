@@ -46,10 +46,10 @@ type
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure UniLoginFormCreate(Sender: TObject);
   private
-    procedure AfterConnect;
+    procedure AfterConnect(const AModalResult: Integer);
     procedure BeforeConnect;
     procedure HideMsg;
-    procedure OnConnect;
+    procedure OnConnect(var AModalResult: Integer);
     procedure ShowMsg(const ACaption: string);
     procedure UpdateUi;
   end;
@@ -63,14 +63,18 @@ implementation
 uses
 {IDE}
   System.SysUtils,
+  System.UITypes,
 {PROJECT}
   cbsMain.ui.Data.Modules.MainModule,
   cbsSystem.Contracts.Module.Main,
   cbsSystem.Support.Form,
   cbsSystem.Support.RunTime,
   cbsSystem.Support.ServerModule,
-  cbsUAuth.ui.Forms.CustomerRegistrationForm,
+  cbsUAuth.dom.Common.Identity.SystemOptions,
+  cbsUAuth.dom.Contracts.Entities.Identity.UserOption,
   cbsUAuth.ui.Data.Modules.LoginModule,
+  cbsUAuth.ui.Forms.CustomerRegistrationForm,
+  cbsUAuth.ui.Forms.LoginChangePassword,
   cbsUAuth.ui.Forms.LoginDomainsForm,
   cbsUAuth.ui.Forms.OptionsForm;
 
@@ -83,10 +87,11 @@ end;
 
 procedure TfrmLogin.actConnectExecute(Sender: TObject);
 begin
+  var LModalResult := mrOk;
   try
     BeforeConnect;
-    OnConnect;
-    AfterConnect;
+    OnConnect(LModalResult);
+    AfterConnect(LModalResult);
   except
     on E: Exception do
     begin
@@ -128,9 +133,9 @@ begin
     end);
 end;
 
-procedure TfrmLogin.AfterConnect;
+procedure TfrmLogin.AfterConnect(const AModalResult: Integer);
 begin
-  ModalResult := mrOK;
+  ModalResult := AModalResult;
 end;
 
 procedure TfrmLogin.BeforeConnect;
@@ -157,15 +162,32 @@ begin
   pnlMsg.Visible := False;
 end;
 
-procedure TfrmLogin.OnConnect;
+procedure TfrmLogin.OnConnect(var AModalResult: Integer);
 begin
-  var LError := '';
-  if not damLogin.AuthenticateUser(
-    damLogin.mtbUSEName.AsString,
-    damLogin.mtbUSEPassword.AsString,
-    LError) then
+  var LResult := damLogin.AuthenticateUser(damLogin.mtbUSEName.AsString, damLogin.mtbUSEPassword.AsString);
+  if LResult.IsSuccess then
   begin
-    raise Exception.Create(LError);
+     var LUser := LResult.Value;
+     if LUser.Settings.First(
+       function(const o: IIdentityUserOption): Boolean
+       begin
+         Result := IsEqualGUID(o.Id, TSystemOptions.ChangePasswordOnNextLoginId);
+       end
+     ).Checked then
+     begin
+       AModalResult := mrNone;
+       MessageDlg('Você precisa alterar sua senha para continuar.', TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],
+         procedure(Sender: TComponent; Result: Integer)
+         begin
+           damLogin.ClearUserPassword;
+           frmLoginChangePassword.UserId := LUser.Id;
+           frmLoginChangePassword.ShowModal(
+             procedure(Sender: TComponent; Result: Integer)
+             begin
+               UpdateUi;
+             end);
+         end);
+     end;
   end;
 end;
 
@@ -236,6 +258,7 @@ begin
 end;
 
 end.
+
 
 
 

@@ -75,6 +75,7 @@
         <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
         <DCC_BplOutput>..\..\build\$(Platform)\$(Config)</DCC_BplOutput>
         <DCC_UNSUPPORTED_CONSTRUCT>false</DCC_UNSUPPORTED_CONSTRUCT>
+        <DCC_DUPLICATE_CTOR_DTOR>false</DCC_DUPLICATE_CTOR_DTOR>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
         <DCC_CBuilderOutput>None</DCC_CBuilderOutput>
@@ -112,6 +113,7 @@
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
         <Debugger_HostApplication>C:\Projects\cybs\build\Win32\Debug\cbs.exe</Debugger_HostApplication>
+        <DCC_DUPLICATE_CTOR_DTOR>false</DCC_DUPLICATE_CTOR_DTOR>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -140,14 +142,14 @@
         <DCCReference Include="uniGUI30.dcp"/>
         <DCCReference Include="cbsMigrations.dcp"/>
         <DCCReference Include="cbsMigrationsFireDac.dcp"/>
+        <DCCReference Include="Spring.Base.dcp"/>
+        <DCCReference Include="..\modules\spring4d\Source\Core\Container\Spring.Container.pas"/>
         <DCCReference Include="src\Module\cbsSystem.Module.BaseModule.pas">
             <Form>damBase</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Form\cbsSystem.Form.BaseForm.pas">
             <Form>frmBase</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Form\cbsSystem.Form.Repository.pas"/>
@@ -164,13 +166,11 @@
         <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.Main.pas"/>
         <DCCReference Include="src\Infrastructure\cbsSystem.Infrastructure.BaseDbModule.pas">
             <Form>damBaseDb</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Support\cbsSystem.Support.Utils.pas"/>
         <DCCReference Include="src\MessageBox\cbsSystem.MessageBox.pas">
             <Form>frmMessageBox</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Support\cbsSystem.Support.MessageBox.pas"/>
@@ -183,7 +183,6 @@
         <DCCReference Include="src\Database\cbsSystem.Database.pas"/>
         <DCCReference Include="src\Form\cbsSystem.Form.DialogBaseForm.pas">
             <Form>frmDialogBase</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Contracts\Form\cbsSystem.Contracts.Form.BaseForm.pas"/>
@@ -197,7 +196,6 @@
         <DCCReference Include="src\Contracts\Database\Seeders\cbsSystem.Contracts.Database.Seeders.DatabaseSeeder.pas"/>
         <DCCReference Include="src\Database\Seeders\cbsSystem.Database.Seeders.DatabaseSeederModule.pas">
             <Form>DatabaseSeederModule</Form>
-            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <DCCReference Include="src\Support\cbsSystem.Support.DatabaseSeederTypeRepository.pas"/>
@@ -207,6 +205,43 @@
         <DCCReference Include="src\cbsSystem.Reflection.pas"/>
         <DCCReference Include="src\Wizard\cbsSystem.Wizard.pas"/>
         <DCCReference Include="src\Contracts\Wizard\cbsSystem.Contracts.Wizard.pas"/>
+        <DCCReference Include="src\Contracts\Container\cbsSystem.Contracts.Container.pas"/>
+        <DCCReference Include="src\Container\cbsSystem.Container.RegisterContainer.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.RegisterContainer.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Container.RegisterType.pas"/>
+        <DCCReference Include="src\Contracts\Container\cbsSystem.Contracts.Container.RegisterContainer.pas"/>
+        <DCCReference Include="src\Container\cbsSystem.Container.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Container.pas"/>
+        <DCCReference Include="src\Contracts\MessageBag\cbsSystem.Contracts.MessageBag.MessageBagItem.pas"/>
+        <DCCReference Include="src\Contracts\MessageBag\cbsSystem.Contracts.MessageBag.MessageBagItems.pas"/>
+        <DCCReference Include="src\Contracts\MessageBag\cbsSystem.Contracts.MessageBag.pas"/>
+        <DCCReference Include="src\MessageBag\cbsSystem.MessageBag.MessageBagItem.pas"/>
+        <DCCReference Include="src\MessageBag\cbsSystem.MessageBag.MessageBagItems.pas"/>
+        <DCCReference Include="src\MessageBag\cbsSystem.MessageBag.pas"/>
+        <DCCReference Include="src\Contracts\Validation\cbsSystem.Contracts.Validation.Rule.pas"/>
+        <DCCReference Include="src\Validation\cbsSystem.Validation.pas"/>
+        <DCCReference Include="src\Validation\Rules\cbsSystem.Validation.Rules.PasswordPolicy.pas"/>
+        <DCCReference Include="src\Contracts\Validation\Rules\cbsSystem.Contracts.Validation.Rules.PasswordPolicy.pas"/>
+        <DCCReference Include="src\Contracts\PathTree\cbsSystem.Contracts.PathTree.pas"/>
+        <DCCReference Include="src\PathTree\cbsSystem.PathTree.pas"/>
+        <DCCReference Include="src\Contracts\Translation\cbsSystem.Contracts.Translation.Translator.pas"/>
+        <DCCReference Include="src\Locales\cbsSystem.Locales.Locale.pas"/>
+        <DCCReference Include="src\Locales\cbsSystem.Locales.pas"/>
+        <DCCReference Include="src\Contracts\Locales\cbsSystem.Contracts.Locales.pas"/>
+        <DCCReference Include="src\Contracts\Locales\cbsSystem.Contracts.Locales.LocaleProperties.pas"/>
+        <DCCReference Include="src\Locales\cbsSystem.Locales.LocaleProperties.pas"/>
+        <DCCReference Include="src\Translation\cbsSystem.Translation.Translator.pas"/>
+        <DCCReference Include="src\Contracts\Config\cbsSystem.Contracts.Config.pas"/>
+        <DCCReference Include="src\Config\cbsSystem.Config.pas"/>
+        <DCCReference Include="src\Translation\cbsSystem.Translation.Translations.pas"/>
+        <DCCReference Include="src\Contracts\Translation\cbsSystem.Contracts.Translation.pas"/>
+        <DCCReference Include="src\Translation\cbsSystem.Translation.Translation.pas"/>
+        <DCCReference Include="src\Translation\Lang\cbsSystem.Translation.Lang.pt_br.pas"/>
+        <DCCReference Include="src\Contracts\Translation\cbsSystem.Contracts.Translation.Translations.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Translations.pas"/>
+        <DCCReference Include="src\PathTree\cbsSystem.PathTreeParser.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Types.pas"/>
+        <DCCReference Include="src\Translation\cbsSystem.Translation.ForReplacement.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -3,7 +3,7 @@ unit cbsUAuth.dom.Contracts.Entities.Identity.UserOption;
 interface
 
 type
-  IUserOption = interface(IUnknown)
+  IIdentityUserOption = interface(IUnknown)
     ['{29BE24AE-34C6-42CB-98B2-DC00FB98BD94}']
     function GetId: TGuid;
     function GetName: string;

@@ -5,7 +5,6 @@ interface
 uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.CreateIndexOperation,
-  cbsMigrations.Contracts.Migrations.Operations.IndexOperation,
   cbsMigrations.Migrations.Operations.IncludeColumn,
   cbsMigrations.Migrations.Operations.IndexOperation;
 

@@ -28,7 +28,7 @@ package Spring.Extensions;
 {$DESCRIPTION 'Spring4D Extensions package'}
 {$LIBSUFFIX '.Delphi13'}
 {$RUNONLY}
-{$IMPLICITBUILD OFF}
+{$IMPLICITBUILD ON}
 
 requires
   rtl,

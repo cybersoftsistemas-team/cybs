@@ -5,8 +5,7 @@ interface
 uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.UniqueConstraintOperation,
-  cbsMigrations.Migrations.Operations.ConstraintOperation,
-  cbsMigrations.Migrations.Operations.IncludeColumn;
+  cbsMigrations.Migrations.Operations.ConstraintOperation;
 
 type
   TUniqueConstraintOperation = class(TConstraintOperation, IUniqueConstraintOperation)

@@ -23,7 +23,7 @@ procedure CreateAddressAddressesAddressTrigger.Up(const ASchema: IMigrationBuild
 begin
   ASchema.Sql(
   'CREATE TRIGGER ' + SchemaName + '_' + TableName + '_Address_trigger ' +
-  'ON ' + SchemaName + '.' + TableName + '                             ' +
+  'ON [' + SchemaName + '].[' + TableName + ']                         ' +
   'AFTER INSERT, UPDATE                                                ' +
   'AS                                                                  ' +
   'BEGIN                                                               ' +
@@ -45,7 +45,7 @@ begin
   '      END,                                                          ' +
   '      c.Name                                                        ' +
   '  )                                                                 ' +
-  '  FROM ' + SchemaName + '.' + TableName + ' a                       ' +
+  '  FROM [' + SchemaName + '].[' + TableName + '] a                   ' +
   '  JOIN inserted i ON i.Id = a.Id                                    ' +
   '  JOIN address.streettypes stt ON stt.Id = a.StreetTypeId           ' +
   '  JOIN address.streets str ON str.Id = a.StreetId                   ' +

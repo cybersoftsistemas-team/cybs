@@ -120,6 +120,8 @@ object frmLogin: TfrmLogin
             'Style({'#13#10'    borderRadius: '#39'2px'#39','#13#10'    overflow: '#39'hidden'#39#13#10'  });' +
             #13#10'}')
         TabOrder = 1
+        Layout = 'auto'
+        LayoutAttribs.Align = 'stretch'
         object labMsg: TUniLabel
           AlignWithMargins = True
           Left = 23

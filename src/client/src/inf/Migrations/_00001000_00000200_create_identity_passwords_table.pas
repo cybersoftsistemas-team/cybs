@@ -27,26 +27,23 @@ uses
 procedure CreateIdentityPasswordsTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
-   .HasSchema(SchemaName)
-   .Columns([
-     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('Password').HasMaxLength(255).IsUnicode.IsRequired
-    ,GuidColumn('UserId').IsRequired
-   ])
-   .Constraints([
-     PrimaryKey('Id')
-    ,ForeignKey('UserId', 'users', 'Id')
-    ,Unique(['UserId', 'Password'])
-   ])
-   .Indexes([
-     CreateIndex('UserId')
-   ]);
+  .HasSchema(SchemaName)
+  .Columns([
+    GuidColumn('UserId').IsRequired
+   ,StringColumn('Hash').HasColumnType('VARBINARY(64)').IsRequired
+   ,IntColumn('Iterations').HasDefaultValueSql('100000').IsRequired
+   ,StringColumn('Salt').HasColumnType('VARBINARY(32)').IsRequired
+  ])
+  .Constraints([
+    PrimaryKey('UserId')
+   ,ForeignKey('UserId', 'users', 'Id')
+  ]);
 end;
 
 procedure CreateIdentityPasswordsTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
-   .HasSchema(SchemaName);
+  .HasSchema(SchemaName);
 end;
 
 initialization

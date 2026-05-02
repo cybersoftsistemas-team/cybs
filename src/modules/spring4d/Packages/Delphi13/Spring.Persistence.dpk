@@ -28,16 +28,12 @@ package Spring.Persistence;
 {$DESCRIPTION 'Spring4D Persistence package'}
 {$LIBSUFFIX '.Delphi13'}
 {$RUNONLY}
-{$IMPLICITBUILD OFF}
-
-{$I Spring.inc}
+{$IMPLICITBUILD ON}
 
 requires
   dbrtl,
-{$IFNDEF FMX}{$IFDEF MSWINDOWS}
   vcl,
   vclimg,
-{$ENDIF}{$ENDIF}
   Spring.Base;
 
 contains

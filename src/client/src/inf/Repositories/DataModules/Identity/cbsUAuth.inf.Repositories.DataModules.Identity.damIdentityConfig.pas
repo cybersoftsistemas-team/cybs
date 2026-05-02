@@ -1,4 +1,4 @@
-unit cbsUAuth.inf.Repositories.Identity.Data.Modules.damIdentityConfig;
+unit cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityConfig;
 
 interface
 
@@ -14,9 +14,9 @@ type
   TdamIdentityConfig = class(TdamBase)
     qryCON: TFDQuery;
   private
-    function GetMappedConfig(const ADataSet: TDataSet): IConfig;
+    function GetMappedConfig(const ADataSet: TDataSet): IIdentityConfig;
   public
-    function GetConfig: IConfig;
+    function GetConfig: IIdentityConfig;
   end;
 
 implementation
@@ -28,25 +28,24 @@ implementation
 uses
 {PROJECT}
   cbsMain.inf.DbModule,
-  cbsUAuth.dom.Entities.Identity.Config;
+  cbsSystem.Support.Container;
 
-function TdamIdentityConfig.GetConfig: IConfig;
+function TdamIdentityConfig.GetConfig: IIdentityConfig;
 begin
   qryCON.Close;
   qryCON.Open;
   Result := GetMappedConfig(qryCON);
 end;
 
-function TdamIdentityConfig.GetMappedConfig(const ADataSet: TDataSet): IConfig;
+function TdamIdentityConfig.GetMappedConfig(const ADataSet: TDataSet): IIdentityConfig;
 begin
+   Result := App.Make<IIdentityConfig>;
    if not ADataSet.IsEmpty then
   begin
-    Result := TConfig.Create;
     Result.LockoutMinutes := ADataSet.FieldByName('LockoutMinutes').AsInteger;
     Result.MaxAttempts := ADataSet.FieldByName('MaxAttempts').AsInteger;
-    Exit;
+    Result.PasswordIterations := ADataSet.FieldByName('PasswordIterations').AsInteger;
   end;
-  Result := TConfig.Create;
 end;
 
 end.

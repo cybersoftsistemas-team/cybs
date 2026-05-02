@@ -12,6 +12,7 @@ type
   TdamDbSeed = class(TDatabaseSeederModule)
   protected
     procedure AfterRunSeed; override;
+    procedure BeforeRunSeed; override;
   end;
 
 implementation
@@ -22,20 +23,27 @@ implementation
 
 uses
 {PROJECT}
-  cbsUAuth.dom.Contracts.Services.AuthService,
-  cbsUAuth.app.Services.AuthService;
+  cbsSystem.Support.Container,
+  cbsUAuth.dom.Common.Identity.SystemOptions,
+  cbsUAuth.dom.Common.Identity.SystemUsers,
+  cbsUAuth.dom.Contracts.Services.AuthService;
 
 { TdamDbSeed }
 
 procedure TdamDbSeed.AfterRunSeed;
 begin
   inherited;
-  var LAuth: IAuthService := TAuthService.Create;
-  try
-    LAuth.TryCreateAdminWithTemporaryPassword('Administrador', 'Admin@123');
-  finally
-    LAuth := nil;
-  end;
+  App.Make<IAuthService>.TryCreateAdminWithTemporaryPassword;
+end;
+
+procedure TdamDbSeed.BeforeRunSeed;
+begin
+  inherited;
+  sptSeed.Params.ParamByName('AccountDisabledId').AsGuid := TSystemOptions.AccountDisabledId;
+  sptSeed.Params.ParamByName('AdministratorId').AsGuid := TSystemUsers.AdministratorId;
+  sptSeed.Params.ParamByName('ChangePasswordOnNextLoginId').AsGuid := TSystemOptions.ChangePasswordOnNextLoginId;
+  sptSeed.Params.ParamByName('PasswordNeverExpires').AsGuid := TSystemOptions.PasswordNeverExpires;
+  sptSeed.Params.ParamByName('UserCannotChangeThePasswordId').AsGuid := TSystemOptions.UserCannotChangeThePasswordId;
 end;
 
 end.

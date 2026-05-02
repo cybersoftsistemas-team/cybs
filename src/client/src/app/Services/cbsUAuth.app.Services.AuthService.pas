@@ -4,130 +4,119 @@ interface
 
 uses
 {PROJECT}
-  cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository,
-  cbsUAuth.dom.Contracts.Repositories.Identity.UserRepository,
-  cbsUAuth.dom.Contracts.Services.AuthService,
-  cbsUAuth.dom.Contracts.Services.PasswordHasher;
+  cbsSystem.Contracts.MessageBag,
+  cbsUAuth.app.Common.AuthResult,
+  cbsUAuth.dom.Contracts.Services.AuthService;
 
 type
   TAuthService = class(TInterfacedObject, IAuthService)
-  private
-    FConfigRepository: IConfigRepository;
-    FHasher: IPasswordHasher;
-    FUserRepository: IUserRepository;
-    function ValidatePasswordPolicy(const APassword: string): Boolean;
   public
-    constructor Create;
-    destructor Destroy; override;
-    function Authenticate(const AUserName, APassword: string; out AError: string): Boolean;
-    function ChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword: string): Boolean;
-    procedure TryCreateAdminWithTemporaryPassword(const AUserName, ATempPassword: string);
+    function Authenticate(const AUserName, APassword: string): TAuthResult;
+    function ChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword: string; out AMessages: IMessageBag;
+      const AChangePasswordOnNextLogin: Boolean = False): Boolean;
+    procedure TryCreateAdminWithTemporaryPassword;
   end;
 
 implementation
 
 uses
 {IDE}
-  System.DateUtils,
-  System.Math,
   System.SysUtils,
 {PROJECT}
+  cbsSystem.Contracts.Validation.Rules.PasswordPolicy,
+  cbsSystem.Support.Container,
   cbsUAuth.app.Services.AuthError,
-  cbsUAuth.inf.Repositories.Identity.ConfigRepository,
-  cbsUAuth.inf.Repositories.Identity.UserRepository,
-  cbsUAuth.inf.Services.PasswordHasher;
+  cbsUAuth.dom.Common.Identity.SystemUsers,
+  cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository,
+  cbsUAuth.dom.Contracts.Repositories.Identity.UserRepository,
+  cbsUAuth.dom.Contracts.Services.PasswordHasher,
+  cbsUAuth.dom.Exceptions.AuthError;
 
 { TAuthService }
 
-constructor TAuthService.Create;
+function TAuthService.Authenticate(const AUserName, APassword: string): TAuthResult;
 begin
-  inherited Create;
-  FConfigRepository := TConfigRepository.Create;
-  FHasher := TPasswordHasher.Create;
-  FUserRepository := TUserRepository.Create;
-end;
-
-destructor TAuthService.Destroy;
-begin
-  FHasher := nil;
-  FUserRepository := nil;
-  FConfigRepository := nil;
-  inherited;
-end;
-
-function TAuthService.Authenticate(const AUserName, APassword: string; out AError: string): Boolean;
-begin
-  AError := '';
-  Result := False;
-  var LLockoutMinutes := FConfigRepository.LockoutMinutes;
-  var LMaxAttempts := FConfigRepository.MaxAttempts;
-  var LUser := FUserRepository.GetByUserName(AUserName);
+  var LUserRep := App.Make<IIdentityUserRepository>;
+  var LUser := LUserRep.GetByUserName(AUserName);
   if LUser.IsEmpty then
   begin
-    AError := AuthErrorMessage(aeInvalidCredentials);
-    Exit;
-  end;
-  if not LUser.AccountActivated then
-  begin
-    AError := AuthErrorMessage(aeAccountNotActivated);
-    Exit;
+    Exit(TAuthResult.Fail(LUser, aeUserNotFound));
   end;
   if LUser.IsLocked then
   begin
-    var LMinutes := Ceil((LUser.LockoutEnd - Now) * 24 * 60);
-    AError := Format(AuthErrorMessage(aeAccountLocked), [LMinutes]);
-    Exit;
+    Exit(TAuthResult.Fail(LUser, aeAccountLocked));
   end;
-  if FHasher.Verify(APassword, LUser.Hash, LUser.Salt, LUser.Iterations) then
+  if not LUser.AccountActivated then
   begin
-    FUserRepository.ResetFailed(LUser.Id);
-    Exit(True);
+    Exit(TAuthResult.Fail(LUser, aeAccountNotActivated));
   end;
-  var LNewFailed := LUser.AccessFailedCount;
-  if LNewFailed >= LMaxAttempts then
+  var LHasher := App.Make<IPasswordHasher>;
+  if not LHasher.Verify(APassword, LUser.Hash, LUser.Salt, LUser.Iterations) then
   begin
-    AError := Format(AuthErrorMessage(aeAccountLocked), [LLockoutMinutes]);
-    Exit;
+    LUserRep.IncrementFailed(LUser.Id);
+    Exit(TAuthResult.Fail(LUser, aeInvalidCredentials));
   end;
-  FUserRepository.IncrementFailed(LUser.Id);
-  AError := AuthErrorMessage(aeInvalidCredentials);
+  LUserRep.ResetFailed(LUser.Id);
+  Result := TAuthResult.Ok(LUser);
 end;
 
-function TAuthService.ChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword: string): Boolean;
+function TAuthService.ChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword: string; out AMessages: IMessageBag;
+  const AChangePasswordOnNextLogin: Boolean): Boolean;
 begin
   Result := False;
-  var LUser := FUserRepository.GetById(AUserId);
+  AMessages := App.Make<IMessageBag>;
+  var LUserRep := App.Make<IIdentityUserRepository>;
+  var LUser := LUserRep.GetById(AUserId);
   if LUser.IsEmpty then Exit;
-  if not FHasher.Verify(ACurrentPassword, LUser.Hash, LUser.Salt, LUser.Iterations) then Exit;
-  if not ValidatePasswordPolicy(ANewPassword) then
+  var LHasher := App.Make<IPasswordHasher>;
+  if not LHasher.Verify(ACurrentPassword, LUser.Hash, LUser.Salt, LUser.Iterations) then
   begin
-    raise Exception.Create('Senha inválida');
+    AMessages.Add('password', 'current_password');
   end;
-  var LNewSalt := FHasher.GenerateSalt;
-  var LNewHash := FHasher.Hash(ANewPassword, LNewSalt, LUser.Iterations);
-  FUserRepository.UpdatePassword(LUser.Id, LNewHash, LNewSalt);
+  var LPasswordPolicy := App.Make<IPasswordPolicy>;
+  if not LPasswordPolicy.Min(8).Letters.MixedCase.Numbers.Symbols.Passes('Nova senha', ANewPassword) then
+  begin
+    AMessages.AddRange(LPasswordPolicy.Messages);
+  end;
+  if not AMessages.IsEmpty then Exit;
+  var LConfigRep := App.Make<IIdentityConfigRepository>;
+  var LIterations := LConfigRep.PasswordIterations;
+  var LNewSalt := LHasher.GenerateSalt;
+  LUserRep.UpdatePassword(
+    LUser.Id,
+    LHasher.Hash(
+      ANewPassword,
+      LNewSalt,
+      LIterations
+    ),
+    LNewSalt,
+    LIterations,
+    AChangePasswordOnNextLogin // O usuário deve alterar a senha no próximo logon
+  );
   Result := True;
 end;
 
-function TAuthService.ValidatePasswordPolicy(const APassword: string): Boolean;
-const
-  LChArray: array[0..9] of Char = ('0','1','2','3','4','5','6','7','8','9');
+procedure TAuthService.TryCreateAdminWithTemporaryPassword;
 begin
-  Result := (Length(APassword) >= 8) and
-    (APassword.ToLower <> APassword) and
-    (APassword.ToUpper <> APassword) and
-    (APassword.IndexOfAny(LChArray) >= 0);
-end;
-
-procedure TAuthService.TryCreateAdminWithTemporaryPassword(const AUserName, ATempPassword: string);
-begin
-  var LUser := FUserRepository.GetByUserName(AUserName);
-  if not LUser.IsEmpty and (LUser.LastLoginAt = 0) then
+  var LUserRep := App.Make<IIdentityUserRepository>;
+  var LUser := LUserRep.GetById(TSystemUsers.AdministratorId);
+  if not LUser.IsEmpty and not LUser.IsPasswordExists then
   begin
-    var LIterations := LUser.Iterations;
-    var LSalt := FHasher.GenerateSalt;
-    var LHash := FHasher.Hash(ATempPassword, LSalt, LIterations);
-    FUserRepository.UpdatePassword(LUser.Id, LHash, LSalt);
+    var LConfigRep := App.Make<IIdentityConfigRepository>;
+    var LIterations := LConfigRep.PasswordIterations;
+    var LHasher := App.Make<IPasswordHasher>;
+    var LSalt := LHasher.GenerateSalt;
+    LUserRep.UpdatePassword(
+      LUser.Id,
+      LHasher.Hash(
+        TSystemUsers.TemporaryPassword,
+        LSalt,
+        LIterations
+      ),
+      LSalt,
+      LIterations,
+      True // O usuário deve alterar a senha no próximo logon
+    );
   end;
 end;
 

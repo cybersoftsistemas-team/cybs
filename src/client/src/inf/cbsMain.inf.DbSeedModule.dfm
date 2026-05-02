@@ -1909,6 +1909,7 @@ inherited damDbSeed: TdamDbSeed
           '    VALUES (S.AreaCode, S.StateId);')
       end>
     Connection = damDb.Connection
+    ScriptOptions.BreakOnError = True
     Params = <
       item
         Name = 'CountryId'

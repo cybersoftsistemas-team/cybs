@@ -6,10 +6,11 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsUAuth.dom.Contracts.Entities.Identity.User;
+  cbsUAuth.dom.Contracts.Entities.Identity.User,
+  cbsUAuth.dom.Contracts.Entities.Identity.UserOption;
 
 type
-  TUser = class(TInterfacedObject, IUser)
+  TIdentityUser = class(TInterfacedObject, IIdentityUser)
   private
     FAccessFailedCount: Integer;
     FAccountActivated: Boolean;
@@ -20,6 +21,7 @@ type
     FLastLoginAt: TDateTime;
     FLockoutEnd: TDateTime;
     FName: string;
+    FPasswordExists: Boolean;
     FSalt: TBytes;
     FSettingList: IUserSettingList;
     function GetAccessFailedCount: Integer;
@@ -45,10 +47,11 @@ type
     procedure SetSalt(const AValue: TBytes);
   public
     constructor Create; overload;
-    constructor Create(const ASettings: IUserSettings); overload;
+    constructor Create(const ASettings: TArray<IIdentityUserOption>); overload;
     destructor Destroy; override;
     function IsEmpty: Boolean;
     function IsLocked: Boolean;
+    function IsPasswordExists: Boolean;
     property AccessFailedCount: Integer read GetAccessFailedCount write SetAccessFailedCount;
     property AccountActivated: Boolean read GetAccountActivated write SetAccountActivated;
     property AccountBlockedOut: Boolean read GetAccountBlockedOut write SetAccountBlockedOut;
@@ -64,16 +67,16 @@ type
 
 implementation
 
-{ TUser }
+{ TIdentityUser }
 
-constructor TUser.Create;
+constructor TIdentityUser.Create;
 begin
   inherited Create;
   FId := TGUID.Empty;
   FSettingList := CreateUserSettingList;
 end;
 
-constructor TUser.Create(const ASettings: IUserSettings);
+constructor TIdentityUser.Create(const ASettings: TArray<IIdentityUserOption>);
 begin
   Create;
   if Assigned(ASettings) then
@@ -82,124 +85,130 @@ begin
   end;
 end;
 
-destructor TUser.Destroy;
+destructor TIdentityUser.Destroy;
 begin
   FSettingList.Clear;
   FSettingList := nil;
   inherited;
 end;
 
-function TUser.GetAccessFailedCount: Integer;
+function TIdentityUser.GetAccessFailedCount: Integer;
 begin
   Result := FAccessFailedCount;
 end;
 
-function TUser.GetAccountActivated: Boolean;
+function TIdentityUser.GetAccountActivated: Boolean;
 begin
   Result := FAccountActivated;
 end;
 
-function TUser.GetAccountBlockedOut: Boolean;
+function TIdentityUser.GetAccountBlockedOut: Boolean;
 begin
   Result := FAccountBlockedOut;
 end;
 
-function TUser.GetHash: TBytes;
+function TIdentityUser.GetHash: TBytes;
 begin
   Result := FHash;
 end;
 
-function TUser.GetId: TGuid;
+function TIdentityUser.GetId: TGuid;
 begin
   Result := FId;
 end;
 
-function TUser.GetIterations: Integer;
+function TIdentityUser.GetIterations: Integer;
 begin
   Result := FIterations;
 end;
 
-function TUser.GetLastLoginAt: TDateTime;
+function TIdentityUser.GetLastLoginAt: TDateTime;
 begin
   Result := FLastLoginAt;
 end;
 
-function TUser.GetLockoutEnd: TDateTime;
+function TIdentityUser.GetLockoutEnd: TDateTime;
 begin
   Result := FLockoutEnd;
 end;
 
-function TUser.GetName: string;
+function TIdentityUser.GetName: string;
 begin
   Result := FName;
 end;
 
-function TUser.GetSalt: TBytes;
+function TIdentityUser.GetSalt: TBytes;
 begin
   Result := FSalt;
 end;
 
-function TUser.GetSettings: IUserSettings;
+function TIdentityUser.GetSettings: IUserSettings;
 begin
   Result := FSettingList;
 end;
 
-function TUser.IsEmpty: Boolean;
+function TIdentityUser.IsEmpty: Boolean;
 begin
   Result := Id = TGuid.Empty
 end;
 
-function TUser.IsLocked: Boolean;
+function TIdentityUser.IsLocked: Boolean;
 begin
   Result := (LockoutEnd > Now);
 end;
 
-procedure TUser.SetAccessFailedCount(const AValue: Integer);
+function TIdentityUser.IsPasswordExists: Boolean;
+begin
+  Result := FPasswordExists;
+end;
+
+procedure TIdentityUser.SetAccessFailedCount(const AValue: Integer);
 begin
   FAccessFailedCount := AValue;
 end;
 
-procedure TUser.SetAccountActivated(const AValue: Boolean);
+procedure TIdentityUser.SetAccountActivated(const AValue: Boolean);
 begin
   FAccountActivated := AValue;
 end;
 
-procedure TUser.SetAccountBlockedOut(const AValue: Boolean);
+procedure TIdentityUser.SetAccountBlockedOut(const AValue: Boolean);
 begin
   FAccountBlockedOut := AValue;
 end;
 
-procedure TUser.SetHash(const AValue: TBytes);
+procedure TIdentityUser.SetHash(const AValue: TBytes);
 begin
   FHash := AValue;
+  FPasswordExists := Length(FHash) > 0;
 end;
 
-procedure TUser.SetId(const AValue: TGuid);
+procedure TIdentityUser.SetId(const AValue: TGuid);
 begin
   FId := AValue;
 end;
 
-procedure TUser.SetIterations(const AValue: Integer);
+procedure TIdentityUser.SetIterations(const AValue: Integer);
 begin
   FIterations := AValue;
 end;
 
-procedure TUser.SetLastLoginAt(const AValue: TDateTime);
+procedure TIdentityUser.SetLastLoginAt(const AValue: TDateTime);
 begin
   FLastLoginAt := AValue;
 end;
 
-procedure TUser.SetLockoutEnd(const AValue: TDateTime);
+procedure TIdentityUser.SetLockoutEnd(const AValue: TDateTime);
 begin
   FLockoutEnd := AValue;
 end;
 
-procedure TUser.SetName(const AValue: string);
+procedure TIdentityUser.SetName(const AValue: string);
 begin
   FName := AValue;
 end;
 
-procedure TUser.SetSalt(const AValue: TBytes);
+procedure TIdentityUser.SetSalt(const AValue: TBytes);
 begin
   FSalt := AValue;
 end;

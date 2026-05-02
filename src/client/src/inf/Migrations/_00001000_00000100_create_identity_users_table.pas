@@ -27,60 +27,59 @@ uses
 procedure CreateIdentityUsersTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
-   .HasSchema(SchemaName)
-   .Columns([
-     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
-    ,StringColumn('Description').IsUnicode.IsRequired
-    ,IntColumn('AccessFailedCount').HasDefaultValueSql('0').IsRequired
-    ,ComputedColumn('AccountActivated')
-     .HasSqlAs(
-      'CASE ' +
-      '    WHEN LockoutEnd IS NOT NULL AND LockoutEnd > GETDATE() THEN CAST(0 AS BIT) ' +
-      '    WHEN AccountExpiresDate IS NOT NULL AND AccountExpiresDate < GETDATE() THEN CAST(0 AS BIT) ' +
-      '    ELSE CAST(1 AS BIT) ' +
-      'END')
-     .IsOptional
-    ,ComputedColumn('AccountBlockedOut')
-     .HasSqlAs(
-      'CASE ' +
-      '    WHEN LockoutEnd IS NOT NULL AND LockoutEnd > GETDATE() THEN CAST(1 AS BIT) ' +
-      '    ELSE CAST(0 AS BIT) ' +
-      'END')
-     .IsOptional
-    ,ComputedColumn('AccountExpired')
-     .HasSqlAs(
-      'CASE ' +
-      '    WHEN [AccountExpiresDate] IS NULL THEN CONVERT(bit, 0) ' +
-      '    WHEN [AccountExpiresDate] < GETDATE() THEN CONVERT(bit, 1) ' +
-      '    ELSE CONVERT(bit, 0) ' +
-      'END')
-     .IsOptional
-    ,DateTimeColumn('AccountExpiresDate').IsOptional
-    ,DateTimeColumn('LastLoginAt').IsOptional
-    ,DateTimeColumn('LockoutEnd').IsOptional
-    ,StringColumn('PasswordHash').HasColumnType('VARBINARY(64)').IsRequired
-    ,IntColumn('PasswordIterations').HasDefaultValueSql('100000').IsRequired
-    ,StringColumn('PasswordSalt').HasColumnType('VARBINARY(32)').IsRequired
-    ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
-    ,GuidColumn('PersonId').IsOptional
-   ])
-   .Constraints([
-     PrimaryKey('Id')
-    ,ForeignKey('PersonId', 'naturals', 'Id').HasPrincipalSchema('person')
-    ,Unique('Name')
-   ])
-   .Indexes([
-     CreateIndex('AccountExpiresDate')
-    ,CreateIndex('LockoutEnd')
-    ,CreateIndex('PersonId')
-   ]);
+  .HasSchema(SchemaName)
+  .Columns([
+    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+   ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
+   ,StringColumn('Description').IsUnicode.IsRequired
+   ,IntColumn('AccessFailedCount').HasDefaultValueSql('0').IsRequired
+   ,ComputedColumn('AccountActivated')
+    .HasSqlAs(
+     'CASE ' +
+     '    WHEN AccountDisabled = 1 THEN CAST(0 AS BIT) ' +
+     '    WHEN LockoutEnd IS NOT NULL AND LockoutEnd > GETDATE() THEN CAST(0 AS BIT) ' +
+     '    WHEN AccountExpiresDate IS NOT NULL AND AccountExpiresDate < GETDATE() THEN CAST(0 AS BIT) ' +
+     '    ELSE CAST(1 AS BIT) ' +
+     'END')
+    .IsOptional
+   ,ComputedColumn('AccountBlockedOut')
+    .HasSqlAs(
+     'CASE ' +
+     '    WHEN LockoutEnd IS NOT NULL AND LockoutEnd > GETDATE() THEN CAST(1 AS BIT) ' +
+     '    ELSE CAST(0 AS BIT) ' +
+     'END')
+    .IsOptional
+   ,BooleanColumn('AccountDisabled').HasDefaultValueSql('0').IsRequired
+   ,ComputedColumn('AccountExpired')
+    .HasSqlAs(
+     'CASE ' +
+     '    WHEN [AccountExpiresDate] IS NULL THEN CAST(0 AS BIT) ' +
+     '    WHEN [AccountExpiresDate] < GETDATE() THEN CAST(1 AS BIT) ' +
+     '    ELSE CAST(0 AS BIT) ' +
+     'END')
+    .IsOptional
+   ,DateTimeColumn('AccountExpiresDate').IsOptional
+   ,DateTimeColumn('LastLoginAt').IsOptional
+   ,DateTimeColumn('LockoutEnd').IsOptional
+   ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
+   ,GuidColumn('PersonId').IsOptional
+  ])
+  .Constraints([
+    PrimaryKey('Id')
+   ,ForeignKey('PersonId', 'naturals', 'Id').HasPrincipalSchema('person')
+   ,Unique('Name')
+  ])
+  .Indexes([
+    CreateIndex('AccountExpiresDate')
+   ,CreateIndex('LockoutEnd')
+   ,CreateIndex('PersonId')
+  ]);
 end;
 
 procedure CreateIdentityUsersTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
-   .HasSchema(SchemaName);
+  .HasSchema(SchemaName);
 end;
 
 initialization

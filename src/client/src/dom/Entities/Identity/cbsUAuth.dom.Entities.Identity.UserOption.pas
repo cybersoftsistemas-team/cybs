@@ -7,7 +7,7 @@ uses
   cbsUAuth.dom.Contracts.Entities.Identity.UserOption;
 
 type
-  TUserOption = class(TInterfacedObject, IUserOption)
+  TIdentityUserOption = class(TInterfacedObject, IIdentityUserOption)
   private
     FId: TGuid;
     FName: string;
@@ -30,44 +30,44 @@ type
 
 implementation
 
-{ TUserOption }
+{ TIdentityUserOption }
 
-function TUserOption.GetChecked: Boolean;
+function TIdentityUserOption.GetChecked: Boolean;
 begin
   Result := FChecked;
 end;
 
-function TUserOption.GetDescription: string;
+function TIdentityUserOption.GetDescription: string;
 begin
   Result := FDescription;
 end;
 
-function TUserOption.GetId: TGuid;
+function TIdentityUserOption.GetId: TGuid;
 begin
   Result := FId;
 end;
 
-function TUserOption.GetName: string;
+function TIdentityUserOption.GetName: string;
 begin
   Result := FName;
 end;
 
-procedure TUserOption.SetChecked(const AValue: Boolean);
+procedure TIdentityUserOption.SetChecked(const AValue: Boolean);
 begin
   FChecked := AValue;
 end;
 
-procedure TUserOption.SetDescription(const AValue: string);
+procedure TIdentityUserOption.SetDescription(const AValue: string);
 begin
   FDescription := AValue;
 end;
 
-procedure TUserOption.SetId(const AValue: TGuid);
+procedure TIdentityUserOption.SetId(const AValue: TGuid);
 begin
   FId := AValue;
 end;
 
-procedure TUserOption.SetName(const AValue: string);
+procedure TIdentityUserOption.SetName(const AValue: string);
 begin
   FName := AValue;
 end;

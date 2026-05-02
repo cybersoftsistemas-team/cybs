@@ -28,12 +28,10 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.DropUniqueConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.EnsureSchemaOperation,
   cbsMigrations.Contracts.Migrations.Operations.ForeignKeyOperation,
-  cbsMigrations.Contracts.Migrations.Operations.IndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.MigrationOperation,
   cbsMigrations.Contracts.Migrations.Operations.PrimaryKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.RenameColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.SqlOperation,
-  cbsMigrations.Contracts.Migrations.Operations.UniqueConstraintOperation,
   cbsMigrations.Migrations.Operations.IncludeColumn,
   cbsMigrations.Schema.Types,
 {SPRING}
