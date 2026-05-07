@@ -64,6 +64,10 @@ contains
   _00000001_00001405_create_address_addresses_address_trigger in 'src\inf\Migrations\_00000001_00001405_create_address_addresses_address_trigger.pas',
   cbsMain.ui.Data.Modules.MainModule in 'src\ui\Data\Modules\cbsMain.ui.Data.Modules.MainModule.pas' {damMain: TUniGUIMainModule},
   cbsMain.ui.Forms.MainForm in 'src\ui\Forms\cbsMain.ui.Forms.MainForm.pas' {frmMain: TUniForm},
-  cbsMain.app.Common.Result in 'src\app\Common\cbsMain.app.Common.Result.pas';
+  cbsMain.app.Common.Result in 'src\app\Common\cbsMain.app.Common.Result.pas',
+  cbsUAuth.dom.General.Common.SystemEmails in 'src\dom\General\Common\cbsUAuth.dom.General.Common.SystemEmails.pas',
+  cbsMain.inf.Entity in 'src\inf\cbsMain.inf.Entity.pas',
+  cbsMain.inf.Repository in 'src\inf\cbsMain.inf.Repository.pas',
+  cbsMain.dom.Contracts.Repository in 'src\dom\Contracts\cbsMain.dom.Contracts.Repository.pas';
 
 end.

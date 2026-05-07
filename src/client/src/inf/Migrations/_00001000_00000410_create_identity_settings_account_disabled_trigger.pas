@@ -22,7 +22,7 @@ uses
   System.SysUtils,
 {PROJECT}
   cbsMain.inf.DbContext,
-  cbsUAuth.dom.Common.Identity.SystemOptions;
+  cbsUAuth.dom.Identity.Common.SystemOptions;
 
 { CreateIdentitySettingsAccountDisabledTrigger }
 
@@ -32,21 +32,21 @@ begin
   var AccountDisabledId :=
     TSystemOptions.AccountDisabledId.ToString.Replace('{','').Replace('}','');
   ASchema.Sql(
-  'CREATE TRIGGER ' + SchemaName + '_' + TableName + '_account_disabled_trigger ' +
-  'ON [' + SchemaName + '].[' + TableName + ']                                  ' +
-  'AFTER INSERT, UPDATE                                                         ' +
-  'AS                                                                           ' +
-  'BEGIN                                                                        ' +
-  '    SET NOCOUNT ON;                                                          ' +
-  '    IF TRIGGER_NESTLEVEL() > 1 RETURN;                                       ' +
-  '    UPDATE u                                                                 ' +
-  '       SET u.AccountDisabled = s.Checked                                     ' +
-  '    FROM [identity].[users] u                                                ' +
-  '    JOIN inserted s                                                          ' +
-  '        ON s.UserId = u.Id                                                   ' +
-  '    WHERE s.OptionId = ''' + AccountDisabledId + '''                         ' +
-  '      AND u.AccountDisabled <> s.Checked;                                    ' +
-  'END;                                                                         ' );
+  Format('CREATE TRIGGER %s_%s_account_disabled_trigger ', [SchemaName, TableName]) +
+  Format('ON [%s].[%s] ', [SchemaName, TableName])                                  +
+         'AFTER INSERT, UPDATE                                                    ' +
+         'AS                                                                      ' +
+         'BEGIN                                                                   ' +
+         '    SET NOCOUNT ON;                                                     ' +
+         '    IF TRIGGER_NESTLEVEL() > 1 RETURN;                                  ' +
+         '    UPDATE u                                                            ' +
+         '       SET u.AccountDisabled = s.Checked                                ' +
+         '    FROM [identity].[users] u                                           ' +
+         '    JOIN inserted s                                                     ' +
+         '        ON s.UserId = u.Id                                              ' +
+  Format('    WHERE s.OptionId = ''%s''', [AccountDisabledId])                      +
+         '    AND u.AccountDisabled <> s.Checked;                                 ' +
+         'END;                                                                    ' );
 end;
 
 initialization

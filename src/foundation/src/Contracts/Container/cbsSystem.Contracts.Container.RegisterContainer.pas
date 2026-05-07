@@ -4,7 +4,6 @@ interface
 
 uses
 {IDE}
-  System.Rtti,
   System.TypInfo,
 {SPRING}
   Spring.Collections;

@@ -4,7 +4,6 @@ interface
 
 uses
 {PROJECT}
-  cbsSystem.Contracts.Translation,
   cbsSystem.Locales.Locale,
   cbsSystem.Support.Types;
 

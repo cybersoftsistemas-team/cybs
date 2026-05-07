@@ -24,9 +24,9 @@ implementation
 uses
 {PROJECT}
   cbsSystem.Support.Container,
-  cbsUAuth.dom.Common.Identity.SystemOptions,
-  cbsUAuth.dom.Common.Identity.SystemUsers,
-  cbsUAuth.dom.Contracts.Services.AuthService;
+  cbsUAuth.dom.Contracts.Services.AuthService,
+  cbsUAuth.dom.Identity.Common.SystemOptions,
+  cbsUAuth.dom.Identity.Common.SystemUsers;
 
 { TdamDbSeed }
 
@@ -47,3 +47,4 @@ begin
 end;
 
 end.
+

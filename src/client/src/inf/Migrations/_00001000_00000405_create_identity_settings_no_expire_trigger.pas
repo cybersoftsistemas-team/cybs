@@ -22,7 +22,7 @@ uses
   System.SysUtils,
 {PROJECT}
   cbsMain.inf.DbContext,
-  cbsUAuth.dom.Common.Identity.SystemOptions;
+  cbsUAuth.dom.Identity.Common.SystemOptions;
 
 { CreateIdentitySettingsNoExpireTrigger }
 
@@ -32,21 +32,21 @@ begin
   var PasswordNeverExpiresId :=
     TSystemOptions.PasswordNeverExpires.ToString.Replace('{','').Replace('}','');
   ASchema.Sql(
-  'CREATE TRIGGER ' + SchemaName + '_' + TableName + '_no_expire_trigger ' +
-  'ON [' + SchemaName + '].[' + TableName + ']                           ' +
-  'AFTER INSERT, UPDATE                                                  ' +
-  'AS                                                                    ' +
-  'BEGIN                                                                 ' +
-  '  SET NOCOUNT ON;                                                     ' +
-  '  UPDATE u                                                            ' +
-  '  SET u.AccountExpiresDate = NULL                                     ' +
-  '  FROM [identity].[users] u                                           ' +
-  '  JOIN inserted s                                                     ' +
-  '  ON s.UserId = u.Id                                                  ' +
-  '  WHERE s.OptionId = ''' + PasswordNeverExpiresId + '''               ' +
-  '  AND s.Checked = 1                                                   ' +
-  '  AND u.AccountExpiresDate IS NOT NULL;                               ' +
-  'END;                                                                  ' );
+  Format('CREATE TRIGGER %s_%s_no_expire_trigger ', [SchemaName, TableName]) +
+  Format('ON [%s].[%s] ', [SchemaName, TableName])                           +
+         'AFTER INSERT, UPDATE                                             ' +
+         'AS                                                               ' +
+         'BEGIN                                                            ' +
+         '  SET NOCOUNT ON;                                                ' +
+         '  UPDATE u                                                       ' +
+         '  SET u.AccountExpiresDate = NULL                                ' +
+         '  FROM [identity].[users] u                                      ' +
+         '  JOIN inserted s                                                ' +
+         '  ON s.UserId = u.Id                                             ' +
+  Format('  WHERE s.OptionId = ''%s''', [PasswordNeverExpiresId])            +
+         '  AND s.Checked = 1                                              ' +
+         '  AND u.AccountExpiresDate IS NOT NULL;                          ' +
+         'END;                                                             ' );
 end;
 
 initialization

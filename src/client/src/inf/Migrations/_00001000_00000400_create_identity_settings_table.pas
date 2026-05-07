@@ -29,12 +29,13 @@ begin
   ASchema.CreateTable(TableName)
    .HasSchema(SchemaName)
    .Columns([
-     GuidColumn('UserId').IsRequired
+     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    ,GuidColumn('UserId').IsRequired
     ,GuidColumn('OptionId').IsRequired
     ,BooleanColumn('Checked').HasDefaultValueSql('0').IsRequired
    ])
    .Constraints([
-     PrimaryKey(['UserId', 'OptionId'])
+     PrimaryKey('Id')
     ,ForeignKey('UserId', 'users', 'Id')
     ,ForeignKey('OptionId', 'options', 'Id')
    ])

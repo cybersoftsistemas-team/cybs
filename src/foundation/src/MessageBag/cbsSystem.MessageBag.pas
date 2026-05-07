@@ -20,7 +20,9 @@ type
     function GetEnumerator: IMessageBagEnumerator;
     function Has(const AKey: string): Boolean;
     function IsEmpty: Boolean;
+    function Messages: string;
     procedure AddRange(const AValues: IMessageBag);
+    procedure Clear;
     property Items[const AKey: string]: IMessageBagItems read GetItem; default;
   end;
 
@@ -97,6 +99,15 @@ begin
   Result := FMessageBagList.IsEmpty;
 end;
 
+function TMessageBag.Messages: string;
+begin
+  Result := '';
+  for var LMessageBag in FMessageBagList do
+  begin
+    Result := Concat(Result, LMessageBag.Value.Messages);
+  end;
+end;
+
 procedure TMessageBag.AddRange(const AValues: IMessageBag);
 begin
   for var LMessages in AValues do
@@ -105,6 +116,14 @@ begin
     begin
       Add(LMessages.Key, LItem.Message);
     end;
+  end;
+end;
+
+procedure TMessageBag.Clear;
+begin
+  for var LMessageBag in FMessageBagList do
+  begin
+    LMessageBag.Value.Clear;
   end;
 end;
 

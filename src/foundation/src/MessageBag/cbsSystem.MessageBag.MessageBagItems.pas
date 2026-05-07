@@ -16,6 +16,8 @@ type
     function Add(const AMessage: string): IMessageBagItems;
     function GetEnumerator: IMessageBagItemsEnumerator;
     function IsEmpty: Boolean;
+    function Messages: string;
+    procedure Clear;
   end;
 
 implementation
@@ -53,6 +55,20 @@ end;
 function TMessageBagItems.IsEmpty: Boolean;
 begin
   Result := FMessageBagItemList.IsEmpty;
+end;
+
+function TMessageBagItems.Messages: string;
+begin
+  Result := '';
+  for var LMessageBagItem in FMessageBagItemList do
+  begin
+    Result := Concat(Result, LMessageBagItem.Message, #13);
+  end;
+end;
+
+procedure TMessageBagItems.Clear;
+begin
+  FMessageBagItemList.Clear;
 end;
 
 end.

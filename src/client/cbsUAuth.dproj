@@ -191,40 +191,26 @@
         <DCCReference Include="src\dom\Contracts\Services\cbsUAuth.dom.Contracts.Services.AuthService.pas"/>
         <DCCReference Include="src\app\Services\cbsUAuth.app.Services.AuthService.pas"/>
         <DCCReference Include="src\app\Services\cbsUAuth.app.Services.AuthError.pas"/>
-        <DCCReference Include="src\dom\Contracts\Entities\Identity\cbsUAuth.dom.Contracts.Entities.Identity.Config.pas"/>
-        <DCCReference Include="src\dom\Contracts\Entities\Identity\cbsUAuth.dom.Contracts.Entities.Identity.User.pas"/>
-        <DCCReference Include="src\dom\Contracts\Entities\Identity\cbsUAuth.dom.Contracts.Entities.Identity.UserOption.pas"/>
-        <DCCReference Include="src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.User.pas"/>
-        <DCCReference Include="src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.UserOption.pas"/>
-        <DCCReference Include="src\inf\Repositories\Identity\cbsUAuth.inf.Repositories.Identity.UserRepository.pas"/>
-        <DCCReference Include="src\dom\Contracts\Repositories\Identity\cbsUAuth.dom.Contracts.Repositories.Identity.UserRepository.pas"/>
-        <DCCReference Include="src\dom\Entities\Identity\cbsUAuth.dom.Entities.Identity.Config.pas"/>
-        <DCCReference Include="src\dom\Contracts\Repositories\Identity\cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository.pas"/>
-        <DCCReference Include="src\inf\Repositories\Identity\cbsUAuth.inf.Repositories.Identity.ConfigRepository.pas"/>
         <DCCReference Include="src\dom\Exceptions\AuthError\cbsUAuth.dom.Exceptions.AuthError.pas"/>
         <DCCReference Include="src\app\Common\cbsUAuth.app.Common.AuthResult.pas"/>
-        <DCCReference Include="src\dom\Common\Identity\cbsUAuth.dom.Common.Identity.SystemUsers.pas"/>
         <DCCReference Include="src\inf\ioc\Modules\cbsUAuth.inf.iocModules.ContainerRoot.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000105_create_identity_users_no_expire_trigger.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000405_create_identity_settings_no_expire_trigger.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000110_create_identity_users_account_disabled_trigger.pas"/>
         <DCCReference Include="src\inf\Migrations\_00001000_00000410_create_identity_settings_account_disabled_trigger.pas"/>
-        <DCCReference Include="src\dom\Common\Identity\cbsUAuth.dom.Common.Identity.SystemOptions.pas"/>
         <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginChangePassword.pas">
             <Form>frmLoginChangePassword</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\inf\Repositories\DataModules\Identity\cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityConfig.pas">
-            <Form>damIdentityConfig</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\inf\Repositories\DataModules\Identity\cbsUAuth.inf.Repositories.DataModules.Identity.damIdentityUser.pas">
-            <Form>damIdentityUser</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
+        <DCCReference Include="src\inf\Migrations\_00001000_00000605_create_domain_domains_allow_access_to_admin_trigger.pas"/>
+        <DCCReference Include="src\inf\Identity\Entities\cbsUAuth.inf.Identity.Entities.pas"/>
+        <DCCReference Include="src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityUserRepository.pas"/>
+        <DCCReference Include="src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityUserRepository.pas"/>
+        <DCCReference Include="src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityConfigRepository.pas"/>
+        <DCCReference Include="src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityConfigRepository.pas"/>
+        <DCCReference Include="src\dom\Identity\Common\cbsUAuth.dom.Identity.Common.SystemOptions.pas"/>
+        <DCCReference Include="src\dom\Identity\Common\cbsUAuth.dom.Identity.Common.SystemUsers.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

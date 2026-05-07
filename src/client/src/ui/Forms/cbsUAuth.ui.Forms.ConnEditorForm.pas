@@ -86,7 +86,6 @@ uses
 {IDE}
   FireDAC.Stan.Util,
   System.SysUtils,
-  System.Types,
   System.UITypes,
   System.Variants,
 {PROJECT}

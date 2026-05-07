@@ -5,7 +5,6 @@ interface
 uses
 {IDE}
   System.Rtti,
-  System.SysUtils,
 {PROJECT}
   cbsSystem.Contracts.PathTree;
 

@@ -10,10 +10,14 @@ uses
 
 type
   TAuthService = class(TInterfacedObject, IAuthService)
+  private
+    procedure BeforeChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword, APasswordConfirmation: string; var AMessages: IMessageBag);
+    procedure OnChangePassword(const AUserId: TGuid; const APassword: string; const AChangePasswordOnNextLogin: Boolean; var AMessages: IMessageBag);
+    procedure UpdatePassword(AUserId: TGuid; const APassword: string; const AChangePasswordOnNextLogin: Boolean = False; const AForce: Boolean = False);
   public
     function Authenticate(const AUserName, APassword: string): TAuthResult;
-    function ChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword: string; out AMessages: IMessageBag;
-      const AChangePasswordOnNextLogin: Boolean = False): Boolean;
+    function ChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword, APasswordConfirmation: string;
+      const AChangePasswordOnNextLogin: Boolean = False): TChangePasswordResult;
     procedure TryCreateAdminWithTemporaryPassword;
   end;
 
@@ -25,24 +29,24 @@ uses
 {PROJECT}
   cbsSystem.Contracts.Validation.Rules.PasswordPolicy,
   cbsSystem.Support.Container,
-  cbsUAuth.app.Services.AuthError,
-  cbsUAuth.dom.Common.Identity.SystemUsers,
-  cbsUAuth.dom.Contracts.Repositories.Identity.ConfigRepository,
-  cbsUAuth.dom.Contracts.Repositories.Identity.UserRepository,
   cbsUAuth.dom.Contracts.Services.PasswordHasher,
-  cbsUAuth.dom.Exceptions.AuthError;
+  cbsUAuth.dom.Identity.Common.SystemUsers,
+  cbsUAuth.dom.Exceptions.AuthError,
+  cbsUAuth.inf.Identity.Contracts.Repositories.IdentityConfigRepository,
+  cbsUAuth.inf.Identity.Contracts.Repositories.IdentityUserRepository,
+  cbsUAuth.inf.Identity.Entities;
 
 { TAuthService }
 
 function TAuthService.Authenticate(const AUserName, APassword: string): TAuthResult;
 begin
   var LUserRep := App.Make<IIdentityUserRepository>;
-  var LUser := LUserRep.GetByUserName(AUserName);
-  if LUser.IsEmpty then
+  var LUser := LUserRep.Find(AUserName);
+  if not Assigned(LUser) then
   begin
-    Exit(TAuthResult.Fail(LUser, aeUserNotFound));
+    Exit(TAuthResult.Fail(aeUserNotFound));
   end;
-  if LUser.IsLocked then
+  if LUser.AccountBlockedOut then
   begin
     Exit(TAuthResult.Fail(LUser, aeAccountLocked));
   end;
@@ -51,7 +55,7 @@ begin
     Exit(TAuthResult.Fail(LUser, aeAccountNotActivated));
   end;
   var LHasher := App.Make<IPasswordHasher>;
-  if not LHasher.Verify(APassword, LUser.Hash, LUser.Salt, LUser.Iterations) then
+  if not LHasher.Verify(APassword, LUser.Password.Hash, LUser.Password.Salt, LUser.Password.Iterations) then
   begin
     LUserRep.IncrementFailed(LUser.Id);
     Exit(TAuthResult.Fail(LUser, aeInvalidCredentials));
@@ -60,63 +64,119 @@ begin
   Result := TAuthResult.Ok(LUser);
 end;
 
-function TAuthService.ChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword: string; out AMessages: IMessageBag;
-  const AChangePasswordOnNextLogin: Boolean): Boolean;
+function TAuthService.ChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword, APasswordConfirmation: string;
+  const AChangePasswordOnNextLogin: Boolean): TChangePasswordResult;
+
+  function ActionResult(const AMessages: IMessageBag): TChangePasswordResult;
+  begin
+    if not AMessages.IsEmpty then
+    begin
+      Exit(TChangePasswordResult.Fail(AMessages));
+    end;
+    Result := TChangePasswordResult.Ok(AMessages);
+  end;
+
 begin
-  Result := False;
-  AMessages := App.Make<IMessageBag>;
-  var LUserRep := App.Make<IIdentityUserRepository>;
-  var LUser := LUserRep.GetById(AUserId);
-  if LUser.IsEmpty then Exit;
-  var LHasher := App.Make<IPasswordHasher>;
-  if not LHasher.Verify(ACurrentPassword, LUser.Hash, LUser.Salt, LUser.Iterations) then
-  begin
-    AMessages.Add('password', 'current_password');
+  var LMessages := App.Make<IMessageBag>;
+  try
+    BeforeChangePassword(AUserId, ACurrentPassword, ANewPassword, APasswordConfirmation, LMessages);
+    OnChangePassword(AUserId, ANewPassword, AChangePasswordOnNextLogin, LMessages);
+    Result := ActionResult(LMessages);
+  except
+    on E: Exception do
+    begin
+      LMessages.Clear;
+      LMessages.Add('Erro', E.Message);
+      Result := TChangePasswordResult.Fail(LMessages);
+    end;
   end;
-  var LPasswordPolicy := App.Make<IPasswordPolicy>;
-  if not LPasswordPolicy.Min(8).Letters.MixedCase.Numbers.Symbols.Passes('Nova senha', ANewPassword) then
+end;
+
+procedure TAuthService.BeforeChangePassword(const AUserId: TGuid; const ACurrentPassword, ANewPassword, APasswordConfirmation: string; var AMessages: IMessageBag);
+begin
+  var LUser := App.Make<IIdentityUserRepository>.Find(AUserId);
+  if not Assigned(LUser) then
   begin
-    AMessages.AddRange(LPasswordPolicy.Messages);
+    AMessages.Add('password', 'user.notfound');
+    Exit;
   end;
+  try
+    if not App.Make<IPasswordHasher>.Verify(
+      ACurrentPassword,
+      LUser.Password.Hash,
+      LUser.Password.Salt,
+      LUser.Password.Iterations
+    ) then
+    begin
+      AMessages.Add('password', 'current_password');
+    end;
+    var LPasswordPolicy := App.Make<IPasswordPolicy>;
+    if not LPasswordPolicy.Min(8).Letters.MixedCase.Numbers.Symbols.Passes('Nova senha', ANewPassword) then
+    begin
+      AMessages.AddRange(LPasswordPolicy.Messages);
+    end;
+    if not AnsiSameStr(ANewPassword, APasswordConfirmation) then
+    begin
+      AMessages.Add('password', 'confirmed', [['attribute', 'Nova senha']]);
+    end;
+  finally
+    FreeAndNil(LUser);
+  end;
+end;
+
+procedure TAuthService.OnChangePassword(const AUserId: TGuid; const APassword: string; const AChangePasswordOnNextLogin: Boolean; var AMessages: IMessageBag);
+begin
   if not AMessages.IsEmpty then Exit;
-  var LConfigRep := App.Make<IIdentityConfigRepository>;
-  var LIterations := LConfigRep.PasswordIterations;
-  var LNewSalt := LHasher.GenerateSalt;
-  LUserRep.UpdatePassword(
-    LUser.Id,
-    LHasher.Hash(
-      ANewPassword,
-      LNewSalt,
-      LIterations
-    ),
-    LNewSalt,
-    LIterations,
-    AChangePasswordOnNextLogin // O usuário deve alterar a senha no próximo logon
-  );
-  Result := True;
+  UpdatePassword(AUserId, APassword, AChangePasswordOnNextLogin, True);
 end;
 
 procedure TAuthService.TryCreateAdminWithTemporaryPassword;
 begin
+  var LUser := App.Make<IIdentityUserRepository>.Find(TSystemUsers.AdministratorId);
+  try
+    if Assigned(LUser) and not LUser.PasswordExists then
+    begin
+      UpdatePassword(LUser.Id, TSystemUsers.TemporaryPassword, True);
+    end;
+  finally
+    FreeAndNil(LUser);
+  end;
+end;
+
+procedure TAuthService.UpdatePassword(AUserId: TGuid; const APassword: string; const AChangePasswordOnNextLogin: Boolean = False; const AForce: Boolean = False);
+begin
+  var LUser: TIdentityUserEntity;
   var LUserRep := App.Make<IIdentityUserRepository>;
-  var LUser := LUserRep.GetById(TSystemUsers.AdministratorId);
-  if not LUser.IsEmpty and not LUser.IsPasswordExists then
+  if not AForce then
   begin
-    var LConfigRep := App.Make<IIdentityConfigRepository>;
-    var LIterations := LConfigRep.PasswordIterations;
-    var LHasher := App.Make<IPasswordHasher>;
-    var LSalt := LHasher.GenerateSalt;
-    LUserRep.UpdatePassword(
-      LUser.Id,
-      LHasher.Hash(
-        TSystemUsers.TemporaryPassword,
+    LUser := LUserRep.Find(AUserId);
+    try
+      AUserId := LUser.Id;
+    finally
+      FreeAndNil(LUser);
+    end;
+  end;
+  if not AUserId.IsEmpty then
+  begin
+    var LConfig := App.Make<IIdentityConfigRepository>.GetConfig;
+    try
+      var LIterations := LConfig.PasswordIterations;
+      var LHasher := App.Make<IPasswordHasher>;
+      var LSalt := LHasher.GenerateSalt;
+      LUserRep.UpdatePassword(
+        AUserId,
+        LHasher.Hash(
+          APassword,
+          LSalt,
+          LIterations
+        ),
         LSalt,
-        LIterations
-      ),
-      LSalt,
-      LIterations,
-      True // O usuário deve alterar a senha no próximo logon
-    );
+        LIterations,
+        AChangePasswordOnNextLogin // O usuário deve alterar a senha no próximo logon
+      );
+    finally
+      FreeAndNil(LConfig)
+    end;
   end;
 end;
 

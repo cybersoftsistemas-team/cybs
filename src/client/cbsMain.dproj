@@ -169,6 +169,10 @@
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
         <DCCReference Include="src\app\Common\cbsMain.app.Common.Result.pas"/>
+        <DCCReference Include="src\dom\General\Common\cbsUAuth.dom.General.Common.SystemEmails.pas"/>
+        <DCCReference Include="src\inf\cbsMain.inf.Entity.pas"/>
+        <DCCReference Include="src\inf\cbsMain.inf.Repository.pas"/>
+        <DCCReference Include="src\dom\Contracts\cbsMain.dom.Contracts.Repository.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -8,6 +8,7 @@ uses
   FireDAC.Comp.Client,
 {PROJECT}
   cbsSystem.Contracts.Database,
+  cbsSystem.Contracts.Database.Persistence,
   cbsSystem.Contracts.Module.ServerModule;
 
 type
@@ -30,6 +31,7 @@ type
     procedure SetDatabaseFields;
     procedure SetId(const AValue: TGuid);
   protected
+    function GetPersistence: IPersistence; virtual; abstract;
     function IsPossibleExecuteMigrations: Boolean; virtual;
     procedure BeforeExecuteMigrations; virtual;
     procedure OnExecuteMigrations; virtual;
@@ -44,6 +46,7 @@ type
     property ConnectionName: string read GetConnectionName write SetConnectionName;
     property ConnectionString: string read GetConnectionString write SetConnectionString;
     property Id: TGuid read GetId write SetId;
+    property Persistence: IPersistence read GetPersistence;
   end;
 
 implementation

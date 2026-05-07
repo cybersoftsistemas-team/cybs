@@ -22,8 +22,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsMain.ui.Data.Modules.MainModule,
-  cbsSystem.Support.ServerModule;
+  cbsMain.ui.Data.Modules.MainModule;
 
 function damDb: TdamDb;
 begin

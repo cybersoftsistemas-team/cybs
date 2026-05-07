@@ -157,7 +157,7 @@ begin
   inherited;
   InitServerModule(Self);
   FDataStorage := TcbsDataStorage.Create(Self);
-  FDatabase := TDatabase.Create(Self);
+  FDatabase := TDatabase.Create(Self, TdamDb);
   RegisterInternalSystemServerModule(Self);
   FDatabase.ExecuteMigrations;
   FTranslator := GlobalContainer.Resolve<ITranslator>;

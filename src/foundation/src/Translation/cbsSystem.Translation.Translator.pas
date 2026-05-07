@@ -4,10 +4,9 @@ interface
 
 uses
 {PROJECT}
-  cbsSystem.Contracts.Config,
   cbsSystem.Contracts.Translation.Translator,
   cbsSystem.Locales.Locale,
-  cbsSystem.PathTree,
+
   cbsSystem.Support.Types;
 
 type

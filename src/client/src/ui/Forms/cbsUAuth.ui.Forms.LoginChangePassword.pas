@@ -36,9 +36,10 @@ implementation
 {$R *.dfm}
 
 uses
+{IDE}
+  System.UITypes,
 {PROJECT}
   cbsMain.ui.Data.Modules.MainModule,
-  cbsSystem.Contracts.MessageBag,
   cbsSystem.Support.Container,
   cbsUAuth.dom.Contracts.Services.AuthService;
 
@@ -51,24 +52,30 @@ end;
 
 procedure TfrmLoginChangePassword.actOkExecute(Sender: TObject);
 begin
-  if ValidateRequiredFields then
+  if not ValidateRequiredFields then Exit;
+  var LActionResult := App.Make<IAuthService>.ChangePassword(
+    FUserId
+   ,edtCurrentPassword.Text
+   ,edtNewPassword.Text
+   ,edtConfirmPassword.Text
+  );
+  if not LActionResult.IsSuccess then
   begin
-    var LErrors: IMessageBag;
-    if not App.Make<IAuthService>.ChangePassword(FUserId, edtCurrentPassword.Text, edtNewPassword.Text, LErrors) then
-    begin
-      var LMessage := '';
-      for var LError in LErrors['password'] do
+    edtCurrentPassword.Clear;
+    edtNewPassword.Clear;
+    edtConfirmPassword.Clear;
+    MessageBox('Erro', 'Erro ao alterar a senha do próximo logon.', LActionResult.Value.Messages, mtError, [mbOK],
+      procedure(const AResult: Integer)
       begin
-        LMessage := Concat(LMessage, LError.Message, #13);
-      end;
-      edtCurrentPassword.Clear;
-      edtNewPassword.Clear;
-      edtConfirmPassword.Clear;
-      MessageBox('Erro', 'Erro ao alterar a senha no próximo logon.', LMessage, mtError, [mbOK]);
-      Exit;
-    end;
-    inherited;
+        edtCurrentPassword.SetFocus;
+      end);
+    Exit;
   end;
+  MessageDlg('A senha foi alterada com sucesso.', TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],
+    procedure(Sender: TComponent; Result: Integer)
+    begin
+      inherited;
+    end);
 end;
 
 procedure TfrmLoginChangePassword.UniFormCreate(Sender: TObject);

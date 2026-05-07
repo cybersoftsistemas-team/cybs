@@ -23,7 +23,9 @@ type
     function GetItem(const AKey: string): IMessageBagItems;
     function Has(const AKey: string): Boolean;
     function IsEmpty: Boolean;
+    function Messages: string;
     procedure AddRange(const AValues: IMessageBag);
+    procedure Clear;
     property Items[const AKey: string]: IMessageBagItems read GetItem; default;
   end;
 

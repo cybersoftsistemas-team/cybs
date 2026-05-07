@@ -19,6 +19,8 @@ type
     function Add(const AMessage: string): IMessageBagItems;
     function GetEnumerator: IMessageBagItemsEnumerator;
     function IsEmpty: Boolean;
+    function Messages: string;
+    procedure Clear;
   end;
 
   IMessageBagItemList = IList<IMessageBagItem>;

@@ -35,25 +35,12 @@ inherited damDbSeed: TdamDbSeed
           '--   ElsOtherId  = 02A7433E-F36B-1410-871D-007892B87384'
           '---------------------------------------------------------'
           ''
-          
-            'DECLARE @ElsEmailsId UNIQUEIDENTIFIER = '#39'FCA6433E-F36B-1410-871D' +
-            '-007892B87384'#39';'
-          
-            'DECLARE @ElsEmailId  UNIQUEIDENTIFIER = '#39'FEA6433E-F36B-1410-871D' +
-            '-007892B87384'#39';'
-          
-            'DECLARE @ElsEmail2Id UNIQUEIDENTIFIER = '#39'01A7433E-F36B-1410-871D' +
-            '-007892B87384'#39';'
-          
-            'DECLARE @ElsOtherId  UNIQUEIDENTIFIER = '#39'02A7433E-F36B-1410-871D' +
-            '-007892B87384'#39';'
-          ''
           '---------------------------------------------------------'
           '-- Emails (Pai)'
           '---------------------------------------------------------'
-          'MERGE INTO general.categories AS T'
+          ';MERGE INTO general.categories AS T'
           'USING (VALUES '
-          '    (@ElsEmailsId, '#39'Emails'#39', NULL)'
+          '    (:ElsEmailsId, '#39'Emails'#39', NULL)'
           ') AS S (Id, Name, ParentId)'
           'ON T.Id = S.Id'
           'WHEN MATCHED THEN '
@@ -65,9 +52,9 @@ inherited damDbSeed: TdamDbSeed
           '---------------------------------------------------------'
           '-- Email'
           '---------------------------------------------------------'
-          'MERGE INTO general.categories AS T'
+          ';MERGE INTO general.categories AS T'
           'USING (VALUES '
-          '    (@ElsEmailId, '#39'Email'#39', @ElsEmailsId)'
+          '    (:ElsEmailId, '#39'Email'#39', :ElsEmailsId)'
           ') AS S (Id, Name, ParentId)'
           'ON T.Id = S.Id'
           'WHEN MATCHED THEN'
@@ -79,9 +66,9 @@ inherited damDbSeed: TdamDbSeed
           '---------------------------------------------------------'
           '-- Email 2'
           '---------------------------------------------------------'
-          'MERGE INTO general.categories AS T'
+          ';MERGE INTO general.categories AS T'
           'USING (VALUES '
-          '    (@ElsEmail2Id, '#39'Email 2'#39', @ElsEmailsId)'
+          '    (:ElsEmail2Id, '#39'Email 2'#39', :ElsEmailsId)'
           ') AS S (Id, Name, ParentId)'
           'ON T.Id = S.Id'
           'WHEN MATCHED THEN'
@@ -93,9 +80,9 @@ inherited damDbSeed: TdamDbSeed
           '---------------------------------------------------------'
           '-- Outro'
           '---------------------------------------------------------'
-          'MERGE INTO general.categories AS T'
+          ';MERGE INTO general.categories AS T'
           'USING (VALUES '
-          '    (@ElsOtherId, '#39'Outro'#39', @ElsEmailsId)'
+          '    (:ElsOtherId, '#39'Outro'#39', :ElsEmailsId)'
           ') AS S (Id, Name, ParentId)'
           'ON T.Id = S.Id'
           'WHEN MATCHED THEN'
@@ -1913,6 +1900,26 @@ inherited damDbSeed: TdamDbSeed
     Params = <
       item
         Name = 'CountryId'
+        DataType = ftGuid
+        ParamType = ptInput
+      end
+      item
+        Name = 'ElsEmailsId'
+        DataType = ftGuid
+        ParamType = ptInput
+      end
+      item
+        Name = 'ElsEmailId'
+        DataType = ftGuid
+        ParamType = ptInput
+      end
+      item
+        Name = 'ElsEmail2Id'
+        DataType = ftGuid
+        ParamType = ptInput
+      end
+      item
+        Name = 'ElsOtherId'
         DataType = ftGuid
         ParamType = ptInput
       end>

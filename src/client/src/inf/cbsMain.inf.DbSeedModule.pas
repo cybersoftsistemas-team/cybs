@@ -22,7 +22,9 @@ implementation
 
 uses
 {IDE}
-  System.SysUtils;
+  System.SysUtils,
+{PROJTECT}
+  cbsUAuth.dom.General.Common.SystemEmails;
 
 { TdamDbSeed }
 
@@ -30,6 +32,11 @@ procedure TdamDbSeed.BeforeRunSeed;
 begin
   inherited;
   sptSeed.Params.ParamByName('CountryId').AsGuid := StringToGUID('{46A7433E-F36B-1410-871D-007892B87384}');
+  // General Emails...
+  sptSeed.Params.ParamByName('ElsEmailsId').AsGuid := TSystemEmails.ElsEmailsIdId;
+  sptSeed.Params.ParamByName('ElsEmailId').AsGuid := TSystemEmails.ElsEmailIdId;
+  sptSeed.Params.ParamByName('ElsEmail2Id').AsGuid := TSystemEmails.ElsEmail2IdId;
+  sptSeed.Params.ParamByName('ElsOtherId').AsGuid := TSystemEmails.ElsOtherIdId;
 end;
 
 end.

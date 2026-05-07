@@ -3,8 +3,6 @@ unit cbsSystem.Translation.Translation;
 interface
 
 uses
-{IDE}
-  System.Rtti,
 {PROJECT}
   cbsSystem.Contracts.Translation,
   cbsSystem.PathTree;

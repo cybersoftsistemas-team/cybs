@@ -22,7 +22,7 @@
             <Dependencies>foundation\cbsSystem.dproj</Dependencies>
         </Projects>
         <Projects Include="client\cbsUAuth.dproj">
-            <Dependencies>client\cbsMain.dproj</Dependencies>
+            <Dependencies>foundation\cbsSystem.dproj;client\cbsMain.dproj</Dependencies>
         </Projects>
     </ItemGroup>
     <ProjectExtensions>
@@ -86,13 +86,13 @@
     <Target Name="cbsMain:Make" DependsOnTargets="cbsSystem:Make">
         <MSBuild Projects="client\cbsMain.dproj" Targets="Make"/>
     </Target>
-    <Target Name="cbsUAuth" DependsOnTargets="cbsMain">
+    <Target Name="cbsUAuth" DependsOnTargets="cbsSystem;cbsMain">
         <MSBuild Projects="client\cbsUAuth.dproj"/>
     </Target>
-    <Target Name="cbsUAuth:Clean" DependsOnTargets="cbsMain:Clean">
+    <Target Name="cbsUAuth:Clean" DependsOnTargets="cbsSystem:Clean;cbsMain:Clean">
         <MSBuild Projects="client\cbsUAuth.dproj" Targets="Clean"/>
     </Target>
-    <Target Name="cbsUAuth:Make" DependsOnTargets="cbsMain:Make">
+    <Target Name="cbsUAuth:Make" DependsOnTargets="cbsSystem:Make;cbsMain:Make">
         <MSBuild Projects="client\cbsUAuth.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">

@@ -4,7 +4,6 @@ interface
 
 uses
 {PROJECT}
-  cbsSystem.Contracts.Translation,
   cbsSystem.Translation.Translation;
 
 type
@@ -23,6 +22,7 @@ uses
 
 procedure TLangPtBr.SetTranslations;
 begin
+  &Set('confirmed', 'A confirmação para o campo :attribute não coincide.');
   &Set('current_password', 'A senha atual está incorreta.');
 
   // min
@@ -42,6 +42,9 @@ begin
   &Set('password.mixed'  , 'A :attribute deve conter pelo menos uma letra maiúscula e uma minúscula.');
   &Set('password.numbers', 'A :attribute deve conter pelo menos um número.');
   &Set('password.symbols', 'A :attribute deve conter pelo menos um símbolo.');
+
+  // user
+  &Set('user.notfound', 'O usuário não pôde ser encontrado.');
 end;
 
 end.

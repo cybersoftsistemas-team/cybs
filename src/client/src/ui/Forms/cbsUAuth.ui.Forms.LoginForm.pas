@@ -70,8 +70,8 @@ uses
   cbsSystem.Support.Form,
   cbsSystem.Support.RunTime,
   cbsSystem.Support.ServerModule,
-  cbsUAuth.dom.Common.Identity.SystemOptions,
-  cbsUAuth.dom.Contracts.Entities.Identity.UserOption,
+  cbsUAuth.dom.Identity.Common.SystemOptions,
+  cbsUAuth.inf.Identity.Entities,
   cbsUAuth.ui.Data.Modules.LoginModule,
   cbsUAuth.ui.Forms.CustomerRegistrationForm,
   cbsUAuth.ui.Forms.LoginChangePassword,
@@ -168,25 +168,30 @@ begin
   if LResult.IsSuccess then
   begin
      var LUser := LResult.Value;
-     if LUser.Settings.First(
-       function(const o: IIdentityUserOption): Boolean
-       begin
-         Result := IsEqualGUID(o.Id, TSystemOptions.ChangePasswordOnNextLoginId);
-       end
-     ).Checked then
-     begin
-       AModalResult := mrNone;
-       MessageDlg('Você precisa alterar sua senha para continuar.', TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],
-         procedure(Sender: TComponent; Result: Integer)
+     try
+       if LUser.Settings.First(
+         function(const ASetting: TIdentitySettingEntity): Boolean
          begin
-           damLogin.ClearUserPassword;
-           frmLoginChangePassword.UserId := LUser.Id;
-           frmLoginChangePassword.ShowModal(
-             procedure(Sender: TComponent; Result: Integer)
-             begin
-               UpdateUi;
-             end);
-         end);
+           Result := IsEqualGUID(ASetting.OptionId, TSystemOptions.ChangePasswordOnNextLoginId);
+         end
+       ).Checked then
+       begin
+         AModalResult := mrNone;
+         var LUserId := LUser.Id;
+         MessageDlg('Você precisa alterar sua senha para continuar.', TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],
+           procedure(Sender: TComponent; Result: Integer)
+           begin
+             damLogin.ClearUserPassword;
+             frmLoginChangePassword.UserId := LUserId;
+             frmLoginChangePassword.ShowModal(
+               procedure(Sender: TComponent; Result: Integer)
+               begin
+                 UpdateUi;
+               end);
+           end);
+       end;
+     finally
+       FreeAndNil(LUser);
      end;
   end;
 end;

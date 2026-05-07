@@ -68,8 +68,6 @@ uses
   cbsSystem.Support.Module,
   cbsSystem.Support.ServerModule,
   cbsUAuth.app.Services.AuthError,
-  cbsUAuth.app.Services.AuthService,
-  cbsUAuth.dom.Contracts.Entities.Identity.User,
   cbsUAuth.dom.Contracts.Services.AuthService,
   cbsUAuth.dom.Exceptions.AuthError;
 
@@ -88,26 +86,22 @@ end;
 
 function  TdamLogin.AuthenticateUser(const AUserName, APassword: string): TAuthResult;
 begin
-  var LAuth := App.Make<IAuthService>;
-  try
-    Result := LAuth.Authenticate(mtbUSEName.AsString, mtbUSEPassword.AsString);
-    if not Result.IsSuccess then
-    begin
-      ClearUserPassword;
-      mtbUSEPassword.FocusControl;
-      var LUser := Result.Value;
+  Result := App.Make<IAuthService>.Authenticate(mtbUSEName.AsString, mtbUSEPassword.AsString);
+  if not Result.IsSuccess then
+  begin
+    ClearUserPassword;
+    mtbUSEPassword.FocusControl;
+    var LUser := Result.Value;
+    try
       case Result.Error of
         aeAccountLocked:
-        begin
-          var LMinutes := Ceil((LUser.LockoutEnd - Now) * 24 * 60);
-          raise Exception.CreateFmt(AuthErrorToMessage(aeAccountLocked), [LMinutes]);
-        end;
+          raise Exception.CreateFmt(AuthErrorToMessage(aeAccountLocked), [Ceil((LUser.LockoutEnd.Value - Now) * 24 * 60)]);
         else
           raise Exception.Create(AuthErrorToMessage(Result.Error));
       end;
+    finally
+      FreeAndNil(LUser);
     end;
-  finally
-    App.Release(LAuth);
   end;
 end;
 

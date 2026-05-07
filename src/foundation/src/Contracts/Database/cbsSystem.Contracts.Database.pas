@@ -2,12 +2,17 @@ unit cbsSystem.Contracts.Database;
 
 interface
 
+uses
+{PROJECT}
+  cbsSystem.Contracts.Database.Persistence;
+
 type
   IcbsDatabase = interface(IUnknown)
     ['{7A0C9AF5-5E45-4BDC-9CF0-8826F7B2C003}']
     function GetConnectionName: string;
     function GetConnectionString: string;
     function GetId: TGuid;
+    function GetPersistence: IPersistence;
     procedure BeginUpdate;
     procedure CancelUpdate;
     procedure Clear;
@@ -19,6 +24,7 @@ type
     property ConnectionName: string read GetConnectionName write SetConnectionName;
     property ConnectionString: string read GetConnectionString write SetConnectionString;
     property Id: TGuid read GetId write SetId;
+    property Persistence: IPersistence read GetPersistence;
   end;
 
 implementation
