@@ -1,4 +1,4 @@
-unit cbsUAuth.inf.DbSeedModule;
+unit cbsUAuth.identity.inf.Seeders.damDbIdentitySeed;
 
 interface
 
@@ -9,7 +9,7 @@ uses
   System.SysUtils, System.Classes, FireDAC.UI.Intf, FireDAC.Stan.Async, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Stan.Intf, FireDAC.Comp.Script;
 
 type
-  TdamDbSeed = class(TDatabaseSeederModule)
+  TdamDbIdentitySeed = class(TDatabaseSeederModule)
   protected
     procedure AfterRunSeed; override;
     procedure BeforeRunSeed; override;
@@ -29,9 +29,9 @@ uses
   cbsUAuth.app.Identity.Contracts.Services.UserTemporaryPasswordService,
   cbsUAuth.dom.Identity.Common.SystemOptions;
 
-{ TdamDbSeed }
+{ damDbIdentitySeed }
 
-procedure TdamDbSeed.AfterRunSeed;
+procedure TdamDbIdentitySeed.AfterRunSeed;
 begin
   inherited;
   var LUser := App.Make<IIdentityUserRepository>.Find(TSystemUsers.AdministratorId);
@@ -48,7 +48,7 @@ begin
   end;
 end;
 
-procedure TdamDbSeed.BeforeRunSeed;
+procedure TdamDbIdentitySeed.BeforeRunSeed;
 begin
   inherited;
   sptSeed.Params.ParamByName('AccountDisabledId').AsGuid := TSystemOptions.AccountDisabledId;

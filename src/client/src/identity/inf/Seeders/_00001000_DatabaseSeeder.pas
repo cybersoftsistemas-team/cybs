@@ -4,11 +4,11 @@ interface
 
 uses
 {PROJECT}
-  cbsUAuth.inf.DbSeedModule,
+  cbsUAuth.identity.inf.Seeders.damDbIdentitySeed,
   cbsSystem.Database.Seeders.DatabaseSeeder;
 
 type
-  TcbsUAuthDatabaseSeeder = class(TcbsDatabaseSeeder<TdamDbSeed>);
+  TcbsUAuthDatabaseIdentitySeeder = class(TcbsDatabaseSeeder<TdamDbIdentitySeed>);
 
 implementation
 
@@ -18,7 +18,7 @@ uses
 
 initialization
 begin
-  RegisterDatabaseSeeder(TcbsUAuthDatabaseSeeder);
+  RegisterDatabaseSeeder(TcbsUAuthDatabaseIdentitySeeder);
 end;
 
 end.

@@ -1,4 +1,4 @@
-unit cbsUAuth.dom.Identity.Exceptions.UserAuthError;
+unit cbsUAuth.Identity.dom.Exceptions.UserAuthError;
 
 interface
 

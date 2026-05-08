@@ -34,14 +34,6 @@ requires
   cbsSystem;
 
 contains
-  _00001000_00000001_create_identity_schema in 'src\inf\Migrations\_00001000_00000001_create_identity_schema.pas',
-  _00001000_00000100_create_identity_users_table in 'src\inf\Migrations\_00001000_00000100_create_identity_users_table.pas',
-  _00001000_00000200_create_identity_passwords_table in 'src\inf\Migrations\_00001000_00000200_create_identity_passwords_table.pas',
-  _00001000_00000300_create_identity_options_table in 'src\inf\Migrations\_00001000_00000300_create_identity_options_table.pas',
-  _00001000_00000400_create_identity_settings_table in 'src\inf\Migrations\_00001000_00000400_create_identity_settings_table.pas',
-  cbsUAuth.inf.DbSeedModule in 'src\inf\cbsUAuth.inf.DbSeedModule.pas' {damDbSeed: TDataModule},
-  _00001000_DatabaseSeeder in 'src\inf\Seeders\_00001000_DatabaseSeeder.pas',
-  _00001000_00000005_create_identity_configs_table in 'src\inf\Migrations\_00001000_00000005_create_identity_configs_table.pas',
   cbsUAuth.ui.Data.Modules.CustomerRegistrationModule in 'src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.CustomerRegistrationModule.pas' {damCustomerRegistration: TDataModule},
   cbsUAuth.ui.Data.Modules.LoginDomainsModule in 'src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginDomainsModule.pas' {damLoginDomains: TDataModule},
   cbsUAuth.ui.Data.Modules.LoginModule in 'src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginModule.pas' {damLogin: TDataModule},
@@ -52,17 +44,12 @@ contains
   cbsUAuth.ui.Forms.LoginForm in 'src\ui\Forms\cbsUAuth.ui.Forms.LoginForm.pas' {frmLogin: TUniLoginForm},
   cbsUAuth.ui.Forms.OptionsForm in 'src\ui\Forms\cbsUAuth.ui.Forms.OptionsForm.pas' {frmOptions: TUniForm},
   cbsUAuth.inf.iocModules.ContainerRoot in 'src\inf\ioc\Modules\cbsUAuth.inf.iocModules.ContainerRoot.pas',
-  _00001000_00000105_create_identity_users_no_expire_trigger in 'src\inf\Migrations\_00001000_00000105_create_identity_users_no_expire_trigger.pas',
-  _00001000_00000405_create_identity_settings_no_expire_trigger in 'src\inf\Migrations\_00001000_00000405_create_identity_settings_no_expire_trigger.pas',
-  _00001000_00000110_create_identity_users_account_disabled_trigger in 'src\inf\Migrations\_00001000_00000110_create_identity_users_account_disabled_trigger.pas',
-  _00001000_00000410_create_identity_settings_account_disabled_trigger in 'src\inf\Migrations\_00001000_00000410_create_identity_settings_account_disabled_trigger.pas',
   cbsUAuth.ui.Forms.LoginChangePassword in 'src\ui\Forms\cbsUAuth.ui.Forms.LoginChangePassword.pas' {frmLoginChangePassword: TUniForm},
   cbsUAuth.inf.Identity.Entities in 'src\inf\Identity\Entities\cbsUAuth.inf.Identity.Entities.pas',
   cbsUAuth.inf.Identity.Repositories.IdentityUserRepository in 'src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityUserRepository.pas',
   cbsUAuth.inf.Identity.Contracts.Repositories.IdentityUserRepository in 'src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityUserRepository.pas',
   cbsUAuth.inf.Identity.Contracts.Repositories.IdentityConfigRepository in 'src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityConfigRepository.pas',
   cbsUAuth.inf.Identity.Repositories.IdentityConfigRepository in 'src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityConfigRepository.pas',
-  cbsUAuth.dom.Identity.Common.SystemOptions in 'src\dom\Identity\Common\cbsUAuth.dom.Identity.Common.SystemOptions.pas',
   cbsUAuth.app.Identity.Services.UserAuthService in 'src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserAuthService.pas',
   cbsUAuth.app.Identity.Services.CustomUserPasswordService in 'src\app\Identity\Services\cbsUAuth.app.Identity.Services.CustomUserPasswordService.pas',
   cbsUAuth.app.Identity.Common.AuthResult in 'src\app\Identity\Common\cbsUAuth.app.Identity.Common.AuthResult.pas',
@@ -76,7 +63,20 @@ contains
   cbsUAuth.app.Identity.Contracts.Services.UserTemporaryPasswordService in 'src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserTemporaryPasswordService.pas',
   cbsUAuth.app.Identity.Services.UserTemporaryPasswordService in 'src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserTemporaryPasswordService.pas',
   cbsUAuth.app.Identity.Common.UserAuthError in 'src\app\Identity\Common\cbsUAuth.app.Identity.Common.UserAuthError.pas',
-  cbsUAuth.dom.Identity.Exceptions.UserAuthError in 'src\dom\Identity\Exceptions\cbsUAuth.dom.Identity.Exceptions.UserAuthError.pas';
+  cbsUAuth.Identity.dom.Common.SystemOptions in 'src\identity\dom\Common\cbsUAuth.Identity.dom.Common.SystemOptions.pas',
+  cbsUAuth.Identity.dom.Exceptions.UserAuthError in 'src\identity\dom\Exceptions\cbsUAuth.Identity.dom.Exceptions.UserAuthError.pas',
+  _00001000_00000001_create_identity_schema in 'src\identity\inf\Migrations\_00001000_00000001_create_identity_schema.pas',
+  _00001000_00000005_create_identity_configs_table in 'src\identity\inf\Migrations\_00001000_00000005_create_identity_configs_table.pas',
+  _00001000_00000100_create_identity_users_table in 'src\identity\inf\Migrations\_00001000_00000100_create_identity_users_table.pas',
+  _00001000_00000105_create_identity_users_no_expire_trigger in 'src\identity\inf\Migrations\_00001000_00000105_create_identity_users_no_expire_trigger.pas',
+  _00001000_00000110_create_identity_users_account_disabled_trigger in 'src\identity\inf\Migrations\_00001000_00000110_create_identity_users_account_disabled_trigger.pas',
+  _00001000_00000200_create_identity_passwords_table in 'src\identity\inf\Migrations\_00001000_00000200_create_identity_passwords_table.pas',
+  _00001000_00000300_create_identity_options_table in 'src\identity\inf\Migrations\_00001000_00000300_create_identity_options_table.pas',
+  _00001000_00000400_create_identity_settings_table in 'src\identity\inf\Migrations\_00001000_00000400_create_identity_settings_table.pas',
+  _00001000_00000405_create_identity_settings_no_expire_trigger in 'src\identity\inf\Migrations\_00001000_00000405_create_identity_settings_no_expire_trigger.pas',
+  _00001000_00000410_create_identity_settings_account_disabled_trigger in 'src\identity\inf\Migrations\_00001000_00000410_create_identity_settings_account_disabled_trigger.pas',
+  _00001000_DatabaseSeeder in 'src\identity\inf\Seeders\_00001000_DatabaseSeeder.pas',
+  cbsUAuth.identity.inf.Seeders.damDbIdentitySeed in 'src\identity\inf\Seeders\cbsUAuth.identity.inf.Seeders.damDbIdentitySeed.pas' {damDbIdentitySeed: TDataModule};
 
 end.
 

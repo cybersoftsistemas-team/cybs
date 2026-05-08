@@ -1,4 +1,4 @@
-inherited damDbSeed: TdamDbSeed
+inherited damDbIdentitySeed: TdamDbIdentitySeed
   inherited sptSeed: TFDScript
     SQLScripts = <
       item
