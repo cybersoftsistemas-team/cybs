@@ -1,16 +1,16 @@
-unit cbsUAuth.app.Services.AuthError;
+unit cbsUAuth.app.Identity.Common.UserAuthError;
 
 interface
 
 uses
 {PROJECT}
-  cbsUAuth.dom.Exceptions.AuthError;
+  cbsUAuth.dom.Identity.Exceptions.UserAuthError;
 
-  function AuthErrorToMessage(const AError: TAuthError): string;
+  function UserAuthErrorToMessage(const AError: TUserAuthError): string;
 
 implementation
 
-function AuthErrorToMessage(const AError: TAuthError): string;
+function UserAuthErrorToMessage(const AError: TUserAuthError): string;
 begin
   case AError of
     aeInvalidCredentials,

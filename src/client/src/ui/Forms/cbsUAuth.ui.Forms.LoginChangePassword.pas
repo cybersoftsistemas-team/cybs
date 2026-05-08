@@ -41,7 +41,7 @@ uses
 {PROJECT}
   cbsMain.ui.Data.Modules.MainModule,
   cbsSystem.Support.Container,
-  cbsUAuth.dom.Contracts.Services.AuthService;
+  cbsUAuth.app.Identity.Contracts.Services.UserPasswordService;
 
 function frmLoginChangePassword: TfrmLoginChangePassword;
 begin
@@ -53,7 +53,7 @@ end;
 procedure TfrmLoginChangePassword.actOkExecute(Sender: TObject);
 begin
   if not ValidateRequiredFields then Exit;
-  var LActionResult := App.Make<IAuthService>.ChangePassword(
+  var LActionResult := App.Make<IIdentityUserPasswordService>.Change(
     FUserId
    ,edtCurrentPassword.Text
    ,edtNewPassword.Text

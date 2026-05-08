@@ -1,0 +1,2 @@
+inherited damDbCrmSeed: TdamDbCrmSeed
+end

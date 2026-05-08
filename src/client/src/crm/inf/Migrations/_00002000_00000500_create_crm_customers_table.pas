@@ -1,0 +1,61 @@
+unit _00002000_00000500_create_crm_customers_table;
+
+interface
+
+uses
+{PROJECT}
+  cbsMigrations.Support.Migration;
+
+type
+  CreateCrmCustomersTable = class(TMigration)
+  private
+    const TableName = 'customers';
+    const SchemaName = 'crm';
+  protected
+    procedure Up(const ASchema: IMigrationBuilder); override;
+    procedure Down(const ASchema: IMigrationBuilder); override;
+  end;
+
+implementation
+
+uses
+{PROJECT}
+  cbsMain.inf.DbContext;
+
+{ CreateCrmCustomersTable }
+
+procedure CreateCrmCustomersTable.Up(const ASchema: IMigrationBuilder);
+begin
+  ASchema.CreateTable(TableName)
+   .HasSchema(SchemaName)
+   .Columns([
+     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    ,BooleanColumn('Active').HasDefaultValueSql('0').IsRequired
+    ,GuidColumn('DomainId').IsRequired
+    ,GuidColumn('CustomersId').IsRequired
+   ])
+   .Constraints([
+     PrimaryKey('Id')
+    ,ForeignKey('CustomersId', 'persons', 'Id').HasPrincipalSchema('person')
+    ,ForeignKey('DomainId', 'domains', 'Id').HasPrincipalSchema('domain')
+   ])
+   .Indexes([
+     CreateIndex('CustomersId')
+    ,CreateIndex('DomainId')
+    ,CreateIndex(['DomainId', 'CustomersId'], True)
+     .HasInclude('Active')
+   ]);
+end;
+
+procedure CreateCrmCustomersTable.Down(const ASchema: IMigrationBuilder);
+begin
+  ASchema.DropTable(TableName)
+  .HasSchema(SchemaName);
+end;
+
+initialization
+begin
+  RegisterMigration(TDbContext, CreateCrmCustomersTable);
+end;
+
+end.

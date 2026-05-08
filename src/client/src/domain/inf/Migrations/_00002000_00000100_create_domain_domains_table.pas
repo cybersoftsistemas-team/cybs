@@ -1,4 +1,4 @@
-unit _00001000_00000600_create_domain_domains_table;
+unit _00002000_00000100_create_domain_domains_table;
 
 interface
 
@@ -41,6 +41,7 @@ begin
      PrimaryKey('Id')
     ,ForeignKey('ManagedById', 'persons', 'Id').HasPrincipalSchema('person')
     ,ForeignKey('ParentId', TableName, 'Id')
+    ,Unique(['ParentId', 'Name'])
     ,CheckConstraint(Format('chk_%s_%s_no_self_parent', [SchemaName, TableName]), '(ParentId IS NULL OR ParentId <> Id)')
    ])
    .Indexes([

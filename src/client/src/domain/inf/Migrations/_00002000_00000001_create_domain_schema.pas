@@ -1,4 +1,4 @@
-unit _00001000_00000900_create_registration_table;
+unit _00002000_00000001_create_domain_schema;
 
 interface
 
@@ -7,9 +7,9 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateRegistrationSchema = class(TMigration)
+  CreateDomainSchema = class(TMigration)
   private
-    const SchemaName = 'registration';
+    const SchemaName = 'domain';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -21,21 +21,21 @@ uses
 {PROJECT}
   cbsMain.inf.DbContext;
 
-{ CreateRegistrationSchema }
+{ CreateDomainSchema }
 
-procedure CreateRegistrationSchema.Up(const ASchema: IMigrationBuilder);
+procedure CreateDomainSchema.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.EnsureSchema(SchemaName);
 end;
 
-procedure CreateRegistrationSchema.Down(const ASchema: IMigrationBuilder);
+procedure CreateDomainSchema.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropSchema(SchemaName)
 end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateRegistrationSchema);
+  RegisterMigration(TDbContext, CreateDomainSchema);
 end;
 
 end.

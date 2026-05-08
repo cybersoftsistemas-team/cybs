@@ -1,4 +1,4 @@
-unit _00001000_00000700_create_domain_accesses_table;
+unit _00002000_00000300_create_domain_accesses_table;
 
 interface
 
@@ -29,14 +29,16 @@ begin
   ASchema.CreateTable(TableName)
    .HasSchema(SchemaName)
    .Columns([
-     GuidColumn('DomainId').IsRequired
-    ,GuidColumn('UserId').IsRequired
+     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
     ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
+    ,GuidColumn('DomainId').IsRequired
+    ,GuidColumn('UserId').IsRequired
    ])
    .Constraints([
-     PrimaryKey(['DomainId', 'UserId'])
+     PrimaryKey('Id')
     ,ForeignKey('DomainId', 'domains', 'Id')
     ,ForeignKey('UserId', 'users', 'Id').HasPrincipalSchema('identity')
+    ,Unique(['DomainId', 'UserId'])
    ])
    .Indexes([
      CreateIndex('DomainId')

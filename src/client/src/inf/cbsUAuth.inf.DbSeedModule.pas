@@ -24,16 +24,28 @@ implementation
 uses
 {PROJECT}
   cbsSystem.Support.Container,
-  cbsUAuth.dom.Contracts.Services.AuthService,
-  cbsUAuth.dom.Identity.Common.SystemOptions,
-  cbsUAuth.dom.Identity.Common.SystemUsers;
+  cbsMain.dom.Common.SystemUsers,
+  cbsUAuth.inf.Identity.Contracts.Repositories.IdentityUserRepository,
+  cbsUAuth.app.Identity.Contracts.Services.UserTemporaryPasswordService,
+  cbsUAuth.dom.Identity.Common.SystemOptions;
 
 { TdamDbSeed }
 
 procedure TdamDbSeed.AfterRunSeed;
 begin
   inherited;
-  App.Make<IAuthService>.TryCreateAdminWithTemporaryPassword;
+  var LUser := App.Make<IIdentityUserRepository>.Find(TSystemUsers.AdministratorId);
+  try
+    if Assigned(LUser) and not LUser.PasswordExists then
+    begin
+      App.Make<IIdentityUserTemporaryPasswordService>.Update(
+        TSystemUsers.AdministratorId,
+        TSystemUsers.TemporaryPassword
+      );
+    end;
+  finally
+    FreeAndNil(LUser);
+  end;
 end;
 
 procedure TdamDbSeed.BeforeRunSeed;

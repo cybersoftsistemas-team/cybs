@@ -1,4 +1,4 @@
-unit cbsUAuth.inf.Services.PasswordHasher;
+unit cbsUAuth.inf.Identity.Services.PasswordHasherService;
 
 interface
 
@@ -6,18 +6,17 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsUAuth.dom.Contracts.Services.PasswordHasher;
+  cbsUAuth.inf.Identity.Contracts.Services.PasswordHasherService;
 
 type
-  TPasswordHasher = class(TInterfacedObject, IPasswordHasher)
+  TIdentityPasswordHasherService = class(TInterfacedObject, IIdentityPasswordHasherService)
   private
     function PBKDF2_HMAC_SHA256(const APassword: TBytes; const ASalt: TBytes; AIterations, ADKLen: Integer): TBytes;
     function SecureCompare(const A, B: TBytes): Boolean;
   public
     function GenerateSalt: TBytes;
-    function Hash(const APassword: string; const ASalt: TBytes; AIterations: Integer): TBytes;
-    function NeedsRehash(const AStoredIterations, ACurrentIterations: Integer): Boolean;
-    function Verify(const APassword: string; const AHash, ASalt: TBytes; AIterations: Integer): Boolean;
+    function Hash(const APassword: string; const ASalt: TBytes; const AIterations: Integer): TBytes;
+    function Verify(const APassword: string; const AHash: TBytes; const ASalt: TBytes; const AIterations: Integer): Boolean;
   end;
 
 implementation
@@ -34,9 +33,9 @@ const
 
 function BCryptGenRandom(hAlgorithm: Pointer; pbBuffer: PUCHAR; cbBuffer: ULONG; dwFlags: ULONG): LongInt; stdcall; external 'bcrypt.dll';
 
-{ TPasswordHasher }
+{ TIdentityPasswordHasherService }
 
-function TPasswordHasher.GenerateSalt: TBytes;
+function TIdentityPasswordHasherService.GenerateSalt: TBytes;
 begin
   SetLength(Result, SIZE);
   if BCryptGenRandom(nil, @Result[0], Length(Result), BCRYPT_USE_SYSTEM_PREFERRED_RNG) <> 0 then
@@ -45,7 +44,7 @@ begin
   end;
 end;
 
-function TPasswordHasher.Hash(const APassword: string; const ASalt: TBytes; AIterations: Integer): TBytes;
+function TIdentityPasswordHasherService.Hash(const APassword: string; const ASalt: TBytes; const AIterations: Integer): TBytes;
 begin
   Result := PBKDF2_HMAC_SHA256(
     TEncoding.UTF8.GetBytes(APassword),
@@ -55,12 +54,7 @@ begin
   );
 end;
 
-function TPasswordHasher.NeedsRehash(const AStoredIterations, ACurrentIterations: Integer): Boolean;
-begin
-  Result := AStoredIterations < ACurrentIterations;
-end;
-
-function TPasswordHasher.PBKDF2_HMAC_SHA256(const APassword, ASalt: TBytes; AIterations, ADKLen: Integer): TBytes;
+function TIdentityPasswordHasherService.PBKDF2_HMAC_SHA256(const APassword, ASalt: TBytes; AIterations, ADKLen: Integer): TBytes;
 begin
   // número de blocos necessários
   var LBlockCount := Ceil(ADKLen / 32); // 32 = SHA256 output
@@ -94,7 +88,7 @@ begin
   SetLength(Result, ADKLen);
 end;
 
-function TPasswordHasher.SecureCompare(const A, B: TBytes): Boolean;
+function TIdentityPasswordHasherService.SecureCompare(const A, B: TBytes): Boolean;
 begin
   if Length(A) <> Length(B) then Exit(False);
   var LDiff: Byte := 0;
@@ -105,7 +99,7 @@ begin
   Result := LDiff = 0;
 end;
 
-function TPasswordHasher.Verify(const APassword: string; const AHash, ASalt: TBytes; AIterations: Integer): Boolean;
+function TIdentityPasswordHasherService.Verify(const APassword: string; const AHash: TBytes; const ASalt: TBytes; const AIterations: Integer): Boolean;
 begin
   Result := SecureCompare(Hash(APassword, ASalt, AIterations), AHash);
 end;

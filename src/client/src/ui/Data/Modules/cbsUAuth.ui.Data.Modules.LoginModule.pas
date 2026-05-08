@@ -5,7 +5,7 @@ interface
 uses
 {PROJECT}
   cbsSystem.Module.BaseModule,
-  cbsUAuth.app.Common.AuthResult,
+  cbsUAuth.app.Identity.Common.AuthResult,
 {IDE}
   FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf, Data.DB, System.Classes, FireDAC.Comp.DataSet,
   FireDAC.Comp.Client, FireDAC.Stan.Async, FireDAC.DApt;
@@ -40,7 +40,7 @@ type
   private
     procedure SaveOptions;
   public
-    function AuthenticateUser(const AUserName, APassword: string): TAuthResult;
+    function AuthenticateUser(const AUserName, APassword: string): TUserAuthResult;
     function ExistsRegisteredCustomer: Boolean;
     procedure ClearUserPassword;
     procedure LoadData(const AFile, AData: string);
@@ -67,9 +67,9 @@ uses
   cbsSystem.Support.DataSet.Extensions,
   cbsSystem.Support.Module,
   cbsSystem.Support.ServerModule,
-  cbsUAuth.app.Services.AuthError,
-  cbsUAuth.dom.Contracts.Services.AuthService,
-  cbsUAuth.dom.Exceptions.AuthError;
+  cbsUAuth.app.Identity.Common.UserAuthError,
+  cbsUAuth.app.Identity.Contracts.Services.UserAuthService,
+  cbsUAuth.dom.Identity.Exceptions.UserAuthError;
 
 const
   CST_FILENAME_LOGON   = 'logon.dat';
@@ -84,9 +84,12 @@ end;
 
 { TdamLogin }
 
-function  TdamLogin.AuthenticateUser(const AUserName, APassword: string): TAuthResult;
+function  TdamLogin.AuthenticateUser(const AUserName, APassword: string): TUserAuthResult;
 begin
-  Result := App.Make<IAuthService>.Authenticate(mtbUSEName.AsString, mtbUSEPassword.AsString);
+  Result := App.Make<IIdentityUserAuthService>.Authenticate(
+    mtbUSEName.AsString,
+    mtbUSEPassword.AsString
+  );
   if not Result.IsSuccess then
   begin
     ClearUserPassword;
@@ -95,9 +98,9 @@ begin
     try
       case Result.Error of
         aeAccountLocked:
-          raise Exception.CreateFmt(AuthErrorToMessage(aeAccountLocked), [Ceil((LUser.LockoutEnd.Value - Now) * 24 * 60)]);
+          raise Exception.CreateFmt(UserAuthErrorToMessage(aeAccountLocked), [Ceil((LUser.LockoutEnd.Value - Now) * 24 * 60)]);
         else
-          raise Exception.Create(AuthErrorToMessage(Result.Error));
+          raise Exception.Create(UserAuthErrorToMessage(Result.Error));
       end;
     finally
       FreeAndNil(LUser);

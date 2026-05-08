@@ -1,4 +1,4 @@
-unit _00001000_00000605_create_domain_domains_allow_access_to_admin_trigger;
+unit _00002000_00000200_create_domain_domains_allow_access_to_admin_trigger;
 
 interface
 
@@ -21,8 +21,8 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsMain.inf.DbContext,
-  cbsUAuth.dom.Identity.Common.SystemUsers;
+  cbsMain.dom.Common.SystemUsers,
+  cbsMain.inf.DbContext;
 
 { CreateDomainDomainsAllowAccessToAdminTrigger }
 

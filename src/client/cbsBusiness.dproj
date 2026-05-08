@@ -1,14 +1,14 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <ProjectGuid>{9866DE76-FD9C-4E8E-A3E7-1B1F6E656ADF}</ProjectGuid>
-        <MainSource>cbsUAuth.dpk</MainSource>
+        <ProjectGuid>{45B220B2-B316-446E-946F-F8EC965B99D8}</ProjectGuid>
+        <MainSource>cbsBusiness.dpk</MainSource>
         <ProjectVersion>20.3</ProjectVersion>
-        <FrameworkType>VCL</FrameworkType>
+        <FrameworkType>None</FrameworkType>
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win32</Platform>
-        <ProjectName Condition="'$(ProjectName)'==''">cbsUAuth</ProjectName>
-        <TargetedPlatforms>129</TargetedPlatforms>
+        <ProjectName Condition="'$(ProjectName)'==''">cbsBusiness</ProjectName>
+        <TargetedPlatforms>1</TargetedPlatforms>
         <AppType>Package</AppType>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
@@ -31,11 +31,6 @@
     </PropertyGroup>
     <PropertyGroup Condition="('$(Platform)'=='iOSSimARM64' and '$(Base)'=='true') or '$(Base_iOSSimARM64)'!=''">
         <Base_iOSSimARM64>true</Base_iOSSimARM64>
-        <CfgParent>Base</CfgParent>
-        <Base>true</Base>
-    </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='Linux64' and '$(Base)'=='true') or '$(Base_Linux64)'!=''">
-        <Base_Linux64>true</Base_Linux64>
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
@@ -70,16 +65,15 @@
         <DCC_K>false</DCC_K>
         <GenDll>true</GenDll>
         <GenPackage>true</GenPackage>
-        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
         <DCC_CBuilderOutput>All</DCC_CBuilderOutput>
-        <SanitizedProjectName>cbsUAuth</SanitizedProjectName>
-        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\foundation\src\Form;..\foundation\src\Module;..\modules\spring4d\Source;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Services;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-        <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
-        <DCC_BplOutput>..\..\build\$(Platform)\$(Config)</DCC_BplOutput>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
-        <DCC_UNSUPPORTED_CONSTRUCT>false</DCC_UNSUPPORTED_CONSTRUCT>
+        <SanitizedProjectName>cbsBusiness</SanitizedProjectName>
+        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\foundation\src\Form;..\foundation\src\Module;..\modules\spring4d\Source;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Services;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
+        <DCC_BplOutput>..\..\build\$(Platform)\$(Config)</DCC_BplOutput>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Android)'!=''">
         <DCC_CBuilderOutput>None</DCC_CBuilderOutput>
@@ -95,15 +89,12 @@
     <PropertyGroup Condition="'$(Base_iOSSimARM64)'!=''">
         <DCC_CBuilderOutput>None</DCC_CBuilderOutput>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_Linux64)'!=''">
-        <Debugger_Launcher>/usr/bin/gnome-terminal -- &quot;%debuggee%&quot;</Debugger_Launcher>
-    </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
         <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <BT_BuildType>Debug</BT_BuildType>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <Debugger_HostApplication>C:\Projects\cybs\build\Win32\Debug\cbs.exe</Debugger_HostApplication>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
@@ -119,6 +110,7 @@
         <DCC_RemoteDebug>false</DCC_RemoteDebug>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
+        <Debugger_HostApplication>C:\Projects\cybs\build\Win32\Debug\cbs.exe</Debugger_HostApplication>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
@@ -133,83 +125,22 @@
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="cbsMain.dcp"/>
         <DCCReference Include="cbsSystem.dcp"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000001_create_identity_schema.pas"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000100_create_identity_users_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000200_create_identity_passwords_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000300_create_identity_options_table.pas"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000400_create_identity_settings_table.pas"/>
-        <DCCReference Include="src\inf\cbsUAuth.inf.DbSeedModule.pas">
-            <Form>damDbSeed</Form>
+        <DCCReference Include="src\domain\inf\Migrations\_00002000_00000001_create_domain_schema.pas"/>
+        <DCCReference Include="src\domain\inf\Migrations\_00002000_00000100_create_domain_domains_table.pas"/>
+        <DCCReference Include="src\domain\inf\Migrations\_00002000_00000200_create_domain_domains_allow_access_to_admin_trigger.pas"/>
+        <DCCReference Include="src\domain\inf\Migrations\_00002000_00000300_create_domain_accesses_table.pas"/>
+        <DCCReference Include="src\crm\inf\Migrations\_00002000_00000400_create_crm_schema.pas"/>
+        <DCCReference Include="src\crm\inf\Migrations\_00002000_00000500_create_crm_customers_table.pas"/>
+        <DCCReference Include="src\domain\inf\Seeders\_00002000_DatabaseDomainSeeder.pas"/>
+        <DCCReference Include="src\crm\inf\Seeders\_00002001_DatabaseCrmSeeder.pas"/>
+        <DCCReference Include="src\crm\inf\Seeders\cbsBusiness.crm.inf.Seeders.damDbCrmSeed.pas">
+            <Form>damDbCrmSeed</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\inf\Seeders\_00001000_DatabaseSeeder.pas"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000005_create_identity_configs_table.pas"/>
-        <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.CustomerRegistrationModule.pas">
-            <Form>damCustomerRegistration</Form>
+        <DCCReference Include="src\domain\inf\Seeders\cbsBusiness.domain.inf.Seeders.damDbDomainSeed.pas">
+            <Form>damDbDomainSeed</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginDomainsModule.pas">
-            <Form>damLoginDomains</Form>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginModule.pas">
-            <Form>damLogin</Form>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.CityRegistrationForm.pas">
-            <Form>frmCityRegistration</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.ConnEditorForm.pas">
-            <Form>frmConnEditor</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.CustomerRegistrationForm.pas">
-            <Form>frmCustomerRegistration</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginDomainsForm.pas">
-            <Form>frmLoginDomains</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginForm.pas">
-            <Form>frmLogin</Form>
-            <DesignClass>TUniLoginForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.OptionsForm.pas">
-            <Form>frmOptions</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\inf\ioc\Modules\cbsUAuth.inf.iocModules.ContainerRoot.pas"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000105_create_identity_users_no_expire_trigger.pas"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000405_create_identity_settings_no_expire_trigger.pas"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000110_create_identity_users_account_disabled_trigger.pas"/>
-        <DCCReference Include="src\inf\Migrations\_00001000_00000410_create_identity_settings_account_disabled_trigger.pas"/>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginChangePassword.pas">
-            <Form>frmLoginChangePassword</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\inf\Identity\Entities\cbsUAuth.inf.Identity.Entities.pas"/>
-        <DCCReference Include="src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityUserRepository.pas"/>
-        <DCCReference Include="src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityUserRepository.pas"/>
-        <DCCReference Include="src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityConfigRepository.pas"/>
-        <DCCReference Include="src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityConfigRepository.pas"/>
-        <DCCReference Include="src\dom\Identity\Common\cbsUAuth.dom.Identity.Common.SystemOptions.pas"/>
-        <DCCReference Include="src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserAuthService.pas"/>
-        <DCCReference Include="src\app\Identity\Services\cbsUAuth.app.Identity.Services.CustomUserPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Common\cbsUAuth.app.Identity.Common.AuthResult.pas"/>
-        <DCCReference Include="src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserAuthService.pas"/>
-        <DCCReference Include="src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.CustomUserPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserPasswordService.pas"/>
-        <DCCReference Include="src\inf\Identity\Services\cbsUAuth.inf.Identity.Services.PasswordHasherService.pas"/>
-        <DCCReference Include="src\inf\Identity\Contracts\Services\cbsUAuth.inf.Identity.Contracts.Services.PasswordHasherService.pas"/>
-        <DCCReference Include="src\inf\Identity\Contracts\Services\cbsUAuth.inf.Identity.Contracts.Services.PasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserTemporaryPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserTemporaryPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Common\cbsUAuth.app.Identity.Common.UserAuthError.pas"/>
-        <DCCReference Include="src\dom\Identity\Exceptions\cbsUAuth.dom.Identity.Exceptions.UserAuthError.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
@@ -227,13 +158,13 @@
         <Borland.ProjectType>Package</Borland.ProjectType>
         <BorlandProject>
             <Delphi.Personality>
-                <Source>
-                    <Source Name="MainSource">cbsUAuth.dpk</Source>
-                </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k370.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dclofficexp370.bpl">Microsoft Office XP Sample Automation Server Wrapper Components</Excluded_Packages>
                 </Excluded_Packages>
+                <Source>
+                    <Source Name="MainSource">cbsBusiness.dpk</Source>
+                </Source>
             </Delphi.Personality>
             <Deployment Version="5">
                 <DeployFile LocalName="$(BDS)\Redist\iossimulator\libcgunwind.1.0.dylib" Class="DependencyModule">
@@ -251,9 +182,9 @@
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="..\..\build\Win32\Debug\cbsUAuth.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\build\Win32\Debug\cbsBusiness.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>cbsUAuth.bpl</RemoteName>
+                        <RemoteName>cbsBusiness.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
@@ -1114,7 +1045,7 @@
                 <Platform value="Android64">False</Platform>
                 <Platform value="iOSDevice64">False</Platform>
                 <Platform value="iOSSimARM64">False</Platform>
-                <Platform value="Linux64">True</Platform>
+                <Platform value="Linux64">False</Platform>
                 <Platform value="OSX64">False</Platform>
                 <Platform value="OSXARM64">False</Platform>
                 <Platform value="Win32">True</Platform>

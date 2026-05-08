@@ -29,6 +29,7 @@ package cbsMain;
 {$IMPLICITBUILD ON}
 
 requires
+  rtl,
   cbsSystem;
 
 contains
@@ -68,6 +69,7 @@ contains
   cbsUAuth.dom.General.Common.SystemEmails in 'src\dom\General\Common\cbsUAuth.dom.General.Common.SystemEmails.pas',
   cbsMain.inf.Entity in 'src\inf\cbsMain.inf.Entity.pas',
   cbsMain.inf.Repository in 'src\inf\cbsMain.inf.Repository.pas',
-  cbsMain.dom.Contracts.Repository in 'src\dom\Contracts\cbsMain.dom.Contracts.Repository.pas';
+  cbsMain.dom.Contracts.Repository in 'src\dom\Contracts\cbsMain.dom.Contracts.Repository.pas',
+  cbsMain.dom.Common.SystemUsers in 'src\dom\Common\cbsMain.dom.Common.SystemUsers.pas';
 
 end.

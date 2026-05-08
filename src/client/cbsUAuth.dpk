@@ -29,6 +29,7 @@ package cbsUAuth;
 {$IMPLICITBUILD ON}
 
 requires
+  rtl,
   cbsMain,
   cbsSystem;
 
@@ -38,15 +39,8 @@ contains
   _00001000_00000200_create_identity_passwords_table in 'src\inf\Migrations\_00001000_00000200_create_identity_passwords_table.pas',
   _00001000_00000300_create_identity_options_table in 'src\inf\Migrations\_00001000_00000300_create_identity_options_table.pas',
   _00001000_00000400_create_identity_settings_table in 'src\inf\Migrations\_00001000_00000400_create_identity_settings_table.pas',
-  _00001000_00000600_create_domain_domains_table in 'src\inf\Migrations\_00001000_00000600_create_domain_domains_table.pas',
-  _00001000_00000700_create_domain_accesses_table in 'src\inf\Migrations\_00001000_00000700_create_domain_accesses_table.pas',
-  _00001000_00000800_create_domain_persons_table in 'src\inf\Migrations\_00001000_00000800_create_domain_persons_table.pas',
-  _00001000_00000500_create_domain_schema in 'src\inf\Migrations\_00001000_00000500_create_domain_schema.pas',
   cbsUAuth.inf.DbSeedModule in 'src\inf\cbsUAuth.inf.DbSeedModule.pas' {damDbSeed: TDataModule},
   _00001000_DatabaseSeeder in 'src\inf\Seeders\_00001000_DatabaseSeeder.pas',
-  _00001000_00001000_create_registration_customer_table in 'src\inf\Migrations\_00001000_00001000_create_registration_customer_table.pas',
-  _00001000_00000900_create_registration_table in 'src\inf\Migrations\_00001000_00000900_create_registration_table.pas',
-  _00001000_00000805_create_identity_logins_table in 'src\inf\Migrations\_00001000_00000805_create_identity_logins_table.pas',
   _00001000_00000005_create_identity_configs_table in 'src\inf\Migrations\_00001000_00000005_create_identity_configs_table.pas',
   cbsUAuth.ui.Data.Modules.CustomerRegistrationModule in 'src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.CustomerRegistrationModule.pas' {damCustomerRegistration: TDataModule},
   cbsUAuth.ui.Data.Modules.LoginDomainsModule in 'src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginDomainsModule.pas' {damLoginDomains: TDataModule},
@@ -57,27 +51,32 @@ contains
   cbsUAuth.ui.Forms.LoginDomainsForm in 'src\ui\Forms\cbsUAuth.ui.Forms.LoginDomainsForm.pas' {frmLoginDomains: TUniForm},
   cbsUAuth.ui.Forms.LoginForm in 'src\ui\Forms\cbsUAuth.ui.Forms.LoginForm.pas' {frmLogin: TUniLoginForm},
   cbsUAuth.ui.Forms.OptionsForm in 'src\ui\Forms\cbsUAuth.ui.Forms.OptionsForm.pas' {frmOptions: TUniForm},
-  cbsUAuth.dom.Contracts.Services.PasswordHasher in 'src\dom\Contracts\Services\cbsUAuth.dom.Contracts.Services.PasswordHasher.pas',
-  cbsUAuth.inf.Services.PasswordHasher in 'src\inf\Services\cbsUAuth.inf.Services.PasswordHasher.pas',
-  cbsUAuth.dom.Contracts.Services.AuthService in 'src\dom\Contracts\Services\cbsUAuth.dom.Contracts.Services.AuthService.pas',
-  cbsUAuth.app.Services.AuthService in 'src\app\Services\cbsUAuth.app.Services.AuthService.pas',
-  cbsUAuth.app.Services.AuthError in 'src\app\Services\cbsUAuth.app.Services.AuthError.pas',
-  cbsUAuth.dom.Exceptions.AuthError in 'src\dom\Exceptions\AuthError\cbsUAuth.dom.Exceptions.AuthError.pas',
-  cbsUAuth.app.Common.AuthResult in 'src\app\Common\cbsUAuth.app.Common.AuthResult.pas',
   cbsUAuth.inf.iocModules.ContainerRoot in 'src\inf\ioc\Modules\cbsUAuth.inf.iocModules.ContainerRoot.pas',
   _00001000_00000105_create_identity_users_no_expire_trigger in 'src\inf\Migrations\_00001000_00000105_create_identity_users_no_expire_trigger.pas',
   _00001000_00000405_create_identity_settings_no_expire_trigger in 'src\inf\Migrations\_00001000_00000405_create_identity_settings_no_expire_trigger.pas',
   _00001000_00000110_create_identity_users_account_disabled_trigger in 'src\inf\Migrations\_00001000_00000110_create_identity_users_account_disabled_trigger.pas',
   _00001000_00000410_create_identity_settings_account_disabled_trigger in 'src\inf\Migrations\_00001000_00000410_create_identity_settings_account_disabled_trigger.pas',
   cbsUAuth.ui.Forms.LoginChangePassword in 'src\ui\Forms\cbsUAuth.ui.Forms.LoginChangePassword.pas' {frmLoginChangePassword: TUniForm},
-  _00001000_00000605_create_domain_domains_allow_access_to_admin_trigger in 'src\inf\Migrations\_00001000_00000605_create_domain_domains_allow_access_to_admin_trigger.pas',
   cbsUAuth.inf.Identity.Entities in 'src\inf\Identity\Entities\cbsUAuth.inf.Identity.Entities.pas',
   cbsUAuth.inf.Identity.Repositories.IdentityUserRepository in 'src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityUserRepository.pas',
   cbsUAuth.inf.Identity.Contracts.Repositories.IdentityUserRepository in 'src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityUserRepository.pas',
   cbsUAuth.inf.Identity.Contracts.Repositories.IdentityConfigRepository in 'src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityConfigRepository.pas',
   cbsUAuth.inf.Identity.Repositories.IdentityConfigRepository in 'src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityConfigRepository.pas',
   cbsUAuth.dom.Identity.Common.SystemOptions in 'src\dom\Identity\Common\cbsUAuth.dom.Identity.Common.SystemOptions.pas',
-  cbsUAuth.dom.Identity.Common.SystemUsers in 'src\dom\Identity\Common\cbsUAuth.dom.Identity.Common.SystemUsers.pas';
+  cbsUAuth.app.Identity.Services.UserAuthService in 'src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserAuthService.pas',
+  cbsUAuth.app.Identity.Services.CustomUserPasswordService in 'src\app\Identity\Services\cbsUAuth.app.Identity.Services.CustomUserPasswordService.pas',
+  cbsUAuth.app.Identity.Common.AuthResult in 'src\app\Identity\Common\cbsUAuth.app.Identity.Common.AuthResult.pas',
+  cbsUAuth.app.Identity.Contracts.Services.UserAuthService in 'src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserAuthService.pas',
+  cbsUAuth.app.Identity.Contracts.Services.CustomUserPasswordService in 'src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.CustomUserPasswordService.pas',
+  cbsUAuth.app.Identity.Contracts.Services.UserPasswordService in 'src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserPasswordService.pas',
+  cbsUAuth.inf.Identity.Services.PasswordHasherService in 'src\inf\Identity\Services\cbsUAuth.inf.Identity.Services.PasswordHasherService.pas',
+  cbsUAuth.inf.Identity.Contracts.Services.PasswordHasherService in 'src\inf\Identity\Contracts\Services\cbsUAuth.inf.Identity.Contracts.Services.PasswordHasherService.pas',
+  cbsUAuth.inf.Identity.Contracts.Services.PasswordService in 'src\inf\Identity\Contracts\Services\cbsUAuth.inf.Identity.Contracts.Services.PasswordService.pas',
+  cbsUAuth.app.Identity.Services.UserPasswordService in 'src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserPasswordService.pas',
+  cbsUAuth.app.Identity.Contracts.Services.UserTemporaryPasswordService in 'src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserTemporaryPasswordService.pas',
+  cbsUAuth.app.Identity.Services.UserTemporaryPasswordService in 'src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserTemporaryPasswordService.pas',
+  cbsUAuth.app.Identity.Common.UserAuthError in 'src\app\Identity\Common\cbsUAuth.app.Identity.Common.UserAuthError.pas',
+  cbsUAuth.dom.Identity.Exceptions.UserAuthError in 'src\dom\Identity\Exceptions\cbsUAuth.dom.Identity.Exceptions.UserAuthError.pas';
 
 end.
 

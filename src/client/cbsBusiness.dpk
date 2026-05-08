@@ -1,0 +1,49 @@
+package cbsBusiness;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  cbsMain,
+  cbsSystem;
+
+contains
+  _00002000_00000001_create_domain_schema in 'src\domain\inf\Migrations\_00002000_00000001_create_domain_schema.pas',
+  _00002000_00000100_create_domain_domains_table in 'src\domain\inf\Migrations\_00002000_00000100_create_domain_domains_table.pas',
+  _00002000_00000200_create_domain_domains_allow_access_to_admin_trigger in 'src\domain\inf\Migrations\_00002000_00000200_create_domain_domains_allow_access_to_admin_trigger.pas',
+  _00002000_00000300_create_domain_accesses_table in 'src\domain\inf\Migrations\_00002000_00000300_create_domain_accesses_table.pas',
+  _00002000_00000400_create_crm_schema in 'src\crm\inf\Migrations\_00002000_00000400_create_crm_schema.pas',
+  _00002000_00000500_create_crm_customers_table in 'src\crm\inf\Migrations\_00002000_00000500_create_crm_customers_table.pas',
+  _00002000_DatabaseDomainSeeder in 'src\domain\inf\Seeders\_00002000_DatabaseDomainSeeder.pas',
+  _00002001_DatabaseCrmSeeder in 'src\crm\inf\Seeders\_00002001_DatabaseCrmSeeder.pas',
+  cbsBusiness.crm.inf.Seeders.damDbCrmSeed in 'src\crm\inf\Seeders\cbsBusiness.crm.inf.Seeders.damDbCrmSeed.pas' {damDbCrmSeed: TDataModule},
+  cbsBusiness.domain.inf.Seeders.damDbDomainSeed in 'src\domain\inf\Seeders\cbsBusiness.domain.inf.Seeders.damDbDomainSeed.pas' {damDbDomainSeed: TDataModule};
+
+end.
+

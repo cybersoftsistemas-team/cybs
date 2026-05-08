@@ -1,9 +1,9 @@
-unit cbsUAuth.dom.Exceptions.AuthError;
+unit cbsUAuth.dom.Identity.Exceptions.UserAuthError;
 
 interface
 
 type
-  TAuthError = (
+  TUserAuthError = (
     aeNone,
     aeInvalidCredentials,
     aeUserNotFound,
