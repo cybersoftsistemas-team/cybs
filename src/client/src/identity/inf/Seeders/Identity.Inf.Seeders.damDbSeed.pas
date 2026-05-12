@@ -9,16 +9,18 @@ uses
   Identity.Inf.Contracts.Repositories.ConfigRepository,
   Identity.Inf.Contracts.Repositories.OptionRepository,
   Identity.Inf.Contracts.Repositories.UserRepository,
+{SPRING}
+  Spring.Container.Common,
 {IDE}
   System.SysUtils, System.Classes, FireDAC.UI.Intf, FireDAC.Stan.Async, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Stan.Intf, FireDAC.Comp.Script;
 
 type
   TdamIdentityDbSeed = class(TDatabaseSeederModule)
   private
-    FConfigRepository: IConfigRepository;
-    FOptionRepository: IOptionRepository;
-    FUserRepository: IUserRepository;
-    FUserTemporaryPasswordService: IUserTemporaryPasswordService;
+    [Inject] FConfigRepository: IConfigRepository;
+    [Inject] FOptionRepository: IOptionRepository;
+    [Inject] FUserRepository: IUserRepository;
+    [Inject] FUserTemporaryPasswordService: IUserTemporaryPasswordService;
   protected
     procedure AfterRunSeed; override;
     procedure OnRunSeed; override;
@@ -26,13 +28,6 @@ type
     property OptionRepository: IOptionRepository read FOptionRepository;
     property UserRepository: IUserRepository read FUserRepository;
     property UserTemporaryPasswordService: IUserTemporaryPasswordService read FUserTemporaryPasswordService;
-  public
-    constructor Create(
-      const AConfigRepository: IConfigRepository;
-      const AOptionRepository: IOptionRepository;
-      const AUserRepository: IUserRepository;
-      const AUserTemporaryPasswordService: IUserTemporaryPasswordService
-    ); reintroduce;
   end;
 
 implementation
@@ -48,20 +43,6 @@ uses
   Shared.Core.Common.SystemUsers;
 
 { damDbIdentitySeed }
-
-constructor TdamIdentityDbSeed.Create(
-  const AConfigRepository: IConfigRepository;
-  const AOptionRepository: IOptionRepository;
-  const AUserRepository: IUserRepository;
-  const AUserTemporaryPasswordService: IUserTemporaryPasswordService
-);
-begin
-  inherited Create(nil);
-  FConfigRepository := AConfigRepository;
-  FOptionRepository := AOptionRepository;
-  FUserRepository := AUserRepository;
-  FUserTemporaryPasswordService := AUserTemporaryPasswordService;
-end;
 
 procedure TdamIdentityDbSeed.AfterRunSeed;
 begin

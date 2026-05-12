@@ -6,20 +6,18 @@ uses
 {PROJTECT}
   cbsSystem.Database.Seeders.DatabaseSeederModule,
   Telecom.Inf.Contracts.Repositories.AreaCodeRepository,
+{SPRING}
+  Spring.Container.Common,
 {IDE}
   FireDAC.UI.Intf, FireDAC.Stan.Async, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, System.Classes, FireDAC.Stan.Intf, FireDAC.Comp.Script;
 
 type
   TdamTelecomDbSeed = class(TDatabaseSeederModule)
   private
-    FAreaCodeRepository: IAreaCodeRepository;
+    [Inject] FAreaCodeRepository: IAreaCodeRepository;
   protected
     procedure OnRunSeed; override;
     property AreaCodeRepository: IAreaCodeRepository read FAreaCodeRepository;
-  public
-    constructor Create(
-      const AAreaCodeRepository: IAreaCodeRepository
-    ); reintroduce;
   end;
 
 implementation
@@ -34,14 +32,6 @@ uses
   Telecom.Inf.Seeders.damDbSeed.Extensions;
 
 { TdamDbTelecomSeed }
-
-constructor TdamTelecomDbSeed.Create(
-  const AAreaCodeRepository: IAreaCodeRepository
-);
-begin
-  inherited Create(nil);
-  FAreaCodeRepository := AAreaCodeRepository;
-end;
 
 procedure TdamTelecomDbSeed.OnRunSeed;
 begin

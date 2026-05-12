@@ -80,7 +80,8 @@ contains
   Identity.Inf.Seeders.damDbSeed in 'src\Identity\Inf\Seeders\Identity.Inf.Seeders.damDbSeed.pas' {damIdentityDbSeed: TDataModule},
   Identity.Inf.Contracts.Repositories.OptionRepository in 'src\Identity\Inf\Contracts\Repositories\Identity.Inf.Contracts.Repositories.OptionRepository.pas',
   Identity.Inf.Repositories.OptionRepository in 'src\Identity\Inf\Repositories\Identity.Inf.Repositories.OptionRepository.pas',
-  _00000250_00000300_create_identity_users_set_settings_trigger in 'src\Identity\Inf\Migrations\_00000250_00000300_create_identity_users_set_settings_trigger.pas';
+  _00000250_00000300_create_identity_users_set_settings_trigger in 'src\Identity\Inf\Migrations\_00000250_00000300_create_identity_users_set_settings_trigger.pas',
+  Identity.Inf.Seeders.damDbSeed.Extensions in 'src\Identity\Inf\Seeders\Identity.Inf.Seeders.damDbSeed.Extensions.pas';
 
 end.
 

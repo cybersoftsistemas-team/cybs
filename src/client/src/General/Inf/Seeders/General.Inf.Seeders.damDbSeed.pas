@@ -6,20 +6,18 @@ uses
 {PROJTECT}
   cbsSystem.Database.Seeders.DatabaseSeederModule,
   General.Inf.Contracts.Repositories.CategoryRepository,
+{SPRING}
+  Spring.Container.Common,
 {IDE}
   System.SysUtils, System.Classes, FireDAC.UI.Intf, FireDAC.Stan.Async, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Stan.Intf, FireDAC.Comp.Script;
 
 type
   TdamGeneralDbSeed = class(TDatabaseSeederModule)
   private
-    FCategoryRepository: ICategoryRepository;
+    [Inject] FCategoryRepository: ICategoryRepository;
   protected
     procedure OnRunSeed; override;
     property CategoryRepository: ICategoryRepository read FCategoryRepository;
-  public
-    constructor Create(
-      const ACategoryRepository: ICategoryRepository
-    ); reintroduce;
   end;
 
 implementation
@@ -39,14 +37,6 @@ uses
   General.Inf.Seeders.damDbSeed.Extensions;
 
 { TdamGeneralDbSeed }
-
-constructor TdamGeneralDbSeed.Create(
-  const ACategoryRepository: ICategoryRepository
-);
-begin
-  inherited Create(nil);
-  FCategoryRepository := ACategoryRepository;
-end;
 
 procedure TdamGeneralDbSeed.OnRunSeed;
 begin

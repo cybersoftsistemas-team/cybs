@@ -7,23 +7,20 @@ uses
   Address.Inf.Contracts.Repositories.StateCodeRepository,
   Address.Inf.Contracts.Repositories.StateRepository,
   cbsSystem.Database.Seeders.DatabaseSeederModule,
+{SPRING}
+  Spring.Container.Common,
 {IDE}
   FireDAC.UI.Intf, FireDAC.Stan.Async, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, System.Classes, FireDAC.Stan.Intf, FireDAC.Comp.Script;
 
 type
   TdamAddressDbSeed = class(TDatabaseSeederModule)
   private
-    FStateCodeRepository: IStateCodeRepository;
-    FStateRepository: IStateRepository;
+    [Inject] FStateCodeRepository: IStateCodeRepository;
+    [Inject] FStateRepository: IStateRepository;
   protected
     procedure OnRunSeed; override;
     property StateCodeRepository: IStateCodeRepository read FStateCodeRepository;
     property StateRepository: IStateRepository read FStateRepository;
-  public
-    constructor Create(
-      const AStateCodeRepository: IStateCodeRepository;
-      const AStateRepository: IStateRepository
-    ); reintroduce;
   end;
 
 implementation
@@ -39,16 +36,6 @@ uses
   Country.Dom.Common.SystemCountry;
 
 { TdamAddressDbSeed }
-
-constructor TdamAddressDbSeed.Create(
-  const AStateCodeRepository: IStateCodeRepository;
-  const AStateRepository: IStateRepository
-);
-begin
-  inherited Create(nil);
-  FStateCodeRepository := AStateCodeRepository;
-  FStateRepository := AStateRepository;
-end;
 
 procedure TdamAddressDbSeed.OnRunSeed;
 begin

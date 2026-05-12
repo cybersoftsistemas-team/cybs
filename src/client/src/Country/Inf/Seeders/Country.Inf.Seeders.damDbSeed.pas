@@ -8,26 +8,22 @@ uses
   Country.Inf.Contracts.Repositories.CountryCodeRepository,
   Country.Inf.Contracts.Repositories.CountryRepository,
   Country.Inf.Contracts.Repositories.NationalityRepository,
+{SPRING}
+  Spring.Container.Common,
 {IDE}
   FireDAC.UI.Intf, FireDAC.Stan.Async, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, System.Classes, FireDAC.Stan.Intf, FireDAC.Comp.Script;
 
 type
   TdamCountryDbSeed = class(TDatabaseSeederModule)
   private
-    FCountryRepository: ICountryRepository;
-    FCountryCodeRepository: ICountryCodeRepository;
-    FNationalityRepository: INationalityRepository;
+    [Inject] FCountryRepository: ICountryRepository;
+    [Inject] FCountryCodeRepository: ICountryCodeRepository;
+    [Inject] FNationalityRepository: INationalityRepository;
   protected
     procedure OnRunSeed; override;
     property CountryRepository: ICountryRepository read FCountryRepository;
     property CountryCodeRepository: ICountryCodeRepository read FCountryCodeRepository;
     property NationalityRepository: INationalityRepository read FNationalityRepository;
-  public
-    constructor Create(
-      const ACountryRepository: ICountryRepository;
-      const ACountryCodeRepository: ICountryCodeRepository;
-      const ANationalityRepository: INationalityRepository
-    ); reintroduce;
   end;
 
 implementation
@@ -42,18 +38,6 @@ uses
   Country.Inf.Seeders.damDbSeed.Extensions;
 
 { TdamDbCountrySeed }
-
-constructor TdamCountryDbSeed.Create(
-  const ACountryRepository: ICountryRepository;
-  const ACountryCodeRepository: ICountryCodeRepository;
-  const ANationalityRepository: INationalityRepository
-);
-begin
-  inherited Create(nil);
-  FCountryRepository := ACountryRepository;
-  FCountryCodeRepository := ACountryCodeRepository;
-  FNationalityRepository := ANationalityRepository;
-end;
 
 procedure TdamCountryDbSeed.OnRunSeed;
 begin
