@@ -6,7 +6,6 @@ uses
 {PROJTECT}
   cbsSystem.Database.Seeders.DatabaseSeederModule,
   General.Inf.Contracts.Repositories.CategoryRepository,
-  General.Inf.Entities,
 {IDE}
   System.SysUtils, System.Classes, FireDAC.UI.Intf, FireDAC.Stan.Async, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Stan.Intf, FireDAC.Comp.Script;
 
@@ -14,21 +13,13 @@ type
   TdamGeneralDbSeed = class(TDatabaseSeederModule)
   private
     FCategoryRepository: ICategoryRepository;
-
-    procedure CreateCategory(
-      const AId: TGuid;
-      const AName: string;
-      const AParentId: TGuid
-    );
-
   protected
     procedure OnRunSeed; override;
+    property CategoryRepository: ICategoryRepository read FCategoryRepository;
   public
-
     constructor Create(
       const ACategoryRepository: ICategoryRepository
     ); reintroduce;
-
   end;
 
 implementation
@@ -39,15 +30,13 @@ implementation
 
 uses
 {PROJECT}
-  cbsSystem.Support.Container,
   General.Dom.Common.SystemAddress,
   General.Dom.Common.SystemBusinessTypes,
   General.Dom.Common.SystemEmails,
   General.Dom.Common.SystemGender,
   General.Dom.Common.SystemPersonTypes,
   General.Dom.Common.SystemPhones,
-{SPRING}
-  Spring;
+  General.Inf.Seeders.damDbSeed.Extensions;
 
 { TdamGeneralDbSeed }
 
@@ -57,23 +46,6 @@ constructor TdamGeneralDbSeed.Create(
 begin
   inherited Create(nil);
   FCategoryRepository := ACategoryRepository;
-end;
-
-procedure TdamGeneralDbSeed.CreateCategory(
-  const AId: TGuid;
-  const AName: string;
-  const AParentId: TGuid
-);
-begin
-  var LEntity := FCategoryRepository.Find(AId);
-  if not Assigned(LEntity) then
-    LEntity := TCategoryEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.Reserved := True;
-  if not AParentId.IsEmpty then
-    LEntity.ParentId := AParentId;
-  FCategoryRepository.Save(LEntity);
 end;
 
 procedure TdamGeneralDbSeed.OnRunSeed;

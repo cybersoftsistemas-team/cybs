@@ -134,14 +134,19 @@
         <DCCReference Include="src\CRM\Inf\Migrations\_00002000_00000500_create_crm_customers_table.pas"/>
         <DCCReference Include="src\Domain\Inf\Seeders\_00000300_0000001_DomainDatabaseSeeder.pas"/>
         <DCCReference Include="src\CRM\Inf\Seeders\_00000350_00000001_CRMDatabaseSeeder.pas"/>
-        <DCCReference Include="src\CRM\Inf\Seeders\CRM.Inf.Seeders.damDbSeeder.pas">
-            <Form>damCRMDbSeeder</Form>
+        <DCCReference Include="src\CRM\Inf\Seeders\CRM.Inf.Seeders.damDbSeed.pas">
+            <Form>damCRMDbSeed</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Domain\Inf\Seeders\Domain.Inf.Seeders.damDbSeeder.pas">
-            <Form>damDomainDbSeeder</Form>
+        <DCCReference Include="src\Domain\Inf\Seeders\Domain.Inf.Seeders.damDbSeed.pas">
+            <Form>damDomainDbSeed</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="src\Domain\Inf\Entities\Domain.Inf.Entities.pas"/>
+        <DCCReference Include="src\Domain\Inf\Contracts\Repositories\Domain.Inf.Contracts.Repositories.DomainRepository.pas"/>
+        <DCCReference Include="src\Domain\Inf\Contracts\Repositories\Domain.Inf.Contracts.Repositories.AccessRepository.pas"/>
+        <DCCReference Include="src\Domain\Inf\Repositories\Domain.Inf.Repositories.AccessRepository.pas"/>
+        <DCCReference Include="src\Domain\Inf\Repositories\Domain.Inf.Repositories.DomainRepository.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

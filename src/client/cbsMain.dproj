@@ -212,6 +212,16 @@
         <DCCReference Include="src\Person\Inf\Migrations\_00000200_00000600_create_person_phones_table.pas"/>
         <DCCReference Include="src\Person\Inf\Entities\Person.Inf.Entities.pas"/>
         <DCCReference Include="src\General\Dom\Common\General.Dom.Common.SystemPersonTypes.pas"/>
+        <DCCReference Include="src\Person\Inf\Seeders\_00000200_0000001_PersonDatabaseSeeder.pas"/>
+        <DCCReference Include="src\Person\Inf\Seeders\Person.Inf.Seeders.damDbSeed.pas">
+            <Form>damPersonDbSeed</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Address\Inf\Seeders\Address.Inf.Seeders.damDbSeed.Extensions.pas"/>
+        <DCCReference Include="src\Country\Inf\Seeders\Country.Inf.Seeders.damDbSeed.Extensions.pas"/>
+        <DCCReference Include="src\General\Inf\Seeders\General.Inf.Seeders.damDbSeed.Extensions.pas"/>
+        <DCCReference Include="src\Telecom\Inf\Seeders\Telecom.Inf.Seeders.damDbSeed.Extensions.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

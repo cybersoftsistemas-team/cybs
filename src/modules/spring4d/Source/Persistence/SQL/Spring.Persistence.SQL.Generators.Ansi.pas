@@ -111,7 +111,6 @@ uses
   TypInfo,
   Variants,
   Spring,
-  Spring.Persistence.Core.Exceptions,
   Spring.Reflection;
 
 

@@ -29,8 +29,7 @@ uses
 {PROJECT}
   cbsSystem.Container,
 {SPRING}
-  Spring,
-  Spring.Container;
+  Spring;
 
 { App }
 

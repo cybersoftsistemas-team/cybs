@@ -134,6 +134,7 @@
         <DCCReference Include="cbsSystem.dcp"/>
         <DCCReference Include="cbsClient.dcp"/>
         <DCCReference Include="cbsMain.dcp"/>
+        <DCCReference Include="cbsBusiness.dcp"/>
         <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000001_create_identity_schema.pas"/>
         <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000100_create_identity_configs_table.pas"/>
         <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000200_create_identity_users_table.pas"/>

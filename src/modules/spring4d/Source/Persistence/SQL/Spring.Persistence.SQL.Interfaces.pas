@@ -29,7 +29,6 @@ unit Spring.Persistence.SQL.Interfaces;
 interface
 
 uses
-  Classes,
   Rtti,
   Spring.Collections,
   Spring.Persistence.Mapping.Attributes,

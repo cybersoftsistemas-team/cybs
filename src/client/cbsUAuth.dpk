@@ -32,7 +32,8 @@ requires
   rtl,
   cbsSystem,
   cbsClient,
-  cbsMain;
+  cbsMain,
+  cbsBusiness;
 
 contains
   _00000250_00000001_create_identity_schema in 'src\Identity\Inf\Migrations\_00000250_00000001_create_identity_schema.pas',

@@ -106,7 +106,13 @@ contains
   _00000200_00000500_create_person_emails_table in 'src\Person\Inf\Migrations\_00000200_00000500_create_person_emails_table.pas',
   _00000200_00000600_create_person_phones_table in 'src\Person\Inf\Migrations\_00000200_00000600_create_person_phones_table.pas',
   Person.Inf.Entities in 'src\Person\Inf\Entities\Person.Inf.Entities.pas',
-  General.Dom.Common.SystemPersonTypes in 'src\General\Dom\Common\General.Dom.Common.SystemPersonTypes.pas';
+  General.Dom.Common.SystemPersonTypes in 'src\General\Dom\Common\General.Dom.Common.SystemPersonTypes.pas',
+  _00000200_0000001_PersonDatabaseSeeder in 'src\Person\Inf\Seeders\_00000200_0000001_PersonDatabaseSeeder.pas',
+  Person.Inf.Seeders.damDbSeed in 'src\Person\Inf\Seeders\Person.Inf.Seeders.damDbSeed.pas' {damPersonDbSeed: TDataModule},
+  Address.Inf.Seeders.damDbSeed.Extensions in 'src\Address\Inf\Seeders\Address.Inf.Seeders.damDbSeed.Extensions.pas',
+  Country.Inf.Seeders.damDbSeed.Extensions in 'src\Country\Inf\Seeders\Country.Inf.Seeders.damDbSeed.Extensions.pas',
+  General.Inf.Seeders.damDbSeed.Extensions in 'src\General\Inf\Seeders\General.Inf.Seeders.damDbSeed.Extensions.pas',
+  Telecom.Inf.Seeders.damDbSeed.Extensions in 'src\Telecom\Inf\Seeders\Telecom.Inf.Seeders.damDbSeed.Extensions.pas';
 
 end.
 

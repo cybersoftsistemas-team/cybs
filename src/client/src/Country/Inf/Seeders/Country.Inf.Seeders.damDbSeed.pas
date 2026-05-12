@@ -17,34 +17,17 @@ type
     FCountryRepository: ICountryRepository;
     FCountryCodeRepository: ICountryCodeRepository;
     FNationalityRepository: INationalityRepository;
-
-    procedure CreateCountry(
-      const AId: TGuid;
-      const AName: string;
-      const ADialCode: string
-    );
-
-    procedure CreateCountryCode(
-      const ACodeType: string;
-      const ACode: string;
-      const ACountryId: TGuid
-    );
-
-    procedure CreateNationality(
-      const AName: string;
-      const ACountryId: TGuid
-    );
-
   protected
     procedure OnRunSeed; override;
+    property CountryRepository: ICountryRepository read FCountryRepository;
+    property CountryCodeRepository: ICountryCodeRepository read FCountryCodeRepository;
+    property NationalityRepository: INationalityRepository read FNationalityRepository;
   public
-
     constructor Create(
       const ACountryRepository: ICountryRepository;
       const ACountryCodeRepository: ICountryCodeRepository;
       const ANationalityRepository: INationalityRepository
     ); reintroduce;
-
   end;
 
 implementation
@@ -55,9 +38,8 @@ implementation
 
 uses
 {PROJECT}
-  cbsSystem.Support.Container,
   Country.Dom.Common.SystemCountry,
-  Country.Inf.Entities;
+  Country.Inf.Seeders.damDbSeed.Extensions;
 
 { TdamDbCountrySeed }
 
@@ -71,49 +53,6 @@ begin
   FCountryRepository := ACountryRepository;
   FCountryCodeRepository := ACountryCodeRepository;
   FNationalityRepository := ANationalityRepository;
-end;
-
-procedure TdamCountryDbSeed.CreateCountry(
-  const AId: TGuid;
-  const AName, ADialCode: string
-);
-begin
-  var LEntity := FCountryRepository.Find(AName);
-  if not Assigned(LEntity) then
-    LEntity := TCountryEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.DialCode := ADialCode;
-  FCountryRepository.Save(LEntity);
-end;
-
-procedure TdamCountryDbSeed.CreateCountryCode(
-  const ACodeType, ACode: string;
-  const ACountryId: TGuid
-);
-begin
-  var LEntity := FCountryCodeRepository.Find(ACodeType, ACode);
-  if not Assigned(LEntity) then
-  begin
-    LEntity := TCountryCodeEntity.Create;
-    LEntity.CodeType := ACodeType;
-    LEntity.Code := ACode;
-    LEntity.CountryId := ACountryId;
-    FCountryCodeRepository.Insert(LEntity);
-  end;
-end;
-
-procedure TdamCountryDbSeed.CreateNationality(
-  const AName: string;
-  const ACountryId: TGuid
-);
-begin
-  var LEntity := FNationalityRepository.Find(ACountryId);
-  if not Assigned(LEntity) then
-    LEntity := TNationalityEntity.Create;
-  LEntity.Id := ACountryId;
-  LEntity.Name := AName;
-  FNationalityRepository.Save(LEntity);
 end;
 
 procedure TdamCountryDbSeed.OnRunSeed;

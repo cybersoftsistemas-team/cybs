@@ -35,7 +35,6 @@ uses
   Spring.Container.Common,
   Spring.Container.Core,
   Spring.Container.Registration,
-  Spring.Logging,
   Spring.Services;
 
 {$IFDEF DELPHIXE6_UP}{$RTTI EXPLICIT METHODS([]) PROPERTIES([]) FIELDS([])}{$ENDIF}
@@ -186,8 +185,7 @@ uses
   Spring.Container.Builder,
   Spring.Container.CreationContext,
   Spring.Container.Resolvers,
-  Spring.Container.ResourceStrings,
-  Spring.Reflection;
+  Spring.Container.ResourceStrings;
 
 function GlobalContainer: TContainer;
 begin

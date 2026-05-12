@@ -15,29 +15,15 @@ type
   private
     FStateCodeRepository: IStateCodeRepository;
     FStateRepository: IStateRepository;
-
-    procedure CreateState(
-      const AId: TGuid;
-      const AName: string;
-      const AAcronym: string;
-      const ACountryId: TGuid
-    );
-
-    procedure CreateStateCode(
-      const ACodeType: string;
-      const ACode: string;
-      const AStateId: TGuid
-    );
-
   protected
     procedure OnRunSeed; override;
+    property StateCodeRepository: IStateCodeRepository read FStateCodeRepository;
+    property StateRepository: IStateRepository read FStateRepository;
   public
-
     constructor Create(
       const AStateCodeRepository: IStateCodeRepository;
       const AStateRepository: IStateRepository
     ); reintroduce;
-
   end;
 
 implementation
@@ -47,12 +33,9 @@ implementation
 {$R *.dfm}
 
 uses
-{IDE}
-  System.SysUtils,
 {PROJECT}
   Address.Dom.Common.SystemState,
-  Address.Inf.Entities,
-  cbsSystem.Support.Container,
+  Address.Inf.Seeders.damDbSeed.Extensions,
   Country.Dom.Common.SystemCountry;
 
 { TdamAddressDbSeed }
@@ -65,39 +48,6 @@ begin
   inherited Create(nil);
   FStateCodeRepository := AStateCodeRepository;
   FStateRepository := AStateRepository;
-end;
-
-procedure TdamAddressDbSeed.CreateState(
-  const AId: TGuid;
-  const AName: string;
-  const AAcronym: string;
-  const ACountryId: TGuid
-);
-begin
-  var LEntity := FStateRepository.Find(AId);
-  if not Assigned(LEntity) then
-    LEntity := TStateEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.Acronym := AAcronym;
-  LEntity.CountryId := ACountryId;
-  FStateRepository.Save(LEntity);
-end;
-
-procedure TdamAddressDbSeed.CreateStateCode(
-  const ACodeType, ACode: string;
-  const AStateId: TGuid
-);
-begin
-  var LEntity := FStateCodeRepository.Find(ACodeType, ACode);
-  if not Assigned(LEntity) then
-  begin
-    LEntity := TStateCodeEntity.Create;
-    LEntity.CodeType := ACodeType;
-    LEntity.Code := ACode;
-    LEntity.StateId := AStateId;
-    FStateCodeRepository.Insert(LEntity);
-  end;
 end;
 
 procedure TdamAddressDbSeed.OnRunSeed;

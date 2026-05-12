@@ -1,0 +1,2 @@
+inherited damPersonDbSeed: TdamPersonDbSeed
+end

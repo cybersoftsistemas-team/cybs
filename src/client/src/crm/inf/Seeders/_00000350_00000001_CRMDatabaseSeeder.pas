@@ -5,10 +5,10 @@ interface
 uses
 {PROJECT}
   cbsSystem.Database.Seeders.DatabaseSeeder,
-  CRM.Inf.Seeders.damDbSeeder;
+  CRM.Inf.Seeders.damDbSeed;
 
 type
-  TCRMDatabaseSeeder = class(TcbsDatabaseSeeder<TdamCRMDbSeeder>);
+  TCRMDatabaseSeeder = class(TcbsDatabaseSeeder<TdamCRMDbSeed>);
 
 implementation
 

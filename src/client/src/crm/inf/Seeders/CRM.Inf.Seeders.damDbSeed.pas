@@ -1,4 +1,4 @@
-unit Domain.Inf.Seeders.damDbSeeder;
+unit CRM.Inf.Seeders.damDbSeed;
 
 interface
 
@@ -9,7 +9,7 @@ uses
   System.SysUtils, System.Classes, FireDAC.UI.Intf, FireDAC.Stan.Async, FireDAC.Comp.ScriptCommands, FireDAC.Stan.Util, FireDAC.Stan.Intf, FireDAC.Comp.Script;
 
 type
-  TdamDomainDbSeeder = class(TDatabaseSeederModule)
+  TdamCRMDbSeed = class(TDatabaseSeederModule)
   private
     { Private declarations }
   public

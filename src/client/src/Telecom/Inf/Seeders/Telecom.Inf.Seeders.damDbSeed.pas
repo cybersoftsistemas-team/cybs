@@ -13,20 +13,13 @@ type
   TdamTelecomDbSeed = class(TDatabaseSeederModule)
   private
     FAreaCodeRepository: IAreaCodeRepository;
-
-    procedure CreateAreaCode(
-      const AAreaCode: string;
-      const AStateId: TGuid
-    );
-
   protected
     procedure OnRunSeed; override;
+    property AreaCodeRepository: IAreaCodeRepository read FAreaCodeRepository;
   public
-
     constructor Create(
       const AAreaCodeRepository: IAreaCodeRepository
     ); reintroduce;
-
   end;
 
 implementation
@@ -38,8 +31,7 @@ implementation
 uses
 {PROJECT}
   Address.Dom.Common.SystemState,
-  cbsSystem.Support.Container,
-  Telecom.Inf.Entities;
+  Telecom.Inf.Seeders.damDbSeed.Extensions;
 
 { TdamDbTelecomSeed }
 
@@ -49,21 +41,6 @@ constructor TdamTelecomDbSeed.Create(
 begin
   inherited Create(nil);
   FAreaCodeRepository := AAreaCodeRepository;
-end;
-
-procedure TdamTelecomDbSeed.CreateAreaCode(
-  const AAreaCode: string;
-  const AStateId: TGuid
-);
-begin
-  var LEntity := FAreaCodeRepository.Find(AAreaCode, AStateId);
-  if not Assigned(LEntity) then
-  begin
-    LEntity := TAreaCodeEntity.Create;
-    LEntity.AreaCode := AAreaCode;
-    LEntity.StateId := AStateId;
-    FAreaCodeRepository.Insert(LEntity);
-  end;
 end;
 
 procedure TdamTelecomDbSeed.OnRunSeed;

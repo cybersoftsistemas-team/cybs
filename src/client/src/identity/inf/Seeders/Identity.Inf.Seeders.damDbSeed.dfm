@@ -1,6 +1,5 @@
 inherited damIdentityDbSeed: TdamIdentityDbSeed
   inherited sptSeed: TFDScript
-    SQLScripts = <>
     Connection = damDb.Connection
     ScriptOptions.BreakOnError = True
     Params = <

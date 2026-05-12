@@ -19,33 +19,20 @@ type
     FOptionRepository: IOptionRepository;
     FUserRepository: IUserRepository;
     FUserTemporaryPasswordService: IUserTemporaryPasswordService;
-
-    procedure CreateAdminUser(
-      const AId: TGuid;
-      const AName: string;
-      const ADescription: string
-    );
-
-    procedure CreateConfig;
-
-    procedure CreateOption(
-      const AId: TGuid;
-      const AName: string;
-      const ADescription: string
-    );
-
   protected
     procedure AfterRunSeed; override;
     procedure OnRunSeed; override;
+    property ConfigRepository: IConfigRepository read FConfigRepository;
+    property OptionRepository: IOptionRepository read FOptionRepository;
+    property UserRepository: IUserRepository read FUserRepository;
+    property UserTemporaryPasswordService: IUserTemporaryPasswordService read FUserTemporaryPasswordService;
   public
-
     constructor Create(
       const AConfigRepository: IConfigRepository;
       const AOptionRepository: IOptionRepository;
       const AUserRepository: IUserRepository;
       const AUserTemporaryPasswordService: IUserTemporaryPasswordService
     ); reintroduce;
-
   end;
 
 implementation
@@ -57,7 +44,7 @@ implementation
 uses
 {PROJECT}
   Identity.Dom.Common.SystemOptions,
-  Identity.Inf.Entities,
+  Identity.Inf.Seeders.damDbSeed.Extensions,
   Shared.Core.Common.SystemUsers;
 
 { damDbIdentitySeed }
@@ -76,52 +63,9 @@ begin
   FUserTemporaryPasswordService := AUserTemporaryPasswordService;
 end;
 
-procedure TdamIdentityDbSeed.CreateAdminUser(
-  const AId: TGuid;
-  const AName: string;
-  const ADescription: string
-);
-begin
-  var LEntity := FUserRepository.Find(AId);
-  if not Assigned(LEntity) then
-    LEntity := TUserEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.Description := ADescription;
-  LEntity.Reserved := True;
-  FUserRepository.Save(LEntity);
-end;
-
 procedure TdamIdentityDbSeed.AfterRunSeed;
 begin
-  var LUser := FUserRepository.Find(TSystemUsers.AdministratorId);
-  try
-    if Assigned(LUser) and not LUser.PasswordExists then
-    begin
-      FUserTemporaryPasswordService.Update(
-        TSystemUsers.AdministratorId,
-        TSystemUsers.TemporaryPassword
-      );
-    end;
-  finally
-    FreeAndNil(LUser);
-  end;
-end;
-
-procedure TdamIdentityDbSeed.CreateConfig;
-begin
-  FConfigRepository.GetConfig.Free;
-end;
-
-procedure TdamIdentityDbSeed.CreateOption(const AId: TGuid; const AName, ADescription: string);
-begin
-  var LEntity := FOptionRepository.Find(AId);
-  if not Assigned(LEntity) then
-    LEntity := TOptionEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.Description := ADescription;
-  FOptionRepository.Save(LEntity);
+  CreateUserTemporaryPassword(TSystemUsers.AdministratorId, TSystemUsers.TemporaryPassword);
 end;
 
 procedure TdamIdentityDbSeed.OnRunSeed;

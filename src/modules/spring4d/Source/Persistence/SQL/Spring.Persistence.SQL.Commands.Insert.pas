@@ -66,8 +66,8 @@ type
     property InsertCommand: TInsertCommand read fCommand;
     property Table: TSQLTable read FTable;
   public
-    constructor Create(const connection: IDBConnection); overload; override;
-    constructor Create(const entity: TObject; const connection: IDBConnection); overload;
+    constructor Create(const connection: IDBConnection); reintroduce; overload; override;
+    constructor Create(const entity: TObject; const connection: IDBConnection); reintroduce; overload;
     destructor Destroy; override;
 
     procedure Build(entityClass: TClass); override;
@@ -81,7 +81,6 @@ uses
   Rtti, // H2443
   TypInfo, // H2443
   Variants,
-  Spring.Persistence.Core.Exceptions,
   Spring.Persistence.SQL.Params,
   Spring.Reflection;
 

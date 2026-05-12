@@ -43,8 +43,13 @@ contains
   _00002000_00000500_create_crm_customers_table in 'src\CRM\Inf\Migrations\_00002000_00000500_create_crm_customers_table.pas',
   _00000300_0000001_DomainDatabaseSeeder in 'src\Domain\Inf\Seeders\_00000300_0000001_DomainDatabaseSeeder.pas',
   _00000350_00000001_CRMDatabaseSeeder in 'src\CRM\Inf\Seeders\_00000350_00000001_CRMDatabaseSeeder.pas',
-  CRM.Inf.Seeders.damDbSeeder in 'src\CRM\Inf\Seeders\CRM.Inf.Seeders.damDbSeeder.pas' {damCRMDbSeeder: TDataModule},
-  Domain.Inf.Seeders.damDbSeeder in 'src\Domain\Inf\Seeders\Domain.Inf.Seeders.damDbSeeder.pas' {damDomainDbSeeder: TDataModule};
+  CRM.Inf.Seeders.damDbSeed in 'src\CRM\Inf\Seeders\CRM.Inf.Seeders.damDbSeed.pas' {damCRMDbSeed: TDataModule},
+  Domain.Inf.Seeders.damDbSeed in 'src\Domain\Inf\Seeders\Domain.Inf.Seeders.damDbSeed.pas' {damDomainDbSeed: TDataModule},
+  Domain.Inf.Entities in 'src\Domain\Inf\Entities\Domain.Inf.Entities.pas',
+  Domain.Inf.Contracts.Repositories.DomainRepository in 'src\Domain\Inf\Contracts\Repositories\Domain.Inf.Contracts.Repositories.DomainRepository.pas',
+  Domain.Inf.Contracts.Repositories.AccessRepository in 'src\Domain\Inf\Contracts\Repositories\Domain.Inf.Contracts.Repositories.AccessRepository.pas',
+  Domain.Inf.Repositories.AccessRepository in 'src\Domain\Inf\Repositories\Domain.Inf.Repositories.AccessRepository.pas',
+  Domain.Inf.Repositories.DomainRepository in 'src\Domain\Inf\Repositories\Domain.Inf.Repositories.DomainRepository.pas';
 
 end.
 

@@ -24,11 +24,11 @@
         <Projects Include="client\cbsMain.dproj">
             <Dependencies>foundation\cbsSystem.dproj;client\cbsClient.dproj</Dependencies>
         </Projects>
-        <Projects Include="client\cbsUAuth.dproj">
-            <Dependencies>foundation\cbsSystem.dproj;client\cbsClient.dproj;client\cbsMain.dproj</Dependencies>
-        </Projects>
         <Projects Include="client\cbsBusiness.dproj">
             <Dependencies>foundation\cbsSystem.dproj;client\cbsClient.dproj;client\cbsMain.dproj</Dependencies>
+        </Projects>
+        <Projects Include="client\cbsUAuth.dproj">
+            <Dependencies>foundation\cbsSystem.dproj;client\cbsClient.dproj;client\cbsMain.dproj;client\cbsBusiness.dproj</Dependencies>
         </Projects>
     </ItemGroup>
     <ProjectExtensions>
@@ -101,15 +101,6 @@
     <Target Name="cbsMain:Make" DependsOnTargets="cbsSystem:Make;cbsClient:Make">
         <MSBuild Projects="client\cbsMain.dproj" Targets="Make"/>
     </Target>
-    <Target Name="cbsUAuth" DependsOnTargets="cbsSystem;cbsClient;cbsMain">
-        <MSBuild Projects="client\cbsUAuth.dproj"/>
-    </Target>
-    <Target Name="cbsUAuth:Clean" DependsOnTargets="cbsSystem:Clean;cbsClient:Clean;cbsMain:Clean">
-        <MSBuild Projects="client\cbsUAuth.dproj" Targets="Clean"/>
-    </Target>
-    <Target Name="cbsUAuth:Make" DependsOnTargets="cbsSystem:Make;cbsClient:Make;cbsMain:Make">
-        <MSBuild Projects="client\cbsUAuth.dproj" Targets="Make"/>
-    </Target>
     <Target Name="cbsBusiness" DependsOnTargets="cbsSystem;cbsClient;cbsMain">
         <MSBuild Projects="client\cbsBusiness.dproj"/>
     </Target>
@@ -119,14 +110,23 @@
     <Target Name="cbsBusiness:Make" DependsOnTargets="cbsSystem:Make;cbsClient:Make;cbsMain:Make">
         <MSBuild Projects="client\cbsBusiness.dproj" Targets="Make"/>
     </Target>
+    <Target Name="cbsUAuth" DependsOnTargets="cbsSystem;cbsClient;cbsMain;cbsBusiness">
+        <MSBuild Projects="client\cbsUAuth.dproj"/>
+    </Target>
+    <Target Name="cbsUAuth:Clean" DependsOnTargets="cbsSystem:Clean;cbsClient:Clean;cbsMain:Clean;cbsBusiness:Clean">
+        <MSBuild Projects="client\cbsUAuth.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="cbsUAuth:Make" DependsOnTargets="cbsSystem:Make;cbsClient:Make;cbsMain:Make;cbsBusiness:Make">
+        <MSBuild Projects="client\cbsUAuth.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="cbsMigrations;cbsMigrationsFireDac;cbsSystem;cbs;cbsServer;cbsClient;cbsMain;cbsUAuth;cbsBusiness"/>
+        <CallTarget Targets="cbsMigrations;cbsMigrationsFireDac;cbsSystem;cbs;cbsServer;cbsClient;cbsMain;cbsBusiness;cbsUAuth"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="cbsMigrations:Clean;cbsMigrationsFireDac:Clean;cbsSystem:Clean;cbs:Clean;cbsServer:Clean;cbsClient:Clean;cbsMain:Clean;cbsUAuth:Clean;cbsBusiness:Clean"/>
+        <CallTarget Targets="cbsMigrations:Clean;cbsMigrationsFireDac:Clean;cbsSystem:Clean;cbs:Clean;cbsServer:Clean;cbsClient:Clean;cbsMain:Clean;cbsBusiness:Clean;cbsUAuth:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="cbsMigrations:Make;cbsMigrationsFireDac:Make;cbsSystem:Make;cbs:Make;cbsServer:Make;cbsClient:Make;cbsMain:Make;cbsUAuth:Make;cbsBusiness:Make"/>
+        <CallTarget Targets="cbsMigrations:Make;cbsMigrationsFireDac:Make;cbsSystem:Make;cbs:Make;cbsServer:Make;cbsClient:Make;cbsMain:Make;cbsBusiness:Make;cbsUAuth:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

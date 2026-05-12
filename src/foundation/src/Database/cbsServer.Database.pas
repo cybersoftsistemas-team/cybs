@@ -32,9 +32,7 @@ uses
 {PROJECT}
   cbsSystem.Contracts.Database.Seeders.DatabaseSeeder,
   cbsSystem.Database.Persistence,
-  cbsSystem.Reflection,
   cbsSystem.Support.Container,
-  cbsSystem.Support.DatabaseSeederTypeRepository,
   Shared.Inf.Database.Connection,
   Shared.Inf.Database.Context;
 
