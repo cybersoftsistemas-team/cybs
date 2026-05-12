@@ -1,0 +1,2 @@
+inherited damCRMDbSeeder: TdamCRMDbSeeder
+end

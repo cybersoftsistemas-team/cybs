@@ -5,6 +5,7 @@ interface
 uses
 {IDE}
   System.TypInfo,
+  System.Rtti,
 {PROJECT}
   cbsSystem.Contracts.Container;
 
@@ -14,7 +15,8 @@ type
     procedure Resolve(var AResult; AServiceType: PTypeInfo); overload;
     procedure Resolve(var AResult; AServiceType: PTypeInfo; const AParams: TParams); overload;
   public
-    procedure Make(var AResult; AServiceType: PTypeInfo);
+    function MakeAll(const AServiceType: PTypeInfo): TArray<TValue>;
+    procedure Make(var AResult; AServiceType: PTypeInfo); overload;
     procedure MakeWith(var AResult; AServiceType: PTypeInfo; const AParams: TParams);
     procedure Release(const AInstance: TObject); overload;
     procedure Release(const AInstance: IInterface); overload;
@@ -28,6 +30,11 @@ uses
   Spring.Container;
 
 { TContainer }
+
+function TContainer.MakeAll(const AServiceType: PTypeInfo): TArray<TValue>;
+begin
+  Result := GlobalContainer.ResolveAll(AServiceType);
+end;
 
 procedure TContainer.Make(var AResult; AServiceType: PTypeInfo);
 begin

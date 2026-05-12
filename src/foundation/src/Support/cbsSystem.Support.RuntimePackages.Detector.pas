@@ -18,7 +18,7 @@ uses
 
 const
   InternalRuntimePackages: TArray<string> = [
-    'cbsMain.bpl',
+    'cbsClient.bpl',
     'cbsMigrations.bpl',
     'cbsMigrationsFireDAC.bpl',
     'cbsSystem.bpl'

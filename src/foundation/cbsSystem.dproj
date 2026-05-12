@@ -144,6 +144,11 @@
         <DCCReference Include="cbsMigrationsFireDac.dcp"/>
         <DCCReference Include="Spring.Base.dcp"/>
         <DCCReference Include="..\modules\spring4d\Source\Core\Container\Spring.Container.pas"/>
+        <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Commands.Insert.pas"/>
+        <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Generators.Abstract.pas"/>
+        <DCCReference Include="..\modules\spring4d\Source\Persistence\Mapping\Spring.Persistence.Mapping.Attributes.pas"/>
+        <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Generators.Ansi.pas"/>
+        <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Interfaces.pas"/>
         <DCCReference Include="src\Module\cbsSystem.Module.BaseModule.pas">
             <Form>damBase</Form>
             <DesignClass>TDataModule</DesignClass>

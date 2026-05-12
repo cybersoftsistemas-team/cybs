@@ -3,6 +3,8 @@ unit cbsSystem.Database.Seeders.DatabaseSeeder;
 interface
 
 uses
+{IDE}
+  System.TypInfo,
 {PROJECT}
   cbsSystem.Contracts.Database.Seeders.DatabaseSeeder,
   cbsSystem.Database.Seeders.DatabaseSeederModule;
@@ -29,7 +31,9 @@ implementation
 
 uses
 {IDE}
-  System.SysUtils;
+  System.SysUtils,
+{SPRING}
+  Spring.Container;
 
 { TcbsDatabaseSeeder }
 
@@ -43,7 +47,9 @@ procedure TcbsDatabaseSeeder.OnRun;
 begin
   if Assigned(TDbSeeder) then
   begin
-    var LDbSeeder := TDbSeeder.Create(nil);
+    GlobalContainer.RegisterType(TDbSeeder.ClassInfo, TDbSeeder.ClassInfo);
+    GlobalContainer.Build;
+    var LDbSeeder := GlobalContainer.Resolve(TDbSeeder.ClassInfo).AsType<TDatabaseSeederModule>;
     try
       LDbSeeder.RunSeed;
     finally

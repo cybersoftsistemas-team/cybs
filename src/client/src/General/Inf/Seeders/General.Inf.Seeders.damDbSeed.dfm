@@ -1,0 +1,2 @@
+inherited damGeneralDbSeed: TdamGeneralDbSeed
+end

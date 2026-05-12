@@ -73,7 +73,7 @@
         <DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;$(DCC_Namespace)</DCC_Namespace>
         <DCC_CBuilderOutput>All</DCC_CBuilderOutput>
         <SanitizedProjectName>cbsUAuth</SanitizedProjectName>
-        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\foundation\src\Form;..\foundation\src\Module;..\modules\spring4d\Source;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Services;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\foundation\src\Form;..\foundation\src\Module;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
         <DCC_BplOutput>..\..\build\$(Platform)\$(Config)</DCC_BplOutput>
         <VerInfo_Locale>1046</VerInfo_Locale>
@@ -131,86 +131,98 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="cbsMain.dcp"/>
         <DCCReference Include="cbsSystem.dcp"/>
-        <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.CustomerRegistrationModule.pas">
+        <DCCReference Include="cbsClient.dcp"/>
+        <DCCReference Include="cbsMain.dcp"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000001_create_identity_schema.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000100_create_identity_configs_table.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000200_create_identity_users_table.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000400_create_identity_users_no_expire_trigger.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000500_create_identity_users_account_disabled_trigger.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000600_create_identity_passwords_table.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000600_create_identity_options_table.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000800_create_identity_settings_table.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000900_create_identity_settings_no_expire_trigger.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00001000_create_identity_settings_account_disabled_trigger.pas"/>
+        <DCCReference Include="src\Identity\Dom\Common\Identity.Dom.Common.SystemOptions.pas"/>
+        <DCCReference Include="src\Identity\Inf\Entities\Identity.Inf.Entities.pas"/>
+        <DCCReference Include="src\Identity\Inf\Contracts\Repositories\Identity.Inf.Contracts.Repositories.ConfigRepository.pas"/>
+        <DCCReference Include="src\Identity\Inf\Contracts\Repositories\Identity.Inf.Contracts.Repositories.UserRepository.pas"/>
+        <DCCReference Include="src\Identity\Inf\Repositories\Identity.Inf.Repositories.ConfigRepository.pas"/>
+        <DCCReference Include="src\Identity\Inf\Repositories\Identity.Inf.Repositories.UserRepository.pas"/>
+        <DCCReference Include="src\Identity\Inf\Contracts\Services\Identity.Inf.Contracts.Services.PasswordHasherService.pas"/>
+        <DCCReference Include="src\Identity\Inf\Contracts\Services\Identity.Inf.Contracts.Services.PasswordService.pas"/>
+        <DCCReference Include="src\Identity\Inf\Services\Identity.Inf.Services.PasswordHasherService.pas"/>
+        <DCCReference Include="src\Identity\Dom\Exceptions\Identity.Dom.Exceptions.UserAuthError.pas"/>
+        <DCCReference Include="src\Identity\App\Services\Identity.App.Services.CustomUserPasswordService.pas"/>
+        <DCCReference Include="src\Identity\App\Services\Identity.App.Services.UserAuthService.pas"/>
+        <DCCReference Include="src\Identity\App\Services\Identity.App.Services.UserPasswordService.pas"/>
+        <DCCReference Include="src\Identity\App\Services\Identity.App.Services.UserTemporaryPasswordService.pas"/>
+        <DCCReference Include="src\Identity\App\Common\Identity.App.Common.AuthResult.pas"/>
+        <DCCReference Include="src\Identity\App\Common\Identity.App.Common.UserAuthError.pas"/>
+        <DCCReference Include="src\Identity\App\Contracts\Services\Identity.App.Contracts.Services.UserPasswordService.pas"/>
+        <DCCReference Include="src\Identity\App\Contracts\Services\Identity.App.Contracts.Services.CustomUserPasswordService.pas"/>
+        <DCCReference Include="src\Identity\App\Contracts\Services\Identity.App.Contracts.Services.UserAuthService.pas"/>
+        <DCCReference Include="src\Identity\App\Contracts\Services\Identity.App.Contracts.Services.UserTemporaryPasswordService.pas"/>
+        <DCCReference Include="src\Identity\UI\Data\Modules\Identity.UI.Data.Modules.CustomerRegistrationModule.pas">
             <Form>damCustomerRegistration</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginDomainsModule.pas">
+        <DCCReference Include="src\Identity\UI\Data\Modules\Identity.UI.Data.Modules.LoginDomainsModule.pas">
             <Form>damLoginDomains</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\Data\Modules\cbsUAuth.ui.Data.Modules.LoginModule.pas">
+        <DCCReference Include="src\Identity\UI\Data\Modules\Identity.UI.Data.Modules.LoginModule.pas">
             <Form>damLogin</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.CityRegistrationForm.pas">
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.CityRegistrationForm.pas">
             <Form>frmCityRegistration</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.ConnEditorForm.pas">
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.ConnEditorForm.pas">
             <Form>frmConnEditor</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.CustomerRegistrationForm.pas">
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.CustomerRegistrationForm.pas">
             <Form>frmCustomerRegistration</Form>
+            <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginDomainsForm.pas">
-            <Form>frmLoginDomains</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginForm.pas">
-            <Form>frmLogin</Form>
-            <DesignClass>TUniLoginForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.OptionsForm.pas">
-            <Form>frmOptions</Form>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\inf\ioc\Modules\cbsUAuth.inf.iocModules.ContainerRoot.pas"/>
-        <DCCReference Include="src\ui\Forms\cbsUAuth.ui.Forms.LoginChangePassword.pas">
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.LoginChangePassword.pas">
             <Form>frmLoginChangePassword</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\inf\Identity\Entities\cbsUAuth.inf.Identity.Entities.pas"/>
-        <DCCReference Include="src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityUserRepository.pas"/>
-        <DCCReference Include="src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityUserRepository.pas"/>
-        <DCCReference Include="src\inf\Identity\Contracts\Repositories\cbsUAuth.inf.Identity.Contracts.Repositories.IdentityConfigRepository.pas"/>
-        <DCCReference Include="src\inf\Identity\Repositories\cbsUAuth.inf.Identity.Repositories.IdentityConfigRepository.pas"/>
-        <DCCReference Include="src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserAuthService.pas"/>
-        <DCCReference Include="src\app\Identity\Services\cbsUAuth.app.Identity.Services.CustomUserPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Common\cbsUAuth.app.Identity.Common.AuthResult.pas"/>
-        <DCCReference Include="src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserAuthService.pas"/>
-        <DCCReference Include="src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.CustomUserPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserPasswordService.pas"/>
-        <DCCReference Include="src\inf\Identity\Services\cbsUAuth.inf.Identity.Services.PasswordHasherService.pas"/>
-        <DCCReference Include="src\inf\Identity\Contracts\Services\cbsUAuth.inf.Identity.Contracts.Services.PasswordHasherService.pas"/>
-        <DCCReference Include="src\inf\Identity\Contracts\Services\cbsUAuth.inf.Identity.Contracts.Services.PasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Contracts\Services\cbsUAuth.app.Identity.Contracts.Services.UserTemporaryPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Services\cbsUAuth.app.Identity.Services.UserTemporaryPasswordService.pas"/>
-        <DCCReference Include="src\app\Identity\Common\cbsUAuth.app.Identity.Common.UserAuthError.pas"/>
-        <DCCReference Include="src\identity\dom\Common\cbsUAuth.Identity.dom.Common.SystemOptions.pas"/>
-        <DCCReference Include="src\identity\dom\Exceptions\cbsUAuth.Identity.dom.Exceptions.UserAuthError.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000001_create_identity_schema.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000005_create_identity_configs_table.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000100_create_identity_users_table.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000105_create_identity_users_no_expire_trigger.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000110_create_identity_users_account_disabled_trigger.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000200_create_identity_passwords_table.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000300_create_identity_options_table.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000400_create_identity_settings_table.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000405_create_identity_settings_no_expire_trigger.pas"/>
-        <DCCReference Include="src\identity\inf\Migrations\_00001000_00000410_create_identity_settings_account_disabled_trigger.pas"/>
-        <DCCReference Include="src\identity\inf\Seeders\_00001000_DatabaseSeeder.pas"/>
-        <DCCReference Include="src\identity\inf\Seeders\cbsUAuth.identity.inf.Seeders.damDbIdentitySeed.pas">
-            <Form>damDbIdentitySeed</Form>
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.LoginDomainsForm.pas">
+            <Form>frmLoginDomains</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.LoginForm.pas">
+            <Form>frmLogin</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniLoginForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.OptionsForm.pas">
+            <Form>frmOptions</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TUniForm</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Identity\Inf\Seeders\_00000250_00000001_IdentityDatabaseSeeder.pas"/>
+        <DCCReference Include="src\Identity\Inf\Seeders\Identity.Inf.Seeders.damDbSeed.pas">
+            <Form>damIdentityDbSeed</Form>
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
+        <DCCReference Include="src\Identity\Inf\Contracts\Repositories\Identity.Inf.Contracts.Repositories.OptionRepository.pas"/>
+        <DCCReference Include="src\Identity\Inf\Repositories\Identity.Inf.Repositories.OptionRepository.pas"/>
+        <DCCReference Include="src\Identity\Inf\Migrations\_00000250_00000300_create_identity_users_set_settings_trigger.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

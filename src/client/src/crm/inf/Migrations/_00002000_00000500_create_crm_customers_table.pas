@@ -20,31 +20,31 @@ implementation
 
 uses
 {PROJECT}
-  cbsMain.inf.DbContext;
+  Shared.Inf.Database.Context;
 
 { CreateCrmCustomersTable }
 
 procedure CreateCrmCustomersTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
-   .HasSchema(SchemaName)
-   .Columns([
-     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-    ,BooleanColumn('Active').HasDefaultValueSql('0').IsRequired
-    ,GuidColumn('DomainId').IsRequired
-    ,GuidColumn('CustomersId').IsRequired
-   ])
-   .Constraints([
-     PrimaryKey('Id')
-    ,ForeignKey('CustomersId', 'persons', 'Id').HasPrincipalSchema('person')
-    ,ForeignKey('DomainId', 'domains', 'Id').HasPrincipalSchema('domain')
-   ])
-   .Indexes([
-     CreateIndex('CustomersId')
-    ,CreateIndex('DomainId')
-    ,CreateIndex(['DomainId', 'CustomersId'], True)
-     .HasInclude('Active')
-   ]);
+  .HasSchema(SchemaName)
+  .Columns([
+    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+   ,BooleanColumn('Active').HasDefaultValueSql('0').IsRequired
+   ,GuidColumn('DomainId').IsRequired
+   ,GuidColumn('CustomersId').IsRequired
+  ])
+  .Constraints([
+    PrimaryKey('Id')
+   ,ForeignKey('CustomersId', 'persons', 'Id').HasPrincipalSchema('person')
+   ,ForeignKey('DomainId', 'domains', 'Id').HasPrincipalSchema('domain')
+  ])
+  .Indexes([
+    CreateIndex('CustomersId')
+   ,CreateIndex('DomainId')
+   ,CreateIndex(['DomainId', 'CustomersId'], True)
+    .HasInclude('Active')
+  ]);
 end;
 
 procedure CreateCrmCustomersTable.Down(const ASchema: IMigrationBuilder);

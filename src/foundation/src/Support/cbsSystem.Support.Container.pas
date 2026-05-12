@@ -13,7 +13,9 @@ type
   private
     class var FContainer: IContainer;
   public
-    class function Make<T>: T; static;
+    class function Make(const AObjectType: TClass): TObject; overload; static;
+    class function Make<T>: T; overload; static;
+    class function MakeAll<T>: TArray<T>; static;
     class function MakeWith<T>(const AParams: TParams): T; static;
     class procedure Release(const AInstance: TObject); overload; static;
     class procedure Release(const AInstance: IInterface); overload; static;
@@ -22,14 +24,36 @@ type
 implementation
 
 uses
+{IDE}
+  System.Rtti,
 {PROJECT}
-  cbsSystem.Container;
+  cbsSystem.Container,
+{SPRING}
+  Spring,
+  Spring.Container;
 
 { App }
+
+class function App.Make(const AObjectType: TClass): TObject;
+begin
+  FContainer.Make(Result, AObjectType.ClassInfo);
+end;
 
 class function App.Make<T>: T;
 begin
   FContainer.Make(Result, TypeInfo(T));
+end;
+
+class function App.MakeAll<T>: TArray<T>;
+type
+  TValueArray = array of TValue;
+begin
+  var LValues := FContainer.MakeAll(TypeInfo(T));
+  SetLength(Result, Length(LValues));
+  for var I := Low(LValues) to High(LValues) do
+  begin
+    TValueArray(LValues)[I].AsTypeRelaxed(TypeInfo(T), Result[I]);
+  end;
 end;
 
 class function App.MakeWith<T>(const AParams: TParams): T;
@@ -49,7 +73,7 @@ end;
 
 initialization
 begin
-  App.FContainer := TContainer.Create;
+  App.FContainer := cbsSystem.Container.TContainer.Create;
 end;
 
 finalization

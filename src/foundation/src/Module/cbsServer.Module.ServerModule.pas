@@ -53,15 +53,14 @@ uses
   Winapi.ShellAPI,
 {$ENDIF}
 {PROJECT}
-  cbsMain.inf.DbModule,
-  cbsMain.ui.Data.Modules.MainModule,
-  cbsMain.ui.Forms.MainForm,
   cbsServer.Database,
+  cbsSystem.Contracts.Database.Seeders.DatabaseSeeder,
   cbsSystem.Contracts.MessageBag,
   cbsSystem.Contracts.Validation.Rules.PasswordPolicy,
   cbsSystem.DataStorage,
   cbsSystem.Locales.Locale,
   cbsSystem.MessageBag,
+  cbsSystem.Support.DatabaseSeederTypeRepository,
   cbsSystem.Support.RegisterContainer,
   cbsSystem.Support.FormTypeRepository,
   cbsSystem.Support.ModuleManager,
@@ -70,6 +69,9 @@ uses
   cbsSystem.Support.ServerModule,
   cbsSystem.Translation.Translator,
   cbsSystem.Validation.Rules.PasswordPolicy,
+  Shared.Inf.Database.Connection,
+  Shared.UI.Data.Modules.MainModule,
+  Shared.UI.Forms.MainForm,
 {SPRING}
   Spring.Container;
 
@@ -100,15 +102,18 @@ begin
   for var LItem in Container do
   begin
     var LShared := LItem.Value.Value;
-    var LRegisterType :=
-      if Assigned(LItem.Value.Key) then
-        GlobalContainer.RegisterType(LItem.Key, LItem.Value.Key)
-      else
-        GlobalContainer.RegisterType(LItem.Key, LItem.Key);
+    var LRegisterType := if Assigned(LItem.Value.Key) then
+      GlobalContainer.RegisterType(LItem.Key, LItem.Value.Key)
+    else
+      GlobalContainer.RegisterType(LItem.Key, LItem.Key);
     if Assigned(LRegisterType) and LShared then
     begin
       LRegisterType.AsSingleton;
     end;
+  end;
+  for var LDbSeederType in DatabaseSeederTypeRepository do
+  begin
+    GlobalContainer.RegisterType(LDbSeederType.ClassInfo).Implements<IDatabaseSeeder>(LDbSeederType.QualifiedClassName);
   end;
   GlobalContainer.RegisterType<PasswordPolicy>.Implements<IPasswordPolicy>;
   GlobalContainer.RegisterType<TMessageBag>.Implements<IMessageBag>;

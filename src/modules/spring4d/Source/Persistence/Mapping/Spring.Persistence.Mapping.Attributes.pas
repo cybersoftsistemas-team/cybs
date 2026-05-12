@@ -285,7 +285,7 @@ type
     constructor Create(const columnName: string; properties: TColumnProperties;
       precision, scale: Integer; const description: string = ''); overload;
 
-    function CanInsert: Boolean; virtual;
+    function CanInsert(const instance: TObject): Boolean; virtual;
     function CanUpdate: Boolean; virtual;
     function GetValue(const instance: TObject): TValue;
 
@@ -378,6 +378,7 @@ type
 implementation
 
 uses
+  System.SysUtils,
   Spring,
   Spring.Persistence.Core.Exceptions,
   Spring.Reflection;
@@ -586,9 +587,49 @@ begin
   Create(columnName, properties, 0, precision, scale, description);
 end;
 
-function ColumnAttribute.CanInsert: Boolean;
+function ColumnAttribute.CanInsert(const instance: TObject): Boolean;
+
+  function HasAssignedValue(const AValue: TValue): Boolean;
+  begin
+    if AValue.IsEmpty then
+      Exit(False);
+    case AValue.Kind of
+      tkInteger:
+        Exit(AValue.AsInteger <> 0);
+      tkInt64:
+        Exit(AValue.AsInt64 <> 0);
+      tkFloat:
+        Exit(AValue.AsExtended <> 0);
+      tkString, tkLString, tkWString, tkUString:
+        Exit(AValue.AsString <> '');
+      tkEnumeration:
+        begin
+          if AValue.TypeInfo = TypeInfo(Boolean) then
+            Exit(AValue.AsBoolean);
+          Exit(AValue.AsOrdinal <> 0);
+        end;
+      tkRecord:
+        begin
+          if AValue.TypeInfo = TypeInfo(TGuid) then
+            Exit(not IsEqualGUID(AValue.AsType<TGuid>, TGuid.Empty));
+          Exit(True);
+        end;
+      tkClass:
+        Exit(AValue.AsObject <> nil);
+    end;
+    Result := True;
+  end;
+
 begin
-  Result := not (cpDontInsert in Properties) and not IsIdentity;
+  Result := not (cpDontInsert in Properties);
+  if not Result then
+    Exit;
+  if IsIdentity then
+  begin
+    if not Assigned(instance) then
+      Exit(False);
+    Result := HasAssignedValue(GetValue(instance));
+  end;
 end;
 
 function ColumnAttribute.CanUpdate: Boolean;

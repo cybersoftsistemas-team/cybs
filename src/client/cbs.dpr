@@ -5,9 +5,13 @@ program cbs;
 {$R *.res}
 
 uses
-  cbs.api.Server in 'src\api\cbs.api.Server.pas';
+  Shared.Inf.Hosting.Server in 'src\Shared\Inf\Hosting\Shared.Inf.Hosting.Server.pas',
+  Shared.App.Contracts.Hosting.ApplicationHost in 'src\Shared\App\Contracts\Hosting\Shared.App.Contracts.Hosting.ApplicationHost.pas';
 
+var
+  Host: IApplicationHost;
 begin
   ReportMemoryLeaksOnShutdown := True;
-  cbsServer.Listen(8077);
+  Host := TServerHost.Create;
+  Host.Listen(8077);
 end.

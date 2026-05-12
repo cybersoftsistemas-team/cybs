@@ -1,0 +1,49 @@
+package cbsClient;
+
+{$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION OFF}
+{$OVERFLOWCHECKS ON}
+{$RANGECHECKS ON}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES ON}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE DEBUG}
+{$ENDIF IMPLICITBUILDING}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  cbsSystem;
+
+contains
+  Shared.Inf.Entities.Entity in 'src\Shared\Inf\Entities\Shared.Inf.Entities.Entity.pas',
+  Shared.Inf.Contracts.Repositories.Repository in 'src\Shared\Inf\Contracts\Repositories\Shared.Inf.Contracts.Repositories.Repository.pas',
+  Shared.Inf.Repositories.Repository in 'src\Shared\Inf\Respositories\Shared.Inf.Repositories.Repository.pas',
+  Shared.UI.Data.Modules.MainModule in 'src\Shared\UI\Data\Modules\Shared.UI.Data.Modules.MainModule.pas' {damMain: TUniGUIMainModule},
+  Shared.UI.Forms.MainForm in 'src\Shared\UI\Forms\Shared.UI.Forms.MainForm.pas' {frmMain: TUniForm},
+  Shared.Inf.Database.Connection in 'src\Shared\Inf\Database\Shared.Inf.Database.Connection.pas' {damDb: TDataModule},
+  Shared.Inf.Database.Context in 'src\Shared\Inf\Database\Shared.Inf.Database.Context.pas',
+  Shared.Core.Contracts.Services.Service in 'src\Shared\Core\Contracts\Services\Shared.Core.Contracts.Services.Service.pas',
+  Shared.Core.Services.Service in 'src\Shared\Core\Services\Shared.Core.Services.Service.pas',
+  Shared.Core.Common.Result in 'src\Shared\Core\Common\Shared.Core.Common.Result.pas',
+  Shared.Core.Common.ActionResult in 'src\Shared\Core\Common\Shared.Core.Common.ActionResult.pas',
+  Shared.Core.Common.SystemUsers in 'src\Shared\Core\Common\Shared.Core.Common.SystemUsers.pas';
+
+end.

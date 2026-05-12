@@ -17,7 +17,6 @@ type
     procedure InternalExecuteMigrations(const TDbModule: DbConnectionModuleType; const TDbMigrationContext: MigrationContextType);
   protected
     function GetPersistence: IPersistence; override;
-    procedure BeforeExecuteMigrations; override;
     procedure OnExecuteMigrations; override;
   public
     constructor Create(const AOwner: IServerModule; const TDbModule: DbConnectionModuleType);
@@ -31,13 +30,13 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsMain.inf.DbContext,
-  cbsMain.inf.DbModule,
-  cbsMain.support.RegisterMigrations,
   cbsSystem.Contracts.Database.Seeders.DatabaseSeeder,
   cbsSystem.Database.Persistence,
   cbsSystem.Reflection,
-  cbsSystem.Support.DatabaseSeederTypeRepository;
+  cbsSystem.Support.Container,
+  cbsSystem.Support.DatabaseSeederTypeRepository,
+  Shared.Inf.Database.Connection,
+  Shared.Inf.Database.Context;
 
 { TDatabase }
 
@@ -56,12 +55,6 @@ end;
 function TDatabase.GetPersistence: IPersistence;
 begin
   Result := FPersistence;
-end;
-
-procedure TDatabase.BeforeExecuteMigrations;
-begin
-  inherited;
-  RegisterMigrations;
 end;
 
 procedure TDatabase.InternalExecuteMigrations(const TDbModule: DbConnectionModuleType; const TDbMigrationContext: MigrationContextType);
@@ -91,14 +84,9 @@ begin
         end;
         LConnection.StartTransaction;
         try
-          for var LDatabaseSeederType in DatabaseSeederTypeRepository do
+          for var LSeeder in App.MakeAll<IDatabaseSeeder> do
           begin
-            var LDatabaseSeeder := CreateObject(LDatabaseSeederType).AsType<IDatabaseSeeder>;
-            try
-              LDatabaseSeeder.Run;
-            finally
-              LDatabaseSeeder := nil;
-            end;
+            LSeeder.Run;
           end;
           LConnection.Commit;
         except

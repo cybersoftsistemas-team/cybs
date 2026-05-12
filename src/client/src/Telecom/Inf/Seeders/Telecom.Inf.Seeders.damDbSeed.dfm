@@ -1,0 +1,2 @@
+inherited damTelecomDbSeed: TdamTelecomDbSeed
+end

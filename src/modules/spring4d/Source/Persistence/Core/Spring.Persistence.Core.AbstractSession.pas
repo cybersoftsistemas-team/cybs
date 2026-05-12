@@ -136,7 +136,8 @@ type
     procedure DoUpdate(const entity: TObject; const updater: IUpdateCommand); virtual;
     procedure DoDelete(const entity: TObject; const deleter: IDeleteCommand); virtual;
 
-    function GetInsertCommandExecutor(entityClass: TClass): IInsertCommand; virtual;
+    function GetInsertCommandExecutor(entity: TObject): IInsertCommand;  overload; virtual;
+    function GetInsertCommandExecutor(entityClass: TClass): IInsertCommand;  overload; virtual;
     function GetUpdateCommandExecutor(entityClass: TClass): IUpdateCommand; virtual;
     function GetDeleteCommandExecutor(entityClass: TClass): IDeleteCommand; virtual;
     function GetSelectCommandExecutor(entityClass: TClass): ISelectCommand; virtual;
@@ -309,11 +310,17 @@ begin
   Result.Build(entityClass);
 end;
 
-function TAbstractSession.GetInsertCommandExecutor(
-  entityClass: TClass): IInsertCommand;
+function TAbstractSession.GetInsertCommandExecutor(entityClass: TClass): IInsertCommand;
 begin
   Result := TInsertExecutor.Create(Connection);
   Result.Build(entityClass);
+end;
+
+function TAbstractSession.GetInsertCommandExecutor(
+  entity: TObject): IInsertCommand;
+begin
+  Result := TInsertExecutor.Create(entity, Connection);
+  Result.Build(entity.ClassType);
 end;
 
 function TAbstractSession.GetLazyValueAsInterface(const id: TValue;

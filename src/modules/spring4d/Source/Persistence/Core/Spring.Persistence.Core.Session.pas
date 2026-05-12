@@ -434,7 +434,7 @@ procedure TSession.Insert(const entity: TObject);
 var
   inserter: IInsertCommand;
 begin
-  inserter := GetInsertCommandExecutor(entity.ClassType);
+  inserter := GetInsertCommandExecutor(entity);
   DoInsert(entity, inserter);
 end;
 

@@ -36,19 +36,21 @@ end;
 procedure TDatabaseSeederModule.BeforeRunSeed;
 begin
   // This method can be overwritten by inherited classes.
-  sptSeed.ValidateAll;
+  if not sptSeed.IsEmpty then
+    sptSeed.ValidateAll;
 end;
 
 function TDatabaseSeederModule.IsRunSeed: Boolean;
 begin
   // This method can be overwritten by inherited classes.
-  Result := not sptSeed.IsEmpty;
+  Result := True;
 end;
 
 procedure TDatabaseSeederModule.OnRunSeed;
 begin
   // This method can be overwritten by inherited classes.
-  sptSeed.ExecuteAll;
+  if not sptSeed.IsEmpty then
+    sptSeed.ExecuteAll;
 end;
 
 procedure TDatabaseSeederModule.RunSeed;

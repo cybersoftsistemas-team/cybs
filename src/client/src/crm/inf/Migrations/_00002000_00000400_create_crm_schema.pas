@@ -19,7 +19,7 @@ implementation
 
 uses
 {PROJECT}
-  cbsMain.inf.DbContext;
+  Shared.Inf.Database.Context;
 
 { CreateCrmSchema }
 

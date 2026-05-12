@@ -1,0 +1,2 @@
+inherited damAddressDbSeed: TdamAddressDbSeed
+end

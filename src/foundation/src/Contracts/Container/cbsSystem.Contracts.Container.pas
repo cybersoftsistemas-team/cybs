@@ -14,6 +14,7 @@ type
 
   IContainer = interface(IUnknown)
     ['{9313664A-9731-48A0-99A3-D997D04358CD}']
+    function MakeAll(const AServiceType: PTypeInfo): TArray<TValue>;
     procedure Make(var AResult; AServiceType: PTypeInfo);
     procedure MakeWith(var AResult; AServiceType: PTypeInfo; const AParams: TParams);
     procedure Release(const AInstance: IInterface); overload;

@@ -410,7 +410,7 @@ begin
 
   fInsertFields.Clear;
   for column in columns do
-    if column.CanInsert then
+    if column.CanInsert(fEntity) then
     begin
       insertField := TSQLInsertField.Create(column.ColumnName, fTable, column,
         GetAndIncParameterName(column.ColumnName));

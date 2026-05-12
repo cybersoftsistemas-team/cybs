@@ -123,22 +123,23 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
-        <DCCReference Include="cbsMain.dcp"/>
         <DCCReference Include="cbsSystem.dcp"/>
-        <DCCReference Include="src\domain\inf\Migrations\_00002000_00000001_create_domain_schema.pas"/>
-        <DCCReference Include="src\domain\inf\Migrations\_00002000_00000100_create_domain_domains_table.pas"/>
-        <DCCReference Include="src\domain\inf\Migrations\_00002000_00000200_create_domain_domains_allow_access_to_admin_trigger.pas"/>
-        <DCCReference Include="src\domain\inf\Migrations\_00002000_00000300_create_domain_accesses_table.pas"/>
-        <DCCReference Include="src\crm\inf\Migrations\_00002000_00000400_create_crm_schema.pas"/>
-        <DCCReference Include="src\crm\inf\Migrations\_00002000_00000500_create_crm_customers_table.pas"/>
-        <DCCReference Include="src\domain\inf\Seeders\_00002000_DatabaseDomainSeeder.pas"/>
-        <DCCReference Include="src\crm\inf\Seeders\_00002001_DatabaseCrmSeeder.pas"/>
-        <DCCReference Include="src\crm\inf\Seeders\cbsBusiness.crm.inf.Seeders.damDbCrmSeed.pas">
-            <Form>damDbCrmSeed</Form>
+        <DCCReference Include="cbsClient.dcp"/>
+        <DCCReference Include="cbsMain.dcp"/>
+        <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000001_create_domain_schema.pas"/>
+        <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000100_create_domain_domains_table.pas"/>
+        <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000200_create_domain_domains_allow_access_to_admin_trigger.pas"/>
+        <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000300_create_domain_accesses_table.pas"/>
+        <DCCReference Include="src\CRM\Inf\Migrations\_00002000_00000400_create_crm_schema.pas"/>
+        <DCCReference Include="src\CRM\Inf\Migrations\_00002000_00000500_create_crm_customers_table.pas"/>
+        <DCCReference Include="src\Domain\Inf\Seeders\_00000300_0000001_DomainDatabaseSeeder.pas"/>
+        <DCCReference Include="src\CRM\Inf\Seeders\_00000350_00000001_CRMDatabaseSeeder.pas"/>
+        <DCCReference Include="src\CRM\Inf\Seeders\CRM.Inf.Seeders.damDbSeeder.pas">
+            <Form>damCRMDbSeeder</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\domain\inf\Seeders\cbsBusiness.domain.inf.Seeders.damDbDomainSeed.pas">
-            <Form>damDbDomainSeed</Form>
+        <DCCReference Include="src\Domain\Inf\Seeders\Domain.Inf.Seeders.damDbSeeder.pas">
+            <Form>damDomainDbSeeder</Form>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
         <BuildConfiguration Include="Base">

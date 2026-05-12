@@ -1,2 +1,0 @@
-inherited damDbDomainSeed: TdamDbDomainSeed
-end
