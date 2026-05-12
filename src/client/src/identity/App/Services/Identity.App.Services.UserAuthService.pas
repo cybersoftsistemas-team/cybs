@@ -8,21 +8,16 @@ uses
   Identity.App.Common.AuthResult,
   Identity.Inf.Contracts.Repositories.UserRepository,
   Identity.Inf.Contracts.Services.PasswordHasherService,
-  Shared.Core.Services.Service;
+  Shared.Core.Services.Service,
+{SPRING}
+  Spring.Container.Common;
 
 type
   TUserAuthService = class(TService, IUserAuthService)
   private
-    FPasswordHasherService: IPasswordHasherService;
-    FUserRepository: IUserRepository;
+    [Inject] FPasswordHasherService: IPasswordHasherService;
+    [Inject] FUserRepository: IUserRepository;
   public
-
-    constructor Create(
-      const APasswordHasherService: IPasswordHasherService;
-      const AUserRepository: IUserRepository
-    );
-    
-    destructor Destroy; override;
     function Authenticate(const AUserName, APassword: string): TUserAuthResult;
   end;
 
@@ -34,23 +29,6 @@ uses
   Identity.Dom.Exceptions.UserAuthError;
 
 { TUserAuthService }
-
-constructor TUserAuthService.Create(
-  const APasswordHasherService: IPasswordHasherService;
-  const AUserRepository: IUserRepository
-);
-begin
-  inherited Create;
-  FPasswordHasherService := APasswordHasherService;
-  FUserRepository := AUserRepository;
-end;
-
-destructor TUserAuthService.Destroy;
-begin
-  App.Release(FPasswordHasherService);
-  App.Release(FUserRepository);
-  inherited;
-end;
 
 function TUserAuthService.Authenticate(const AUserName, APassword: string): TUserAuthResult;
 begin
