@@ -47,7 +47,6 @@ end;
 
 function TPersistence.GetSession: TSession;
 begin
-  FSession.Connection.Connect;
   Result := FSession;
 end;
 

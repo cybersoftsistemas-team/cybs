@@ -4,7 +4,11 @@ interface
 
 uses
 {PROJECT}
-  cbsSystem.Contracts.Container;
+  cbsSystem.Contracts.Container,
+
+  Data.DB,
+  FireDAC.Comp.Client,
+  FireDAC.Comp.DataSet;
 
 type
   TParam = cbsSystem.Contracts.Container.TParam;
@@ -16,9 +20,17 @@ type
     class function Make(const AObjectType: TClass): TObject; overload; static;
     class function Make<T>: T; overload; static;
     class function MakeAll<T>: TArray<T>; static;
-    class function MakeWith<T>(const AParams: TParams): T; static;
+    class function MakeWith<T>(const AParams: cbsSystem.Contracts.Container.TParams): T; static;
     class procedure Release(const AInstance: TObject); overload; static;
     class procedure Release(const AInstance: IInterface); overload; static;
+  end;
+
+  TFDMemTableExtensions = class helper for TFDMemTable
+  public
+    procedure CreateAndCopyDataSet(
+      const ASource: TDataSet;
+      const AOptions: TFDCopyDataSetOptions = [coRestart, coAppend]
+    );
   end;
 
 implementation
@@ -55,7 +67,7 @@ begin
   end;
 end;
 
-class function App.MakeWith<T>(const AParams: TParams): T;
+class function App.MakeWith<T>(const AParams: cbsSystem.Contracts.Container.TParams): T;
 begin
   FContainer.MakeWith(Result, TypeInfo(T), AParams);
 end;
@@ -68,6 +80,17 @@ end;
 class procedure App.Release(const AInstance: IInterface);
 begin
   FContainer.Release(AInstance);
+end;
+
+{ TFDMemTableExtensions }
+
+procedure TFDMemTableExtensions.CreateAndCopyDataSet(
+  const ASource: TDataSet;
+  const AOptions: TFDCopyDataSetOptions
+);
+begin
+  inherited CreateDataSet;
+  CopyDataSet(ASource, AOptions);
 end;
 
 initialization

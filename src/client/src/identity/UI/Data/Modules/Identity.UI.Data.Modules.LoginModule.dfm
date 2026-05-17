@@ -1,9 +1,8 @@
 inherited damLogin: TdamLogin
   OnCreate = UniGUIMainModuleCreate
   Height = 159
-  Width = 311
+  Width = 165
   object mtbUSE: TFDMemTable
-    OnNewRecord = mtbUSENewRecord
     FetchOptions.AssignedValues = [evMode]
     FetchOptions.Mode = fmAll
     ResourceOptions.AssignedValues = [rvStoreItems, rvSilentMode]
@@ -14,11 +13,6 @@ inherited damLogin: TdamLogin
     UpdateOptions.AutoCommitUpdates = True
     Left = 32
     Top = 16
-    object mtbUSEId: TGuidField
-      FieldName = 'Id'
-      Visible = False
-      Size = 38
-    end
     object mtbUSEName: TStringField
       DisplayLabel = 'Nome de usu'#225'rio'
       FieldName = 'Name'
@@ -29,13 +23,14 @@ inherited damLogin: TdamLogin
       FieldName = 'Password'
       Size = 255
     end
-    object mtbUSEDomainId: TGuidField
-      FieldName = 'DomainId'
-      Size = 38
-    end
     object mtbUSEDomainName: TStringField
+      DisplayLabel = 'Dom'#237'nio'
       FieldName = 'DomainName'
       Size = 255
+    end
+    object mtbUSERememberYourLoginCredentials: TBooleanField
+      DisplayLabel = 'Lembrar das credenciais de acesso'
+      FieldName = 'RememberYourLoginCredentials'
     end
   end
   object dsoUSE: TDataSource
@@ -84,46 +79,5 @@ inherited damLogin: TdamLogin
     OnDataChange = dsoDataChange
     Left = 104
     Top = 88
-  end
-  object qryCMR: TFDQuery
-    Connection = damDb.Connection
-    SQL.Strings = (
-      'SELECT Id'
-      ',CustomerId'
-      ',ClientId'
-      ',CreatedAt'
-      'FROM registration.customer;')
-    Left = 176
-    Top = 16
-    object qryCMRId: TIntegerField
-      FieldName = 'Id'
-      Origin = 'Id'
-      ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
-      Required = True
-    end
-    object qryCMRCustomerId: TGuidField
-      FieldName = 'CustomerId'
-      Origin = 'CustomerId'
-      Required = True
-      Size = 38
-    end
-    object qryCMRClientId: TGuidField
-      FieldName = 'ClientId'
-      Origin = 'ClientId'
-      Required = True
-      Size = 38
-    end
-    object qryCMRCreatedAt: TSQLTimeStampField
-      FieldName = 'CreatedAt'
-      Origin = 'CreatedAt'
-      Required = True
-    end
-  end
-  object dsoCMR: TDataSource
-    DataSet = qryCMR
-    OnStateChange = dsoStateChange
-    OnDataChange = dsoDataChange
-    Left = 248
-    Top = 16
   end
 end

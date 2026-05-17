@@ -1,4 +1,4 @@
-unit Identity.UI.Forms.LoginChangePassword;
+﻿unit Identity.UI.Forms.LoginChangePassword;
 
 interface
 
@@ -64,7 +64,7 @@ begin
     edtCurrentPassword.Clear;
     edtNewPassword.Clear;
     edtConfirmPassword.Clear;
-    MessageBox('Erro', 'Erro ao alterar a senha do pr�ximo logon.', LActionResult.Value.Messages, mtError, [mbOK],
+    MessageBox('Erro', 'Erro ao alterar a senha do próximo logon.', LActionResult.Value.Messages, mtError, [mbOK],
       procedure(const AResult: Integer)
       begin
         edtCurrentPassword.SetFocus;

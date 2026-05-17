@@ -110,7 +110,7 @@ end;
 procedure TfrmLoginDomains.UniFormCreate(Sender: TObject);
 begin
   inherited;
-  BuildTreeView(trvDomains, damLoginDomains.qryDOM);
+  BuildTreeView(trvDomains, damLoginDomains.mtbDOM);
 end;
 
 end.

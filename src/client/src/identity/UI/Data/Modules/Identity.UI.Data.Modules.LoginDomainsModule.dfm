@@ -1,17 +1,17 @@
 inherited damLoginDomains: TdamLoginDomains
   Height = 86
-  Width = 93
-  object qryDOM: TFDQuery
-    Connection = damDb.Connection
-    SQL.Strings = (
-      'SELECT Id'
-      ',Name'
-      ',ParentId'
-      'FROM domain.domains'
-      'ORDER BY ParentId, Name')
+  Width = 95
+  object mtbDOM: TFDMemTable
+    FetchOptions.AssignedValues = [evMode]
+    FetchOptions.Mode = fmAll
+    ResourceOptions.AssignedValues = [rvSilentMode]
+    ResourceOptions.SilentMode = True
+    UpdateOptions.AssignedValues = [uvCheckRequired, uvAutoCommitUpdates]
+    UpdateOptions.CheckRequired = False
+    UpdateOptions.AutoCommitUpdates = True
     Left = 31
     Top = 16
-    object qryDOMId: TGuidField
+    object mtbDOMId: TGuidField
       FieldName = 'Id'
       Origin = 'Id'
       ProviderFlags = [pfInUpdate, pfInWhere, pfInKey]
@@ -19,13 +19,13 @@ inherited damLoginDomains: TdamLoginDomains
       Visible = False
       Size = 38
     end
-    object qryDOMName: TWideStringField
+    object mtbDOMName: TWideStringField
       FieldName = 'Name'
       Origin = 'Name'
       Required = True
       Size = 255
     end
-    object qryDOMParentId: TGuidField
+    object mtbDOMParentId: TGuidField
       FieldName = 'ParentId'
       Origin = 'ParentId'
       Visible = False

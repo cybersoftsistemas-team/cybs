@@ -1,11 +1,12 @@
-unit Identity.UI.Forms.LoginForm;
+﻿unit Identity.UI.Forms.LoginForm;
 
 interface
 
 uses
 {IDE}
   uniGUITypes, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Imaging.pngimage,
-  uniImage, uniSpeedButton, uniButton, uniBitBtn, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, uniPanel, Vcl.Controls, Vcl.Forms, uniTimer;
+  uniImage, uniSpeedButton, uniButton, uniBitBtn, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, uniPanel, Vcl.Controls, Vcl.Forms, uniTimer, uniCheckBox, uniDBCheckBox,
+  uniScreenMask;
 
 type
   TfrmLogin = class(TUniLoginForm)
@@ -38,6 +39,8 @@ type
     pnlMsg: TUniSimplePanel;
     labMsg: TUniLabel;
     imgMsg: TUniImage;
+    cbxRememberYourLoginCredentials: TUniDBCheckBox;
+    usmSelected: TUniScreenMask;
     procedure actConnectExecute(Sender: TObject);
     procedure actDomainsExecute(Sender: TObject);
     procedure actOptionsExecute(Sender: TObject);
@@ -46,7 +49,7 @@ type
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure UniLoginFormCreate(Sender: TObject);
   private
-    procedure AfterConnect(const AModalResult: Integer);
+    procedure AfterConnect;
     procedure BeforeConnect;
     procedure HideMsg;
     procedure OnConnect(var AModalResult: Integer);
@@ -71,11 +74,12 @@ uses
   cbsSystem.Support.ServerModule,
   Identity.Dom.Common.SystemOptions,
   Identity.Inf.Entities,
+  Identity.UI.Data.Modules.LoginDomainsModule,
   Identity.UI.Data.Modules.LoginModule,
-  Identity.UI.Forms.CustomerRegistrationForm,
   Identity.UI.Forms.LoginChangePassword,
+  Identity.UI.Forms.LoginDomainRegistrationForm,
   Identity.UI.Forms.LoginDomainsForm,
-  Identity.UI.Forms.OptionsForm,  
+  Identity.UI.Forms.LoginOptionsForm,
   Shared.UI.Data.Modules.MainModule;
 
 function frmLogin: TfrmLogin;
@@ -91,7 +95,8 @@ begin
   try
     BeforeConnect;
     OnConnect(LModalResult);
-    AfterConnect(LModalResult);
+    AfterConnect;
+    ModalResult := LModalResult;
   except
     on E: Exception do
     begin
@@ -107,9 +112,7 @@ begin
     begin
       if Result = mrOk then
       begin
-        damLogin.SetDomain(
-         frmLoginDomains.DomainId
-        ,frmLoginDomains.DomainName);
+        damLogin.SetDomain(frmLoginDomains.DomainName);
       end;
       UpdateUi;
     end);
@@ -117,7 +120,7 @@ end;
 
 procedure TfrmLogin.actOptionsExecute(Sender: TObject);
 begin
-  frmOptions.ShowModal(
+  frmLoginOptions.ShowModal(
     procedure(Sender: TComponent; Result: Integer)
     begin
       UpdateUi;
@@ -126,16 +129,18 @@ end;
 
 procedure TfrmLogin.actRegisterExecute(Sender: TObject);
 begin
-  frmCustomerRegistration.ShowModal(
+  frmDomainRegistration.ShowModal(
     procedure(Sender: TComponent; Result: Integer)
     begin
       UpdateUi;
+      if Result = mrOk then
+        damLogin.mtbUSEName.FocusControl;
     end);
 end;
 
-procedure TfrmLogin.AfterConnect(const AModalResult: Integer);
+procedure TfrmLogin.AfterConnect;
 begin
-  ModalResult := AModalResult;
+  damLogin.SaveLogonData;
 end;
 
 procedure TfrmLogin.BeforeConnect;
@@ -148,12 +153,23 @@ begin
   if damLogin.mtbUSEPassword.AsString.Trim.IsEmpty then
   begin
     edtPassword.SetFocus;
-    raise Exception.CreateFmt('Digite uma %s de usu�rio para fazer o login.', [edtPassword.FieldLabel.ToLower]);
+    raise Exception.CreateFmt('Digite uma %s de usuário para fazer o login.', [edtPassword.FieldLabel.ToLower]);
   end;
-  if damLogin.mtbUSEDomainId.AsGuid.IsEmpty then
+  if damLogin.mtbUSEDomainName.AsString.Trim.IsEmpty then
   begin
     btnDomains.SetFocus;
     raise Exception.CreateFmt('Selecione um %s de acesso para fazer o login.', [edtDomainName.FieldLabel.ToLower]);
+  end;
+  if not damLoginDomains.ExistsDomain(damLogin.mtbUSEDomainName.AsString) then
+  begin
+    damLogin.mtbUSEDomainName.Clear;
+    damLogin.mtbUSEDomainName.FocusControl;
+    raise Exception.CreateFmt('O domínio de acesso %s não pôde ser encontrado.', [damLogin.mtbUSEDomainName.AsString]);
+  end;
+  if not damLoginDomains.ExistsAccess(damLogin.mtbUSEDomainName.AsString, damLogin.mtbUSEName.AsString) then
+  begin
+    MessageDlg(Format('O usuário %s não tem acesso ao domínio %s.',
+      [damLogin.mtbUSEName.AsString, damLogin.mtbUSEDomainName.AsString]), TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK]);
   end;
 end;
 
@@ -167,32 +183,35 @@ begin
   var LResult := damLogin.AuthenticateUser(damLogin.mtbUSEName.AsString, damLogin.mtbUSEPassword.AsString);
   if LResult.IsSuccess then
   begin
-     var LUser := LResult.Value;
-     try
-       if LUser.Settings.First(
-         function(const ASetting: TSettingEntity): Boolean
-         begin
-           Result := IsEqualGUID(ASetting.OptionId, TSystemOptions.ChangePasswordOnNextLoginId);
-         end
-       ).Checked then
-       begin
-         AModalResult := mrNone;
-         var LUserId := LUser.Id;
-         MessageDlg('Voc� precisa alterar sua senha para continuar.', TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],
-           procedure(Sender: TComponent; Result: Integer)
-           begin
-             damLogin.ClearUserPassword;
-             frmLoginChangePassword.UserId := LUserId;
-             frmLoginChangePassword.ShowModal(
-               procedure(Sender: TComponent; Result: Integer)
-               begin
-                 UpdateUi;
-               end);
-           end);
-       end;
-     finally
-       FreeAndNil(LUser);
-     end;
+    var LUser := LResult.Value;
+    try
+      if LUser.Settings.First(
+        function(const ASetting: TSettingEntity): Boolean
+        begin
+          Result := IsEqualGUID(
+            ASetting.OptionId,
+            TSystemOptions.ChangePasswordOnNextLoginId
+          );
+        end
+      ).Checked then
+      begin
+        AModalResult := mrNone;
+        var LUserId := LUser.Id;
+        MessageDlg('Você precisa alterar sua senha para continuar.', TMsgDlgType.mtInformation, [TMsgDlgBtn.mbOK],
+          procedure(Sender: TComponent; Result: Integer)
+          begin
+            damLogin.ClearUserPassword;
+            frmLoginChangePassword.UserId := LUserId;
+            frmLoginChangePassword.ShowModal(
+              procedure(Sender: TComponent; Result: Integer)
+              begin
+                UpdateUi;
+              end);
+          end);
+      end;
+    finally
+      LUser.Free;
+    end;
   end;
 end;
 
@@ -206,7 +225,7 @@ procedure TfrmLogin.UniLoginFormActivate(Sender: TObject);
 begin
   if not SameText(string(edtUserName.Text).Trim, '') then
   begin
-    edtPassword.SetFocus;
+    damLogin.mtbUSEPassword.FocusControl;
   end;
 end;
 
@@ -229,31 +248,32 @@ end;
 
 procedure TfrmLogin.UpdateUi;
 begin
-  var LExistsRegisteredCustomer := True; //damLogin.ExistsRegisteredCustomer;
-  edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and LExistsRegisteredCustomer;
+  var LExistsRegisteredDomain := damLoginDomains.ExistsRegisteredDomain;
+  edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and LExistsRegisteredDomain;
   edtPassword.Enabled := edtUserName.Enabled;
   edtDomainName.Enabled := edtUserName.Enabled;
   actDomains.Enabled := edtUserName.Enabled;
+  cbxRememberYourLoginCredentials.Enabled := edtUserName.Enabled;
   actOptions.Visible := RunTime.IsClientRunningInServer;
-  actRegister.Visible := actOptions.Visible and not ServerModule.Database.Id.IsEmpty and not LExistsRegisteredCustomer;
-  actConnect.Visible := not actOptions.Visible or ServerModule.Database.Id.IsEmpty or LExistsRegisteredCustomer;
+  actRegister.Visible := actOptions.Visible and not ServerModule.Database.Id.IsEmpty and not LExistsRegisteredDomain;
+  actConnect.Visible := not actOptions.Visible or ServerModule.Database.Id.IsEmpty or LExistsRegisteredDomain;
   actConnect.Enabled := edtUserName.Enabled;
   HideMsg;
   if actOptions.Visible and damLogin.mtbCNS.Active and damLogin.mtbCNS.IsEmpty then
   begin
-    ShowMsg('N�o existe uma configura��o de conex�o com o banco de dados.');
+    ShowMsg('Não existe uma configuração de conexão com o banco de dados.');
   end
   else if actOptions.Visible and ServerModule.Database.Id.IsEmpty then
   begin
-    ShowMsg('� necess�rio selecionar uma conex�o com o banco de dados.');
+    ShowMsg('É necessário selecionar uma conexão com o banco de dados.');
   end
   else if actRegister.Visible then
   begin
-    ShowMsg('Registre um cliente para ter acesso ao sistema.');
+    ShowMsg('Registre um domínio para ter acesso ao sistema.');
   end
   else if actConnect.Visible and not actConnect.Enabled then
   begin
-    ShowMsg('O acesso ao sistema est� temporariamente indispon�vel.');
+    ShowMsg('O acesso ao sistema está temporariamente indisponável.');
   end;
 end;
 

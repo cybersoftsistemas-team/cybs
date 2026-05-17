@@ -40,6 +40,8 @@ type
 
   ModuleType = class of TDataModule;
 
+  procedure RegisterModuleType(const AModuleType: ModuleType);
+
 implementation
 
 {%CLASSGROUP 'System.Classes.TPersistent'}
@@ -48,7 +50,14 @@ implementation
 
 uses
 {IDE}
-  cbsSystem.Support.Utils;
+  cbsSystem.Support.Utils,
+{PROJECT}
+  cbsSystem.Support.Module;
+
+procedure RegisterModuleType(const AModuleType: ModuleType);
+begin
+  cbsSystem.Support.Module.RegisterModuleType(AModuleType);
+end;
 
 { TdamBase }
 
@@ -62,6 +71,11 @@ destructor TdamBase.Destroy;
 begin
   FFormListenerList := nil;
   inherited;
+end;
+
+function TdamBase.GetCpfOrCnpfDBFieldDisplayText: Boolean;
+begin
+  Result := FCpfOrCnpfDBFieldDisplayText;
 end;
 
 procedure TdamBase.AddFormListener(const AForm: IForm);
@@ -143,11 +157,6 @@ begin
     end;
   end;
   DoStateChange(Sender);
-end;
-
-function TdamBase.GetCpfOrCnpfDBFieldDisplayText: Boolean;
-begin
-  Result := FCpfOrCnpfDBFieldDisplayText;
 end;
 
 procedure TdamBase.OpenDataSets;

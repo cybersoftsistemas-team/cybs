@@ -96,14 +96,14 @@ object frmLogin: TfrmLogin
       Left = 0
       Top = 93
       Width = 453
-      Height = 162
+      Height = 170
       Hint = ''
       ParentColor = False
       Align = alClient
       TabOrder = 2
       DesignSize = (
         453
-        162)
+        170)
       object pnlMsg: TUniSimplePanel
         Left = 28
         Top = 6
@@ -157,13 +157,13 @@ object frmLogin: TfrmLogin
       end
       object pnlButtons: TUniContainerPanel
         Left = 28
-        Top = 124
+        Top = 144
         Width = 392
         Height = 25
         Hint = ''
         ParentColor = False
         Anchors = [akLeft, akRight, akBottom]
-        TabOrder = 6
+        TabOrder = 7
         object btnOptions: TUniBitBtn
           AlignWithMargins = True
           Left = 317
@@ -212,7 +212,7 @@ object frmLogin: TfrmLogin
       end
       object edtUserName: TUniDBEdit
         Left = 28
-        Top = 40
+        Top = 36
         Width = 392
         Height = 22
         Hint = ''
@@ -225,7 +225,7 @@ object frmLogin: TfrmLogin
       end
       object edtPassword: TUniDBEdit
         Left = 28
-        Top = 68
+        Top = 64
         Width = 392
         Height = 22
         Hint = ''
@@ -239,7 +239,7 @@ object frmLogin: TfrmLogin
       end
       object edtDomainName: TUniDBEdit
         Left = 28
-        Top = 96
+        Top = 92
         Width = 363
         Height = 22
         Hint = ''
@@ -254,7 +254,7 @@ object frmLogin: TfrmLogin
       end
       object btnDomains: TUniSpeedButton
         Left = 397
-        Top = 96
+        Top = 92
         Width = 23
         Height = 22
         Action = actDomains
@@ -263,22 +263,36 @@ object frmLogin: TfrmLogin
         ImageIndex = 2
         TabOrder = 5
       end
+      object cbxRememberYourLoginCredentials: TUniDBCheckBox
+        Left = 189
+        Top = 119
+        Width = 202
+        Height = 17
+        Hint = ''
+        DataField = 'RememberYourLoginCredentials'
+        DataSource = damLogin.dsoUSE
+        Caption = 'Lembrar das credenciais de acesso.'
+        Anchors = [akRight, akBottom]
+        TabOrder = 6
+        ParentColor = False
+        Color = clBtnFace
+      end
     end
     object pnlFooter: TUniSimplePanel
       Left = 0
-      Top = 255
+      Top = 263
       Width = 453
-      Height = 93
+      Height = 85
       Hint = ''
       ParentColor = False
       Align = alBottom
       TabOrder = 3
       DesignSize = (
         453
-        93)
+        85)
       object imgBckFooter: TUniImage
         Left = 0
-        Top = 47
+        Top = 39
         Width = 451
         Height = 46
         Hint = ''
@@ -506,7 +520,7 @@ object frmLogin: TfrmLogin
       end
       object labFooterTitle: TUniLabel
         Left = 30
-        Top = 31
+        Top = 23
         Width = 174
         Height = 13
         Hint = ''
@@ -516,7 +530,7 @@ object frmLogin: TfrmLogin
       end
       object labFooterSubTitle: TUniLabel
         Left = 30
-        Top = 45
+        Top = 37
         Width = 315
         Height = 13
         Hint = ''
@@ -587,22 +601,27 @@ object frmLogin: TfrmLogin
       310804AFC16B630B4955E9CEE0C129C124FB303EC6C72A23888F88186FEBF243
       72232F8843CE2E3F094004A81168B882F594B89D834940868F7D1384ED1C140B
       FC801FF50283BEB2734FA025415E3000FE3DA38A41B3014A0000000049454E44
-      AE426082FFFFFF1F04F800000089504E470D0A1A0A0000000D49484452000000
-      100000001008060000001FF3FF610000001974455874536F6674776172650041
-      646F626520496D616765526561647971C9653C0000002C744558745469746C65
-      004164643B4974656D3B4164644974656D3B426172733B526962626F6E3B4974
-      656D3B506C75734E32EF810000006249444154785ED5D3C10980300C85E1EEE4
-      1C2E2539671E9771110F461E34A287BE48444A0B3FC9217CB71633FBD4B58888
-      918E3A270AB007405537205900637724033CE2006F54605E56E400F67E000A01
-      3FA2FD0A30AC786F3F530834BB1FB780139B0320D9EACDD2140000000049454E
-      44AE426082FFFFFF1F04F400000089504E470D0A1A0A0000000D494844520000
-      00100000001008060000001FF3FF610000001974455874536F66747761726500
-      41646F626520496D616765526561647971C9653C0000000B744558745469746C
-      6500496E666F3B6D122D860000007F49444154785EADD3C10904210C05D09492
-      6A72DBA6F6AC556C13DB41DA112C20F3850C88E02E337F847750C247A3CAEBFD
-      5D19547068C973CDD6FA79A250A0436CF4ACD13540E193457F65ADCE0105E2A2
-      7206D86EDB1832FC388E493627AE06A42AD9E1B8C947402376D01E097022C0E9
-      26D2D7483E24FE29F39F89FECE074CA754D1009116650000000049454E44AE42
-      6082}
+      AE426082FFFFFF1F04AF00000089504E470D0A1A0A0000000D49484452000000
+      100000001008060000001FF3FF61000000017352474200AECE1CE90000000467
+      414D410000B18F0BFC6105000000097048597300000EC300000EC301C76FA864
+      0000004449444154384F6360A005F06DDAF11F1B46578713A06B1C35800C0360
+      60C3860DFF41185D1C2780692084D1F5C101BA24360DE87C30285B3EFD3F3226
+      456CB81830A00000CF4F0D687684B6C10000000049454E44AE426082FFFFFF1F
+      04F400000089504E470D0A1A0A0000000D494844520000001000000010080600
+      00001FF3FF610000001974455874536F6674776172650041646F626520496D61
+      6765526561647971C9653C0000000B744558745469746C6500496E666F3B6D12
+      2D860000007F49444154785EADD3C10904210C05D094926A72DBA6F6AC556C13
+      DB41DA112C20F3850C88E02E337F847750C247A3CAEBFD5D19547068C973CDD6
+      FA79A250A0436CF4ACD13540E193457F65ADCE0105E2A27206D86EDB1832FC38
+      8E493627AE06A42AD9E1B8C947402376D01E097022C0E926D2D7483E24FE29F3
+      9F89FECE074CA754D1009116650000000049454E44AE426082}
+  end
+  object usmSelected: TUniScreenMask
+    AttachedControl = btnConnect
+    Enabled = True
+    DisplayMessage = 'Conectando...'
+    TargetControl = Owner
+    Left = 407
+    Top = 16
   end
 end

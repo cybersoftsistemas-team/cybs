@@ -35,6 +35,7 @@ type
     function IsPossibleExecuteMigrations: Boolean; virtual;
     procedure BeforeExecuteMigrations; virtual;
     procedure OnExecuteMigrations; virtual;
+    property Owner: IServerModule read FOwner;
   public
     constructor Create(const AOwner: IServerModule);
     destructor Destroy; override;

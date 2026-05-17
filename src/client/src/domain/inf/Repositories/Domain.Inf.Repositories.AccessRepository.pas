@@ -11,16 +11,26 @@ uses
 type
   TAccessRepository = class(TRepository<TAccessEntity>, IAccessRepository)
   public
-    function Find(const ADomainId: TGuid; const AUserId: TGuid): TAccessEntity;
+    function Find(const ADomainName: string; const AUserName: string): TAccessEntity;
   end;
 
 implementation
 
 { TAccessRepository }
 
-function TAccessRepository.Find(const ADomainId, AUserId: TGuid): TAccessEntity;
+function TAccessRepository.Find(const ADomainName: string; const AUserName: string): TAccessEntity;
 begin
-  Result := FirstOrDefault(ICriteria.Add(Restrictions.Eq('DomainId', ToValue(ADomainId))).Add(Restrictions.Eq('UserId', ToValue(AUserId))));
+  Result := Session.SingleOrDefault<TAccessEntity>(
+    'SELECT A.* ' +
+    'FROM [domain].[accesses] A ' +
+    'INNER JOIN [domain].[domains] D ' +
+    ' ON D.Id = A.DomainId ' +
+    'INNER JOIN [identity].[users] U ' +
+    ' ON U.Id = A.UserId ' +
+    'WHERE D.Name = :0 ' +
+    'AND U.Name = :1 ',
+    [ADomainName, AUserName]
+  );
 end;
 
 initialization

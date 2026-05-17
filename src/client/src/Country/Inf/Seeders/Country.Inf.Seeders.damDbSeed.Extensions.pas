@@ -25,35 +25,47 @@ uses
 procedure TdamCountryDbSeedExtensions.CreateCountry(const AId: TGuid; const AName, ADialCode: string);
 begin
   var LEntity := CountryRepository.Find(AName);
-  if not Assigned(LEntity) then
-    LEntity := TCountryEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.DialCode := ADialCode;
-  CountryRepository.Save(LEntity);
+  try
+    if not Assigned(LEntity) then
+      LEntity := TCountryEntity.Create;
+    LEntity.Id := AId;
+    LEntity.Name := AName;
+    LEntity.DialCode := ADialCode;
+    CountryRepository.Save(LEntity);
+  finally
+    LEntity.Free;
+  end;
 end;
 
 procedure TdamCountryDbSeedExtensions.CreateCountryCode(const ACodeType, ACode: string; const ACountryId: TGuid);
 begin
   var LEntity := CountryCodeRepository.Find(ACodeType, ACode);
-  if not Assigned(LEntity) then
-  begin
-    LEntity := TCountryCodeEntity.Create;
-    LEntity.CodeType := ACodeType;
-    LEntity.Code := ACode;
-    LEntity.CountryId := ACountryId;
-    CountryCodeRepository.Insert(LEntity);
+  try
+    if not Assigned(LEntity) then
+    begin
+      LEntity := TCountryCodeEntity.Create;
+      LEntity.CodeType := ACodeType;
+      LEntity.Code := ACode;
+      LEntity.CountryId := ACountryId;
+      CountryCodeRepository.Insert(LEntity);
+    end;
+  finally
+    LEntity.Free;
   end;
 end;
 
 procedure TdamCountryDbSeedExtensions.CreateNationality(const AName: string; const ACountryId: TGuid);
 begin
   var LEntity := NationalityRepository.Find(ACountryId);
-  if not Assigned(LEntity) then
-    LEntity := TNationalityEntity.Create;
-  LEntity.Id := ACountryId;
-  LEntity.Name := AName;
-  NationalityRepository.Save(LEntity);
+  try
+    if not Assigned(LEntity) then
+      LEntity := TNationalityEntity.Create;
+    LEntity.Id := ACountryId;
+    LEntity.Name := AName;
+    NationalityRepository.Save(LEntity);
+  finally
+    LEntity.Free;
+  end;
 end;
 
 end.

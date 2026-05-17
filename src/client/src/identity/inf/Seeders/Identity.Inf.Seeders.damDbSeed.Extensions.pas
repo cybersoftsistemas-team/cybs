@@ -26,13 +26,17 @@ uses
 procedure TdamIdentityDbSeedExtensions.CreateAdminUser(const AId: TGuid; const AName: string; const ADescription: string);
 begin
   var LEntity := UserRepository.Find(AId);
-  if not Assigned(LEntity) then
-    LEntity := TUserEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.Description := ADescription;
-  LEntity.Reserved := True;
-  UserRepository.Save(LEntity);
+  try
+    if not Assigned(LEntity) then
+      LEntity := TUserEntity.Create;
+    LEntity.Id := AId;
+    LEntity.Name := AName;
+    LEntity.Description := ADescription;
+    LEntity.Reserved := True;
+    UserRepository.Save(LEntity);
+  finally
+    LEntity.Free;
+  end;
 end;
 
 procedure TdamIdentityDbSeedExtensions.CreateConfig;
@@ -43,19 +47,23 @@ end;
 procedure TdamIdentityDbSeedExtensions.CreateOption(const AId: TGuid; const AName, ADescription: string);
 begin
   var LEntity := OptionRepository.Find(AId);
-  if not Assigned(LEntity) then
-    LEntity := TOptionEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.Description := ADescription;
-  OptionRepository.Save(LEntity);
+  try
+    if not Assigned(LEntity) then
+      LEntity := TOptionEntity.Create;
+    LEntity.Id := AId;
+    LEntity.Name := AName;
+    LEntity.Description := ADescription;
+    OptionRepository.Save(LEntity);
+  finally
+    LEntity.Free;
+  end;
 end;
 
 procedure TdamIdentityDbSeedExtensions.CreateUserTemporaryPassword(const AUserId: TGuid; const ATemporaryPassword: string);
 begin
-  var LUser := UserRepository.Find(AUserId);
+  var LEntity := UserRepository.Find(AUserId);
   try
-    if Assigned(LUser) and not LUser.PasswordExists then
+    if Assigned(LEntity) and not LEntity.PasswordExists then
     begin
       UserTemporaryPasswordService.Update(
         AUserId,
@@ -63,7 +71,7 @@ begin
       );
     end;
   finally
-    LUser.Free;
+    LEntity.Free;
   end;
 end;
 

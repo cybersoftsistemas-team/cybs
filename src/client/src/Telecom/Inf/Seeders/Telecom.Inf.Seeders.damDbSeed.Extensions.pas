@@ -23,12 +23,16 @@ uses
 procedure TdamTelecomDbSeedExtensions.CreateAreaCode(const AAreaCode: string; const AStateId: TGuid);
 begin
   var LEntity := AreaCodeRepository.Find(AAreaCode, AStateId);
-  if not Assigned(LEntity) then
-  begin
-    LEntity := TAreaCodeEntity.Create;
-    LEntity.AreaCode := AAreaCode;
-    LEntity.StateId := AStateId;
-    AreaCodeRepository.Insert(LEntity);
+  try
+    if not Assigned(LEntity) then
+    begin
+      LEntity := TAreaCodeEntity.Create;
+      LEntity.AreaCode := AAreaCode;
+      LEntity.StateId := AStateId;
+      AreaCodeRepository.Insert(LEntity);
+    end;
+  finally
+    LEntity.Free;
   end;
 end;
 

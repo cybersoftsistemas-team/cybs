@@ -24,25 +24,33 @@ uses
 procedure TdamAddressDbSeedExtensions.CreateState(const AId: TGuid; const AName, AAcronym: string; const ACountryId: TGuid);
 begin
   var LEntity := StateRepository.Find(AId);
-  if not Assigned(LEntity) then
-    LEntity := TStateEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.Acronym := AAcronym;
-  LEntity.CountryId := ACountryId;
-  StateRepository.Save(LEntity);
+  try
+    if not Assigned(LEntity) then
+      LEntity := TStateEntity.Create;
+    LEntity.Id := AId;
+    LEntity.Name := AName;
+    LEntity.Acronym := AAcronym;
+    LEntity.CountryId := ACountryId;
+    StateRepository.Save(LEntity);
+  finally
+    LEntity.Free;
+  end;
 end;
 
 procedure TdamAddressDbSeedExtensions.CreateStateCode(const ACodeType, ACode: string; const AStateId: TGuid);
 begin
   var LEntity := StateCodeRepository.Find(ACodeType, ACode);
-  if not Assigned(LEntity) then
-  begin
-    LEntity := TStateCodeEntity.Create;
-    LEntity.CodeType := ACodeType;
-    LEntity.Code := ACode;
-    LEntity.StateId := AStateId;
-    StateCodeRepository.Insert(LEntity);
+  try
+    if not Assigned(LEntity) then
+    begin
+      LEntity := TStateCodeEntity.Create;
+      LEntity.CodeType := ACodeType;
+      LEntity.Code := ACode;
+      LEntity.StateId := AStateId;
+      StateCodeRepository.Insert(LEntity);
+    end;
+  finally
+    LEntity.Free;
   end;
 end;
 

@@ -7,7 +7,8 @@ uses
   Domain.Inf.Entities,
   Shared.Inf.Contracts.Repositories.Repository,
 {SPRING}
-  Spring.Collections;
+  Spring.Collections,
+  Spring.Data.ObjectDataSet;
 
 type
   IDomainRepository = interface(IRepository<TDomainEntity>)
@@ -15,6 +16,7 @@ type
     function Find(const AId: TGuid): TDomainEntity; overload;
     function Find(const AName: string): TDomainEntity; overload;
     function FindAll: IList<TDomainEntity>;
+    function GetAll: TObjectDataSet;
   end;
 
 implementation

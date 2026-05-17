@@ -10,7 +10,7 @@ uses
 type
   IAccessRepository = interface(IRepository<TAccessEntity>)
     ['{9CAFCCF9-1B54-4A0A-8C06-74F7AC6BFC2C}']
-    function Find(const ADomainId: TGuid; const AUserId: TGuid): TAccessEntity;
+    function Find(const ADomainName: string; const AUserName: string): TAccessEntity;
   end;
 
 implementation

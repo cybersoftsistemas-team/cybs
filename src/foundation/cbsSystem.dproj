@@ -143,6 +143,7 @@
         <DCCReference Include="cbsMigrations.dcp"/>
         <DCCReference Include="cbsMigrationsFireDac.dcp"/>
         <DCCReference Include="Spring.Base.dcp"/>
+        <DCCReference Include="Spring.Data.dcp"/>
         <DCCReference Include="..\modules\spring4d\Source\Core\Container\Spring.Container.pas"/>
         <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Commands.Insert.pas"/>
         <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Generators.Abstract.pas"/>

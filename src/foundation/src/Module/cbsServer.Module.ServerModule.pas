@@ -161,9 +161,9 @@ procedure TcbsServerModule.FirstInit;
 begin
   inherited;
   InitServerModule(Self);
+  RegisterInternalSystemServerModule(Self);
   FDataStorage := TcbsDataStorage.Create(Self);
   FDatabase := TDatabase.Create(Self, TdamDb);
-  RegisterInternalSystemServerModule(Self);
   FDatabase.ExecuteMigrations;
   FTranslator := GlobalContainer.Resolve<ITranslator>;
   FTranslator.Locale := TLocale.pt_br;

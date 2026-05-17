@@ -130,8 +130,8 @@
         <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000100_create_domain_domains_table.pas"/>
         <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000200_create_domain_domains_allow_access_to_admin_trigger.pas"/>
         <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000300_create_domain_accesses_table.pas"/>
-        <DCCReference Include="src\CRM\Inf\Migrations\_00002000_00000400_create_crm_schema.pas"/>
-        <DCCReference Include="src\CRM\Inf\Migrations\_00002000_00000500_create_crm_customers_table.pas"/>
+        <DCCReference Include="src\CRM\Inf\Migrations\_00000350_00000001_create_crm_schema.pas"/>
+        <DCCReference Include="src\CRM\Inf\Migrations\_00000350_00000100_create_crm_customers_table.pas"/>
         <DCCReference Include="src\Domain\Inf\Seeders\_00000300_0000001_DomainDatabaseSeeder.pas"/>
         <DCCReference Include="src\CRM\Inf\Seeders\_00000350_00000001_CRMDatabaseSeeder.pas"/>
         <DCCReference Include="src\CRM\Inf\Seeders\CRM.Inf.Seeders.damDbSeed.pas">

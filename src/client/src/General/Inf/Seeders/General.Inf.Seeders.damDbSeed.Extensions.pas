@@ -23,14 +23,18 @@ uses
 procedure TdamGeneralDbSeedExtensions.CreateCategory(const AId: TGuid; const AName: string; const AParentId: TGuid);
 begin
   var LEntity := CategoryRepository.Find(AId);
-  if not Assigned(LEntity) then
-    LEntity := TCategoryEntity.Create;
-  LEntity.Id := AId;
-  LEntity.Name := AName;
-  LEntity.Reserved := True;
-  if not AParentId.IsEmpty then
-    LEntity.ParentId := AParentId;
-  CategoryRepository.Save(LEntity);
+  try
+    if not Assigned(LEntity) then
+      LEntity := TCategoryEntity.Create;
+    LEntity.Id := AId;
+    LEntity.Name := AName;
+    LEntity.Reserved := True;
+    if not AParentId.IsEmpty then
+      LEntity.ParentId := AParentId;
+    CategoryRepository.Save(LEntity);
+  finally
+    LEntity.Free;
+  end;
 end;
 
 end.

@@ -1,4 +1,4 @@
-unit Identity.App.Common.UserAuthError;
+﻿unit Identity.App.Common.UserAuthError;
 
 interface
 
@@ -15,7 +15,7 @@ begin
   case AError of
     aeInvalidCredentials,
     aeUserNotFound:
-      Result := 'Usu�rio n�o encontrado ou a senha est� inv�lida.';
+      Result := 'Usuário não encontrado ou a senha está incorreta.';
     aeAccountNotActivated:
       Result := 'Conta desativada.';
     aeAccountLocked:

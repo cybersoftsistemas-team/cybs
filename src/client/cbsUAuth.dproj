@@ -165,11 +165,6 @@
         <DCCReference Include="src\Identity\App\Contracts\Services\Identity.App.Contracts.Services.CustomUserPasswordService.pas"/>
         <DCCReference Include="src\Identity\App\Contracts\Services\Identity.App.Contracts.Services.UserAuthService.pas"/>
         <DCCReference Include="src\Identity\App\Contracts\Services\Identity.App.Contracts.Services.UserTemporaryPasswordService.pas"/>
-        <DCCReference Include="src\Identity\UI\Data\Modules\Identity.UI.Data.Modules.CustomerRegistrationModule.pas">
-            <Form>damCustomerRegistration</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TDataModule</DesignClass>
-        </DCCReference>
         <DCCReference Include="src\Identity\UI\Data\Modules\Identity.UI.Data.Modules.LoginDomainsModule.pas">
             <Form>damLoginDomains</Form>
             <FormType>dfm</FormType>
@@ -180,18 +175,13 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.CityRegistrationForm.pas">
-            <Form>frmCityRegistration</Form>
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.LoginOptionsConnEditorForm.pas">
+            <Form>frmLoginOptionsConnEditor</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.ConnEditorForm.pas">
-            <Form>frmConnEditor</Form>
-            <FormType>dfm</FormType>
-            <DesignClass>TUniForm</DesignClass>
-        </DCCReference>
-        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.CustomerRegistrationForm.pas">
-            <Form>frmCustomerRegistration</Form>
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.LoginDomainRegistrationForm.pas">
+            <Form>frmDomainRegistration</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>
@@ -210,8 +200,8 @@
             <FormType>dfm</FormType>
             <DesignClass>TUniLoginForm</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.OptionsForm.pas">
-            <Form>frmOptions</Form>
+        <DCCReference Include="src\Identity\UI\Forms\Identity.UI.Forms.LoginOptionsForm.pas">
+            <Form>frmLoginOptions</Form>
             <FormType>dfm</FormType>
             <DesignClass>TUniForm</DesignClass>
         </DCCReference>

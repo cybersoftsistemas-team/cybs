@@ -1,4 +1,4 @@
-﻿unit Identity.UI.Forms.ConnEditorForm;
+﻿unit Identity.UI.Forms.LoginOptionsConnEditorForm;
 
 interface
 
@@ -12,7 +12,7 @@ uses
   uniScreenMask;
 
 type
-  TfrmConnEditor = class(TfrmBase)
+  TfrmLoginOptionsConnEditor = class(TfrmBase)
     actCancel: TAction;
     actDefaults: TAction;
     actOk: TAction;
@@ -76,7 +76,7 @@ type
     property ConnectionString: string read FConnectionString write SetConnectionString;
   end;
 
-  function frmConnEditor: TfrmConnEditor;
+  function frmLoginOptionsConnEditor: TfrmLoginOptionsConnEditor;
 
 implementation
 
@@ -96,9 +96,9 @@ uses
 const
   DriverID = 'MSSQL';
 
-function frmConnEditor: TfrmConnEditor;
+function frmLoginOptionsConnEditor: TfrmLoginOptionsConnEditor;
 begin
-  Result := TfrmConnEditor(damMain.GetFormInstance(TfrmConnEditor));
+  Result := TfrmLoginOptionsConnEditor(damMain.GetFormInstance(TfrmLoginOptionsConnEditor));
 end;
 
 function GUIxSetupEditor(AItems: TStrings; const AType: String): Integer;
@@ -164,12 +164,12 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.actDefaultsExecute(Sender: TObject);
+procedure TfrmLoginOptionsConnEditor.actDefaultsExecute(Sender: TObject);
 begin
   ResetConnectionDef;
 end;
 
-procedure TfrmConnEditor.actOkExecute(Sender: TObject);
+procedure TfrmLoginOptionsConnEditor.actOkExecute(Sender: TObject);
 begin
   BeforeOk;
   SetConnectionParams(FConnection);
@@ -177,7 +177,7 @@ begin
   ModalResult := mrOk;
 end;
 
-procedure TfrmConnEditor.actTestConnExecute(Sender: TObject);
+procedure TfrmLoginOptionsConnEditor.actTestConnExecute(Sender: TObject);
 begin
   try
     var LConn := GetTempConnection;
@@ -197,7 +197,7 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.BeforeOk;
+procedure TfrmLoginOptionsConnEditor.BeforeOk;
 type
   IParamList = IDictionary<string, string>;
 begin
@@ -231,23 +231,23 @@ begin
   PostDataSet;
 end;
 
-procedure TfrmConnEditor.cbxComboSelect(Sender: TObject);
+procedure TfrmLoginOptionsConnEditor.cbxComboSelect(Sender: TObject);
 begin
   pnlValue.Visible := False;
 end;
 
-procedure TfrmConnEditor.dsoPRMDataChange(Sender: TObject; Field: TField);
+procedure TfrmLoginOptionsConnEditor.dsoPRMDataChange(Sender: TObject; Field: TField);
 begin
   edtConnectionNameChange(Sender);
 end;
 
-procedure TfrmConnEditor.edtConnectionNameChange(Sender: TObject);
+procedure TfrmLoginOptionsConnEditor.edtConnectionNameChange(Sender: TObject);
 begin
   actOk.Enabled := not string(edtConnectionName.Text).Trim.IsEmpty;
   actTestConn.Enabled := actOk.Enabled;
 end;
 
-procedure TfrmConnEditor.FillConnParams(const AParams: TStrings);
+procedure TfrmLoginOptionsConnEditor.FillConnParams(const AParams: TStrings);
 begin
   AParams.Clear;
   if FConnection <> nil then
@@ -288,7 +288,7 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.FillParamGrids;
+procedure TfrmLoginOptionsConnEditor.FillParamGrids;
 begin
   var LDrvMeta: IFDPhysDriverMetadata;
   if IsDriverKnown(FDriverID, LDrvMeta) then
@@ -316,7 +316,7 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.FillParamValues(const AAsIs: Boolean);
+procedure TfrmLoginOptionsConnEditor.FillParamValues(const AAsIs: Boolean);
 begin
   var LStrs := TFDStringList.Create;
   try
@@ -338,12 +338,12 @@ end;
 
 { TfrmConnEditor }
 
-function TfrmConnEditor.GetConnectionName: string;
+function TfrmLoginOptionsConnEditor.GetConnectionName: string;
 begin
   Result := string(edtConnectionName.Text).Trim;
 end;
 
-procedure TfrmConnEditor.GetDriverParams(const ADrvID: String; AStrs: TStrings);
+procedure TfrmLoginOptionsConnEditor.GetDriverParams(const ADrvID: String; AStrs: TStrings);
 begin
   var LDrvMeta: IFDPhysDriverMetadata;
   if IsDriverKnown(ADrvID, LDrvMeta) then
@@ -360,7 +360,7 @@ begin
   end;
 end;
 
-function TfrmConnEditor.GetTempConnection: TFDCustomConnection;
+function TfrmLoginOptionsConnEditor.GetTempConnection: TFDCustomConnection;
 begin
   Result := TFDConnection.Create(nil);
   if Assigned(FConnection) then
@@ -374,7 +374,7 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.grdParamsAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
+procedure TfrmLoginOptionsConnEditor.grdParamsAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
 begin
   if EventName = 'beforeedit' then
   begin
@@ -392,7 +392,7 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.grdParamsDrawColumnCell(Sender: TObject; ACol, ARow: Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
+procedure TfrmLoginOptionsConnEditor.grdParamsDrawColumnCell(Sender: TObject; ACol, ARow: Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
 begin
   if (ARow = 0) or ((ARow > 0) and (ACol = 2)) then
   begin
@@ -412,7 +412,7 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.grdParamsSelectionChange(Sender: TObject);
+procedure TfrmLoginOptionsConnEditor.grdParamsSelectionChange(Sender: TObject);
 begin
   var LCurrentColumn := grdParams.Columns[grdParams.CurrCol];
   pnlValue.Visible := False;
@@ -424,7 +424,7 @@ begin
   LCurrentColumn.ReadOnly := LDataSet.RecNo = 1;
 end;
 
-function TfrmConnEditor.IsDriverKnown(const ADrvID: String; out ADrvMeta: IFDPhysDriverMetadata): Boolean;
+function TfrmLoginOptionsConnEditor.IsDriverKnown(const ADrvID: String; out ADrvMeta: IFDPhysDriverMetadata): Boolean;
 begin
   var LManMeta: IFDPhysManagerMetadata;
   FDPhysManager.CreateMetadata(LManMeta);
@@ -437,17 +437,17 @@ begin
   Result := False;
 end;
 
-procedure TfrmConnEditor.mtbPRMAfterPost(DataSet: TDataSet);
+procedure TfrmLoginOptionsConnEditor.mtbPRMAfterPost(DataSet: TDataSet);
 begin
   PostEdited;
 end;
 
-procedure TfrmConnEditor.mtbPRMAfterScroll(DataSet: TDataSet);
+procedure TfrmLoginOptionsConnEditor.mtbPRMAfterScroll(DataSet: TDataSet);
 begin
   pnlValue.Visible := False;
 end;
 
-procedure TfrmConnEditor.OverrideBy(AThis, AByThat: TStrings);
+procedure TfrmLoginOptionsConnEditor.OverrideBy(AThis, AByThat: TStrings);
 begin
   for var I := 0 to AByThat.Count - 1 do
   begin
@@ -457,7 +457,7 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.PostDataSet;
+procedure TfrmLoginOptionsConnEditor.PostDataSet;
 begin
   if mtbPRM.State in dsEditModes then
   begin
@@ -465,7 +465,7 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.PostEdited;
+procedure TfrmLoginOptionsConnEditor.PostEdited;
 begin
   PostDataSet;
   if FDataChange then
@@ -479,7 +479,7 @@ begin
   end;
 end;
 
-procedure TfrmConnEditor.ResetConnectionDef;
+procedure TfrmLoginOptionsConnEditor.ResetConnectionDef;
 begin
   FEdited.Clear;
   FillParamValues(True);
@@ -487,19 +487,19 @@ begin
   grdParams.Refresh;
 end;
 
-procedure TfrmConnEditor.SetConnectionName(const AValue: string);
+procedure TfrmLoginOptionsConnEditor.SetConnectionName(const AValue: string);
 begin
   edtConnectionName.Text := AValue;
 end;
 
-procedure TfrmConnEditor.SetConnectionParams(const AConnection: TFDCustomConnection);
+procedure TfrmLoginOptionsConnEditor.SetConnectionParams(const AConnection: TFDCustomConnection);
 begin
   AConnection.Close;
   FillConnParams(AConnection.Params);
   AConnection.DriverName := FDriverID;
 end;
 
-procedure TfrmConnEditor.SetConnectionString(const AValue: string);
+procedure TfrmLoginOptionsConnEditor.SetConnectionString(const AValue: string);
 begin
   FConnectionString := AValue;
   FConnection.ResultConnectionDef.ParseString(AValue);
@@ -510,7 +510,7 @@ begin
   FillParamGrids;
 end;
 
-procedure TfrmConnEditor.UniFormCreate(Sender: TObject);
+procedure TfrmLoginOptionsConnEditor.UniFormCreate(Sender: TObject);
 begin
   inherited;
   FDefaults := TFDStringList.Create;
@@ -521,7 +521,7 @@ begin
   FConnection.Temporary := True;
 end;
 
-procedure TfrmConnEditor.UniFormDestroy(Sender: TObject);
+procedure TfrmLoginOptionsConnEditor.UniFormDestroy(Sender: TObject);
 begin
   FDFreeAndNil(FConnection);
   FDFreeAndNil(FDefaults);

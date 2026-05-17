@@ -16,6 +16,7 @@ type
     function Find(const AId: TGuid): TDomainEntity; overload;
     function Find(const AName: string): TDomainEntity; overload;
     function FindAll: IList<TDomainEntity>;
+    function GetAll: TObjectDataSet;
   end;
 
 implementation
@@ -29,12 +30,20 @@ end;
 
 function TDomainRepository.Find(const AName: string): TDomainEntity;
 begin
-  Result := inherited Find(AName);
+  Result := FirstOrDefault(ICriteria.Add(Restrictions.Eq('Name', AName)));
 end;
 
 function TDomainRepository.FindAll: IList<TDomainEntity>;
 begin
   Result := Session.FindAll<TDomainEntity>;
+end;
+
+function TDomainRepository.GetAll: TObjectDataSet;
+begin
+  Result := CreateObjectDataSet;
+  Result.DataList := FindAll as IObjectList;
+  Result.Open;
+  Result.Sort := 'ParentId, Name';
 end;
 
 initialization

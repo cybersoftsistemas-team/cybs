@@ -1,4 +1,4 @@
-inherited frmOptions: TfrmOptions
+inherited frmLoginOptions: TfrmLoginOptions
   ClientHeight = 347
   ClientWidth = 451
   Caption = 'Adicionar/Remover Conex'#245'es de Bancos de Dados'

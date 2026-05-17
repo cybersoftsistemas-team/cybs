@@ -7,11 +7,14 @@ uses
   cbsSystem.Contracts.Form.BaseForm,
   cbsSystem.Contracts.Module.BaseModule,
   cbsSystem.MessageBox,
+  cbsSystem.Support.Container,
 {IDE}
   Data.DB, Dialogs, uniEdit, uniDBEdit, uniDBComboBox, uniDateTimePicker, uniDBLookupComboBox, uniGUIForm, uniGUIClasses, uniGUIBaseClasses, uniImageList, System.ImageList,
   Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu;
 
 type
+  App = cbsSystem.Support.Container.App;
+
   TRequiredFieldMode = (
     rfmAutomatic,
     rfmManual,

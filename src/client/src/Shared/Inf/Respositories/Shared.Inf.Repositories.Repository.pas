@@ -10,11 +10,16 @@ uses
   Shared.Inf.Entities.Entity,
 {SPRING}
   Spring.Collections,
+  Spring.Data.ObjectDataSet,
   Spring.Persistence.Core.Session,
   Spring.Persistence.Criteria.Interfaces,
+  Spring.Persistence.Criteria.Properties,
   Spring.Persistence.Criteria.Restrictions;
 
 type
+  TObjectDataSet = Spring.Data.ObjectDataSet.TObjectDataSet;
+  IProperty = Spring.Persistence.Criteria.Interfaces.IProperty;
+  TProperty = Spring.Persistence.Criteria.Properties.TProperty;
   Restrictions = Spring.Persistence.Criteria.Restrictions.Restrictions;
 
   TRepository = class(TInterfacedObject);
@@ -25,6 +30,7 @@ type
     FSession: TSession;
     function GetCriteria: ICriteria<TEntity>;
   protected
+    function CreateObjectDataSet: TObjectDataSet;
     function Find(const AId: TGuid): TEntity; overload;
     function Find(const AName: string): TEntity; overload;
     function FirstOrDefault(const ACriteria: ICriteria<TEntity>): TEntity;
@@ -46,7 +52,9 @@ implementation
 uses
 {PROJECT}
   cbsSystem.Support.Container.RegisterType,
-  cbsSystem.Support.ServerModule;
+  cbsSystem.Support.ServerModule,
+{SPRING}
+  Spring.Persistence.Mapping.Attributes;
 
 procedure RegisterRepository(const AInterface: TGuid; const ARepositoryType: RepositoryType);
 begin
@@ -65,6 +73,12 @@ destructor TRepository<TEntity>.Destroy;
 begin
   FSession := nil;
   inherited;
+end;
+
+function TRepository<TEntity>.CreateObjectDataSet: TObjectDataSet;
+begin
+  Result := TObjectDataSet.Create(nil);
+  Result.ColumnAttributeClass := ColumnAttribute;
 end;
 
 function TRepository<TEntity>.Find(const AId: TGuid): TEntity;

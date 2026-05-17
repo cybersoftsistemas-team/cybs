@@ -1,4 +1,4 @@
-unit Identity.UI.Forms.OptionsForm;
+﻿unit Identity.UI.Forms.LoginOptionsForm;
 
 interface
 
@@ -10,7 +10,7 @@ uses
   Vcl.Forms, uniBasicGrid, uniDBGrid, uniImageList, System.ImageList, Vcl.ImgList, uniMainMenu, uniScreenMask;
 
 type
-  TfrmOptions = class(TfrmBase)
+  TfrmLoginOptions = class(TfrmBase)
     actAdd: TAction;
     actClear: TAction;
     actClose: TAction;
@@ -44,12 +44,12 @@ type
     function GetTestConnection: TFDCustomConnection;
     procedure TestConnection;
   public
-    procedure AddorEditConnection; overload;
-    procedure AddorEditConnection(const AName, AConnectionString: string); overload;
+    procedure AddOrEditConnection; overload;
+    procedure AddOrEditConnection(const AName, AConnectionString: string); overload;
     procedure DataChange(Sender: TObject; Field: TField); override;
   end;
 
-  function frmOptions: TfrmOptions;
+  function frmLoginOptions: TfrmLoginOptions;
 
 implementation
 
@@ -63,24 +63,35 @@ uses
 {PROJECT}
   cbsSystem.Support.ServerModule,
   Identity.UI.Data.Modules.LoginModule,
-  Identity.UI.Forms.ConnEditorForm,
+  Identity.UI.Forms.LoginOptionsConnEditorForm,
   Shared.UI.Data.Modules.MainModule;
 
-function frmOptions: TfrmOptions;
+function frmLoginOptions: TfrmLoginOptions;
 begin
-  Result := TfrmOptions(damMain.GetFormInstance(TfrmOptions));
+  Result := TfrmLoginOptions(damMain.GetFormInstance(TfrmLoginOptions));
 end;
 
 { TfrmOptions }
 
-procedure TfrmOptions.actAddExecute(Sender: TObject);
+function TfrmLoginOptions.GetDataModule: IDataModule;
 begin
-  AddorEditConnection;
+  Result := damLogin;
 end;
 
-procedure TfrmOptions.actClearExecute(Sender: TObject);
+function TfrmLoginOptions.GetTestConnection: TFDCustomConnection;
 begin
-  MessageDlg('Tem certeza de que deseja excluir todas as conex�es?',
+  Result := TFDConnection.Create(nil);
+  Result.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
+end;
+
+procedure TfrmLoginOptions.actAddExecute(Sender: TObject);
+begin
+  AddOrEditConnection;
+end;
+
+procedure TfrmLoginOptions.actClearExecute(Sender: TObject);
+begin
+  MessageDlg('Tem certeza de que deseja excluir todas as conexões?',
     mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo],
     procedure(Sender: TComponent; Result: Integer)
     begin
@@ -91,9 +102,9 @@ begin
     end);
 end;
 
-procedure TfrmOptions.actDelExecute(Sender: TObject);
+procedure TfrmLoginOptions.actDelExecute(Sender: TObject);
 begin
-  MessageDlg(Format('Tem certeza de que deseja excluir a conex�o ''%s''?',
+  MessageDlg(Format('Tem certeza de que deseja excluir a conexão ''%s''?',
     [damLogin.mtbCNSName.AsString]), mtConfirmation, [TMsgDlgBtn.mbYes, TMsgDlgBtn.mbNo],
     procedure(Sender: TComponent; Result: Integer)
     begin
@@ -104,12 +115,12 @@ begin
     end);
 end;
 
-procedure TfrmOptions.actEditExecute(Sender: TObject);
+procedure TfrmLoginOptions.actEditExecute(Sender: TObject);
 begin
-  AddorEditConnection(damLogin.mtbCNSName.AsString, damLogin.mtbCNSConnectionString.AsString);
+  AddOrEditConnection(damLogin.mtbCNSName.AsString, damLogin.mtbCNSConnectionString.AsString);
 end;
 
-procedure TfrmOptions.actSelectedExecute(Sender: TObject);
+procedure TfrmLoginOptions.actSelectedExecute(Sender: TObject);
 begin
   var LDatabase := ServerModule.Database;
   LDatabase.BeginUpdate;
@@ -135,11 +146,11 @@ begin
   end;
 end;
 
-procedure TfrmOptions.actTestConnExecute(Sender: TObject);
+procedure TfrmLoginOptions.actTestConnExecute(Sender: TObject);
 begin
   try
     TestConnection;
-    ShowMessage('Conex�o estabelecida com sucesso.');
+    ShowMessage('Conexão estabelecida com sucesso.');
   except
     on E: Exception do
     begin
@@ -148,36 +159,35 @@ begin
   end;
 end;
 
-procedure TfrmOptions.AddorEditConnection;
+procedure TfrmLoginOptions.AddOrEditConnection;
 begin
-  AddorEditConnection('','');
+  AddOrEditConnection('','');
 end;
 
-procedure TfrmOptions.AddorEditConnection(const AName, AConnectionString: string);
+procedure TfrmLoginOptions.AddOrEditConnection(const AName, AConnectionString: string);
 begin
-  frmConnEditor.ConnectionName := AName;
-  frmConnEditor.ConnectionString := AConnectionString;
-  frmConnEditor.ShowModal(
+  frmLoginOptionsConnEditor.ConnectionName := AName;
+  frmLoginOptionsConnEditor.ConnectionString := AConnectionString;
+  frmLoginOptionsConnEditor.ShowModal(
     procedure(Sender: TComponent; Result: Integer)
     begin
-      if Result = mrOk then
+      if not (Result = mrOk) then
+        Exit;
+      if AName.Trim.IsEmpty and
+        AConnectionString.Trim.IsEmpty then
       begin
-        if AName.Trim.IsEmpty and
-          AConnectionString.Trim.IsEmpty then
-        begin
-          damLogin.mtbCNS.Append;
-        end
-        else
-          damLogin.mtbCNS.Edit;
-        damLogin.mtbCNSName.AsString := frmConnEditor.ConnectionName;
-        damLogin.mtbCNSConnectionString.AsString := frmConnEditor.ConnectionString;
-        damLogin.mtbCNS.Post;
-      end;
+        damLogin.mtbCNS.Append;
+      end
+      else
+        damLogin.mtbCNS.Edit;
+      damLogin.mtbCNSName.AsString := frmLoginOptionsConnEditor.ConnectionName;
+      damLogin.mtbCNSConnectionString.AsString := frmLoginOptionsConnEditor.ConnectionString;
+      damLogin.mtbCNS.Post;
     end
   );
 end;
 
-procedure TfrmOptions.DataChange(Sender: TObject; Field: TField);
+procedure TfrmLoginOptions.DataChange(Sender: TObject; Field: TField);
 begin
   inherited;
   actEdit.Enabled := not(damLogin.mtbCNS.State in dsEditModes) and  not damLogin.mtbCNS.IsEmpty;
@@ -187,18 +197,7 @@ begin
   actSelected.Enabled := actEdit.Enabled and not IsEqualGUID(damLogin.mtbCNSId.AsGuid, ServerModule.Database.Id);
 end;
 
-function TfrmOptions.GetDataModule: IDataModule;
-begin
-  Result := damLogin;
-end;
-
-function TfrmOptions.GetTestConnection: TFDCustomConnection;
-begin
-  Result := TFDConnection.Create(nil);
-  Result.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
-end;
-
-procedure TfrmOptions.grdConnDblClick(Sender: TObject);
+procedure TfrmLoginOptions.grdConnDblClick(Sender: TObject);
 begin
   if not damLogin.mtbCNS.IsEmpty then
   begin
@@ -206,7 +205,7 @@ begin
   end;
 end;
 
-procedure TfrmOptions.grdConnDrawColumnCell(Sender: TObject; ACol, ARow:
+procedure TfrmLoginOptions.grdConnDrawColumnCell(Sender: TObject; ACol, ARow:
     Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
 begin
   if IsEqualGUID(
@@ -220,7 +219,7 @@ begin
     Attribs.Font.Style := Attribs.Font.Style - [TFontStyle.fsBold];
 end;
 
-procedure TfrmOptions.TestConnection;
+procedure TfrmLoginOptions.TestConnection;
 begin
   var LConn := GetTestConnection;
   try
