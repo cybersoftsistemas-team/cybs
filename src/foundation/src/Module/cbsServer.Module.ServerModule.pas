@@ -40,6 +40,8 @@ type
 
 implementation
 
+{%CLASSGROUP 'System.Classes.TPersistent'}
+
 {$R *.dfm}
 
 uses
