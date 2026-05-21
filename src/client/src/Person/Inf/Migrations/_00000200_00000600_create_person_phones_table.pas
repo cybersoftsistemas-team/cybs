@@ -29,7 +29,7 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    GuidColumn('Id').IsRequired
    ,GuidColumn('PersonId').IsRequired
    ,GuidColumn('TypeId').IsRequired
    ,StringColumn('Number').HasMaxLength(9).IsUnicode.IsRequired
@@ -47,6 +47,11 @@ begin
    ,CreateIndex('PersonId')
    ,CreateIndex('TypeId')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
 end;
 
 procedure CreatePersonPhonesTable.Down(const ASchema: IMigrationBuilder);

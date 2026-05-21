@@ -31,9 +31,9 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    GuidColumn('Id').IsRequired
    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
-   ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
+   ,BooleanColumn('Reserved').IsRequired
    ,GuidColumn('ParentId').IsOptional
   ])
   .Constraints([
@@ -46,6 +46,16 @@ begin
     CreateIndex('ParentId')
    ,CreateIndex(['ParentId', 'Id'])
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
+
+  ASchema.AddDefaultValue('Reserved')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('0');
 end;
 
 procedure CreateGeneralCategoriesTable.Down(const ASchema: IMigrationBuilder);

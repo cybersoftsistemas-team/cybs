@@ -49,7 +49,8 @@ contains
   Domain.Inf.Contracts.Repositories.DomainRepository in 'src\Domain\Inf\Contracts\Repositories\Domain.Inf.Contracts.Repositories.DomainRepository.pas',
   Domain.Inf.Contracts.Repositories.AccessRepository in 'src\Domain\Inf\Contracts\Repositories\Domain.Inf.Contracts.Repositories.AccessRepository.pas',
   Domain.Inf.Repositories.AccessRepository in 'src\Domain\Inf\Repositories\Domain.Inf.Repositories.AccessRepository.pas',
-  Domain.Inf.Repositories.DomainRepository in 'src\Domain\Inf\Repositories\Domain.Inf.Repositories.DomainRepository.pas';
+  Domain.Inf.Repositories.DomainRepository in 'src\Domain\Inf\Repositories\Domain.Inf.Repositories.DomainRepository.pas',
+  Catalog.Inf.Entities in 'src\Catalog\Inf\Entities\Catalog.Inf.Entities.pas';
 
 end.
 

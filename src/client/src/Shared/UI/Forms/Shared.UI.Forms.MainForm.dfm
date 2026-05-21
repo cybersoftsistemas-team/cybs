@@ -10,58 +10,67 @@ inherited frmMain: TfrmMain
   ExplicitWidth = 1024
   ExplicitHeight = 700
   TextHeight = 15
-  object stbMain: TUniStatusBar [0]
-    Left = 0
-    Top = 639
-    Width = 1008
+  object pclMain: TUniPageControl [0]
+    Left = 246
+    Top = 0
+    Width = 762
+    Height = 661
     Hint = ''
-    Panels = <
-      item
-        Alignment = taCenter
-        Width = 200
-      end
-      item
-        Width = 200
-      end>
-    SizeGrip = False
-    Align = alBottom
-    ParentColor = False
-    ExplicitTop = 585
-    ExplicitWidth = 794
+    ActivePage = tbsMain
+    Align = alClient
+    TabOrder = 2
+    ExplicitLeft = 0
+    ExplicitWidth = 1008
+    ExplicitHeight = 639
+    object tbsMain: TUniTabSheet
+      Hint = ''
+      Caption = 'Cybersoft'
+      ExplicitWidth = 1000
+      ExplicitHeight = 611
+    end
   end
-  object pnlMain: TUniContainerPanel [1]
+  object trmMain: TUniTreeMenu [1]
     Left = 0
     Top = 0
-    Width = 1008
-    Height = 639
+    Width = 241
+    Height = 661
     Hint = ''
+    Items.FontData = {0100000000}
+    SourceMenu = mimMain
+    SingleExpand = True
+  end
+  object sptMain: TUniSplitter [2]
+    Left = 241
+    Top = 0
+    Width = 5
+    Height = 661
+    Hint = ''
+    Align = alLeft
     ParentColor = False
-    Align = alClient
-    TabOrder = 0
-    ExplicitLeft = 408
-    ExplicitTop = 136
-    ExplicitWidth = 256
-    ExplicitHeight = 128
-    object pclMain: TUniPageControl
-      Left = 0
-      Top = 0
-      Width = 1008
-      Height = 639
-      Hint = ''
-      ActivePage = UniTabSheet1
-      Align = alClient
-      TabOrder = 1
-      ExplicitLeft = 208
-      ExplicitTop = 152
-      ExplicitWidth = 289
-      ExplicitHeight = 193
-      object UniTabSheet1: TUniTabSheet
-        Hint = ''
-        Caption = 'UniTabSheet1'
-        ExplicitLeft = 0
-        ExplicitTop = 0
-        ExplicitWidth = 1008
-        ExplicitHeight = 598
+    Color = clBtnFace
+    ExplicitLeft = 240
+    ExplicitHeight = 585
+  end
+  inherited aclMain: TUniActionList
+    Left = 880
+  end
+  inherited ilaMain: TUniImageListAdapter
+    Left = 908
+  end
+  inherited nilstMain: TUniNativeImageList
+    Left = 964
+  end
+  object mimMain: TUniMenuItems
+    Images = nilstMain
+    Left = 936
+    Top = 16
+    object mimMain1: TUniMenuItem
+      Caption = 'Produtos e Servi'#231'os'
+      object Produtos1: TUniMenuItem
+        Caption = 'Produtos'
+      end
+      object Servios1: TUniMenuItem
+        Caption = 'Servi'#231'os'
       end
     end
   end

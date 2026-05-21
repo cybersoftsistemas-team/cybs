@@ -147,6 +147,7 @@
         <DCCReference Include="src\Domain\Inf\Contracts\Repositories\Domain.Inf.Contracts.Repositories.AccessRepository.pas"/>
         <DCCReference Include="src\Domain\Inf\Repositories\Domain.Inf.Repositories.AccessRepository.pas"/>
         <DCCReference Include="src\Domain\Inf\Repositories\Domain.Inf.Repositories.DomainRepository.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Entities\Catalog.Inf.Entities.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

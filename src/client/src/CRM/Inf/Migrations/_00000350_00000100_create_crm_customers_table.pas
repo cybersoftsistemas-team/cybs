@@ -29,8 +29,8 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-   ,BooleanColumn('Active').HasDefaultValueSql('0').IsRequired
+    GuidColumn('Id').IsRequired
+   ,BooleanColumn('Active').IsRequired
    ,GuidColumn('DomainId').IsRequired
    ,GuidColumn('CustomersId').IsRequired
   ])
@@ -45,6 +45,16 @@ begin
    ,CreateIndex(['DomainId', 'CustomersId'], True)
     .HasInclude('Active')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
+
+  ASchema.AddDefaultValue('Active')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('0');
 end;
 
 procedure CreateCrmCustomersTable.Down(const ASchema: IMigrationBuilder);

@@ -184,7 +184,11 @@ contains
   cbsMigrations.Contracts.Migrations.Operations.ComputedColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.ComputedColumnOperation.pas',
   cbsMigrations.Migrations.Operations.ComputedColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.ComputedColumnOperation.pas',
   cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation.pas',
-  cbsMigrations.Migrations.Operations.AddComputedColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddComputedColumnOperation.pas';
+  cbsMigrations.Migrations.Operations.AddComputedColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddComputedColumnOperation.pas',
+  cbsMigrations.Contracts.Migrations.Operations.AddDefaultConstraintOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddDefaultConstraintOperation.pas',
+  cbsMigrations.Contracts.Migrations.Operations.DefaultConstraintOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.DefaultConstraintOperation.pas',
+  cbsMigrations.Migrations.Operations.DefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.DefaultConstraintOperation.pas',
+  cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation.pas';
 
 end.
 

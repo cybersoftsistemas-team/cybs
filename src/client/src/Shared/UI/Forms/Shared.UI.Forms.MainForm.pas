@@ -6,15 +6,19 @@ uses
 {PROJECT}
   cbsSystem.Form.BaseForm,
 {IDE}
-  uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Controls, Vcl.Forms, uniGUIClasses, uniStatusBar,
-  uniPanel, uniPageControl;
+  uniGUIBaseClasses, uniImageList, uniGUIClasses, uniTreeView, uniTreeMenu, uniPanel, uniPageControl, Vcl.Controls, Vcl.Forms, System.ImageList, Vcl.ImgList, System.Classes,
+  System.Actions, Vcl.ActnList, uniMainMenu, uniSplitter, Vcl.Menus;
 
 type
   TfrmMain = class(TfrmBase)
-    stbMain: TUniStatusBar;
-    pnlMain: TUniContainerPanel;
     pclMain: TUniPageControl;
-    UniTabSheet1: TUniTabSheet;
+    tbsMain: TUniTabSheet;
+    trmMain: TUniTreeMenu;
+    sptMain: TUniSplitter;
+    mimMain: TUniMenuItems;
+    mimMain1: TUniMenuItem;
+    Produtos1: TUniMenuItem;
+    Servios1: TUniMenuItem;
   private
     { Private declarations }
   public

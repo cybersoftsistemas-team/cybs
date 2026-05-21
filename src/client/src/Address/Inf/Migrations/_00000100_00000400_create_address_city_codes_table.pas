@@ -29,7 +29,7 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    GuidColumn('Id').IsRequired
    ,StringColumn('CodeType').HasMaxLength(50).IsUnicode.IsRequired
    ,StringColumn('Code').HasMaxLength(10).IsUnicode.IsRequired
    ,GuidColumn('CityId').IsRequired
@@ -43,6 +43,11 @@ begin
     CreateIndex(['CodeType', 'CityId'])
    ,CreateIndex('CityId')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
 end;
 
 procedure CreateAddressCityCodesTable.Down(const ASchema: IMigrationBuilder);

@@ -9,6 +9,12 @@ object frmLogin: TfrmLogin
   OnActivate = UniLoginFormActivate
   MonitoredKeys.Keys = <>
   ActiveControl = edtUserName
+  ClientEvents.ExtEvents.Strings = (
+    
+      'window.show=function window.show(sender, eOpts)'#13#10'{'#13#10'    if (wind' +
+      'ow.electronEnv?.isElectron)'#13#10'    {'#13#10'        window.electronAPI.s' +
+      'end("show-login", {'#13#10'            w: 451,'#13#10'            h: 348'#13#10'  ' +
+      '      });'#13#10'    }'#13#10'}')
   ClientEvents.UniEvents.Strings = (
     
       'window.afterCreate=function window.afterCreate(sender)'#13#10'{'#13#10'   va' +

@@ -19,6 +19,8 @@ type
 implementation
 
 uses
+{IDE}
+  System.SysUtils,
 {PROJECT}
   Shared.Inf.Database.Context;
 
@@ -29,15 +31,35 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    IntColumn('Id').HasDefaultValueSql('1').IsRequired
-   ,IntColumn('LockoutMinutes').HasDefaultValueSql('15').IsRequired
-   ,IntColumn('MaxAttempts').HasDefaultValueSql('5').IsRequired
-   ,IntColumn('PasswordIterations').HasDefaultValueSql('125000').IsRequired
+    IntColumn('Id').IsRequired
+   ,IntColumn('LockoutMinutes').IsRequired
+   ,IntColumn('MaxAttempts').IsRequired
+   ,IntColumn('PasswordIterations').IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
-   ,CheckConstraint(Concat(SchemaName, '_', TableName, '_singleton_check'), '(Id = 1)')
+   ,CheckConstraint(Format('%s_%s_singleton_check', [SchemaName, TableName]), '(Id = 1)')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('1');
+
+  ASchema.AddDefaultValue('LockoutMinutes')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('15');
+
+  ASchema.AddDefaultValue('MaxAttempts')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('5');
+
+  ASchema.AddDefaultValue('PasswordIterations')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('125000');
 end;
 
 procedure CreateIdentityConfigsTable.Down(const ASchema: IMigrationBuilder);

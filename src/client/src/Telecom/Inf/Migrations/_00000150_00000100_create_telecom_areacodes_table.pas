@@ -29,7 +29,7 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    GuidColumn('Id').IsRequired
    ,StringColumn('AreaCode').HasMaxLength(5).IsUnicode.IsRequired
    ,GuidColumn('StateId').IsRequired
   ])
@@ -42,6 +42,11 @@ begin
     CreateIndex('AreaCode')
    ,CreateIndex('StateId')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
 end;
 
 procedure CreateTelecomAreaCodesTable.Down(const ASchema: IMigrationBuilder);

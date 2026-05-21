@@ -29,7 +29,7 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    GuidColumn('Id').IsRequired
    ,GuidColumn('PersonId').IsRequired
    ,GuidColumn('TypeId').IsRequired
    ,StringColumn('Address').HasMaxLength(255).IsUnicode.IsRequired
@@ -54,12 +54,17 @@ begin
     CreateIndex('PersonId')
    ,CreateIndex('TypeId')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
 end;
 
 procedure CreatePersonEmailsTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
-   .HasSchema(SchemaName);
+  .HasSchema(SchemaName);
 end;
 
 initialization

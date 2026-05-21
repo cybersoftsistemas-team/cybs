@@ -29,8 +29,8 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-   ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
+    GuidColumn('Id').IsRequired
+   ,BooleanColumn('Reserved').IsRequired
    ,GuidColumn('DomainId').IsRequired
    ,GuidColumn('UserId').IsRequired
   ])
@@ -44,6 +44,16 @@ begin
     CreateIndex('DomainId')
    ,CreateIndex('UserId')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
+
+  ASchema.AddDefaultValue('Reserved')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('0');
 end;
 
 procedure CreateDomainAccessesTable.Down(const ASchema: IMigrationBuilder);

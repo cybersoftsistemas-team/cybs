@@ -29,7 +29,7 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    GuidColumn('Id').IsRequired
    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
    ,StringColumn('DialCode').HasMaxLength(10).IsUnicode.IsRequired
   ])
@@ -38,6 +38,11 @@ begin
    ,Unique('DialCode')
    ,Unique('Name')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
 end;
 
 procedure CreateCountryCountriesTable.Down(const ASchema: IMigrationBuilder);

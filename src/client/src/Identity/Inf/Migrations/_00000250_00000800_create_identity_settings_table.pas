@@ -29,10 +29,10 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    GuidColumn('Id').IsRequired
    ,GuidColumn('UserId').IsRequired
    ,GuidColumn('OptionId').IsRequired
-   ,BooleanColumn('Checked').HasDefaultValueSql('0').IsRequired
+   ,BooleanColumn('Checked').IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
@@ -45,6 +45,16 @@ begin
    ,CreateIndex(['UserId', 'OptionId'])
     .HasInclude('Checked')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
+
+  ASchema.AddDefaultValue('Checked')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('0');
 end;
 
 procedure CreateIdentitySettingsTable.Down(const ASchema: IMigrationBuilder);

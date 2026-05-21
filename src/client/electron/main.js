@@ -80,7 +80,15 @@ function createWindow() {
     if (!win) return;
     win.setResizable(true);
     win.setMaximizable(true);
-    win.setSize(obj.w, obj.h);
+    win.setContentSize(obj.w, obj.h);
+    win.center();
+  });
+
+  ipcMain.on("show-login", (event, obj) => {
+    if (!win) return;
+    win.setResizable(false);
+    win.setMaximizable(false);
+    win.setContentSize(obj.w, obj.h);
     win.center();
   });
 

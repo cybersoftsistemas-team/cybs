@@ -29,11 +29,11 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+    GuidColumn('Id').IsRequired
    ,GuidColumn('PersonId').IsRequired
    ,GuidColumn('TypeId').IsRequired
    ,StringColumn('AdditionalInformation').HasMaxLength(255).IsUnicode.IsOptional
-   ,BooleanColumn('Correspondence').HasDefaultValueSql('0').IsRequired
+   ,BooleanColumn('Correspondence').IsRequired
    ,GuidColumn('AddressId').IsRequired
   ])
   .Constraints([
@@ -48,6 +48,16 @@ begin
    ,CreateIndex('PersonId')
    ,CreateIndex('TypeId')
   ]);
+
+  ASchema.AddDefaultValue('Id')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('NEWSEQUENTIALID()');
+
+  ASchema.AddDefaultValue('Correspondence')
+  .HasTable(TableName)
+  .HasSchema(SchemaName)
+  .HasValue('0');
 end;
 
 procedure CreatePersonAddressesTable.Down(const ASchema: IMigrationBuilder);

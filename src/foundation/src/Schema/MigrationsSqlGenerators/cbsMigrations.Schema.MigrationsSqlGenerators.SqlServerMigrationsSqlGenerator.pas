@@ -5,6 +5,7 @@ interface
 uses
 {PROJECT}
   cbsMigrations.Contracts.Migrations.MigrationCommandListBuilder,
+  cbsMigrations.Contracts.Migrations.Operations.AddDefaultConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.ColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.EnsureSchemaOperation,
@@ -16,6 +17,7 @@ type
   TSqlServerMigrationsSqlGenerator = class(TMigrationsSqlGenerator, ISqlServerMigrationsSqlGenerator)
   protected
     procedure ColumnIdentityDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); override;
+    procedure Generate(const AOperation: IAddDefaultConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAlterColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IEnsureSchemaOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IRenameColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
@@ -30,6 +32,32 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.IntColumnOperation;
 
 { TSqlServerMigrationsSqlGenerator }
+
+procedure TSqlServerMigrationsSqlGenerator.Generate(const AOperation: IAddDefaultConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  ABuilder
+   .Append('ALTER TABLE')
+   .Append(' ')
+   .Append(DelimitIdentifier(AOperation.Table, AOperation.Schema))
+   .Append(' ')
+   .Append('ADD')
+   .Append(' ')
+   .Append('CONSTRAINT')
+   .Append(' ')
+   .Append(DelimitIdentifier(AOperation.Name))
+   .Append(' ')
+   .Append('DEFAULT')
+   .Append(' ')
+   .Append('(')
+   .Append(AOperation.Value)
+   .Append(')')
+   .Append(' ')
+   .Append('FOR')
+   .Append(' ')
+   .Append(DelimitIdentifier(AOperation.ColumnName))
+   .AppendLine(StatementTerminator);
+  EndStatement(ABuilder);
+end;
 
 procedure TSqlServerMigrationsSqlGenerator.Generate(const AOperation: IAlterColumnOperation; const ABuilder: IMigrationCommandListBuilder);
 begin
