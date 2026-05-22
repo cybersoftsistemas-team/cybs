@@ -44,10 +44,9 @@ begin
    ,CreateIndex('StateId')
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('NEWSEQUENTIALID()');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateAddressStateCodesTable.Down(const ASchema: IMigrationBuilder);

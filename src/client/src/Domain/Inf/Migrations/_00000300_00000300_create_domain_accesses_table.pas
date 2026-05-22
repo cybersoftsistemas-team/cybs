@@ -45,15 +45,13 @@ begin
    ,CreateIndex('UserId')
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('NEWSEQUENTIALID()');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('Reserved')
+  ASchema.AddDefault('Reserved', '0')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('0');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateDomainAccessesTable.Down(const ASchema: IMigrationBuilder);

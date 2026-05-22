@@ -75,25 +75,21 @@ begin
    ,CreateIndex('PersonId')
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('NEWSEQUENTIALID()');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('AccessFailedCount')
+  ASchema.AddDefault('AccessFailedCount', '0')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('0');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('AccountDisabled')
+  ASchema.AddDefault('AccountDisabled', '0')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('0');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('Reserved')
+  ASchema.AddDefault('Reserved', '0')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('0');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateIdentityUsersTable.Down(const ASchema: IMigrationBuilder);

@@ -46,15 +46,13 @@ begin
     .HasInclude('Checked')
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('NEWSEQUENTIALID()');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('Checked')
+  ASchema.AddDefault('Checked', '0')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('0');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateIdentitySettingsTable.Down(const ASchema: IMigrationBuilder);

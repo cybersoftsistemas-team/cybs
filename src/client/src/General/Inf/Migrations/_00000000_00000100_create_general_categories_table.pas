@@ -47,15 +47,13 @@ begin
    ,CreateIndex(['ParentId', 'Id'])
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('NEWSEQUENTIALID()');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('Reserved')
+  ASchema.AddDefault('Reserved', '0')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('0');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateGeneralCategoriesTable.Down(const ASchema: IMigrationBuilder);

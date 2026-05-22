@@ -51,10 +51,9 @@ begin
    ,CreateIndex('ZipCode')
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('NEWSEQUENTIALID()');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateAddressAddressesTable.Down(const ASchema: IMigrationBuilder);

@@ -46,15 +46,13 @@ begin
     .HasInclude('Active')
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('NEWSEQUENTIALID()');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('Active')
+  ASchema.AddDefault('Active', '0')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('0');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateCrmCustomersTable.Down(const ASchema: IMigrationBuilder);

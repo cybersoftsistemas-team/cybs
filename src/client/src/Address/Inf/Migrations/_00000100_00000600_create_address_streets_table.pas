@@ -37,10 +37,9 @@ begin
    ,Unique('Name')
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('NEWSEQUENTIALID()');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateAddressStreetsTable.Down(const ASchema: IMigrationBuilder);

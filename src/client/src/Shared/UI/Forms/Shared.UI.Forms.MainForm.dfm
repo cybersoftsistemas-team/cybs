@@ -19,14 +19,9 @@ inherited frmMain: TfrmMain
     ActivePage = tbsMain
     Align = alClient
     TabOrder = 2
-    ExplicitLeft = 0
-    ExplicitWidth = 1008
-    ExplicitHeight = 639
     object tbsMain: TUniTabSheet
       Hint = ''
       Caption = 'Cybersoft'
-      ExplicitWidth = 1000
-      ExplicitHeight = 611
     end
   end
   object trmMain: TUniTreeMenu [1]
@@ -48,8 +43,6 @@ inherited frmMain: TfrmMain
     Align = alLeft
     ParentColor = False
     Color = clBtnFace
-    ExplicitLeft = 240
-    ExplicitHeight = 585
   end
   inherited aclMain: TUniActionList
     Left = 880

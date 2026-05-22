@@ -39,10 +39,9 @@ begin
    ,ForeignKey('UserId', 'users', 'Id')
   ]);
 
-  ASchema.AddDefault('Iterations')
+  ASchema.AddDefault('Iterations', '125000')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('125000');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateIdentityPasswordsTable.Down(const ASchema: IMigrationBuilder);

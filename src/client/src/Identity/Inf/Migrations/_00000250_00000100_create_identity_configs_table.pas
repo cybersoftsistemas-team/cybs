@@ -41,25 +41,21 @@ begin
    ,CheckConstraint(Format('%s_%s_singleton_check', [SchemaName, TableName]), '(Id = 1)')
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', '1')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('1');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('LockoutMinutes')
+  ASchema.AddDefault('LockoutMinutes', '15')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('15');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('MaxAttempts')
+  ASchema.AddDefault('MaxAttempts', '5')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('5');
+  .HasSchema(SchemaName);
 
-  ASchema.AddDefault('PasswordIterations')
+  ASchema.AddDefault('PasswordIterations', '125000')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('125000');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreateIdentityConfigsTable.Down(const ASchema: IMigrationBuilder);

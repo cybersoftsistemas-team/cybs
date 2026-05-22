@@ -48,10 +48,9 @@ begin
    ,CreateIndex('TypeId')
   ]);
 
-  ASchema.AddDefault('Id')
+  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
   .HasTable(TableName)
-  .HasSchema(SchemaName)
-  .HasValue('NEWSEQUENTIALID()');
+  .HasSchema(SchemaName);
 end;
 
 procedure CreatePersonPhonesTable.Down(const ASchema: IMigrationBuilder);
