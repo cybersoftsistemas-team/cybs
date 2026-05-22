@@ -49,12 +49,12 @@ begin
    ,CreateIndex('TypeId')
   ]);
 
-  ASchema.AddDefaultValue('Id')
+  ASchema.AddDefault('Id')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('NEWSEQUENTIALID()');
 
-  ASchema.AddDefaultValue('Correspondence')
+  ASchema.AddDefault('Correspondence')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('0');

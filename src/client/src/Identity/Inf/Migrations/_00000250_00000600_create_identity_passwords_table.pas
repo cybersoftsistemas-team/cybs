@@ -39,7 +39,7 @@ begin
    ,ForeignKey('UserId', 'users', 'Id')
   ]);
 
-  ASchema.AddDefaultValue('Iterations')
+  ASchema.AddDefault('Iterations')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('125000');

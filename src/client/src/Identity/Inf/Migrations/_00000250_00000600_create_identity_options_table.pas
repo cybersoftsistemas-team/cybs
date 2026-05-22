@@ -38,7 +38,7 @@ begin
    ,Unique('Name')
   ]);
 
-  ASchema.AddDefaultValue('Id')
+  ASchema.AddDefault('Id')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('NEWSEQUENTIALID()');

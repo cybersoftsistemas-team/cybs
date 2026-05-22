@@ -46,12 +46,12 @@ begin
     .HasInclude('Active')
   ]);
 
-  ASchema.AddDefaultValue('Id')
+  ASchema.AddDefault('Id')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('NEWSEQUENTIALID()');
 
-  ASchema.AddDefaultValue('Active')
+  ASchema.AddDefault('Active')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('0');

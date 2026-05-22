@@ -48,7 +48,7 @@ begin
    ,CreateIndex('TypeId')
   ]);
 
-  ASchema.AddDefaultValue('Id')
+  ASchema.AddDefault('Id')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('NEWSEQUENTIALID()');

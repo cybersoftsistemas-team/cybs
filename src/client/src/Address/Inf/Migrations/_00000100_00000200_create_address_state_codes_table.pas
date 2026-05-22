@@ -44,7 +44,7 @@ begin
    ,CreateIndex('StateId')
   ]);
 
-  ASchema.AddDefaultValue('Id')
+  ASchema.AddDefault('Id')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('NEWSEQUENTIALID()');

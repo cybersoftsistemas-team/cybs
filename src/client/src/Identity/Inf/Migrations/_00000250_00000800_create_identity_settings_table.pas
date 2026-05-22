@@ -46,12 +46,12 @@ begin
     .HasInclude('Checked')
   ]);
 
-  ASchema.AddDefaultValue('Id')
+  ASchema.AddDefault('Id')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('NEWSEQUENTIALID()');
 
-  ASchema.AddDefaultValue('Checked')
+  ASchema.AddDefault('Checked')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('0');

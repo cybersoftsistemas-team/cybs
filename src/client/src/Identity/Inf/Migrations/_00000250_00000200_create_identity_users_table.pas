@@ -75,22 +75,22 @@ begin
    ,CreateIndex('PersonId')
   ]);
 
-  ASchema.AddDefaultValue('Id')
+  ASchema.AddDefault('Id')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('NEWSEQUENTIALID()');
 
-  ASchema.AddDefaultValue('AccessFailedCount')
+  ASchema.AddDefault('AccessFailedCount')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('0');
 
-  ASchema.AddDefaultValue('AccountDisabled')
+  ASchema.AddDefault('AccountDisabled')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('0');
 
-  ASchema.AddDefaultValue('Reserved')
+  ASchema.AddDefault('Reserved')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('0');

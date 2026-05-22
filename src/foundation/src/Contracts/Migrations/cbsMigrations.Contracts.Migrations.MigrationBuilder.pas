@@ -48,8 +48,8 @@ type
     function AddComputedColumn(const AName: string): IAddComputedColumnOperation;
     function AddDateColumn(const AName, ATable: string): IAddDateColumnOperation;
     function AddDateTimeColumn(const AName, ATable: string): IAddDateTimeColumnOperation;
-    function AddDefaultValue(const AColumnName: TColumnName): IAddDefaultConstraintOperation; overload;
-    function AddDefaultValue(const AName: string; const AColumnName: TColumnName): IAddDefaultConstraintOperation; overload;
+    function AddDefault(const AColumnName: TColumnName): IAddDefaultConstraintOperation; overload;
+    function AddDefault(const AName: string; const AColumnName: TColumnName): IAddDefaultConstraintOperation; overload;
     function AddFloatColumn(const AName, ATable: string): IAddFloatColumnOperation;
     function AddForeignKey(const AName, ATable: string; const AColumn: TForeignKeyColumn; const APrincipalTable: TForeignKeyPrincipalTable; const APrincipalColumn: TForeignKeyPrincipalColumn): IAddForeignKeyOperation; overload;
     function AddForeignKey(const AName, ATable: string; const AColumns: array of TForeignKeyColumn; const APrincipalTable: TForeignKeyPrincipalTable; const APrincipalColumns: array of TForeignKeyPrincipalColumn): IAddForeignKeyOperation; overload;

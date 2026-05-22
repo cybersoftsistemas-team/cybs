@@ -41,22 +41,22 @@ begin
    ,CheckConstraint(Format('%s_%s_singleton_check', [SchemaName, TableName]), '(Id = 1)')
   ]);
 
-  ASchema.AddDefaultValue('Id')
+  ASchema.AddDefault('Id')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('1');
 
-  ASchema.AddDefaultValue('LockoutMinutes')
+  ASchema.AddDefault('LockoutMinutes')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('15');
 
-  ASchema.AddDefaultValue('MaxAttempts')
+  ASchema.AddDefault('MaxAttempts')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('5');
 
-  ASchema.AddDefaultValue('PasswordIterations')
+  ASchema.AddDefault('PasswordIterations')
   .HasTable(TableName)
   .HasSchema(SchemaName)
   .HasValue('125000');
@@ -74,3 +74,4 @@ begin
 end;
 
 end.
+

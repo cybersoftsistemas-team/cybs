@@ -35,7 +35,61 @@ uses
 
 procedure TSqlServerMigrationsSqlGenerator.Generate(const AOperation: IAddDefaultConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
 begin
-  ABuilder
+   ABuilder
+   .AppendLine('DECLARE @DefaultConstraintName NVARCHAR(255);')
+   .AppendLine
+   .Append('SELECT')
+   .AppendLine
+   .Append('    @DefaultConstraintName = dc.name')
+   .AppendLine
+   .Append('FROM sys.default_constraints dc')
+   .AppendLine
+   .Append('INNER JOIN sys.columns c')
+   .AppendLine
+   .Append('    ON c.default_object_id = dc.object_id')
+   .AppendLine
+   .Append('INNER JOIN sys.tables t')
+   .AppendLine
+   .Append('    ON t.object_id = c.object_id')
+   .AppendLine
+   .Append('INNER JOIN sys.schemas s')
+   .AppendLine
+   .Append('    ON s.schema_id = t.schema_id')
+   .AppendLine
+   .Append('WHERE s.name = ')
+   .Append(QuotedStr(AOperation.Schema))
+   .AppendLine
+   .Append('  AND t.name = ')
+   .Append(QuotedStr(AOperation.Table))
+   .AppendLine
+   .Append('  AND c.name = ')
+   .Append(QuotedStr(AOperation.ColumnName))
+   .AppendLine(StatementTerminator)
+   .AppendLine
+   .AppendLine('IF @DefaultConstraintName IS NOT NULL')
+   .AppendLine('BEGIN')
+   .Append('    RAISERROR(')
+   .Append(
+     QuotedStr(
+       'A default constraint already exists for column "%s" in table "%s.%s". Existing constraint: %s'
+     )
+   )
+   .Append(', ')
+   .Append('16')
+   .Append(', ')
+   .Append('1')
+   .Append(', ')
+   .Append(QuotedStr(AOperation.ColumnName))
+   .Append(', ')
+   .Append(QuotedStr(AOperation.Schema))
+   .Append(', ')
+   .Append(QuotedStr(AOperation.Table))
+   .Append(', ')
+   .Append('@DefaultConstraintName')
+   .Append(')')
+   .AppendLine(StatementTerminator)
+   .AppendLine('END')
+   .AppendLine
    .Append('ALTER TABLE')
    .Append(' ')
    .Append(DelimitIdentifier(AOperation.Table, AOperation.Schema))
