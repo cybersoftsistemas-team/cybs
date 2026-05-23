@@ -23,6 +23,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.CreateTableOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropCheckConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropForeignKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropPrimaryKeyOperation,
@@ -78,6 +79,7 @@ type
     procedure Generate(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IDropCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IDropColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
+    procedure Generate(const AOperation: IDropDefaultConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IDropForeignKeyOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IDropIndexOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IDropPrimaryKeyOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
@@ -121,6 +123,7 @@ uses
   cbsMigrations.Migrations.Operations.CreateTableOperation,
   cbsMigrations.Migrations.Operations.DropCheckConstraintOperation,
   cbsMigrations.Migrations.Operations.DropColumnOperation,
+  cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation,
   cbsMigrations.Migrations.Operations.DropForeignKeyOperation,
   cbsMigrations.Migrations.Operations.DropIndexOperation,
   cbsMigrations.Migrations.Operations.DropPrimaryKeyOperation,
@@ -227,6 +230,11 @@ begin
     procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)
     begin
       G.Generate(TDropColumnOperation(O), B);
+    end);
+  FGenerateActions.Add(IDropDefaultConstraintOperation,
+    procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)
+    begin
+      G.Generate(TDropDefaultConstraintOperation(O), B);
     end);
   FGenerateActions.Add(IDropForeignKeyOperation,
     procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)

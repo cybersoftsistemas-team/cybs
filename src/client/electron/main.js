@@ -126,7 +126,6 @@ app
   .whenReady()
   .then(async () => {
     createWindow();
-
     const cfg = await loadConfig();
     win.loadURL(cfg.serverUrl);
     win.setMenu(null);

@@ -31,31 +31,15 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    IntColumn('Id').IsRequired
-   ,IntColumn('LockoutMinutes').IsRequired
-   ,IntColumn('MaxAttempts').IsRequired
-   ,IntColumn('PasswordIterations').IsRequired
+    IntColumn('Id').HasDefaultValueSql('1').IsRequired
+   ,IntColumn('LockoutMinutes').HasDefaultValueSql('15').IsRequired
+   ,IntColumn('MaxAttempts').HasDefaultValueSql('5').IsRequired
+   ,IntColumn('PasswordIterations').HasDefaultValueSql('125000').IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
    ,CheckConstraint(Format('%s_%s_singleton_check', [SchemaName, TableName]), '(Id = 1)')
   ]);
-
-  ASchema.AddDefault('Id', '1')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
-
-  ASchema.AddDefault('LockoutMinutes', '15')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
-
-  ASchema.AddDefault('MaxAttempts', '5')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
-
-  ASchema.AddDefault('PasswordIterations', '125000')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
 end;
 
 procedure CreateIdentityConfigsTable.Down(const ASchema: IMigrationBuilder);

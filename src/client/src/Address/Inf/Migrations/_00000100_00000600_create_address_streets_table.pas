@@ -29,17 +29,13 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').IsRequired
+    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
    ,Unique('Name')
   ]);
-
-  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
 end;
 
 procedure CreateAddressStreetsTable.Down(const ASchema: IMigrationBuilder);

@@ -60,7 +60,9 @@ type
     procedure ColumnDefinition(const ASchema, ATable, AName: string; const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual;
     procedure ColumnDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual;
     procedure ColumnIdentityDefinition(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); virtual;
-    procedure DefaultValue(const ADefaultValueSql: string; const ABuilder: IMigrationCommandListBuilder);
+    procedure CreateDefaultConstraint(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder); virtual;
+    procedure CreateDefaultConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder); virtual;
+    procedure DefaultValue(const ADefaultValueSql: string; const ABuilder: IMigrationCommandListBuilder); virtual;
     procedure Generate(const AOperation: IAddBooleanColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddComputedColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
@@ -118,6 +120,7 @@ begin
   ABuilder
    .AppendLine(StatementTerminator);
   EndStatement(ABuilder);
+  CreateDefaultConstraint(AOperation, ABuilder);
 end;
 
 procedure TMigrationsSqlGenerator.CheckConstraint(const AOperation: IAddCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder);
@@ -241,6 +244,16 @@ begin
   CreateTableUniqueConstraints(AOperation, ABuilder);
   CreateTableCheckConstraints(AOperation, ABuilder);
   CreateTableForeignKeys(AOperation, ABuilder);
+end;
+
+procedure TMigrationsSqlGenerator.CreateDefaultConstraint(const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  // This method can be overwritten by inherited classes.
+end;
+
+procedure TMigrationsSqlGenerator.CreateDefaultConstraints(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  // This method can be overwritten by inherited classes.
 end;
 
 procedure TMigrationsSqlGenerator.CreateTableForeignKeys(const AOperation: ICreateTableOperation; const ABuilder: IMigrationCommandListBuilder);
@@ -516,6 +529,7 @@ begin
    .AppendLine(StatementTerminator);
   EndStatement(ABuilder);
   CreateTableIndexes(AOperation, ABuilder);
+  CreateDefaultConstraints(AOperation, ABuilder);
 end;
 
 procedure TMigrationsSqlGenerator.Generate(const AOperation: IDropCheckConstraintOperation; const ABuilder: IMigrationCommandListBuilder);

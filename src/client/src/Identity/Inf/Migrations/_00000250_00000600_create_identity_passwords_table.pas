@@ -31,17 +31,13 @@ begin
   .Columns([
     GuidColumn('UserId').IsRequired
    ,StringColumn('Hash').HasColumnType('VARBINARY(64)').IsRequired
-   ,IntColumn('Iterations').IsRequired
+   ,IntColumn('Iterations').HasDefaultValueSql('125000').IsRequired
    ,StringColumn('Salt').HasColumnType('VARBINARY(32)').IsRequired
   ])
   .Constraints([
     PrimaryKey('UserId')
    ,ForeignKey('UserId', 'users', 'Id')
   ]);
-
-  ASchema.AddDefault('Iterations', '125000')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
 end;
 
 procedure CreateIdentityPasswordsTable.Down(const ASchema: IMigrationBuilder);

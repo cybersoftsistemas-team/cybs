@@ -21,6 +21,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.CreateTableOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropCheckConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropForeignKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropPrimaryKeyOperation,
@@ -83,6 +84,7 @@ type
     function CreateTable(const AName, ASchema: string): ICreateTableOperation; overload;
     function DropCheckConstraint(const AName: string): IDropCheckConstraintOperation;
     function DropColumn(const AName: string): IDropColumnOperation;
+    function DropDefault(const AColumnName: TColumnName): IDropDefaultConstraintOperation;
     function DropForeignKey(const AName: string): IDropForeignKeyOperation;
     function DropIndex(const AName: string): IDropIndexOperation;
     function DropPrimaryKey(const AName: string): IDropPrimaryKeyOperation;
@@ -117,6 +119,7 @@ uses
   cbsMigrations.Migrations.Operations.CreateTableOperation,
   cbsMigrations.Migrations.Operations.DropCheckConstraintOperation,
   cbsMigrations.Migrations.Operations.DropColumnOperation,
+  cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation,
   cbsMigrations.Migrations.Operations.DropForeignKeyOperation,
   cbsMigrations.Migrations.Operations.DropIndexOperation,
   cbsMigrations.Migrations.Operations.DropPrimaryKeyOperation,
@@ -442,6 +445,15 @@ var
   LOperation: IDropColumnOperation;
 begin
   LOperation := TDropColumnOperation.Create(AName);
+  FOperations.Add(LOperation);
+  Result := LOperation;
+end;
+
+function TMigrationBuilder.DropDefault(const AColumnName: TColumnName): IDropDefaultConstraintOperation;
+var
+  LOperation: IDropDefaultConstraintOperation;
+begin
+  LOperation := TDropDefaultConstraintOperation.Create(AColumnName);
   FOperations.Add(LOperation);
   Result := LOperation;
 end;

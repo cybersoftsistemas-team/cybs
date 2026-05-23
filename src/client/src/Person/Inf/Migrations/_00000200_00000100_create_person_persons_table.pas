@@ -29,7 +29,7 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').IsRequired
+    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
    ,GuidColumn('PersonTypeId').IsRequired
   ])
   .Constraints([
@@ -39,10 +39,6 @@ begin
   .Indexes([
     CreateIndex('PersonTypeId')
   ]);
-
-  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
 end;
 
 procedure CreatePersonPersonsTable.Down(const ASchema: IMigrationBuilder);

@@ -10,7 +10,6 @@ uses
 type
   TConstraintOperation = class(TNamedMigrationObjectOperation, IConstraintOperation)
   public
-    constructor Create(const AName: string);
     function HasSchema(const ASchema: string): IConstraintOperation;
     function HasTable(const ATable: string): IConstraintOperation;
   end;
@@ -18,11 +17,6 @@ type
 implementation
 
 { TConstraintOperation }
-
-constructor TConstraintOperation.Create(const AName: string);
-begin
-  inherited Create(AName);
-end;
 
 function TConstraintOperation.HasSchema(const ASchema: string): IConstraintOperation;
 begin

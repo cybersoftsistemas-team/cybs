@@ -31,9 +31,9 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').IsRequired
+    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
-   ,BooleanColumn('Reserved').IsRequired
+   ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
    ,GuidColumn('ManagedById').IsOptional
    ,GuidColumn('ParentId').IsOptional
   ])
@@ -42,21 +42,13 @@ begin
    ,ForeignKey('ManagedById', 'persons', 'Id').HasPrincipalSchema('person')
    ,ForeignKey('ParentId', TableName, 'Id')
    ,Unique(['ParentId', 'Name'])
-   ,CheckConstraint(Format('chk_%s_%s_no_self_parent', [SchemaName, TableName]), '(ParentId IS NULL OR ParentId <> Id)')
+   ,CheckConstraint(Format('%s_%s_no_self_parent_check', [SchemaName, TableName]), '(ParentId IS NULL OR ParentId <> Id)')
   ])
   .Indexes([
     CreateIndex('ManagedById')
    ,CreateIndex('ParentId')
    ,CreateIndex(['ParentId', 'Id'])
   ]);
-
-  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
-
-  ASchema.AddDefault('Reserved', '0')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
 end;
 
 procedure CreateDomainDomainsTable.Down(const ASchema: IMigrationBuilder);

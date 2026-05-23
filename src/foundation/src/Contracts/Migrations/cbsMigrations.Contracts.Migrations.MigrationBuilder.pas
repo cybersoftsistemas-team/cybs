@@ -21,6 +21,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.CreateTableOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropCheckConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropForeignKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropPrimaryKeyOperation,
@@ -81,6 +82,7 @@ type
     function CreateTable(const AName: string): ICreateTableOperation;
     function DropCheckConstraint(const AName: string): IDropCheckConstraintOperation;
     function DropColumn(const AName: string): IDropColumnOperation;
+    function DropDefault(const AColumnName: TColumnName): IDropDefaultConstraintOperation;
     function DropForeignKey(const AName: string): IDropForeignKeyOperation;
     function DropIndex(const AName: string): IDropIndexOperation;
     function DropPrimaryKey(const AName: string): IDropPrimaryKeyOperation;

@@ -29,10 +29,10 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').IsRequired
+    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
    ,StringColumn('Description').IsUnicode.IsRequired
-   ,IntColumn('AccessFailedCount').IsRequired
+   ,IntColumn('AccessFailedCount').HasDefaultValueSql('0').IsRequired
    ,ComputedColumn('AccountActivated')
     .HasSqlAs(
      'CASE ' +
@@ -49,7 +49,7 @@ begin
      '    ELSE CAST(0 AS BIT) ' +
      'END')
     .IsOptional
-   ,BooleanColumn('AccountDisabled').IsRequired
+   ,BooleanColumn('AccountDisabled').HasDefaultValueSql('0').IsRequired
    ,ComputedColumn('AccountExpired')
     .HasSqlAs(
      'CASE ' +
@@ -61,7 +61,7 @@ begin
    ,DateTimeColumn('AccountExpiresDate').IsOptional
    ,DateTimeColumn('LastLoginAt').IsOptional
    ,DateTimeColumn('LockoutEnd').IsOptional
-   ,BooleanColumn('Reserved').IsRequired
+   ,BooleanColumn('Reserved').HasDefaultValueSql('0').IsRequired
    ,GuidColumn('PersonId').IsOptional
   ])
   .Constraints([
@@ -74,22 +74,6 @@ begin
    ,CreateIndex('LockoutEnd')
    ,CreateIndex('PersonId')
   ]);
-
-  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
-
-  ASchema.AddDefault('AccessFailedCount', '0')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
-
-  ASchema.AddDefault('AccountDisabled', '0')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
-
-  ASchema.AddDefault('Reserved', '0')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
 end;
 
 procedure CreateIdentityUsersTable.Down(const ASchema: IMigrationBuilder);

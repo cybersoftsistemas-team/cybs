@@ -29,7 +29,7 @@ begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').IsRequired
+    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
    ,StringColumn('Address').IsUnicode.IsOptional
    ,StringColumn('Number').HasMaxLength(20).IsUnicode.IsOptional
    ,StringColumn('ZipCode').HasMaxLength(8).IsUnicode.IsFixedLength.IsRequired
@@ -50,10 +50,6 @@ begin
    ,CreateIndex('StreetTypeId')
    ,CreateIndex('ZipCode')
   ]);
-
-  ASchema.AddDefault('Id', 'NEWSEQUENTIALID()')
-  .HasTable(TableName)
-  .HasSchema(SchemaName);
 end;
 
 procedure CreateAddressAddressesTable.Down(const ASchema: IMigrationBuilder);
