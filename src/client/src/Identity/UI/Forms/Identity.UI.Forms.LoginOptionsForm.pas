@@ -4,6 +4,7 @@ interface
 
 uses
 {PROJECT}
+  cbsSystem.Contracts.DatabaseConfig,
   cbsSystem.Form.BaseForm,
 {IDE}
   Data.DB, FireDAC.Comp.Client, uniGUITypes, uniGUIBaseClasses, System.Classes, System.Actions, Vcl.ActnList, uniGUIClasses, uniPanel, uniButton, uniBitBtn, uniLabel, Vcl.Controls,
@@ -31,6 +32,7 @@ type
     pnlLine02: TUniPanel;
     usmSelected: TUniScreenMask;
     usmTestConnection: TUniScreenMask;
+    procedure UniFormCreate(Sender: TObject);
     procedure actAddExecute(Sender: TObject);
     procedure actClearExecute(Sender: TObject);
     procedure actDelExecute(Sender: TObject);
@@ -40,6 +42,7 @@ type
     procedure grdConnDblClick(Sender: TObject);
     procedure grdConnDrawColumnCell(Sender: TObject; ACol, ARow: Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
   protected
+    FDatabaseConfig: IDatabaseConfig;
     function GetDataModule: IDataModule; override;
     function GetTestConnection: TFDCustomConnection;
     procedure TestConnection;
@@ -61,7 +64,7 @@ uses
   System.SysUtils,
   System.UITypes,
 {PROJECT}
-  cbsSystem.Support.ServerModule,
+  cbsSystem.Support.Container,
   Identity.UI.Data.Modules.LoginModule,
   Identity.UI.Forms.LoginOptionsConnEditorForm,
   Shared.UI.Data.Modules.MainModule;
@@ -122,25 +125,30 @@ end;
 
 procedure TfrmLoginOptions.actSelectedExecute(Sender: TObject);
 begin
-  var LDatabase := ServerModule.Database;
-  LDatabase.BeginUpdate;
   try
-    TestConnection;
-    var LRecNo := damLogin.mtbCNS.RecNo;
     try
-      LDatabase.Id := damLogin.mtbCNSId.AsGuid;
-      LDatabase.ConnectionName := damLogin.mtbCNSName.AsString;
-      LDatabase.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
-      LDatabase.ExecuteMigrations;
-      LDatabase.EndUpdate;
-      damLogin.mtbCNS.Refresh;
-    finally
-      damLogin.mtbCNS.RecNo := LRecNo;
+      TestConnection;
+      var LRecNo := damLogin.mtbCNS.RecNo;
+      try
+        FDatabaseConfig.Id := damLogin.mtbCNSId.AsGuid;
+        FDatabaseConfig.ConnectionName := damLogin.mtbCNSName.AsString;
+        FDatabaseConfig.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
+        FDatabaseConfig.ApplyUpdates;
+        damLogin.mtbCNS.Refresh;
+      finally
+        damLogin.mtbCNS.RecNo := LRecNo;
+      end;
+    except
+      on E: Exception do
+      begin
+        FDatabaseConfig.CancelUpdate;
+        raise Exception.Create(E.Message);
+      end;
     end;
+
   except
     on E: Exception do
     begin
-      LDatabase.CancelUpdate;
       MessageBox('Erro', 'Erro ao selecionar o banco de dados.', E.Message, mtError, [mbOK]);
     end;
   end;
@@ -194,7 +202,7 @@ begin
   actDel.Enabled := actEdit.Enabled;
   actClear.Enabled := actEdit.Enabled;
   actTestConn.Enabled := actEdit.Enabled;
-  actSelected.Enabled := actEdit.Enabled and not IsEqualGUID(damLogin.mtbCNSId.AsGuid, ServerModule.Database.Id);
+  actSelected.Enabled := actEdit.Enabled and not IsEqualGUID(damLogin.mtbCNSId.AsGuid, FDatabaseConfig.Id);
 end;
 
 procedure TfrmLoginOptions.grdConnDblClick(Sender: TObject);
@@ -210,7 +218,7 @@ procedure TfrmLoginOptions.grdConnDrawColumnCell(Sender: TObject; ACol, ARow:
 begin
   if IsEqualGUID(
     grdConn.DataSource.DataSet.FieldByName('Id').AsGuid,
-    ServerModule.Database.Id
+    FDatabaseConfig.Id
   ) then
   begin
     Attribs.Font.Style := Attribs.Font.Style + [TFontStyle.fsBold];
@@ -228,6 +236,12 @@ begin
   finally
     FDFreeAndNil(LConn);
   end;
+end;
+
+procedure TfrmLoginOptions.UniFormCreate(Sender: TObject);
+begin
+  inherited;
+  FDatabaseConfig := App.Make<IDatabaseConfig>;
 end;
 
 end.

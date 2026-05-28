@@ -71,7 +71,7 @@
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <SanitizedProjectName>cbsSystem</SanitizedProjectName>
-        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\foundation\src\Form;..\foundation\src\Module;..\modules\spring4d\Source;..\modules\spring4d\Source\Base;..\modules\spring4d\Source\Base\Collections;..\modules\spring4d\Source\Base\Logging;..\modules\spring4d\Source\Base\Patches;..\modules\spring4d\Source\Base\Patterns;..\modules\spring4d\Source\Core\Container;..\modules\spring4d\Source\Core\Interception;..\modules\spring4d\Source\Core\Logging;..\modules\spring4d\Source\Core\Mocking;..\modules\spring4d\Source\Core\Services;..\modules\spring4d\Source\Data\ObjectDataSet;..\modules\spring4d\Source\Extensions\Cryptography;..\modules\spring4d\Source\Extensions\Utils;..\modules\spring4d\Source\Persistence\Adapters;..\modules\spring4d\Source\Persistence\Core;..\modules\spring4d\Source\Persistence\Criteria;..\modules\spring4d\Source\Persistence\Mapping;..\modules\spring4d\Source\Persistence\SQL;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>..\..\build;..\..\build\$(Platform)\$(Config);..\..\build\$(Platform)\$(Config)\.dcp;..\..\build\$(Platform)\$(Config)\.bpl;..\..\build\$(Platform)\$(Config)\.dcu;..\foundation\src\Form;..\foundation\src\Module;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
         <DCC_DcpOutput>..\..\build\$(Platform)\$(Config)\.dcp</DCC_DcpOutput>
         <DCC_BplOutput>..\..\build\$(Platform)\$(Config)</DCC_BplOutput>
         <DCC_UNSUPPORTED_CONSTRUCT>false</DCC_UNSUPPORTED_CONSTRUCT>
@@ -131,25 +131,16 @@
         <DCCReference Include="soaprtl.dcp"/>
         <DCCReference Include="vclimg.dcp"/>
         <DCCReference Include="IndySystem.dcp"/>
-        <DCCReference Include="FireDAC.dcp"/>
-        <DCCReference Include="FireDACCommon.dcp"/>
         <DCCReference Include="uniGUI30Core.dcp"/>
         <DCCReference Include="uniTools30.dcp"/>
         <DCCReference Include="uIndy30.dcp"/>
-        <DCCReference Include="vclFireDAC.dcp"/>
-        <DCCReference Include="FireDACCommonODBC.dcp"/>
-        <DCCReference Include="FireDACMSSQLDriver.dcp"/>
         <DCCReference Include="uniGUI30.dcp"/>
         <DCCReference Include="cbsMigrations.dcp"/>
         <DCCReference Include="cbsMigrationsFireDac.dcp"/>
-        <DCCReference Include="Spring.Base.dcp"/>
-        <DCCReference Include="Spring.Data.dcp"/>
-        <DCCReference Include="..\modules\spring4d\Source\Core\Container\Spring.Container.pas"/>
-        <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Commands.Insert.pas"/>
-        <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Generators.Abstract.pas"/>
-        <DCCReference Include="..\modules\spring4d\Source\Persistence\Mapping\Spring.Persistence.Mapping.Attributes.pas"/>
-        <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Generators.Ansi.pas"/>
-        <DCCReference Include="..\modules\spring4d\Source\Persistence\SQL\Spring.Persistence.SQL.Interfaces.pas"/>
+        <DCCReference Include="Spring.Core.dcp"/>
+        <DCCReference Include="vclFireDAC.dcp"/>
+        <DCCReference Include="FireDACCommonODBC.dcp"/>
+        <DCCReference Include="FireDACMSSQLDriver.dcp"/>
         <DCCReference Include="src\Module\cbsSystem.Module.BaseModule.pas">
             <Form>damBase</Form>
             <DesignClass>TDataModule</DesignClass>
@@ -167,9 +158,7 @@
         <DCCReference Include="src\Module\Manager\cbsSystem.Module.Manager.pas"/>
         <DCCReference Include="src\Module\cbsSystem.Module.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.ModuleManager.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.RunTime.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.DataSet.Extensions.pas"/>
-        <DCCReference Include="src\Contracts\Module\cbsSystem.Contracts.Module.Main.pas"/>
         <DCCReference Include="src\Infrastructure\cbsSystem.Infrastructure.BaseDbModule.pas">
             <Form>damBaseDb</Form>
             <DesignClass>TDataModule</DesignClass>
@@ -185,8 +174,8 @@
         <DCCReference Include="src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas"/>
         <DCCReference Include="src\DataStorage\cbsSystem.DataStorage.pas"/>
         <DCCReference Include="src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas"/>
-        <DCCReference Include="src\Contracts\Database\cbsSystem.Contracts.Database.pas"/>
-        <DCCReference Include="src\Database\cbsSystem.Database.pas"/>
+        <DCCReference Include="src\Contracts\Database\cbsSystem.Contracts.DatabaseConfig.pas"/>
+        <DCCReference Include="src\Database\cbsSystem.DatabaseConfig.pas"/>
         <DCCReference Include="src\Form\cbsSystem.Form.DialogBaseForm.pas">
             <Form>frmDialogBase</Form>
             <DesignClass>TUniForm</DesignClass>
@@ -248,8 +237,8 @@
         <DCCReference Include="src\PathTree\cbsSystem.PathTreeParser.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.Types.pas"/>
         <DCCReference Include="src\Translation\cbsSystem.Translation.ForReplacement.pas"/>
-        <DCCReference Include="src\Contracts\Database\cbsSystem.Contracts.Database.Persistence.pas"/>
-        <DCCReference Include="src\Database\cbsSystem.Database.Persistence.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.Bootstrap.pas"/>
+        <DCCReference Include="src\Support\cbsSystem.Support.ProcessRunner.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

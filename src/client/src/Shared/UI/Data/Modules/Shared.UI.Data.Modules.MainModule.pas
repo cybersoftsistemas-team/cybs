@@ -4,7 +4,7 @@ interface
 
 uses
 {PROJECT}
-  cbsSystem.Contracts.Module.Main,
+  Shared.UI.Contracts.Data.Modules.MainModule,
 {IDE}
   uniGUIMainModule;
 

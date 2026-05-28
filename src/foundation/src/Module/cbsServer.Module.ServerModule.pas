@@ -6,8 +6,6 @@ uses
 {IDE}
   uniGUIServer,
 {PROJECT}
-  cbsSystem.Contracts.Database,
-  cbsSystem.Contracts.DataStorage,
   cbsSystem.Contracts.Module.ServerModule,
   cbsSystem.Contracts.Translation.Translator,
   cbsSystem.Support.Types;
@@ -15,25 +13,14 @@ uses
 type
   TcbsServerModule = class(TUniGUIServerModule, IServerModule)
     procedure UniGUIServerModuleCreate(Sender: TObject);
-    procedure UniGUIServerModuleDestroy(Sender: TObject);
   private
-    FDatabase: IcbsDatabase;
-    FDataStorage: IcbsDataStorage;
     FTranslator: ITranslator;
-    function GetDatabase: IcbsDatabase;
-    function GetDataStorage: IcbsDataStorage;
-    function GetProgramDataConfigPath: string;
-    function GetSystemFilesFolderPath: string;
     procedure HideTrayIconSystem;
   protected
     procedure FirstInit; override;
   public
     function Trans(const APath: string; const ADefaultValue: string = ''): string; overload;
     function Trans(const APath: string; const AReplacements: TForReplacements; const ADefaultValue: string = ''): string; overload;
-    property Database: IcbsDatabase read GetDatabase;
-    property DataStorage: IcbsDataStorage read GetDataStorage;
-    property ProgramDataConfigPath: string read GetProgramDataConfigPath;
-    property SystemFilesFolderPath: string read GetSystemFilesFolderPath;
   end;
 
   function cbsServerModule: TcbsServerModule;
@@ -55,36 +42,29 @@ uses
   Winapi.ShellAPI,
 {$ENDIF}
 {PROJECT}
-  cbsServer.Database,
-  cbsSystem.Contracts.Database.Seeders.DatabaseSeeder,
-  cbsSystem.Contracts.MessageBag,
-  cbsSystem.Contracts.Validation.Rules.PasswordPolicy,
-  cbsSystem.DataStorage,
   cbsSystem.Locales.Locale,
-  cbsSystem.MessageBag,
+  cbsSystem.Support.Bootstrap,
+  cbsSystem.Support.Container,
   cbsSystem.Support.DatabaseSeederTypeRepository,
   cbsSystem.Support.RegisterContainer,
   cbsSystem.Support.FormTypeRepository,
-  cbsSystem.Support.ModuleManager,
   cbsSystem.Support.ModuleTypeRepository,
   cbsSystem.Support.Translations,
   cbsSystem.Support.ServerModule,
   cbsSystem.Translation.Translator,
-  cbsSystem.Validation.Rules.PasswordPolicy,
+  Shared.Inf.Contracts.Services.DatabaseUpdaterService,
   Shared.Inf.Database.Connection,
+  Shared.Inf.Database.Context,
+  Shared.Inf.Services.DatabaseUpdaterService,
   Shared.UI.Data.Modules.MainModule,
-  Shared.UI.Forms.MainForm,
-{SPRING}
-  Spring.Container;
+  Shared.UI.Forms.MainForm;
+
+type
+  TBootstrap = cbsSystem.Support.Bootstrap.Bootstrap;
 
 function cbsServerModule: TcbsServerModule;
 begin
   Result := TcbsServerModule(UniGUIServerInstance);
-end;
-
-procedure LoadSystemModules;
-begin
-  ModuleManager.LoadFromFolder(ExtractFilePath(ParamStr(0)));
 end;
 
 procedure RegisterAppFormsAndDataModules;
@@ -99,55 +79,7 @@ begin
   end;
 end;
 
-procedure RegisterContainerTypes;
-begin
-  for var LItem in Container do
-  begin
-    var LShared := LItem.Value.Value;
-    var LRegisterType := if Assigned(LItem.Value.Key) then
-      GlobalContainer.RegisterType(LItem.Key, LItem.Value.Key)
-    else
-      GlobalContainer.RegisterType(LItem.Key, LItem.Key);
-    if Assigned(LRegisterType) and LShared then
-    begin
-      LRegisterType.AsSingleton;
-    end;
-  end;
-  for var LDbSeederType in DatabaseSeederTypeRepository do
-  begin
-    GlobalContainer.RegisterType(LDbSeederType.ClassInfo).Implements<IDatabaseSeeder>(LDbSeederType.QualifiedClassName);
-  end;
-  GlobalContainer.RegisterType<PasswordPolicy>.Implements<IPasswordPolicy>;
-  GlobalContainer.RegisterType<TMessageBag>.Implements<IMessageBag>;
-  GlobalContainer.RegisterType<TTranslator>.Implements<ITranslator>.AsSingleton;
-  GlobalContainer.Build;
-end;
-
 { TcbsServerModule }
-
-function TcbsServerModule.GetDatabase: IcbsDatabase;
-begin
-  Result := FDatabase;
-end;
-
-function TcbsServerModule.GetDataStorage: IcbsDataStorage;
-begin
-  Result := FDataStorage;
-end;
-
-function TcbsServerModule.GetProgramDataConfigPath: string;
-begin
-  Result := TPath.Combine(TPath.GetPublicPath, '.cybersoft', 'config');
-  if not DirectoryExists(Result) then
-  begin
-    ForceDirectories(Result);
-  end;
-end;
-
-function TcbsServerModule.GetSystemFilesFolderPath: string;
-begin
-  Result := FilesFolderPath;
-end;
 
 function TcbsServerModule.Trans(const APath, ADefaultValue: string): string;
 begin
@@ -164,10 +96,7 @@ begin
   inherited;
   InitServerModule(Self);
   RegisterInternalSystemServerModule(Self);
-  FDataStorage := TcbsDataStorage.Create(Self);
-  FDatabase := TDatabase.Create(Self, TdamDb);
-  FDatabase.ExecuteMigrations;
-  FTranslator := GlobalContainer.Resolve<ITranslator>;
+  FTranslator := cbsSystem.Support.Container.App.Make<ITranslator>;
   FTranslator.Locale := TLocale.pt_br;
 end;
 
@@ -194,31 +123,24 @@ begin
   HideTrayIconSystem;
 end;
 
-procedure TcbsServerModule.UniGUIServerModuleDestroy(Sender: TObject);
-begin
-  FDataStorage := nil;
-  FDatabase := nil;
-  FTranslator := nil;
-end;
-
 initialization
 begin
+  TBootstrap.ImplementSingleton<TdamDb>;
+  TBootstrap.ImplementSingleton<TDbContext>;
+  TBootstrap.ImplementSingleton<IDatabaseUpdaterService, TDatabaseUpdaterService>;
+  TBootstrap.Initialize;
   RegisterServerModuleClass(TcbsServerModule);
   RegisterMainModuleClass(TdamMain);
   RegisterMainFormClass(TfrmMain);
   RegisterModuleClass(TdamDb);
-  LoadSystemModules;
-  RegisterContainerTypes;
   RegisterAppFormsAndDataModules;
   FDManager.Open;
-  CreateTranslations;
 end;
 
 finalization
 begin
   FDManager.Close;
-  CleanupGlobalContainer;
-  DestroyTranslations;
+  TBootstrap.Finalize;
 end;
 
 end.

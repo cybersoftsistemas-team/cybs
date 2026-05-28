@@ -1,30 +1,23 @@
-unit cbsSystem.Contracts.Database;
+unit cbsSystem.Contracts.DatabaseConfig;
 
 interface
 
-uses
-{PROJECT}
-  cbsSystem.Contracts.Database.Persistence;
-
 type
-  IcbsDatabase = interface(IUnknown)
+  IDatabaseConfig = interface(IUnknown)
     ['{7A0C9AF5-5E45-4BDC-9CF0-8826F7B2C003}']
+    function Exists: Boolean;
     function GetConnectionName: string;
     function GetConnectionString: string;
     function GetId: TGuid;
-    function GetPersistence: IPersistence;
-    procedure BeginUpdate;
+    procedure ApplyUpdates;
     procedure CancelUpdate;
     procedure Clear;
-    procedure EndUpdate;
-    procedure ExecuteMigrations;
     procedure SetConnectionName(const AValue: string);
     procedure SetConnectionString(const AValue: string);
     procedure SetId(const AValue: TGuid);
     property ConnectionName: string read GetConnectionName write SetConnectionName;
     property ConnectionString: string read GetConnectionString write SetConnectionString;
     property Id: TGuid read GetId write SetId;
-    property Persistence: IPersistence read GetPersistence;
   end;
 
 implementation

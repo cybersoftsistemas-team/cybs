@@ -4,7 +4,7 @@ interface
 
 uses
 {IDE}
-  Dialogs, uniButton, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, uniLabel, uniImage, uniGUIClasses, uniMemo, System.Classes, Vcl.Controls,
+  Vcl.Dialogs, uniButton, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, uniLabel, uniImage, uniGUIClasses, uniMemo, System.Classes, Vcl.Controls,
   Vcl.Forms, uniPanel;
 
 type

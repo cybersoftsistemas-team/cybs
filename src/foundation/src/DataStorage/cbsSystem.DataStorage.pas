@@ -6,21 +6,19 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
-  cbsSystem.Contracts.DataStorage,
-  cbsSystem.Contracts.Module.ServerModule;
+  cbsSystem.Contracts.DataStorage;
 
 type
-  TcbsDataStorage = class(TInterfacedObject, IcbsDataStorage)
+  TDataStorage = class(TInterfacedObject, IDataStorage)
   private
     FFileContent: string;
     FFileName: TFileName;
-    FOwner: IServerModule;
     function GetConfigPath: string;
+    function GetProgramDataConfigPath: string;
     procedure BeforeLoad(const AFileName: TFileName);
     procedure BeforeSave(const AFileName: TFileName);
     procedure OnSave(const AData: string);
   public
-    constructor Create(const AOwner: IServerModule);
     function Load(const AFileName: string): string;
     procedure Save(const AFileName, AData: string);
   end;
@@ -32,26 +30,29 @@ uses
   System.Classes,
   System.IOUtils;
 
-{ TcbsDataStorage }
+{ TDataStorage }
 
-constructor TcbsDataStorage.Create(const AOwner: IServerModule);
+function TDataStorage.GetConfigPath: string;
 begin
-  inherited Create;
-  FOwner := AOwner;
+  Result := GetProgramDataConfigPath;
 end;
 
-function TcbsDataStorage.GetConfigPath: string;
+function TDataStorage.GetProgramDataConfigPath: string;
 begin
-  Result := FOwner.ProgramDataConfigPath;
+  Result := TPath.Combine(TPath.GetPublicPath, '.cybersoft', 'config');
+  if not DirectoryExists(Result) then
+  begin
+    ForceDirectories(Result);
+  end;
 end;
 
-function TcbsDataStorage.Load(const AFileName: string): string;
+function TDataStorage.Load(const AFileName: string): string;
 begin
   BeforeLoad(AFileName);
   Result := FFileContent;
 end;
 
-procedure TcbsDataStorage.BeforeLoad(const AFileName: TFileName);
+procedure TDataStorage.BeforeLoad(const AFileName: TFileName);
 begin
   FFileContent := '';
   FFileName := TPath.Combine(GetConfigPath, AFileName);
@@ -64,12 +65,12 @@ begin
   FFileContent := LStrStream.DataString;
 end;
 
-procedure TcbsDataStorage.BeforeSave(const AFileName: TFileName);
+procedure TDataStorage.BeforeSave(const AFileName: TFileName);
 begin
   FFileName := TPath.Combine(GetConfigPath, AFileName);
 end;
 
-procedure TcbsDataStorage.OnSave(const AData: string);
+procedure TDataStorage.OnSave(const AData: string);
 begin
   var LStrStream := TStringStream.Create(AData);
   try
@@ -80,7 +81,7 @@ begin
   end;
 end;
 
-procedure TcbsDataStorage.Save(const AFileName, AData: string);
+procedure TDataStorage.Save(const AFileName, AData: string);
 begin
   BeforeSave(AFileName);
   OnSave(AData);

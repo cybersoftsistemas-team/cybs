@@ -1,4 +1,4 @@
-unit cbsSystem.Database;
+unit cbsSystem.DatabaseConfig;
 
 interface
 
@@ -7,22 +7,22 @@ uses
   Data.DB,
   FireDAC.Comp.Client,
 {PROJECT}
-  cbsSystem.Contracts.Database,
-  cbsSystem.Contracts.Database.Persistence,
-  cbsSystem.Contracts.Module.ServerModule;
+  cbsSystem.Contracts.DatabaseConfig,
+  cbsSystem.Contracts.DataStorage;
 
 type
-  TcbsDatabase = class(TInterfacedObject, IcbsDatabase)
+  TDatabaseConfig = class(TInterfacedObject, IDatabaseConfig)
   private
     FDatabase: TFDMemTable;
     FDatabaseConnectionName: TStringField;
     FDatabaseConnectionString: TStringField;
     FDatabaseId: TGuidField;
+    FDataStorage: IDataStorage;
     FLoading: Boolean;
-    FOwner: IServerModule;
     function GetConnectionName: string;
     function GetConnectionString: string;
     function GetId: TGuid;
+    procedure AddOrEdit;
     procedure DatabaseAfterOpen(DataSet: TDataSet);
     procedure DatabaseAfterPost(DataSet: TDataSet);
     procedure SaveDatabaseData;
@@ -30,24 +30,16 @@ type
     procedure SetConnectionString(const AValue: string);
     procedure SetDatabaseFields;
     procedure SetId(const AValue: TGuid);
-  protected
-    function GetPersistence: IPersistence; virtual; abstract;
-    function IsPossibleExecuteMigrations: Boolean; virtual;
-    procedure BeforeExecuteMigrations; virtual;
-    procedure OnExecuteMigrations; virtual;
-    property Owner: IServerModule read FOwner;
   public
-    constructor Create(const AOwner: IServerModule);
+    constructor Create;
     destructor Destroy; override;
-    procedure BeginUpdate;
+    function Exists: Boolean;
+    procedure ApplyUpdates;
     procedure CancelUpdate;
     procedure Clear;
-    procedure EndUpdate;
-    procedure ExecuteMigrations;
     property ConnectionName: string read GetConnectionName write SetConnectionName;
     property ConnectionString: string read GetConnectionString write SetConnectionString;
     property Id: TGuid read GetId write SetId;
-    property Persistence: IPersistence read GetPersistence;
   end;
 
 implementation
@@ -56,18 +48,19 @@ uses
 {IDE}
   System.SysUtils,
 {PROJECT}
+  cbsSystem.Support.Container,
   cbsSystem.Support.DataSet.Extensions;
 
 const
   CST_FILENAME = 'database.dat';
   CST_KEY      = '{EC5880D8-82F9-4CFC-8865-3B4D43792E2E}';
 
-{ TcbsDatabase }
+{ TDatabaseConfig }
 
-constructor TcbsDatabase.Create(const AOwner: IServerModule);
+constructor TDatabaseConfig.Create;
 begin
   inherited Create;
-  FOwner := AOwner;
+  FDataStorage := App.Make<IDataStorage>;
   FDatabase := TFDMemTable.Create(nil);
   FDatabase.AfterOpen := DatabaseAfterOpen;
   FDatabase.AfterPost := DatabaseAfterPost;
@@ -75,20 +68,21 @@ begin
   FDatabase.CreateDataSet;
 end;
 
-destructor TcbsDatabase.Destroy;
+destructor TDatabaseConfig.Destroy;
 begin
+  FDataStorage := nil;
   FreeAndNil(FDatabaseId);
   FreeAndNil(FDatabaseConnectionString);
   FreeAndNil(FDatabase);
   inherited;
 end;
 
-procedure TcbsDatabase.BeforeExecuteMigrations;
+function TDatabaseConfig.Exists: Boolean;
 begin
-  // This method can be overwritten by inherited classes.
+  Result := not FDatabaseId.IsNull and not FDatabaseConnectionString.IsNull;
 end;
 
-procedure TcbsDatabase.BeginUpdate;
+procedure TDatabaseConfig.AddOrEdit;
 begin
   if FDatabase.State not in dsEditModes then
   begin
@@ -96,39 +90,7 @@ begin
   end;
 end;
 
-procedure TcbsDatabase.CancelUpdate;
-begin
-  if FDatabase.State in dsEditModes then
-  begin
-    FDatabase.Cancel;
-  end;
-end;
-
-procedure TcbsDatabase.Clear;
-begin
-  FDatabase.EmptyDataSet;
-  SaveDatabaseData;
-end;
-
-procedure TcbsDatabase.DatabaseAfterOpen(DataSet: TDataSet);
-begin
-  if not FLoading then
-  begin
-    FLoading := True;
-    try
-      FDatabase.LoadData(CST_KEY, FOwner.DataStorage.Load(CST_FILENAME));
-    finally
-      FLoading := False;
-    end;
-  end;
-end;
-
-procedure TcbsDatabase.DatabaseAfterPost(DataSet: TDataSet);
-begin
-  SaveDatabaseData;
-end;
-
-procedure TcbsDatabase.EndUpdate;
+procedure TDatabaseConfig.ApplyUpdates;
 begin
   if FDatabase.State in dsEditModes then
   begin
@@ -136,66 +98,84 @@ begin
   end;
 end;
 
-procedure TcbsDatabase.ExecuteMigrations;
+procedure TDatabaseConfig.CancelUpdate;
 begin
-  if IsPossibleExecuteMigrations then
+  if FDatabase.State in dsEditModes then
   begin
+    FDatabase.Cancel;
+  end;
+end;
+
+procedure TDatabaseConfig.Clear;
+begin
+  FDatabase.EmptyDataSet;
+  SaveDatabaseData;
+end;
+
+procedure TDatabaseConfig.DatabaseAfterOpen(DataSet: TDataSet);
+begin
+  if not FLoading then
+  begin
+    FLoading := True;
     try
-      BeforeExecuteMigrations;
-      OnExecuteMigrations;
-    except
-      raise;
+      FDatabase.LoadData(CST_KEY, FDataStorage.Load(CST_FILENAME));
+    finally
+      FLoading := False;
     end;
   end;
 end;
 
-function TcbsDatabase.GetConnectionName: string;
+procedure TDatabaseConfig.DatabaseAfterPost(DataSet: TDataSet);
+begin
+  SaveDatabaseData;
+end;
+
+//procedure TDatabaseConfig.ExecuteMigrations;
+//begin
+//  if IsPossibleExecuteMigrations then
+//  begin
+//    try
+//      BeforeExecuteMigrations;
+//      OnExecuteMigrations;
+//    except
+//      raise;
+//    end;
+//  end;
+//end;
+
+function TDatabaseConfig.GetConnectionName: string;
 begin
   Result := FDatabaseConnectionName.AsString;
 end;
 
-function TcbsDatabase.GetConnectionString: string;
+function TDatabaseConfig.GetConnectionString: string;
 begin
   Result := FDatabaseConnectionString.AsString;
 end;
 
-function TcbsDatabase.GetId: TGuid;
+function TDatabaseConfig.GetId: TGuid;
 begin
   Result := FDatabaseId.AsGuid;
 end;
 
-function TcbsDatabase.IsPossibleExecuteMigrations: Boolean;
-begin
-  Result := not FDatabaseId.IsNull and not FDatabaseConnectionString.IsNull;
-end;
-
-procedure TcbsDatabase.OnExecuteMigrations;
-begin
-  // This method can be overwritten by inherited classes.
-end;
-
-procedure TcbsDatabase.SaveDatabaseData;
+procedure TDatabaseConfig.SaveDatabaseData;
 begin
   FDatabase.SaveData(CST_KEY, CST_FILENAME, csmServerSide);
 end;
 
-procedure TcbsDatabase.SetConnectionName(const AValue: string);
+procedure TDatabaseConfig.SetConnectionName(const AValue: string);
 begin
-  if FDatabase.State in dsEditModes then
-  begin
-    FDatabaseConnectionName.AsString := AValue;
-  end;
+  AddOrEdit;
+  FDatabaseConnectionName.AsString := AValue;
 end;
 
-procedure TcbsDatabase.SetConnectionString(const AValue: string);
+procedure TDatabaseConfig.SetConnectionString(const AValue: string);
 begin
-  if FDatabase.State in dsEditModes then
-  begin
-    FDatabaseConnectionString.AsString := AValue;
-  end;
+  AddOrEdit;
+  FDatabaseConnectionString.AsString := AValue;
 end;
 
-procedure TcbsDatabase.SetDatabaseFields;
+procedure TDatabaseConfig.SetDatabaseFields;
 begin
   // DatabaseId
   FDatabaseId := TGuidField.Create(nil);
@@ -217,12 +197,10 @@ begin
   FDatabaseConnectionString.DataSet := FDatabase;
 end;
 
-procedure TcbsDatabase.SetId(const AValue: TGuid);
+procedure TDatabaseConfig.SetId(const AValue: TGuid);
 begin
-  if FDatabase.State in dsEditModes then
-  begin
-    FDatabaseId.AsGuid := AValue;
-  end;
+  AddOrEdit;
+  FDatabaseId.AsGuid := AValue;
 end;
 
 end.

@@ -1,6 +1,5 @@
 object cbsServerModule: TcbsServerModule
   OnCreate = UniGUIServerModuleCreate
-  OnDestroy = UniGUIServerModuleDestroy
   TempFolder = 'temp\'
   Title = 'New Application'
   BGColorLogin = 15921906

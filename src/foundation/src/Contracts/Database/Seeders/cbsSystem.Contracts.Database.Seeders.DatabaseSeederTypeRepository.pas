@@ -31,7 +31,8 @@ begin
   Result := TCollections.CreateDictionary<string, DatabaseSeederType>;
   if Assigned(ADatabaseSeederTypes) then
   begin
-    Result.AddRange(ADatabaseSeederTypes);
+    for var LItem in ADatabaseSeederTypes do
+      Result.Add(LItem.Key, LItem.Value);
   end;
 end;
 

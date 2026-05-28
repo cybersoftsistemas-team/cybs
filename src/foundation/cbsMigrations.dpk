@@ -188,7 +188,9 @@ contains
   cbsMigrations.Contracts.Migrations.Operations.AddDefaultConstraintOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddDefaultConstraintOperation.pas',
   cbsMigrations.Contracts.Migrations.Operations.DefaultConstraintOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.DefaultConstraintOperation.pas',
   cbsMigrations.Migrations.Operations.DefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.DefaultConstraintOperation.pas',
-  cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation.pas';
+  cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation.pas',
+  cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation.pas',
+  cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation.pas';
 
 end.
 

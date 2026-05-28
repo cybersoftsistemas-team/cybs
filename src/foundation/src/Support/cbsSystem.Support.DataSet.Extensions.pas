@@ -40,7 +40,8 @@ uses
   System.ZLib,
   uniGUIApplication,
 {PROJECT}
-  cbsSystem.Support.ServerModule;
+  cbsSystem.Contracts.DataStorage,
+  cbsSystem.Support.Container;
 
 { TFDMemTableExtensions }
 
@@ -192,7 +193,7 @@ begin
   var LEnc := Encrypt(StreamToBase64, AKey).Replace(#13, '').Replace(#10, '');
   if AStorageMode = csmServerSide then
   begin
-    ServerModule.DataStorage.Save(AFile, LEnc);
+    App.Make<IDataStorage>.Save(AFile, LEnc);
   end
   else if AStorageMode = csmClientSide then
   begin

@@ -313,6 +313,8 @@
         <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.DefaultConstraintOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.DefaultConstraintOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation.pas"/>
+        <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation.pas"/>
+        <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

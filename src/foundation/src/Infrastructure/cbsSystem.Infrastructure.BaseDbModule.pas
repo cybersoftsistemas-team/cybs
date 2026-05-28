@@ -28,13 +28,14 @@ implementation
 
 uses
 {PROJECT}
-  cbsSystem.Support.ServerModule;
+  cbsSystem.Contracts.DatabaseConfig,
+  cbsSystem.Support.Container;
 
 { TdamBaseDb }
 
 procedure TdamBaseDb.ConnectionBeforeConnect(Sender: TObject);
 begin
-  Connection.ConnectionString := ServerModule.Database.ConnectionString;
+  Connection.ConnectionString := App.Make<IDatabaseConfig>.ConnectionString;
 end;
 
 end.

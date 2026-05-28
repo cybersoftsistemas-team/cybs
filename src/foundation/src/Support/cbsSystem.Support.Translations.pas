@@ -8,34 +8,16 @@ uses
 
   function Translations: ITranslations;
 
-  procedure CreateTranslations;
-  procedure DestroyTranslations;
-
 implementation
 
 uses
 {PROJECT}
-  cbsSystem.Translation.Translations;
-
-var
-  InternalTranslations: ITranslations;
+  cbsSystem.Translation.Translations,
+  cbsSystem.Support.Container;
 
 function Translations: ITranslations;
 begin
-  Result := InternalTranslations;
-end;
-
-procedure CreateTranslations;
-begin
-  if not Assigned(InternalTranslations) then
-  begin
-    InternalTranslations := TTranslations.Create;
-  end;
-end;
-
-procedure DestroyTranslations;
-begin
-  InternalTranslations := nil;
+  Result := App.Make<ITranslations>;
 end;
 
 end.

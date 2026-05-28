@@ -32,7 +32,7 @@ object frmMessageBox: TfrmMessageBox
     Anchors = [akLeft, akTop, akRight, akBottom]
     ReadOnly = True
     ParentColor = True
-    TabOrder = 2
+    TabOrder = 1
   end
   object imgIcon: TUniImage
     Left = 8
@@ -51,7 +51,7 @@ object frmMessageBox: TfrmMessageBox
     Height = 13
     Hint = ''
     Caption = 'labCaption'
-    TabOrder = 1
+    TabOrder = 0
   end
   object ilaMain: TUniImageListAdapter
     Left = 316

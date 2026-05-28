@@ -39,8 +39,8 @@ implementation
 uses
   System.SysUtils,
 {PROJECT}
+  cbsSystem.Contracts.DatabaseConfig,
   cbsSystem.Support.Container,
-  cbsSystem.Support.ServerModule,
   Domain.Inf.Entities,
   Shared.UI.Data.Modules.MainModule;
 
@@ -101,7 +101,7 @@ end;
 procedure TdamLoginDomains.Refresh;
 begin
   mtbDOM.Close;
-  if not ServerModule.Database.Id.IsEmpty then
+  if App.Make<IDatabaseConfig>.Exists then
     mtbDOM.CreateAndCopyDataSet(FDomainRepository.GetAll);
 end;
 

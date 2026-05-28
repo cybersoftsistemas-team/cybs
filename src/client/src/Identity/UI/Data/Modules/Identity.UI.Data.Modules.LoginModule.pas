@@ -4,6 +4,7 @@ interface
 
 uses
 {PROJECT}
+  cbsSystem.Contracts.DatabaseConfig,
   cbsSystem.Module.BaseModule,
   Identity.App.Common.AuthResult,
 {IDE}
@@ -30,6 +31,7 @@ type
     procedure mtbCNSNewRecord(DataSet: TDataSet);
     procedure UniGUIMainModuleCreate(Sender: TObject);
   private
+    FDatabaseConfig: IDatabaseConfig;
     procedure SaveOptions;
     procedure TryClearUserCredentials;
   public
@@ -54,9 +56,9 @@ uses
   System.Math,
   System.SysUtils,
 {PROJECT}
+  cbsSystem.Contracts.DataStorage,
   cbsSystem.Support.Container,
   cbsSystem.Support.DataSet.Extensions,
-  cbsSystem.Support.ServerModule,
   Identity.App.Common.UserAuthError,
   Identity.App.Contracts.Services.UserAuthService,
   Identity.Dom.Exceptions.UserAuthError,
@@ -122,24 +124,24 @@ end;
 
 procedure TdamLogin.mtbCNSAfterOpen(DataSet: TDataSet);
 begin
-  mtbCNS.LoadData(CST_KEY_OPTIONS, ServerModule.DataStorage.Load(CST_FILENAME_OPTIONS));
+  mtbCNS.LoadData(CST_KEY_OPTIONS, App.Make<IDataStorage>.Load(CST_FILENAME_OPTIONS));
 end;
 
 procedure TdamLogin.mtbCNSAfterPost(DataSet: TDataSet);
 begin
   SaveOptions;
-  if IsEqualGUID(mtbCNSId.AsGuid, ServerModule.Database.Id) and
-    not SameText(mtbCNSConnectionString.AsString, ServerModule.Database.ConnectionString) then
+  if IsEqualGUID(mtbCNSId.AsGuid, FDatabaseConfig.Id) and
+    not SameText(mtbCNSConnectionString.AsString, FDatabaseConfig.ConnectionString) then
   begin
-    ServerModule.Database.Clear;
+    FDatabaseConfig.Clear;
   end;
 end;
 
 procedure TdamLogin.mtbCNSBeforeDelete(DataSet: TDataSet);
 begin
-  if IsEqualGUID(mtbCNSId.AsGuid, ServerModule.Database.Id) then
+  if IsEqualGUID(mtbCNSId.AsGuid, FDatabaseConfig.Id) then
   begin
-    ServerModule.Database.Clear;
+    FDatabaseConfig.Clear;
   end;
 end;
 
@@ -147,7 +149,7 @@ procedure TdamLogin.mtbCNSEmptyDataSet;
 begin
   mtbCNS.EmptyDataSet;
   SaveOptions;
-  ServerModule.Database.Clear;
+  FDatabaseConfig.Clear;
 end;
 
 procedure TdamLogin.mtbCNSNewRecord(DataSet: TDataSet);
@@ -187,6 +189,7 @@ end;
 procedure TdamLogin.UniGUIMainModuleCreate(Sender: TObject);
 begin
   inherited;
+  FDatabaseConfig := App.Make<IDatabaseConfig>;
   mtbUSE.CreateDataSet;
   mtbCNS.CreateDataSet;
 end;

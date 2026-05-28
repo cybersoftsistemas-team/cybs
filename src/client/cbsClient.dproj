@@ -124,6 +124,7 @@
         </DelphiCompile>
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="cbsSystem.dcp"/>
+        <DCCReference Include="Spring.Data.dcp"/>
         <DCCReference Include="src\Shared\Inf\Entities\Shared.Inf.Entities.Entity.pas"/>
         <DCCReference Include="src\Shared\Inf\Contracts\Repositories\Shared.Inf.Contracts.Repositories.Repository.pas"/>
         <DCCReference Include="src\Shared\Inf\Respositories\Shared.Inf.Repositories.Repository.pas"/>
@@ -142,12 +143,17 @@
             <FormType>dfm</FormType>
             <DesignClass>TDataModule</DesignClass>
         </DCCReference>
-        <DCCReference Include="src\Shared\Inf\Database\Shared.Inf.Database.Context.pas"/>
         <DCCReference Include="src\Shared\Core\Contracts\Services\Shared.Core.Contracts.Services.Service.pas"/>
         <DCCReference Include="src\Shared\Core\Services\Shared.Core.Services.Service.pas"/>
         <DCCReference Include="src\Shared\Core\Common\Shared.Core.Common.Result.pas"/>
         <DCCReference Include="src\Shared\Core\Common\Shared.Core.Common.ActionResult.pas"/>
         <DCCReference Include="src\Shared\Core\Common\Shared.Core.Common.SystemUsers.pas"/>
+        <DCCReference Include="src\Shared\Inf\Contracts\Database\Shared.Inf.Contracts.Database.Persistence.pas"/>
+        <DCCReference Include="src\Shared\UI\Data\Modules\Shared.UI.Contracts.Data.Modules.MainModule.pas"/>
+        <DCCReference Include="src\Shared\Inf\Contracts\Services\Shared.Inf.Contracts.Services.DatabaseUpdaterService.pas"/>
+        <DCCReference Include="src\Shared\Inf\Services\Shared.Inf.Services.DatabaseUpdaterService.pas"/>
+        <DCCReference Include="src\Shared\Inf\Database\Shared.Inf.Database.Context.pas"/>
+        <DCCReference Include="src\Shared\Core\Common\Shared.Core.Common.RunTime.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

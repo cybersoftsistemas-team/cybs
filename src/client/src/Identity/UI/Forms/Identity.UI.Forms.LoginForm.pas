@@ -3,6 +3,8 @@
 interface
 
 uses
+{PROJECT}
+  cbsSystem.Contracts.DatabaseConfig,
 {IDE}
   uniGUITypes, uniGUIForm, uniGUIBaseClasses, uniImageList, System.ImageList, Vcl.ImgList, System.Classes, System.Actions, Vcl.ActnList, uniMainMenu, Vcl.Imaging.pngimage,
   uniImage, uniSpeedButton, uniButton, uniBitBtn, uniGUIClasses, uniEdit, uniDBEdit, uniLabel, uniPanel, Vcl.Controls, Vcl.Forms, uniTimer, uniCheckBox, uniDBCheckBox,
@@ -49,6 +51,7 @@ type
     procedure UniLoginFormAjaxEvent(Sender: TComponent; EventName: string; Params: TUniStrings);
     procedure UniLoginFormCreate(Sender: TObject);
   private
+    FDatabaseConfig: IDatabaseConfig;
     procedure AfterConnect;
     procedure BeforeConnect;
     procedure HideMsg;
@@ -68,10 +71,8 @@ uses
   System.SysUtils,
   System.UITypes,
 {PROJECT}
-  cbsSystem.Contracts.Module.Main,
+  cbsSystem.Support.Container,
   cbsSystem.Support.Form,
-  cbsSystem.Support.RunTime,
-  cbsSystem.Support.ServerModule,
   Identity.Dom.Common.SystemOptions,
   Identity.Inf.Entities,
   Identity.UI.Data.Modules.LoginDomainsModule,
@@ -80,6 +81,8 @@ uses
   Identity.UI.Forms.LoginDomainRegistrationForm,
   Identity.UI.Forms.LoginDomainsForm,
   Identity.UI.Forms.LoginOptionsForm,
+  Shared.Core.Common.RunTime,
+  Shared.UI.Contracts.Data.Modules.MainModule,
   Shared.UI.Data.Modules.MainModule;
 
 function frmLogin: TfrmLogin;
@@ -243,27 +246,29 @@ end;
 
 procedure TfrmLogin.UniLoginFormCreate(Sender: TObject);
 begin
+  inherited;
+  FDatabaseConfig := App.Make<IDatabaseConfig>;
   UpdateUi;
 end;
 
 procedure TfrmLogin.UpdateUi;
 begin
   var LExistsRegisteredDomain := damLoginDomains.ExistsRegisteredDomain;
-  edtUserName.Enabled := not ServerModule.Database.Id.IsEmpty and LExistsRegisteredDomain;
+  edtUserName.Enabled := FDatabaseConfig.Exists and LExistsRegisteredDomain;
   edtPassword.Enabled := edtUserName.Enabled;
   edtDomainName.Enabled := edtUserName.Enabled;
   actDomains.Enabled := edtUserName.Enabled;
   cbxRememberYourLoginCredentials.Enabled := edtUserName.Enabled;
   actOptions.Visible := RunTime.IsClientRunningInServer;
-  actRegister.Visible := actOptions.Visible and not ServerModule.Database.Id.IsEmpty and not LExistsRegisteredDomain;
-  actConnect.Visible := not actOptions.Visible or ServerModule.Database.Id.IsEmpty or LExistsRegisteredDomain;
+  actRegister.Visible := actOptions.Visible and FDatabaseConfig.Exists and not LExistsRegisteredDomain;
+  actConnect.Visible := not actOptions.Visible or not FDatabaseConfig.Exists or LExistsRegisteredDomain;
   actConnect.Enabled := edtUserName.Enabled;
   HideMsg;
   if actOptions.Visible and damLogin.mtbCNS.Active and damLogin.mtbCNS.IsEmpty then
   begin
     ShowMsg('Não existe uma configuração de conexão com o banco de dados.');
   end
-  else if actOptions.Visible and ServerModule.Database.Id.IsEmpty then
+  else if actOptions.Visible and not FDatabaseConfig.Exists then
   begin
     ShowMsg('É necessário selecionar uma conexão com o banco de dados.');
   end

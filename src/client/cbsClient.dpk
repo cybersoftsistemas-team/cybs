@@ -30,7 +30,8 @@ package cbsClient;
 
 requires
   rtl,
-  cbsSystem;
+  cbsSystem,
+  Spring.Data;
 
 contains
   Shared.Inf.Entities.Entity in 'src\Shared\Inf\Entities\Shared.Inf.Entities.Entity.pas',
@@ -39,11 +40,16 @@ contains
   Shared.UI.Data.Modules.MainModule in 'src\Shared\UI\Data\Modules\Shared.UI.Data.Modules.MainModule.pas' {damMain: TUniGUIMainModule},
   Shared.UI.Forms.MainForm in 'src\Shared\UI\Forms\Shared.UI.Forms.MainForm.pas' {frmMain: TUniForm},
   Shared.Inf.Database.Connection in 'src\Shared\Inf\Database\Shared.Inf.Database.Connection.pas' {damDb: TDataModule},
-  Shared.Inf.Database.Context in 'src\Shared\Inf\Database\Shared.Inf.Database.Context.pas',
   Shared.Core.Contracts.Services.Service in 'src\Shared\Core\Contracts\Services\Shared.Core.Contracts.Services.Service.pas',
   Shared.Core.Services.Service in 'src\Shared\Core\Services\Shared.Core.Services.Service.pas',
   Shared.Core.Common.Result in 'src\Shared\Core\Common\Shared.Core.Common.Result.pas',
   Shared.Core.Common.ActionResult in 'src\Shared\Core\Common\Shared.Core.Common.ActionResult.pas',
-  Shared.Core.Common.SystemUsers in 'src\Shared\Core\Common\Shared.Core.Common.SystemUsers.pas';
+  Shared.Core.Common.SystemUsers in 'src\Shared\Core\Common\Shared.Core.Common.SystemUsers.pas',
+  Shared.Inf.Contracts.Database.Persistence in 'src\Shared\Inf\Contracts\Database\Shared.Inf.Contracts.Database.Persistence.pas',
+  Shared.UI.Contracts.Data.Modules.MainModule in 'src\Shared\UI\Data\Modules\Shared.UI.Contracts.Data.Modules.MainModule.pas',
+  Shared.Inf.Contracts.Services.DatabaseUpdaterService in 'src\Shared\Inf\Contracts\Services\Shared.Inf.Contracts.Services.DatabaseUpdaterService.pas',
+  Shared.Inf.Services.DatabaseUpdaterService in 'src\Shared\Inf\Services\Shared.Inf.Services.DatabaseUpdaterService.pas',
+  Shared.Inf.Database.Context in 'src\Shared\Inf\Database\Shared.Inf.Database.Context.pas',
+  Shared.Core.Common.RunTime in 'src\Shared\Core\Common\Shared.Core.Common.RunTime.pas';
 
 end.
