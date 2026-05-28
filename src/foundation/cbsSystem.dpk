@@ -121,7 +121,6 @@ contains
   cbsSystem.Support.ServerModule in 'src\Support\cbsSystem.Support.ServerModule.pas',
   cbsSystem.Contracts.DataStorage in 'src\Contracts\DataStorage\cbsSystem.Contracts.DataStorage.pas',
   cbsSystem.DataStorage in 'src\DataStorage\cbsSystem.DataStorage.pas',
-  cbsSystem.Contracts.Migrations in 'src\Contracts\Migrations\cbsSystem.Contracts.Migrations.pas',
   cbsSystem.Contracts.DatabaseConfig in 'src\Contracts\Database\cbsSystem.Contracts.DatabaseConfig.pas',
   cbsSystem.DatabaseConfig in 'src\Database\cbsSystem.DatabaseConfig.pas',
   cbsSystem.Form.DialogBaseForm in 'src\Form\cbsSystem.Form.DialogBaseForm.pas' {frmDialogBase: TUniForm},
