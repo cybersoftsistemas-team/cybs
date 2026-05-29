@@ -43,24 +43,14 @@ uses
 {$ENDIF}
 {PROJECT}
   cbsSystem.Locales.Locale,
-  cbsSystem.Support.Bootstrap,
   cbsSystem.Support.Container,
-  cbsSystem.Support.DatabaseSeederTypeRepository,
-  cbsSystem.Support.RegisterContainer,
   cbsSystem.Support.FormTypeRepository,
   cbsSystem.Support.ModuleTypeRepository,
-  cbsSystem.Support.Translations,
   cbsSystem.Support.ServerModule,
-  cbsSystem.Translation.Translator,
-  Shared.Inf.Contracts.Services.DatabaseUpdaterService,
+  Shared.Core.Bootstrap,
   Shared.Inf.Database.Connection,
-  Shared.Inf.Database.Context,
-  Shared.Inf.Services.DatabaseUpdaterService,
   Shared.UI.Data.Modules.MainModule,
   Shared.UI.Forms.MainForm;
-
-type
-  TBootstrap = cbsSystem.Support.Bootstrap.Bootstrap;
 
 function cbsServerModule: TcbsServerModule;
 begin
@@ -125,9 +115,6 @@ end;
 
 initialization
 begin
-  TBootstrap.ImplementSingleton<TdamDb>;
-  TBootstrap.ImplementSingleton<TDbContext>;
-  TBootstrap.ImplementSingleton<IDatabaseUpdaterService, TDatabaseUpdaterService>;
   TBootstrap.Initialize;
   RegisterServerModuleClass(TcbsServerModule);
   RegisterMainModuleClass(TdamMain);

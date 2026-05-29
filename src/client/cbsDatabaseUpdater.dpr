@@ -6,24 +6,19 @@ program cbsDatabaseUpdater;
 
 uses
   System.SysUtils,
-  cbsSystem.Support.Bootstrap,
   cbsSystem.Support.Container,
+  Shared.Core.Bootstrap,
   Shared.Dom.DatabaseUpdater.CommandLineParser in 'src\Shared\Dom\DatabaseUpdater\Shared.Dom.DatabaseUpdater.CommandLineParser.pas',
   Shared.Inf.Contracts.Services.DatabaseUpdaterService,
-  Shared.Inf.Database.Connection in 'src\Shared\Inf\Database\Shared.Inf.Database.Connection.pas' {damDb: TDataModule},
-  Shared.Inf.Database.Context,
-  Shared.Inf.Services.DatabaseUpdaterService;
+  Shared.Inf.Database.Connection in 'src\Shared\Inf\Database\Shared.Inf.Database.Connection.pas' {damDb: TDataModule};
 
 begin
   try
-    Bootstrap.ImplementSingleton<TdamDb>;
-    Bootstrap.ImplementSingleton<TDbContext>;
-    Bootstrap.ImplementSingleton<IDatabaseUpdaterService, TDatabaseUpdaterService>;
-    Bootstrap.Initialize;
+    TBootstrap.Initialize;
     try
       App.Make<IDatabaseUpdaterService>.Execute(TCommandLineParser.Parse);
     finally
-      Bootstrap.Finalize;
+      TBootstrap.Finalize;
     end;
     Halt(0);
   except

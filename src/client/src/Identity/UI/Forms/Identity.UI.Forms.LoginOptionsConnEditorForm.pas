@@ -251,39 +251,39 @@ procedure TfrmLoginOptionsConnEditor.FillConnParams(const AParams: TStrings);
 begin
   AParams.Clear;
   if FConnection <> nil then
-    AParams.SetStrings(FEdited)
-  else
   begin
-    for var I := 0 to FEdited.Count - 1 do
-    begin
-      var LKey := FEdited.Names[I];
-      var LVal := FEdited.Values[LKey];
-      var LChanged := False;
-      var LRecNo := mtbPRM.RecNo;
-      mtbPRM.DisableControls;
-      try
-        mtbPRM.First;
-        while not mtbPRM.Eof do
+    AParams.SetStrings(FEdited);
+    Exit;
+  end;
+  for var I := 0 to FEdited.Count - 1 do
+  begin
+    var LKey := FEdited.Names[I];
+    var LVal := FEdited.Values[LKey];
+    var LChanged := False;
+    var LRecNo := mtbPRM.RecNo;
+    mtbPRM.DisableControls;
+    try
+      mtbPRM.First;
+      while not mtbPRM.Eof do
+      begin
+        if AnsiCompareText(mtbPRMParam.AsString, LKey) = 0 then
         begin
-          if AnsiCompareText(mtbPRMParam.AsString, LKey) = 0 then
-          begin
-            LChanged := True;
-            Break;
-          end;
-          mtbPRM.Next;
+          LChanged := True;
+          Break;
         end;
-      finally
-        mtbPRM.RecNo := LRecNo;
-        mtbPRM.EnableControls;
+        mtbPRM.Next;
       end;
-      if LChanged then
-      begin
-        LChanged := FDefaults.Values[LKey] <> LVal;
-      end;
-      if LChanged then
-      begin
-        AParams.Add(LKey + '=' + LVal);
-      end;
+    finally
+      mtbPRM.RecNo := LRecNo;
+      mtbPRM.EnableControls;
+    end;
+    if LChanged then
+    begin
+      LChanged := FDefaults.Values[LKey] <> LVal;
+    end;
+    if LChanged then
+    begin
+      AParams.Add(LKey + '=' + LVal);
     end;
   end;
 end;
@@ -291,28 +291,27 @@ end;
 procedure TfrmLoginOptionsConnEditor.FillParamGrids;
 begin
   var LDrvMeta: IFDPhysDriverMetadata;
-  if IsDriverKnown(FDriverID, LDrvMeta) then
-  begin
-    var LTab := LDrvMeta.GetConnParams(FResults);
-    FDataChange := False;
-    mtbPRM.DisableControls;
-    try
-      mtbPRM.EmptyDataSet;
-      for var I := 0 to LTab.Rows.Count - 1 do
-      begin
-        mtbPRM.Append;
-        mtbPRMParam.AsString := LTab.Rows[I].GetData('Name');
-        mtbPRMValue.AsString := FResults.Values[LTab.Rows[I].GetData('Name')];
-        mtbPRMDefault.AsString := LTab.Rows[I].GetData('DefVal');
-        mtbPRMParamType.AsString := LTab.Rows[i].GetData('Type');
-        mtbPRM.Post;
-      end;
-      mtbPRM.First;
-    finally
-      FDFree(LTab);
-      mtbPRM.EnableControls;
-      FDataChange := True;
+  if not IsDriverKnown(FDriverID, LDrvMeta) then
+    Exit;
+  var LTab := LDrvMeta.GetConnParams(FResults);
+  FDataChange := False;
+  mtbPRM.DisableControls;
+  try
+    mtbPRM.EmptyDataSet;
+    for var I := 0 to LTab.Rows.Count - 1 do
+    begin
+      mtbPRM.Append;
+      mtbPRMParam.AsString := LTab.Rows[I].GetData('Name');
+      mtbPRMValue.AsString := FResults.Values[LTab.Rows[I].GetData('Name')];
+      mtbPRMDefault.AsString := LTab.Rows[I].GetData('DefVal');
+      mtbPRMParamType.AsString := LTab.Rows[i].GetData('Type');
+      mtbPRM.Post;
     end;
+    mtbPRM.First;
+  finally
+    FDFree(LTab);
+    mtbPRM.EnableControls;
+    FDataChange := True;
   end;
 end;
 
@@ -346,17 +345,16 @@ end;
 procedure TfrmLoginOptionsConnEditor.GetDriverParams(const ADrvID: String; AStrs: TStrings);
 begin
   var LDrvMeta: IFDPhysDriverMetadata;
-  if IsDriverKnown(ADrvID, LDrvMeta) then
-  begin
-    var LTab := LDrvMeta.GetConnParams(AStrs);
-    try
-      for var I := 0 to LTab.Rows.Count - 1 do
-      begin
-        AStrs.Add(LTab.Rows[I].GetData('Name') + '=' + LTab.Rows[I].GetData('DefVal'));
-      end;
-    finally
-      FDFree(LTab);
+  if not IsDriverKnown(ADrvID, LDrvMeta) then
+    Exit;
+  var LTab := LDrvMeta.GetConnParams(AStrs);
+  try
+    for var I := 0 to LTab.Rows.Count - 1 do
+    begin
+      AStrs.Add(LTab.Rows[I].GetData('Name') + '=' + LTab.Rows[I].GetData('DefVal'));
     end;
+  finally
+    FDFree(LTab);
   end;
 end;
 
@@ -383,7 +381,7 @@ begin
     begin
       pnlValue.Title := Format('Parâmetro: %s', [LDataSet.FieldByName('Param').AsString]);
       var LResultIndex := GUIxSetupEditor(cbxCombo.Items, LDataSet.FieldByName('ParamType').AsString);
-      pnlValue.Visible := LResultIndex = 1;
+      pnlValue.Visible := (LResultIndex = 1) and not(grdParams.Columns[grdParams.CurrCol].ReadOnly);
       if pnlValue.Visible then
       begin
         grdParams.CancelEditing;

@@ -12,7 +12,6 @@ implementation
 
 uses
 {PROJECT}
-  cbsSystem.Translation.Translations,
   cbsSystem.Support.Container;
 
 function Translations: ITranslations;

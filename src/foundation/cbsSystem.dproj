@@ -236,7 +236,6 @@
         <DCCReference Include="src\PathTree\cbsSystem.PathTreeParser.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.Types.pas"/>
         <DCCReference Include="src\Translation\cbsSystem.Translation.ForReplacement.pas"/>
-        <DCCReference Include="src\Support\cbsSystem.Support.Bootstrap.pas"/>
         <DCCReference Include="src\Support\cbsSystem.Support.ProcessRunner.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>

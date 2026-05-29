@@ -50,6 +50,7 @@ contains
   Shared.Inf.Contracts.Services.DatabaseUpdaterService in 'src\Shared\Inf\Contracts\Services\Shared.Inf.Contracts.Services.DatabaseUpdaterService.pas',
   Shared.Inf.Services.DatabaseUpdaterService in 'src\Shared\Inf\Services\Shared.Inf.Services.DatabaseUpdaterService.pas',
   Shared.Inf.Database.Context in 'src\Shared\Inf\Database\Shared.Inf.Database.Context.pas',
-  Shared.Core.Common.RunTime in 'src\Shared\Core\Common\Shared.Core.Common.RunTime.pas';
+  Shared.Core.Common.RunTime in 'src\Shared\Core\Common\Shared.Core.Common.RunTime.pas',
+  Shared.Core.Bootstrap in 'src\Shared\Core\Shared.Core.Bootstrap.pas';
 
 end.

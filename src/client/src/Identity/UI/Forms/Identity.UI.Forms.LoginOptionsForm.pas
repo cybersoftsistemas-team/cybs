@@ -67,6 +67,7 @@ uses
   cbsSystem.Support.Container,
   Identity.UI.Data.Modules.LoginModule,
   Identity.UI.Forms.LoginOptionsConnEditorForm,
+  Shared.Inf.Contracts.Services.DatabaseUpdaterService,
   Shared.UI.Data.Modules.MainModule;
 
 function frmLoginOptions: TfrmLoginOptions;
@@ -126,18 +127,12 @@ end;
 procedure TfrmLoginOptions.actSelectedExecute(Sender: TObject);
 begin
   try
+    TestConnection;
     try
-      TestConnection;
-      var LRecNo := damLogin.mtbCNS.RecNo;
-      try
-        FDatabaseConfig.Id := damLogin.mtbCNSId.AsGuid;
-        FDatabaseConfig.ConnectionName := damLogin.mtbCNSName.AsString;
-        FDatabaseConfig.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
-        FDatabaseConfig.ApplyUpdates;
-        damLogin.mtbCNS.Refresh;
-      finally
-        damLogin.mtbCNS.RecNo := LRecNo;
-      end;
+      FDatabaseConfig.Id := damLogin.mtbCNSId.AsGuid;
+      FDatabaseConfig.ConnectionName := damLogin.mtbCNSName.AsString;
+      FDatabaseConfig.ConnectionString := damLogin.mtbCNSConnectionString.AsString;
+      FDatabaseConfig.ApplyUpdates;
     except
       on E: Exception do
       begin
@@ -145,7 +140,7 @@ begin
         raise Exception.Create(E.Message);
       end;
     end;
-
+    App.Make<IDatabaseUpdaterService>.Execute([RunMigrations, RunSeeds]);
   except
     on E: Exception do
     begin
@@ -216,15 +211,9 @@ end;
 procedure TfrmLoginOptions.grdConnDrawColumnCell(Sender: TObject; ACol, ARow:
     Integer; Column: TUniDBGridColumn; Attribs: TUniCellAttribs);
 begin
-  if IsEqualGUID(
-    grdConn.DataSource.DataSet.FieldByName('Id').AsGuid,
-    FDatabaseConfig.Id
-  ) then
-  begin
-    Attribs.Font.Style := Attribs.Font.Style + [TFontStyle.fsBold];
-  end
-  else
-    Attribs.Font.Style := Attribs.Font.Style - [TFontStyle.fsBold];
+  var LId1 := FDatabaseConfig.Id;
+  var LId2 := grdConn.DataSource.DataSet.FieldByName('Id').AsGuid;
+  Attribs.Font.Style := if IsEqualGUID(LId1, LId2) then Attribs.Font.Style + [TFontStyle.fsBold] else Attribs.Font.Style - [TFontStyle.fsBold];
 end;
 
 procedure TfrmLoginOptions.TestConnection;

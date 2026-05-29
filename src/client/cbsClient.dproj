@@ -154,6 +154,7 @@
         <DCCReference Include="src\Shared\Inf\Services\Shared.Inf.Services.DatabaseUpdaterService.pas"/>
         <DCCReference Include="src\Shared\Inf\Database\Shared.Inf.Database.Context.pas"/>
         <DCCReference Include="src\Shared\Core\Common\Shared.Core.Common.RunTime.pas"/>
+        <DCCReference Include="src\Shared\Core\Shared.Core.Bootstrap.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

@@ -6,23 +6,20 @@ uses
 {PROJECT}
   Shared.Inf.Contracts.Services.DatabaseUpdaterService,
   Shared.Inf.Database.Connection,
-  Shared.Inf.Database.Context;
+  Shared.Inf.Database.Context,
+{SPRING}
+  Spring.Container.Common;
 
 type
   TDatabaseUpdaterService = class(TInterfacedObject, IDatabaseUpdaterService)
   private
-    FDb: TdamDb;
-    FDbContext: TDbContext;
+    [Inject] FDb: TdamDb;
+    [Inject] FDbContext: TDbContext;
     function IsPossibleExecute: Boolean;
     procedure OnExecute(const ACommands: TDatabaseUpdateCommands);
     procedure RunMigrations;
     procedure RunSeeds;
   public
-    constructor Create(
-      const ADb: TdamDb;
-      const ADbContext: TDbContext
-    );
-    destructor Destroy; override;
     procedure Execute(const ACommands: TDatabaseUpdateCommands);
   end;
 
@@ -37,23 +34,6 @@ uses
   cbsSystem.Support.Container;
 
 { TDatabaseUpdaterService }
-
-constructor TDatabaseUpdaterService.Create(
-  const ADb: TdamDb;
-  const ADbContext: TDbContext
-);
-begin
-  inherited Create;
-  FDb := ADb;
-  FDbContext := ADbContext;
-end;
-
-destructor TDatabaseUpdaterService.Destroy;
-begin
-  FDbContext.Free;
-  FDb.Free;
-  inherited;
-end;
 
 procedure TDatabaseUpdaterService.Execute(const ACommands: TDatabaseUpdateCommands);
 begin

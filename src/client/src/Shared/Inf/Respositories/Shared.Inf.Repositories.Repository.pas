@@ -55,7 +55,6 @@ uses
   cbsSystem.Support.Container.RegisterType,
   Shared.Inf.Database.Connection,
 {SPRING}
-  Spring.Persistence.Adapters.FireDAC,
   Spring.Persistence.Mapping.Attributes;
 
 procedure RegisterRepository(const AInterface: TGuid; const ARepositoryType: RepositoryType);
@@ -68,7 +67,7 @@ end;
 constructor TRepository<TEntity>.Create;
 begin
   inherited Create;
-  FSession := TSession.Create(TFireDACConnectionAdapter.Create(App.Make<TdamDb>.Connection));
+  FSession := App.Make<TSession>;
 end;
 
 destructor TRepository<TEntity>.Destroy;

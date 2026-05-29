@@ -178,7 +178,6 @@ contains
   cbsSystem.PathTreeParser in 'src\PathTree\cbsSystem.PathTreeParser.pas',
   cbsSystem.Support.Types in 'src\Support\cbsSystem.Support.Types.pas',
   cbsSystem.Translation.ForReplacement in 'src\Translation\cbsSystem.Translation.ForReplacement.pas',
-  cbsSystem.Support.Bootstrap in 'src\Support\cbsSystem.Support.Bootstrap.pas',
   cbsSystem.Support.ProcessRunner in 'src\Support\cbsSystem.Support.ProcessRunner.pas';
 
 end.
