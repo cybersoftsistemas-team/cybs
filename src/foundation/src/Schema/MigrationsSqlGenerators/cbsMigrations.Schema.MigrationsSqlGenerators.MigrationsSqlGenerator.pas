@@ -9,6 +9,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateTimeColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddDecimalColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddFloatColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddForeignKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddGuidColumnOperation,
@@ -68,6 +69,7 @@ type
     procedure Generate(const AOperation: IAddComputedColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddDateColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddDateTimeColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
+    procedure Generate(const AOperation: IAddDecimalColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddFloatColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddForeignKeyOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IAddGuidColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
@@ -140,9 +142,7 @@ end;
 
 procedure TMigrationsSqlGenerator.ColumnDefinition(const ASchema, ATable, AName: string; const AOperation: IColumnOperation; const ABuilder: IMigrationCommandListBuilder);
 var
-  LAlterColumnOperation: IAlterColumnOperation;
   LComputedColumnOperation: IComputedColumnOperation;
-  LStringColumnOperation: IStringColumnOperation;
 begin
   ABuilder
    .Append(DelimitIdentifier(AName))
@@ -174,6 +174,8 @@ begin
      .Append(AOperation.ColumnType);
     ColumnIdentityDefinition(AOperation, ABuilder);
     var LCollation :='';
+    var LAlterColumnOperation: IAlterColumnOperation;
+    var LStringColumnOperation: IStringColumnOperation;
     if Supports(AOperation, IAlterColumnOperation, LAlterColumnOperation) then
     begin
       LCollation := LAlterColumnOperation.Collation;
@@ -403,6 +405,11 @@ begin
 end;
 
 procedure TMigrationsSqlGenerator.Generate(const AOperation: IAddDateTimeColumnOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  AddColumnOperation(TColumnOperation(AOperation), ABuilder);
+end;
+
+procedure TMigrationsSqlGenerator.Generate(const AOperation: IAddDecimalColumnOperation; const ABuilder: IMigrationCommandListBuilder);
 begin
   AddColumnOperation(TColumnOperation(AOperation), ABuilder);
 end;

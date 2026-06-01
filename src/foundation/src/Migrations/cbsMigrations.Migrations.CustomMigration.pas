@@ -14,6 +14,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateTimeColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddDecimalColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddFloatColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddForeignKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddGuidColumnOperation,
@@ -23,6 +24,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateTableOperation,
+  cbsMigrations.Contracts.Migrations.Operations.DecimalColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.ForeignKeyOperation,
   cbsMigrations.Contracts.Migrations.Operations.NumberColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.PrimaryKeyOperation,
@@ -42,6 +44,7 @@ type
     function BuildOperations(const ABuildAction: TBuildOperantionEvent): IOperations;
     function CreateCommandBuilder: ICommandBuilder;
     procedure SetColumnType(const AOperation: ICreateTableOperation); overload;
+    procedure SetColumnType(const AOperation: IDecimalColumnOperation; var ADbType: string; const ABuilder: ICommandBuilder); overload;
     procedure SetColumnType(const AOperation: IStringColumnOperation; var ADbType: string; const ABuilder: ICommandBuilder); overload;
     procedure SetColumnType(const AOperation: INumberColumnOperation; var ADbType: string; const ABuilder: ICommandBuilder); overload;
     procedure SetColumnType(const AOperations: IOperations); overload;
@@ -55,6 +58,7 @@ type
     function CreateIndex(const AName: string; const AColumns: array of TIndexColumn; const AUnique: Boolean = False): ICreateIndexOperation; overload;
     function DateColumn(const AName: string): IAddDateColumnOperation;
     function DateTimeColumn(const AName: string): IAddDateTimeColumnOperation;
+    function DecimalColumn(const AName: string): IAddDecimalColumnOperation;
     function FloatColumn(const AName: string): IAddFloatColumnOperation;
     function ForeignKey(const AColumn: TForeignKeyColumn; const APrincipalTable: TForeignKeyPrincipalTable; const APrincipalColumn: TForeignKeyPrincipalColumn): IAddForeignKeyOperation; overload;
     function ForeignKey(const AColumns: array of TForeignKeyColumn; const APrincipalTable: TForeignKeyPrincipalTable; const APrincipalColumns: array of TForeignKeyPrincipalColumn): IAddForeignKeyOperation; overload;
@@ -89,6 +93,7 @@ uses
   cbsMigrations.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Migrations.Operations.AddDateTimeColumnOperation,
+  cbsMigrations.Migrations.Operations.AddDecimalColumnOperation,
   cbsMigrations.Migrations.Operations.AddFloatColumnOperation,
   cbsMigrations.Migrations.Operations.AddForeignKeyOperation,
   cbsMigrations.Migrations.Operations.AddGuidColumnOperation,
@@ -98,6 +103,7 @@ uses
   cbsMigrations.Migrations.Operations.AddUniqueOperation,
   cbsMigrations.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Migrations.Operations.CreateTableOperation,
+  cbsMigrations.Migrations.Operations.DecimalColumnOperation,
   cbsMigrations.Migrations.Operations.NumberColumnOperation,
   cbsMigrations.Migrations.Operations.StringColumnOperation,
   cbsMigrations.Migrations.CommandBuilder,
@@ -208,6 +214,12 @@ end;
 function TCustomMigration.DateTimeColumn(const AName: string): IAddDateTimeColumnOperation;
 begin
   Result := TAddDateTimeColumnOperation.Create(AName)
+   .IsOptional;
+end;
+
+function TCustomMigration.DecimalColumn(const AName: string): IAddDecimalColumnOperation;
+begin
+  Result := TAddDecimalColumnOperation.Create(AName)
    .IsOptional;
 end;
 
@@ -323,7 +335,13 @@ begin
     LColumnOperation.ColumnType.Trim.IsEmpty then
   begin
     LDbType := MappedColumnTypes.GetDbType(LColumnOperation, FDriverID);
-    if Supports(LColumnOperation, INumberColumnOperation) then
+    if Supports(LColumnOperation, IDecimalColumnOperation) then
+    begin
+      LBuilder := CreateCommandBuilder;
+      SetColumnType(TDecimalColumnOperation(LColumnOperation), LDbType, LBuilder);
+      LDbType := LBuilder.Build;
+    end
+    else if Supports(LColumnOperation, INumberColumnOperation) then
     begin
       LBuilder := CreateCommandBuilder;
       SetColumnType(TNumberColumnOperation(LColumnOperation), LDbType, LBuilder);
@@ -336,6 +354,22 @@ begin
       LDbType := LBuilder.Build;
     end;
     LColumnOperation.HasColumnType(LDbType);
+  end;
+end;
+
+procedure TCustomMigration.SetColumnType(const AOperation: IDecimalColumnOperation; var ADbType: string; const ABuilder: ICommandBuilder);
+begin
+  ABuilder.Append(ADbType);
+  if (FDriverID in LengthOrPrecisionSupport) and
+    (AOperation.Precision > 0) and
+    (AOperation.Scale > 0) then
+  begin
+    ABuilder
+     .Append('(')
+     .Append(AOperation.Precision.ToString)
+     .Append(',')
+     .Append(AOperation.Scale.ToString)
+     .Append(')');
   end;
 end;
 

@@ -10,6 +10,7 @@ uses
 type
   TFloatColumnOperation = class(TNumberColumnOperation, IFloatColumnOperation)
   public
+    constructor Create(const AName: string);
     function HasColumnType(const AColumnType: string): IFloatColumnOperation;
     function HasDefaultValueSql(const ADefaultValueSql: string): IFloatColumnOperation;
     function HasPrecision(const APrecision: Integer): IFloatColumnOperation;
@@ -22,6 +23,12 @@ type
 implementation
 
 { TFloatColumnOperation }
+
+constructor TFloatColumnOperation.Create(const AName: string);
+begin
+  inherited Create(AName);
+  HasPrecision(53);
+end;
 
 function TFloatColumnOperation.HasColumnType(const AColumnType: string): IFloatColumnOperation;
 begin

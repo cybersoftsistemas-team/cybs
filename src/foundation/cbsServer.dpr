@@ -2,7 +2,6 @@ library cbsServer;
 
 uses
   Forms,
-  cbsSystem.Support.Bootstrap,
   cbsServer.Module.ServerModule in 'src\Module\cbsServer.Module.ServerModule.pas' {cbsServerModule: TUniGUIServerModule};
 
 {$R *.res}

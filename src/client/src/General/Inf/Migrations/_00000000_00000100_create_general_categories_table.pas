@@ -10,7 +10,7 @@ type
   CreateGeneralCategoriesTable = class(TMigration)
   private
     const SchemaName = 'general';
-    const TableName = 'categories';
+    const TableName  = 'categories';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;

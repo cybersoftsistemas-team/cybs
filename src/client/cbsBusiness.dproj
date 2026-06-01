@@ -126,14 +126,14 @@
         <DCCReference Include="cbsSystem.dcp"/>
         <DCCReference Include="cbsClient.dcp"/>
         <DCCReference Include="cbsMain.dcp"/>
-        <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000001_create_domain_schema.pas"/>
-        <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000100_create_domain_domains_table.pas"/>
-        <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000200_create_domain_domains_allow_access_to_admin_trigger.pas"/>
-        <DCCReference Include="src\Domain\Inf\Migrations\_00000300_00000300_create_domain_accesses_table.pas"/>
-        <DCCReference Include="src\CRM\Inf\Migrations\_00000350_00000001_create_crm_schema.pas"/>
-        <DCCReference Include="src\CRM\Inf\Migrations\_00000350_00000100_create_crm_customers_table.pas"/>
-        <DCCReference Include="src\Domain\Inf\Seeders\_00000300_0000001_DomainDatabaseSeeder.pas"/>
-        <DCCReference Include="src\CRM\Inf\Seeders\_00000350_00000001_CRMDatabaseSeeder.pas"/>
+        <DCCReference Include="src\Domain\Inf\Migrations\_00000030_00000001_create_domain_schema.pas"/>
+        <DCCReference Include="src\Domain\Inf\Migrations\_00000030_00000100_create_domain_domains_table.pas"/>
+        <DCCReference Include="src\Domain\Inf\Migrations\_00000030_00000200_create_domain_domains_allow_access_to_admin_trigger.pas"/>
+        <DCCReference Include="src\Domain\Inf\Migrations\_00000030_00000300_create_domain_accesses_table.pas"/>
+        <DCCReference Include="src\CRM\Inf\Migrations\_00000035_00000001_create_crm_schema.pas"/>
+        <DCCReference Include="src\CRM\Inf\Migrations\_00000035_00000100_create_crm_customers_table.pas"/>
+        <DCCReference Include="src\Domain\Inf\Seeders\_00000030_0000001_DomainDatabaseSeeder.pas"/>
+        <DCCReference Include="src\CRM\Inf\Seeders\_00000070_00000001_CRMDatabaseSeeder.pas"/>
         <DCCReference Include="src\CRM\Inf\Seeders\CRM.Inf.Seeders.damDbSeed.pas">
             <Form>damCRMDbSeed</Form>
             <DesignClass>TDataModule</DesignClass>
@@ -148,6 +148,12 @@
         <DCCReference Include="src\Domain\Inf\Repositories\Domain.Inf.Repositories.AccessRepository.pas"/>
         <DCCReference Include="src\Domain\Inf\Repositories\Domain.Inf.Repositories.DomainRepository.pas"/>
         <DCCReference Include="src\Catalog\Inf\Entities\Catalog.Inf.Entities.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000040_00000001_create_catalog_schema.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000040_00000200_create_catalog_items_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000040_00000100_create_catalog_unit_measures_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000040_00000300_create_catalog_products_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000040_00000300_create_catalog_services_table.pas"/>
+        <DCCReference Include="src\Inventory\Inf\Entities\Inventory.Inf.Entities.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

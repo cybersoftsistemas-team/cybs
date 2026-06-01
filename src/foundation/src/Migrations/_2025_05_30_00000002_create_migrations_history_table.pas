@@ -36,6 +36,7 @@ begin
    .Columns([
      StringColumn('migration').HasMaxLength(255).IsUnicode.IsRequired
     ,IntColumn('batch').IsRequired
+    ,DateTimeColumn('CreatedAt').HasDefaultValueSql('GETDATE()').IsRequired
    ])
    .Constraints([
      PrimaryKey('migration')

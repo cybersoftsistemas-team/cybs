@@ -21,6 +21,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.BooleanColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.DateColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.DateTimeColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.DecimalColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.FloatColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.GuidColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.IntColumnOperation,
@@ -42,13 +43,14 @@ begin
    TMappedColumnTypes.Create
 
     // MSSQL
-    .Register(IBooleanColumnOperation  , DriverID.MSSQL, 'BIT'              )
-    .Register(IDateColumnOperation     , DriverID.MSSQL, 'DATE'             )
-    .Register(IDateTimeColumnOperation , DriverID.MSSQL, 'DATETIME'         )
-    .Register(IFloatColumnOperation    , DriverID.MSSQL, 'FLOAT'            )
-    .Register(IGuidColumnOperation     , DriverID.MSSQL, 'UNIQUEIDENTIFIER' )
-    .Register(IIntColumnOperation      , DriverID.MSSQL, 'INT'              )
-    .Register(IStringColumnOperation   , DriverID.MSSQL, 'VARCHAR'          );
+    .Register(IBooleanColumnOperation  , DriverID.MSSQL , 'BIT'              )
+    .Register(IDateColumnOperation     , DriverID.MSSQL , 'DATE'             )
+    .Register(IDateTimeColumnOperation , DriverID.MSSQL , 'DATETIME'         )
+    .Register(IDecimalColumnOperation  , DriverID.MSSQL , 'DECIMAL'          )
+    .Register(IFloatColumnOperation    , DriverID.MSSQL , 'FLOAT'            )
+    .Register(IGuidColumnOperation     , DriverID.MSSQL , 'UNIQUEIDENTIFIER' )
+    .Register(IIntColumnOperation      , DriverID.MSSQL , 'INT'              )
+    .Register(IStringColumnOperation   , DriverID.MSSQL , 'VARCHAR'          );
 end;
 
 finalization

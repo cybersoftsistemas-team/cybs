@@ -36,16 +36,16 @@ requires
   cbsBusiness;
 
 contains
-  _00000250_00000001_create_identity_schema in 'src\Identity\Inf\Migrations\_00000250_00000001_create_identity_schema.pas',
-  _00000250_00000100_create_identity_configs_table in 'src\Identity\Inf\Migrations\_00000250_00000100_create_identity_configs_table.pas',
-  _00000250_00000200_create_identity_users_table in 'src\Identity\Inf\Migrations\_00000250_00000200_create_identity_users_table.pas',
-  _00000250_00000400_create_identity_users_no_expire_trigger in 'src\Identity\Inf\Migrations\_00000250_00000400_create_identity_users_no_expire_trigger.pas',
-  _00000250_00000500_create_identity_users_account_disabled_trigger in 'src\Identity\Inf\Migrations\_00000250_00000500_create_identity_users_account_disabled_trigger.pas',
-  _00000250_00000600_create_identity_passwords_table in 'src\Identity\Inf\Migrations\_00000250_00000600_create_identity_passwords_table.pas',
-  _00000250_00000600_create_identity_options_table in 'src\Identity\Inf\Migrations\_00000250_00000600_create_identity_options_table.pas',
-  _00000250_00000800_create_identity_settings_table in 'src\Identity\Inf\Migrations\_00000250_00000800_create_identity_settings_table.pas',
-  _00000250_00000900_create_identity_settings_no_expire_trigger in 'src\Identity\Inf\Migrations\_00000250_00000900_create_identity_settings_no_expire_trigger.pas',
-  _00000250_00001000_create_identity_settings_account_disabled_trigger in 'src\Identity\Inf\Migrations\_00000250_00001000_create_identity_settings_account_disabled_trigger.pas',
+  _00000025_00000001_create_identity_schema in 'src\Identity\Inf\Migrations\_00000025_00000001_create_identity_schema.pas',
+  _00000025_00000100_create_identity_configs_table in 'src\Identity\Inf\Migrations\_00000025_00000100_create_identity_configs_table.pas',
+  _00000025_00000200_create_identity_users_table in 'src\Identity\Inf\Migrations\_00000025_00000200_create_identity_users_table.pas',
+  _00000025_00000400_create_identity_users_no_expire_trigger in 'src\Identity\Inf\Migrations\_00000025_00000400_create_identity_users_no_expire_trigger.pas',
+  _00000025_00000500_create_identity_users_account_disabled_trigger in 'src\Identity\Inf\Migrations\_00000025_00000500_create_identity_users_account_disabled_trigger.pas',
+  _00000025_00000600_create_identity_passwords_table in 'src\Identity\Inf\Migrations\_00000025_00000600_create_identity_passwords_table.pas',
+  _00000025_00000600_create_identity_options_table in 'src\Identity\Inf\Migrations\_00000025_00000600_create_identity_options_table.pas',
+  _00000025_00000800_create_identity_settings_table in 'src\Identity\Inf\Migrations\_00000025_00000800_create_identity_settings_table.pas',
+  _00000025_00000900_create_identity_settings_no_expire_trigger in 'src\Identity\Inf\Migrations\_00000025_00000900_create_identity_settings_no_expire_trigger.pas',
+  _00000025_00001000_create_identity_settings_account_disabled_trigger in 'src\Identity\Inf\Migrations\_00000025_00001000_create_identity_settings_account_disabled_trigger.pas',
   Identity.Dom.Common.SystemOptions in 'src\Identity\Dom\Common\Identity.Dom.Common.SystemOptions.pas',
   Identity.Inf.Entities in 'src\Identity\Inf\Entities\Identity.Inf.Entities.pas',
   Identity.Inf.Contracts.Repositories.ConfigRepository in 'src\Identity\Inf\Contracts\Repositories\Identity.Inf.Contracts.Repositories.ConfigRepository.pas',
@@ -74,11 +74,11 @@ contains
   Identity.UI.Forms.LoginDomainsForm in 'src\Identity\UI\Forms\Identity.UI.Forms.LoginDomainsForm.pas' {frmLoginDomains: TUniForm},
   Identity.UI.Forms.LoginForm in 'src\Identity\UI\Forms\Identity.UI.Forms.LoginForm.pas' {frmLogin: TUniLoginForm},
   Identity.UI.Forms.LoginOptionsForm in 'src\Identity\UI\Forms\Identity.UI.Forms.LoginOptionsForm.pas' {frmLoginOptions: TUniForm},
-  _00000250_00000001_IdentityDatabaseSeeder in 'src\Identity\Inf\Seeders\_00000250_00000001_IdentityDatabaseSeeder.pas',
+  _00000025_00000001_IdentityDatabaseSeeder in 'src\Identity\Inf\Seeders\_00000025_00000001_IdentityDatabaseSeeder.pas',
   Identity.Inf.Seeders.damDbSeed in 'src\Identity\Inf\Seeders\Identity.Inf.Seeders.damDbSeed.pas' {damIdentityDbSeed: TDataModule},
   Identity.Inf.Contracts.Repositories.OptionRepository in 'src\Identity\Inf\Contracts\Repositories\Identity.Inf.Contracts.Repositories.OptionRepository.pas',
   Identity.Inf.Repositories.OptionRepository in 'src\Identity\Inf\Repositories\Identity.Inf.Repositories.OptionRepository.pas',
-  _00000250_00000300_create_identity_users_set_settings_trigger in 'src\Identity\Inf\Migrations\_00000250_00000300_create_identity_users_set_settings_trigger.pas',
+  _00000025_00000300_create_identity_users_set_settings_trigger in 'src\Identity\Inf\Migrations\_00000025_00000300_create_identity_users_set_settings_trigger.pas',
   Identity.Inf.Seeders.damDbSeed.Extensions in 'src\Identity\Inf\Seeders\Identity.Inf.Seeders.damDbSeed.Extensions.pas';
 
 end.

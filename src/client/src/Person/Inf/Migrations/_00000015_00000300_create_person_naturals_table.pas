@@ -1,0 +1,80 @@
+unit _00000015_00000300_create_person_naturals_table;
+
+interface
+
+uses
+{PROJECT}
+  cbsMigrations.Support.Migration;
+
+type
+  CreatePersonNaturalsTable = class(TMigration)
+  private
+    const SchemaName = 'person';
+    const TableName  = 'naturals';
+  protected
+    procedure Up(const ASchema: IMigrationBuilder); override;
+    procedure Down(const ASchema: IMigrationBuilder); override;
+  end;
+
+implementation
+
+uses
+{PROJECT}
+  Shared.Inf.Database.Context;
+
+{ CreatePersonNaturalsTable }
+
+procedure CreatePersonNaturalsTable.Up(const ASchema: IMigrationBuilder);
+begin
+  ASchema.CreateTable(TableName)
+  .HasSchema(SchemaName)
+  .Columns([
+    GuidColumn('Id').IsRequired
+   ,StringColumn('FirstName').HasMaxLength(127).IsUnicode.IsRequired
+   ,StringColumn('LastName').HasMaxLength(127).IsUnicode.IsOptional
+   ,ComputedColumn('FullName')
+    .HasSqlAs(
+     'CONVERT(NVARCHAR(254),' +
+     '  TRIM(CONCAT([FirstName],'' '',[LastName]))' +
+     ')')
+    .IsOptional
+    .IsStored
+   ,DateTimeColumn('Birthday').IsOptional // Data de nascimento
+   ,StringColumn('SSN').HasMaxLength(11).IsUnicode.IsRequired // SSN – Social Security Number (CPF)
+   ,GuidColumn('PlaceOfBirthId').IsOptional // Naturalidade
+   ,GuidColumn('NationalityId').IsOptional // Nacionalidade
+   ,GuidColumn('GenderId').IsOptional // Gênero
+  ])
+  .Constraints([
+    PrimaryKey('Id')
+   ,ForeignKey('GenderId', 'categories', 'Id').HasPrincipalSchema('general')
+   ,ForeignKey('NationalityId', 'nationalities', 'Id').HasPrincipalSchema('country')
+   ,ForeignKey('persons', 'Id')
+   ,ForeignKey('PlaceOfBirthId', 'cities', 'Id').HasPrincipalSchema('address')
+   ,Unique('SSN')
+  ])
+  .Indexes([
+    CreateIndex('FullName')
+     .HasInclude([
+      'Id',
+      'FirstName',
+      'LastName'
+    ])
+   ,CreateIndex('GenderId')
+   ,CreateIndex('NationalityId')
+   ,CreateIndex('PlaceOfBirthId')
+  ]);
+end;
+
+procedure CreatePersonNaturalsTable.Down(const ASchema: IMigrationBuilder);
+begin
+  ASchema.DropTable(TableName)
+  .HasSchema(SchemaName);
+end;
+
+initialization
+begin
+  RegisterMigration(TDbContext, CreatePersonNaturalsTable);
+end;
+
+end.

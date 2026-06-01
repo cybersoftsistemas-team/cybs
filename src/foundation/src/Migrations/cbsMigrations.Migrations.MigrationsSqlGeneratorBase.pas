@@ -10,6 +10,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDateTimeColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.AddDecimalColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddDefaultConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddFloatColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.AddForeignKeyOperation,
@@ -66,6 +67,7 @@ type
     procedure Generate(const AOperation: IAddComputedColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddDateColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddDateTimeColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
+    procedure Generate(const AOperation: IAddDecimalColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddDefaultConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddFloatColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
     procedure Generate(const AOperation: IAddForeignKeyOperation; const ABuilder: IMigrationCommandListBuilder); overload; virtual; abstract;
@@ -110,6 +112,7 @@ uses
   cbsMigrations.Migrations.Operations.AddComputedColumnOperation,
   cbsMigrations.Migrations.Operations.AddDateColumnOperation,
   cbsMigrations.Migrations.Operations.AddDateTimeColumnOperation,
+  cbsMigrations.Migrations.Operations.AddDecimalColumnOperation,
   cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation,
   cbsMigrations.Migrations.Operations.AddFloatColumnOperation,
   cbsMigrations.Migrations.Operations.AddForeignKeyOperation,
@@ -165,6 +168,11 @@ begin
     procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)
     begin
       G.Generate(TAddDateTimeColumnOperation(O), B);
+    end);
+  FGenerateActions.Add(IAddDecimalColumnOperation,
+    procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)
+    begin
+      G.Generate(TAddDecimalColumnOperation(O), B);
     end);
   FGenerateActions.Add(IAddDefaultConstraintOperation,
     procedure(const G: TMigrationsSqlGeneratorBase; const O: IMigrationOperation; const B: IMigrationCommandListBuilder)

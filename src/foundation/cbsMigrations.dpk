@@ -190,7 +190,11 @@ contains
   cbsMigrations.Migrations.Operations.DefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.DefaultConstraintOperation.pas',
   cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation.pas',
   cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation.pas',
-  cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation.pas';
+  cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation.pas',
+  cbsMigrations.Contracts.Migrations.Operations.DecimalColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.DecimalColumnOperation.pas',
+  cbsMigrations.Migrations.Operations.DecimalColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.DecimalColumnOperation.pas',
+  cbsMigrations.Contracts.Migrations.Operations.AddDecimalColumnOperation in 'src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddDecimalColumnOperation.pas',
+  cbsMigrations.Migrations.Operations.AddDecimalColumnOperation in 'src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDecimalColumnOperation.pas';
 
 end.
 

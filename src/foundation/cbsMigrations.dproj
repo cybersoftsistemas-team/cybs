@@ -315,6 +315,10 @@
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation.pas"/>
         <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation.pas"/>
         <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.DropDefaultConstraintOperation.pas"/>
+        <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.DecimalColumnOperation.pas"/>
+        <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.DecimalColumnOperation.pas"/>
+        <DCCReference Include="src\Contracts\Migrations\Operations\cbsMigrations.Contracts.Migrations.Operations.AddDecimalColumnOperation.pas"/>
+        <DCCReference Include="src\Migrations\Operations\cbsMigrations.Migrations.Operations.AddDecimalColumnOperation.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
