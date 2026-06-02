@@ -8,6 +8,7 @@ uses
   cbsMigrations.Contracts.Migrations.Operations.AddDefaultConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.AlterColumnOperation,
   cbsMigrations.Contracts.Migrations.Operations.ColumnOperation,
+  cbsMigrations.Contracts.Migrations.Operations.CreateIndexOperation,
   cbsMigrations.Contracts.Migrations.Operations.CreateTableOperation,
   cbsMigrations.Contracts.Migrations.Operations.DropDefaultConstraintOperation,
   cbsMigrations.Contracts.Migrations.Operations.EnsureSchemaOperation,
@@ -27,6 +28,7 @@ type
     procedure Generate(const AOperation: IDropDefaultConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IEnsureSchemaOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IRenameColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
+    procedure IndexOptions(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder); override;
   end;
 
 implementation
@@ -36,7 +38,8 @@ uses
   System.SysUtils,
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.IntColumnOperation,
-  cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation;
+  cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation,
+  cbsMigrations.Migrations.Operations.CreateIndexOperation;
 
 { TSqlServerMigrationsSqlGenerator }
 
@@ -263,6 +266,18 @@ begin
    .Append('''COLUMN''')
   .AppendLine(StatementTerminator);
   EndStatement(ABuilder);
+end;
+
+procedure TSqlServerMigrationsSqlGenerator.IndexOptions(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
+begin
+  if not AOperation.Filter.Trim.IsEmpty then
+  begin
+    ABuilder
+     .Append(' ')
+     .Append('WHERE')
+     .Append(' ')
+     .Append(AOperation.Filter);
+  end;
 end;
 
 end.

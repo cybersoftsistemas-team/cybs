@@ -30,12 +30,12 @@ begin
   .HasSchema(SchemaName)
   .Columns([
     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-   ,StringColumn('Code').HasMaxLength(30).IsUnicode.IsRequired
+   ,StringColumn('Code').HasMaxLength(50).IsUnicode.IsRequired
    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
-   ,StringColumn('Description').IsMaxLength.IsUnicode.IsOptional
+   ,StringColumn('Description').IsMaxLength.IsUnicode.IsRequired
    ,BooleanColumn('Active').HasDefaultValueSql('1').IsRequired
-   ,DecimalColumn('CostPrice').HasDefaultValueSql('0').HasPrecision(18,4).IsRequired
-   ,DecimalColumn('SalePrice').HasDefaultValueSql('0').HasPrecision(18,4).IsRequired
+   ,DecimalColumn('CostPrice').HasDefaultValueSql('0').HasPrecision(18,6).IsRequired
+   ,DecimalColumn('SalePrice').HasDefaultValueSql('0').HasPrecision(18,6).IsRequired
    ,DateTimeColumn('CreatedAt').HasDefaultValueSql('GETDATE()').IsRequired
    ,DateTimeColumn('UpdatedAt').IsOptional
    ,GuidColumn('ItemTypeId').IsRequired
@@ -48,7 +48,11 @@ begin
    ,Unique('Code')
   ])
   .Indexes([
-    CreateIndex('ItemTypeId')
+    CreateIndex('Name')
+   ,CreateIndex('ItemTypeId')
+   ,CreateIndex('UnitMeasureId')
+   ,CreateIndex(['ItemTypeId', 'Active'])
+   ,CreateIndex(['UnitMeasureId', 'Active'])
   ]);
 end;
 

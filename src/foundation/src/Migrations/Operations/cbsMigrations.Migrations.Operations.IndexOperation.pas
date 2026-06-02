@@ -14,12 +14,14 @@ type
     FColumns: IIndexColumnList;
     FDescending: TDescending;
     FFilter: string;
+    FFilterColumns: IFilterColumnList;
     FIncludeColumns: IIncludeColumnList;
     FUnique: Boolean;
     function GetDescending: TDescending;
     function GetFilter: string;
     function GetUnique: Boolean;
     procedure AddColumn(const AColumn: TIndexColumn);
+    procedure AddFilterColumn(const AFilterColumn: TFilterColumn);
     procedure AddIncludeColumn(const AIncludeColumn: TIncludeColumn);
   protected
     procedure DoPrepare; override;
@@ -29,13 +31,18 @@ type
     function Columns: IIndexColumns;
     function HasColumns(const AColumns: array of TIndexColumn): IIndexOperation;
     function HasDescending(const ADescending: TDescending): IIndexOperation;
+    function HasFilter(const AWhere: string): IIndexOperation;
+    function HasFilterColumn(const AFilterColumn: TFilterColumn): IIndexOperation; overload;
+    function HasFilterColumn(const AFilterColumns: array of TFilterColumn): IIndexOperation; overload;
     function HasInclude(const AColumn: TIncludeColumn): IIndexOperation; overload;
     function HasInclude(const AColumns: array of TIncludeColumn): IIndexOperation; overload;
     function HasName(const AName: string): IIndexOperation;
     function HasSchema(const ASchema: string): IIndexOperation;
     function HasTable(const ATable: string): IIndexOperation;
     function HasUnique(const AUnique: Boolean): IIndexOperation;
+    function FilterColumns: IFilterColumns;
     function IncludeColumns: IIncludeColumns;
+    function IsUnique: IIndexOperation;
     property Descending: TDescending read GetDescending;
     property Filter: string read GetFilter;
     property Unique: Boolean read GetUnique;
@@ -53,14 +60,17 @@ constructor TIndexOperation.Create;
 begin
   inherited Create('');
   FColumns := CreateIndexColumnList;
+  FFilterColumns := CreateFilterColumnList;
   FIncludeColumns := CreateIncludeColumnList;
 end;
 
 destructor TIndexOperation.Destroy;
 begin
   FColumns.Clear;
+  FFilterColumns.Clear;
   FIncludeColumns.Clear;
   FColumns := nil;
+  FFilterColumns := nil;
   FIncludeColumns := nil;
   inherited;
 end;
@@ -97,6 +107,26 @@ end;
 function TIndexOperation.HasDescending(const ADescending: TDescending): IIndexOperation;
 begin
   FDescending := ADescending;
+  Result := Self;
+end;
+
+function TIndexOperation.HasFilter(const AWhere: string): IIndexOperation;
+begin
+  FFilter := AWhere;
+  Result := Self;
+end;
+
+function TIndexOperation.HasFilterColumn(const AFilterColumn: TFilterColumn): IIndexOperation;
+begin
+  Result := HasFilterColumn([AFilterColumn]);
+end;
+
+function TIndexOperation.HasFilterColumn(const AFilterColumns: array of TFilterColumn): IIndexOperation;
+begin
+  for var LFilterColumn in AFilterColumns do
+  begin
+    AddFilterColumn(LFilterColumn);
+  end;
   Result := Self;
 end;
 
@@ -138,9 +168,19 @@ begin
   Result := Self;
 end;
 
+function TIndexOperation.FilterColumns: IFilterColumns;
+begin
+  Result := FFilterColumns;
+end;
+
 function TIndexOperation.IncludeColumns: IIncludeColumns;
 begin
   Result := FIncludeColumns;
+end;
+
+function TIndexOperation.IsUnique: IIndexOperation;
+begin
+  Result := HasUnique(True);
 end;
 
 procedure TIndexOperation.AddColumn(const AColumn: TIndexColumn);
@@ -148,6 +188,14 @@ begin
   if not FColumns.Contains(AColumn) then
   begin
     FColumns.Add(AColumn);
+  end;
+end;
+
+procedure TIndexOperation.AddFilterColumn(const AFilterColumn: TFilterColumn);
+begin
+  if not FFilterColumns.Contains(AFilterColumn) then
+  begin
+    FFilterColumns.Add(AFilterColumn);
   end;
 end;
 
@@ -163,8 +211,11 @@ procedure TIndexOperation.DoPrepare;
 begin
   if not Table.Trim.IsEmpty and Name.Trim.IsEmpty then
   begin
+    var LColumns := string.Join('_', FColumns.ToArray);
+    if not FFilterColumns.IsEmpty then
+      LColumns := LColumns + '_ftr_' + string.Join('_', FFilterColumns.ToArray);
     var LName := if FUnique then '%s_%s_unique' else '%s_%s_index';
-    SetName(Format(LName, [QualifiedTableName('_'), string.Join('_', FColumns.ToArray)]));
+    SetName(Format(LName, [QualifiedTableName('_'), LColumns]));
   end;
 end;
 

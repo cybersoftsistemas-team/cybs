@@ -54,7 +54,6 @@ type
     procedure ForeignKeyConstraint(const AOperation: IAddForeignKeyOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure GenerateIncludeColumnList(const AColumns: TArray<string>; const ABuilder: IMigrationCommandListBuilder);
     procedure GenerateIndexColumnList(const AColumns: TArray<string>; const ADescending: TDescending; const ABuilder: IMigrationCommandListBuilder);
-    procedure IndexOptions(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure PrimaryKeyConstraint(const AOperation: IAddPrimaryKeyOperation; const ABuilder: IMigrationCommandListBuilder);
     procedure UniqueConstraint(const AOperation: IAddUniqueOperation; const ABuilder: IMigrationCommandListBuilder);
   protected
@@ -89,6 +88,7 @@ type
     procedure Generate(const AOperation: IDropUniqueConstraintOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: IRenameColumnOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
     procedure Generate(const AOperation: ISqlOperation; const ABuilder: IMigrationCommandListBuilder); overload; override;
+    procedure IndexOptions(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder); virtual;
     procedure IndexTraits(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder); virtual;
   end;
 
@@ -704,22 +704,9 @@ begin
   end;
 end;
 
-procedure TMigrationsSqlGenerator.IndexOptions(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder);
-var
-  LCreateIndexOperation: ICreateIndexOperation;
+procedure TMigrationsSqlGenerator.IndexOptions(const AOperation: ICreateIndexOperation; const ABuilder: IMigrationCommandListBuilder);
 begin
-  if Supports(AOperation, ICreateIndexOperation) then
-  begin
-    LCreateIndexOperation := TCreateIndexOperation(AOperation);
-    if not TCreateIndexOperation(AOperation).Filter.Trim.IsEmpty then
-    begin
-      ABuilder
-       .Append(' ')
-       .Append('WHERE')
-       .Append(' ')
-       .Append(LCreateIndexOperation.Filter);
-    end;
-  end;
+  // This method can be overwritten by inherited classes.
 end;
 
 procedure TMigrationsSqlGenerator.IndexTraits(const AOperation: IMigrationOperation; const ABuilder: IMigrationCommandListBuilder);

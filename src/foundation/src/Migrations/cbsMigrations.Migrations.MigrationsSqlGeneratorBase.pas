@@ -300,7 +300,11 @@ end;
 
 function TMigrationsSqlGeneratorBase.ColumnList(const AColumns: TArray<string>): string;
 begin
-  Result := string.Join(', ', AColumns);
+  Result := '';
+  for var LColumn in AColumns do
+  begin
+    Result := Result + if Result.Trim.IsEmpty then DelimitIdentifier(LColumn) else ', ' + DelimitIdentifier(LColumn);
+  end;
 end;
 
 function TMigrationsSqlGeneratorBase.CreateGenerateActionList: IGenerateActions;

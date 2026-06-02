@@ -1,4 +1,4 @@
-unit _00000040_00000300_create_catalog_products_table;
+unit _00000040_00001100_create_catalog_services_table;
 
 interface
 
@@ -7,10 +7,10 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateCatalogProductTable = class(TMigration)
+  CreateCatalogServiceTable = class(TMigration)
   private
     const SchemaName = 'catalog';
-    const TableName  = 'products';
+    const TableName  = 'services';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -22,26 +22,22 @@ uses
 {PROJECT}
   Shared.Inf.Database.Context;
 
-{ CreateCatalogProductTable }
+{ CreateCatalogServiceTable }
 
-procedure CreateCatalogProductTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateCatalogServiceTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
     GuidColumn('Id').IsRequired
-   ,GuidColumn('NcmId').IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
    ,ForeignKey('Id', 'items', 'Id')
-  ])
-  .Indexes([
-    CreateIndex('NcmId')
   ]);
 end;
 
-procedure CreateCatalogProductTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateCatalogServiceTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
   .HasSchema(SchemaName);
@@ -49,7 +45,7 @@ end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateCatalogProductTable);
+  RegisterMigration(TDbContext, CreateCatalogServiceTable);
 end;
 
 end.

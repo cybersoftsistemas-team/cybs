@@ -1,4 +1,4 @@
-unit _00000040_00000100_create_catalog_unit_measures_table;
+unit _00000045_00000100_create_inventory_warehouses_table;
 
 interface
 
@@ -7,10 +7,10 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateCatalogUnitMeasureTable = class(TMigration)
+  CreateInventoryWarehousesTable = class(TMigration)
   private
-    const SchemaName = 'catalog';
-    const TableName  = 'unit_measures';
+    const SchemaName = 'inventory';
+    const TableName  = 'warehouses';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -22,9 +22,9 @@ uses
 {PROJECT}
   Shared.Inf.Database.Context;
 
-{ CreateCatalogUnitMeasureTable }
+{ CreateInventoryWarehousesTable }
 
-procedure CreateCatalogUnitMeasureTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateInventoryWarehousesTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
@@ -32,22 +32,20 @@ begin
     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
    ,StringColumn('Code').HasMaxLength(50).IsUnicode.IsRequired
    ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
-   ,StringColumn('Symbol').HasMaxLength(20).IsUnicode.IsRequired
-   ,GuidColumn('MeasureTypeId').IsRequired
+   ,BooleanColumn('Active').HasDefaultValueSql('1').IsRequired
+   ,GuidColumn('DomainId').IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
-   ,ForeignKey('MeasureTypeId', 'categories', 'Id').HasPrincipalSchema('general')
-   ,Unique('Code')
+   ,ForeignKey('DomainId', 'domains', 'Id').HasPrincipalSchema('domain')
+   ,Unique(['DomainId', 'Code'])
   ])
   .Indexes([
-    CreateIndex('MeasureTypeId')
-   ,CreateIndex('Name')
-   ,CreateIndex('Symbol')
+    CreateIndex('DomainId')
   ]);
 end;
 
-procedure CreateCatalogUnitMeasureTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateInventoryWarehousesTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
   .HasSchema(SchemaName);
@@ -55,7 +53,7 @@ end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateCatalogUnitMeasureTable);
+  RegisterMigration(TDbContext, CreateInventoryWarehousesTable);
 end;
 
 end.

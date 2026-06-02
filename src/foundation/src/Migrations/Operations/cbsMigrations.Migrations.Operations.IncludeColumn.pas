@@ -9,27 +9,36 @@ uses
 type
   TDescending = array of Boolean;
   TIncludeColumn = string;
+  TFilterColumn = TIncludeColumn;
   TIndexColumn = TIncludeColumn;
 
-  IIncludeColumns = IEnumerable<TIncludeColumn>;
+  IFilterColumns = IEnumerable<TFilterColumn>;
   IIndexColumns = IEnumerable<TIndexColumn>;
+  IIncludeColumns = IEnumerable<TIncludeColumn>;
 
-  IIncludeColumnList = IList<TIncludeColumn>;
+  IFilterColumnList = IList<TFilterColumn>;
   IIndexColumnList = IList<TIndexColumn>;
+  IIncludeColumnList = IList<TIncludeColumn>;
 
-  function CreateIncludeColumnList: IIncludeColumnList;
+  function CreateFilterColumnList: IFilterColumnList;
   function CreateIndexColumnList: IIndexColumnList;
+  function CreateIncludeColumnList: IIncludeColumnList;
 
 implementation
 
-function CreateIncludeColumnList: IIncludeColumnList;
+function CreateFilterColumnList: IFilterColumnList;
 begin
-  Result := TCollections.CreateList<TIncludeColumn>;
+  Result := TCollections.CreateList<TFilterColumn>;
 end;
 
 function CreateIndexColumnList: IIndexColumnList;
 begin
   Result := TCollections.CreateList<TIndexColumn>;
+end;
+
+function CreateIncludeColumnList: IIncludeColumnList;
+begin
+  Result := TCollections.CreateList<TIncludeColumn>;
 end;
 
 end.

@@ -1,4 +1,4 @@
-unit _00000040_00000300_create_catalog_services_table;
+unit _00000040_00000600_create_catalog_attributes_table;
 
 interface
 
@@ -7,10 +7,10 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateCatalogServiceTable = class(TMigration)
+  CreateCatalogAttributeTable = class(TMigration)
   private
     const SchemaName = 'catalog';
-    const TableName  = 'services';
+    const TableName  = 'attributes';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -22,22 +22,23 @@ uses
 {PROJECT}
   Shared.Inf.Database.Context;
 
-{ CreateCatalogServiceTable }
+{ CreateCatalogAttributeTable }
 
-procedure CreateCatalogServiceTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateCatalogAttributeTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
-    GuidColumn('Id').IsRequired
+    GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
+   ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
-   ,ForeignKey('Id', 'items', 'Id')
+   ,Unique('Name')
   ]);
 end;
 
-procedure CreateCatalogServiceTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateCatalogAttributeTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
   .HasSchema(SchemaName);
@@ -45,7 +46,7 @@ end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateCatalogServiceTable);
+  RegisterMigration(TDbContext, CreateCatalogAttributeTable);
 end;
 
 end.

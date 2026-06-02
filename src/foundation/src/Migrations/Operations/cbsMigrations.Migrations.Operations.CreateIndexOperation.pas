@@ -13,12 +13,14 @@ type
   public
     function HasColumns(const AColumns: array of TIndexColumn): ICreateIndexOperation;
     function HasDescending(const ADescending: TDescending): ICreateIndexOperation;
+    function HasFilter(const AWhere: string): ICreateIndexOperation;
     function HasInclude(const AColumn: TIncludeColumn): ICreateIndexOperation; overload;
     function HasInclude(const AColumns: array of TIncludeColumn): ICreateIndexOperation; overload;
     function HasName(const AName: string): ICreateIndexOperation;
     function HasSchema(const ASchema: string): ICreateIndexOperation;
     function HasTable(const ATable: string): ICreateIndexOperation;
     function HasUnique(const AUnique: Boolean): ICreateIndexOperation;
+    function IsUnique: ICreateIndexOperation;
   end;
 
 implementation
@@ -33,6 +35,11 @@ end;
 function TCreateIndexOperation.HasDescending(const ADescending: TDescending): ICreateIndexOperation;
 begin
   Result := TCreateIndexOperation(inherited HasDescending(ADescending));
+end;
+
+function TCreateIndexOperation.HasFilter(const AWhere: string): ICreateIndexOperation;
+begin
+  Result := TCreateIndexOperation(inherited HasFilter(AWhere));
 end;
 
 function TCreateIndexOperation.HasInclude(const AColumn: TIncludeColumn): ICreateIndexOperation;
@@ -63,6 +70,11 @@ end;
 function TCreateIndexOperation.HasUnique(const AUnique: Boolean): ICreateIndexOperation;
 begin
   Result := TCreateIndexOperation(inherited HasUnique(AUnique));
+end;
+
+function TCreateIndexOperation.IsUnique: ICreateIndexOperation;
+begin
+  Result := TCreateIndexOperation(inherited IsUnique);
 end;
 
 end.

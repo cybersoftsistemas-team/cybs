@@ -16,13 +16,18 @@ type
     function GetUnique: Boolean;
     function HasColumns(const AColumns: array of TIndexColumn): IIndexOperation;
     function HasDescending(const ADescending: TDescending): IIndexOperation;
+    function HasFilter(const AWhere: string): IIndexOperation;
+    function HasFilterColumn(const AFilterColumn: TFilterColumn): IIndexOperation; overload;
+    function HasFilterColumn(const AFilterColumns: array of TFilterColumn): IIndexOperation; overload;
     function HasInclude(const AColumn: TIncludeColumn): IIndexOperation; overload;
     function HasInclude(const AColumns: array of TIncludeColumn): IIndexOperation; overload;
     function HasName(const AName: string): IIndexOperation;
     function HasSchema(const ASchema: string): IIndexOperation;
     function HasTable(const ATable: string): IIndexOperation;
     function HasUnique(const AUnique: Boolean): IIndexOperation;
+    function FilterColumns: IFilterColumns;
     function IncludeColumns: IIncludeColumns;
+    function IsUnique: IIndexOperation;
     property Descending: TDescending read GetDescending;
     property Filter: string read GetFilter;
     property Unique: Boolean read GetUnique;
