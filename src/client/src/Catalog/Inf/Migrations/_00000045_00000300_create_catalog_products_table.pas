@@ -1,4 +1,4 @@
-unit _00000040_00000300_create_catalog_products_table;
+unit _00000045_00000300_create_catalog_products_table;
 
 interface
 
@@ -31,13 +31,22 @@ begin
   .Columns([
     GuidColumn('Id').IsRequired
    ,GuidColumn('NcmId').IsRequired
+   ,BooleanColumn('LotControlled').HasDefaultValueSql('0').IsRequired
+   ,BooleanColumn('ExpirationControlled').HasDefaultValueSql('0').IsRequired
+   ,BooleanColumn('StockControlled').HasDefaultValueSql('1').IsRequired
+   ,GuidColumn('ManufacturerId').IsOptional
   ])
   .Constraints([
     PrimaryKey('Id')
    ,ForeignKey('Id', 'items', 'Id')
+   ,ForeignKey('ManufacturerId', 'manufacturers', 'Id').HasPrincipalSchema('crm')
+   ,ForeignKey('NcmId', 'ncms', 'Id').HasPrincipalSchema('fiscal')
   ])
   .Indexes([
-    CreateIndex('NcmId')
+    CreateIndex('ManufacturerId')
+   ,CreateIndex('NcmId')
+   ,CreateIndex(['ManufacturerId', 'StockControlled'])
+   ,CreateIndex(['LotControlled', 'ExpirationControlled'])
   ]);
 end;
 

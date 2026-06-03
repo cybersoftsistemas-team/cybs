@@ -1,4 +1,4 @@
-unit _00000040_00001000_create_catalog_variant_values_table;
+unit _00000045_00000900_create_catalog_grids_table;
 
 interface
 
@@ -7,10 +7,10 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateCatalogVariantValueTable = class(TMigration)
+  CreateCatalogGridsTable = class(TMigration)
   private
     const SchemaName = 'catalog';
-    const TableName  = 'variant_values';
+    const TableName  = 'grids';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -22,9 +22,9 @@ uses
 {PROJECT}
   Shared.Inf.Database.Context;
 
-{ CreateCatalogVariantValueTable }
+{ CreateCatalogGridsTable }
 
-procedure CreateCatalogVariantValueTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateCatalogGridsTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
@@ -45,7 +45,7 @@ begin
   ]);
 end;
 
-procedure CreateCatalogVariantValueTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateCatalogGridsTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
   .HasSchema(SchemaName);
@@ -53,7 +53,7 @@ end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateCatalogVariantValueTable);
+  RegisterMigration(TDbContext, CreateCatalogGridsTable);
 end;
 
 end.

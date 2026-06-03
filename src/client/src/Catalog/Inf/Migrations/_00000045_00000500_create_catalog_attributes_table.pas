@@ -1,4 +1,4 @@
-unit _00000040_00000500_create_catalog_grids_table;
+unit _00000045_00000500_create_catalog_attributes_table;
 
 interface
 
@@ -7,10 +7,10 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateCatalogGridTable = class(TMigration)
+  CreateCatalogAttributeTable = class(TMigration)
   private
     const SchemaName = 'catalog';
-    const TableName  = 'grids';
+    const TableName  = 'attributes';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -22,25 +22,23 @@ uses
 {PROJECT}
   Shared.Inf.Database.Context;
 
-{ CreateCatalogGridTable }
+{ CreateCatalogAttributeTable }
 
-procedure CreateCatalogGridTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateCatalogAttributeTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-   ,BooleanColumn('StockControlled').HasDefaultValueSql('0').IsRequired
-   ,GuidColumn('ProductId').IsRequired
+   ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
-   ,ForeignKey('ProductId', 'products', 'Id').HasPrincipalSchema('catalog')
-   ,Unique('ProductId')
+   ,Unique('Name')
   ]);
 end;
 
-procedure CreateCatalogGridTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateCatalogAttributeTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
   .HasSchema(SchemaName);
@@ -48,7 +46,7 @@ end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateCatalogGridTable);
+  RegisterMigration(TDbContext, CreateCatalogAttributeTable);
 end;
 
 end.

@@ -1,4 +1,4 @@
-unit _00000045_00000300_create_inventory_transactions_table;
+unit _00000050_00000500_create_inventory_transactions_table;
 
 interface
 
@@ -32,6 +32,7 @@ begin
     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
    ,IntColumn('Sequence').HasColumnType('BIGINT').HasIncrement().IsRequired
    ,GuidColumn('WarehouseId').IsRequired
+   ,GuidColumn('LotId').IsOptional
    ,GuidColumn('VariantId').IsRequired
    ,GuidColumn('TransactionTypeId').IsRequired
    ,DateTimeColumn('TransactionDate').HasDefaultValueSql('GETDATE()').IsRequired
@@ -44,21 +45,31 @@ begin
    ,GuidColumn('ReferenceId').IsRequired
    ,StringColumn('Notes').IsMaxLength.IsUnicode.IsOptional
    ,DateTimeColumn('CreatedAt').HasDefaultValueSql('GETDATE()').IsRequired
-   ,StringColumn('CreatedBy').HasMaxLength(255).IsUnicode.IsRequired
+   ,StringColumn('CreatedBy').HasMaxLength(100).IsUnicode.IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
    ,ForeignKey('WarehouseId', 'warehouses', 'Id')
+   ,ForeignKey('LotId', 'lots', 'Id')
    ,ForeignKey('VariantId', 'variants', 'Id').HasPrincipalSchema('catalog')
    ,ForeignKey('TransactionTypeId', 'categories', 'Id').HasPrincipalSchema('general')
    ,ForeignKey('UnitMeasureId', 'unit_measures', 'Id').HasPrincipalSchema('catalog')
    ,ForeignKey('ReferenceTypeId', 'categories', 'Id').HasPrincipalSchema('general')
   ])
   .Indexes([
-    CreateIndex(['WarehouseId', 'VariantId', 'TransactionDate'])
-   ,CreateIndex('ReferenceId')
+    CreateIndex('Sequence').IsUnique
+   ,CreateIndex('WarehouseId')
+   ,CreateIndex('LotId')
+   ,CreateIndex('VariantId')
    ,CreateIndex('TransactionTypeId')
+   ,CreateIndex('UnitMeasureId')
+   ,CreateIndex('ReferenceTypeId')
    ,CreateIndex('TransactionDate')
+   ,CreateIndex(['WarehouseId', 'VariantId'])
+   ,CreateIndex(['WarehouseId', 'LotId'])
+   ,CreateIndex(['VariantId', 'TransactionDate'])
+   ,CreateIndex(['LotId', 'TransactionDate'])
+   ,CreateIndex(['ReferenceTypeId', 'ReferenceId'])
   ]);
 end;
 

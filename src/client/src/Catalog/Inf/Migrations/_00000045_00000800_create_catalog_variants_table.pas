@@ -1,4 +1,4 @@
-unit _00000040_00000900_create_catalog_variants_table;
+unit _00000045_00000800_create_catalog_variants_table;
 
 interface
 
@@ -33,15 +33,21 @@ begin
    ,StringColumn('SKU').HasMaxLength(100).IsUnicode.IsRequired
    ,StringColumn('Gtin').HasMaxLength(14).IsUnicode.IsOptional
    ,BooleanColumn('Active').HasDefaultValueSql('1').IsRequired
-   ,GuidColumn('GridId').IsRequired
+   ,GuidColumn('ProductId').IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
-   ,ForeignKey('GridId', 'grids', 'Id')
+   ,ForeignKey('ProductId', 'products', 'Id').HasPrincipalSchema('catalog')
    ,Unique('SKU')
   ])
   .Indexes([
-    CreateIndex('GridId')
+    CreateIndex('ProductId')
+   ,CreateIndex(['ProductId', 'Active'])
+   ,CreateIndex('Gtin')
+   ,CreateIndex('Gtin')
+    .IsUnique
+    .HasFilterColumn('Gtin')
+    .HasFilter('Gtin IS NOT NULL')
   ]);
 end;
 

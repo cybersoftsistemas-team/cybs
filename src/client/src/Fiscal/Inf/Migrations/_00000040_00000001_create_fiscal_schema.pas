@@ -1,4 +1,4 @@
-unit _00000040_00000001_create_catalog_schema;
+unit _00000040_00000001_create_fiscal_schema;
 
 interface
 
@@ -7,9 +7,9 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateCatalogSchema = class(TMigration)
+  CreateFiscalSchema = class(TMigration)
   private
-    const SchemaName = 'catalog';
+    const SchemaName = 'fiscal';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -21,21 +21,21 @@ uses
 {PROJECT}
   Shared.Inf.Database.Context;
 
-{ CreateCatalogSchema }
+{ CreateFiscalSchema }
 
-procedure CreateCatalogSchema.Up(const ASchema: IMigrationBuilder);
+procedure CreateFiscalSchema.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.EnsureSchema(SchemaName);
 end;
 
-procedure CreateCatalogSchema.Down(const ASchema: IMigrationBuilder);
+procedure CreateFiscalSchema.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropSchema(SchemaName)
 end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateCatalogSchema);
+  RegisterMigration(TDbContext, CreateFiscalSchema);
 end;
 
 end.

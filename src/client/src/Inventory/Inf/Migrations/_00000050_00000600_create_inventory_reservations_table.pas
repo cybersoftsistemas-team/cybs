@@ -1,4 +1,4 @@
-unit _00000045_00000400_create_inventory_reservations_table;
+unit _00000050_00000600_create_inventory_reservations_table;
 
 interface
 
@@ -32,6 +32,7 @@ begin
     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
    ,GuidColumn('WarehouseId').IsRequired
    ,GuidColumn('VariantId').IsRequired
+   ,GuidColumn('LotId').IsOptional
    ,DecimalColumn('Quantity').HasDefaultValueSql('0').HasPrecision(18,6).IsRequired
    ,DateTimeColumn('ReservationDate').HasDefaultValueSql('GETDATE()').IsRequired
    ,DateTimeColumn('ExpirationDate').IsOptional
@@ -40,20 +41,30 @@ begin
    ,GuidColumn('StatusId').IsRequired
    ,StringColumn('Notes').IsMaxLength.IsUnicode.IsOptional
    ,DateTimeColumn('CreatedAt').HasDefaultValueSql('GETDATE()').IsRequired
-   ,StringColumn('CreatedBy').HasMaxLength(255).IsUnicode.IsRequired
+   ,StringColumn('CreatedBy').HasMaxLength(100).IsUnicode.IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
    ,ForeignKey('WarehouseId', 'warehouses', 'Id')
    ,ForeignKey('VariantId', 'variants', 'Id').HasPrincipalSchema('catalog')
+   ,ForeignKey('LotId', 'lots', 'Id')
    ,ForeignKey('ReferenceTypeId', 'categories', 'Id').HasPrincipalSchema('general')
    ,ForeignKey('StatusId', 'categories', 'Id').HasPrincipalSchema('general')
   ])
   .Indexes([
-    CreateIndex(['WarehouseId', 'VariantId', 'StatusId'])
-   ,CreateIndex('ReferenceId')
+    CreateIndex('WarehouseId')
+   ,CreateIndex('VariantId')
+   ,CreateIndex('LotId')
    ,CreateIndex('StatusId')
+   ,CreateIndex('ReferenceTypeId')
+   ,CreateIndex('ReservationDate')
    ,CreateIndex('ExpirationDate')
+   ,CreateIndex(['WarehouseId', 'VariantId'])
+   ,CreateIndex(['WarehouseId', 'LotId'])
+   ,CreateIndex(['StatusId', 'ExpirationDate'])
+   ,CreateIndex(['ReferenceTypeId', 'ReferenceId'])
+   ,CreateIndex(['VariantId', 'StatusId'])
+   ,CreateIndex(['LotId', 'StatusId'])
   ]);
 end;
 

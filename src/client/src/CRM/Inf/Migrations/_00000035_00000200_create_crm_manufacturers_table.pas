@@ -1,4 +1,4 @@
-unit _00000045_00000100_create_inventory_warehouses_table;
+unit _00000035_00000200_create_crm_manufacturers_table;
 
 interface
 
@@ -7,10 +7,10 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateInventoryWarehousesTable = class(TMigration)
+  CreateManufacturersTable = class(TMigration)
   private
-    const SchemaName = 'inventory';
-    const TableName  = 'warehouses';
+    const SchemaName = 'crm';
+    const TableName  = 'manufacturers';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -22,30 +22,33 @@ uses
 {PROJECT}
   Shared.Inf.Database.Context;
 
-{ CreateInventoryWarehousesTable }
+{ CreateManufacturersTable }
 
-procedure CreateInventoryWarehousesTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateManufacturersTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
   .Columns([
     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-   ,StringColumn('Code').HasMaxLength(50).IsUnicode.IsRequired
-   ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
    ,BooleanColumn('Active').HasDefaultValueSql('1').IsRequired
    ,GuidColumn('DomainId').IsRequired
+   ,GuidColumn('PersonId').IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
    ,ForeignKey('DomainId', 'domains', 'Id').HasPrincipalSchema('domain')
-   ,Unique(['DomainId', 'Code'])
+   ,ForeignKey('PersonId', 'persons', 'Id').HasPrincipalSchema('person')
   ])
   .Indexes([
     CreateIndex('DomainId')
+   ,CreateIndex('PersonId')
+   ,CreateIndex(['DomainId', 'PersonId'])
+    .HasInclude('Active')
+    .IsUnique()
   ]);
 end;
 
-procedure CreateInventoryWarehousesTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateManufacturersTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
   .HasSchema(SchemaName);
@@ -53,7 +56,7 @@ end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateInventoryWarehousesTable);
+  RegisterMigration(TDbContext, CreateManufacturersTable);
 end;
 
 end.

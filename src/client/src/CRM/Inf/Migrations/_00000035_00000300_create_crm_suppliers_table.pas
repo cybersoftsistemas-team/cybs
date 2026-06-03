@@ -1,4 +1,4 @@
-unit _00000035_00000100_create_crm_customers_table;
+unit _00000035_00000300_create_crm_suppliers_table;
 
 interface
 
@@ -7,10 +7,10 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateCrmCustomersTable = class(TMigration)
+  CreateCrmSuppliersTable = class(TMigration)
   private
     const SchemaName = 'crm';
-    const TableName  = 'customers';
+    const TableName  = 'suppliers';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -22,9 +22,9 @@ uses
 {PROJECT}
   Shared.Inf.Database.Context;
 
-{ CreateCrmCustomersTable }
+{ CreateCrmSuppliersTable }
 
-procedure CreateCrmCustomersTable.Up(const ASchema: IMigrationBuilder);
+procedure CreateCrmSuppliersTable.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.CreateTable(TableName)
   .HasSchema(SchemaName)
@@ -48,7 +48,7 @@ begin
   ]);
 end;
 
-procedure CreateCrmCustomersTable.Down(const ASchema: IMigrationBuilder);
+procedure CreateCrmSuppliersTable.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropTable(TableName)
   .HasSchema(SchemaName);
@@ -56,7 +56,7 @@ end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateCrmCustomersTable);
+  RegisterMigration(TDbContext, CreateCrmSuppliersTable);
 end;
 
 end.

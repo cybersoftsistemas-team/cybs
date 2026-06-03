@@ -1,4 +1,4 @@
-unit _00000045_00000001_create_inventory_schema;
+unit _00000045_00000001_create_catalog_schema;
 
 interface
 
@@ -7,9 +7,9 @@ uses
   cbsMigrations.Support.Migration;
 
 type
-  CreateInventorySchema = class(TMigration)
+  CreateCatalogSchema = class(TMigration)
   private
-    const SchemaName = 'inventory';
+    const SchemaName = 'catalog';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -21,21 +21,21 @@ uses
 {PROJECT}
   Shared.Inf.Database.Context;
 
-{ CreateInventorySchema }
+{ CreateCatalogSchema }
 
-procedure CreateInventorySchema.Up(const ASchema: IMigrationBuilder);
+procedure CreateCatalogSchema.Up(const ASchema: IMigrationBuilder);
 begin
   ASchema.EnsureSchema(SchemaName);
 end;
 
-procedure CreateInventorySchema.Down(const ASchema: IMigrationBuilder);
+procedure CreateCatalogSchema.Down(const ASchema: IMigrationBuilder);
 begin
   ASchema.DropSchema(SchemaName)
 end;
 
 initialization
 begin
-  RegisterMigration(TDbContext, CreateInventorySchema);
+  RegisterMigration(TDbContext, CreateCatalogSchema);
 end;
 
 end.
