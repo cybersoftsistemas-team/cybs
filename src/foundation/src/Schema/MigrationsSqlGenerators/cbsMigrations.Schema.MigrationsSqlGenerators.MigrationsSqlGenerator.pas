@@ -104,8 +104,7 @@ uses
   cbsMigrations.Migrations.Operations.AddCheckConstraintOperation,
   cbsMigrations.Migrations.Operations.AddForeignKeyOperation,
   cbsMigrations.Migrations.Operations.AddUniqueOperation,
-  cbsMigrations.Migrations.Operations.ColumnOperation,
-  cbsMigrations.Migrations.Operations.CreateIndexOperation;
+  cbsMigrations.Migrations.Operations.ColumnOperation;
 
 { TMigrationsSqlGenerator }
 

@@ -1,4 +1,4 @@
-unit _00000045_00000600_create_catalog_attribute_codes_table;
+unit _00000045_00000600_create_catalog_attributes_table;
 
 interface
 
@@ -10,7 +10,7 @@ type
   CreateCatalogAttributeTable = class(TMigration)
   private
     const SchemaName = 'catalog';
-    const TableName  = 'attribute_codes';
+    const TableName  = 'attributes';
   protected
     procedure Up(const ASchema: IMigrationBuilder); override;
     procedure Down(const ASchema: IMigrationBuilder); override;
@@ -30,15 +30,11 @@ begin
   .HasSchema(SchemaName)
   .Columns([
     GuidColumn('Id').HasDefaultValueSql('NEWSEQUENTIALID()').IsRequired
-   ,StringColumn('Code').HasMaxLength(100).IsUnicode.IsRequired
-   ,StringColumn('CodeType').HasMaxLength(50).IsUnicode.IsRequired
-   ,GuidColumn('AttributeId').IsRequired
+   ,StringColumn('Name').HasMaxLength(255).IsUnicode.IsRequired
   ])
   .Constraints([
     PrimaryKey('Id')
-   ,ForeignKey('AttributeId', 'attributes', 'Id')
-   ,Unique(['AttributeId', 'CodeType'])
-   ,Unique(['CodeType', 'Code'])
+   ,Unique('Name')
   ]);
 end;
 

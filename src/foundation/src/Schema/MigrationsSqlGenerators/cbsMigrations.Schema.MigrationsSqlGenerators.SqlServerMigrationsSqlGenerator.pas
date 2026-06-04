@@ -38,8 +38,7 @@ uses
   System.SysUtils,
 {PROJECT}
   cbsMigrations.Contracts.Migrations.Operations.IntColumnOperation,
-  cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation,
-  cbsMigrations.Migrations.Operations.CreateIndexOperation;
+  cbsMigrations.Migrations.Operations.AddDefaultConstraintOperation;
 
 { TSqlServerMigrationsSqlGenerator }
 

@@ -1,4 +1,4 @@
-unit _00000045_00000300_create_catalog_products_table;
+unit _00000045_00000400_create_catalog_products_table;
 
 interface
 
@@ -33,7 +33,7 @@ begin
    ,GuidColumn('NcmId').IsRequired
    ,BooleanColumn('LotControlled').HasDefaultValueSql('0').IsRequired
    ,BooleanColumn('ExpirationControlled').HasDefaultValueSql('0').IsRequired
-   ,BooleanColumn('StockControlled').HasDefaultValueSql('1').IsRequired
+   ,BooleanColumn('StockControlled').HasDefaultValueSql('0').IsRequired
    ,GuidColumn('ManufacturerId').IsOptional
   ])
   .Constraints([

@@ -1,4 +1,4 @@
-unit _00000045_00000800_create_catalog_variants_table;
+unit _00000045_00000900_create_catalog_variants_table;
 
 interface
 

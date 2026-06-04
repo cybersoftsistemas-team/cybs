@@ -149,17 +149,17 @@
         <DCCReference Include="src\Domain\Inf\Repositories\Domain.Inf.Repositories.DomainRepository.pas"/>
         <DCCReference Include="src\Catalog\Inf\Entities\Catalog.Inf.Entities.pas"/>
         <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000001_create_catalog_schema.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000200_create_catalog_items_table.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000100_create_catalog_unit_measures_table.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000300_create_catalog_products_table.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00001000_create_catalog_services_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000300_create_catalog_items_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000200_create_catalog_unit_measures_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000400_create_catalog_products_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00001100_create_catalog_services_table.pas"/>
         <DCCReference Include="src\Inventory\Inf\Entities\Inventory.Inf.Entities.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000400_create_catalog_conversions_table.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000700_create_catalog_columns_table.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000500_create_catalog_attributes_table.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000600_create_catalog_attribute_codes_table.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000800_create_catalog_variants_table.pas"/>
-        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000900_create_catalog_grids_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000500_create_catalog_conversions_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000800_create_catalog_columns_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000600_create_catalog_attributes_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000700_create_catalog_attribute_codes_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000900_create_catalog_variants_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00001000_create_catalog_grids_table.pas"/>
         <DCCReference Include="src\Inventory\Inf\Migrations\_00000050_00000001_create_inventory_schema.pas"/>
         <DCCReference Include="src\Inventory\Inf\Migrations\_00000050_00000200_create_inventory_inventories_table.pas"/>
         <DCCReference Include="src\Inventory\Inf\Migrations\_00000050_00000100_create_inventory_warehouses_table.pas"/>
@@ -173,6 +173,17 @@
         <DCCReference Include="src\Fiscal\Inf\Entities\Fiscal.Inf.Entities.pas"/>
         <DCCReference Include="src\Fiscal\Inf\Migrations\_00000040_00000001_create_fiscal_schema.pas"/>
         <DCCReference Include="src\Fiscal\Inf\Migrations\_00000040_00000100_create_fiscal_ncms_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Contracts\Repositories\Catalog.Inf.Contracts.Repositories.ProductRepository.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Migrations\_00000045_00000100_create_catalog_configs_table.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Seeders\_00000045_00000001_CatalogDatabaseSeeder.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Seeders\Catalog.Inf.Seeders.damDbSeed.pas">
+            <Form>damCatalogDbSeed</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TDataModule</DesignClass>
+        </DCCReference>
+        <DCCReference Include="src\Catalog\Inf\Contracts\Repositories\Catalog.Inf.Contracts.Repositories.ConfigRepository.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Repositories\Catalog.Inf.Repositories.ConfigRepository.pas"/>
+        <DCCReference Include="src\Catalog\Inf\Seeders\Catalog.Inf.Seeders.damDbSeed.Extensions.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>
